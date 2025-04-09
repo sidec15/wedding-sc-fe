@@ -3,3 +3,7 @@ $font-family-base: 'Comfortaa', 'Segoe UI', sans-serif;
 body, html {
   font-family: $font-family-base;
 }
+
+.navbar .nav-links li a {
+  cursor: pointer;
+}
