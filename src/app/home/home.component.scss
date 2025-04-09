@@ -1,0 +1,44 @@
+@import '../../styles/variables';
+
+.hero {
+  background-image: url('/images/home-01.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  .hero-content {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2rem;
+    border-radius: 12px;
+
+    h1 {
+      font-size: 2.5rem;
+      color: $accent;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .names {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $text;
+    }
+
+    .wedding-date {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: $accent;
+      margin-top: 1rem;
+      letter-spacing: 1px;
+    }
+    
+  }
+}

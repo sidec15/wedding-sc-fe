@@ -1,11 +1,4 @@
-// app.component.scss
-
-// Theme colors
-$bg: #fff;
-$text: #333;
-$accent: #cf9a72; // soft wedding-like peach/gold
-$hover: darken($accent, 10%);
-$light-gray: #f7f7f7;
+@use "../styles/variables.scss" as *;
 
 // Base reset
 * {
@@ -14,9 +7,10 @@ $light-gray: #f7f7f7;
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
-  font-family: 'Comfortaa', 'Segoe UI', sans-serif;
+  font-family: "Comfortaa", "Segoe UI", sans-serif;
   background-color: $light-gray;
   color: $text;
 }
@@ -42,7 +36,7 @@ html, body {
     font-weight: bold;
     color: $accent;
     text-decoration: none;
-    font-family: 'Comfortaa', cursive;
+    font-family: "Comfortaa", cursive;
   }
 
   .nav-links {
@@ -62,7 +56,7 @@ html, body {
           color: $accent;
 
           &::after {
-            content: '';
+            content: "";
             position: absolute;
             left: 0;
             bottom: -4px;
