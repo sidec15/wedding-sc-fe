@@ -7,22 +7,23 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   height: 100%;
   font-family: "Comfortaa", "Segoe UI", sans-serif;
   background-color: $light-gray;
   color: $text;
 }
 
-// Layout container for full height
+// Full-height layout
 :host {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-// Header & Navigation
+// ====================
+// 🌐 NAVBAR (Desktop)
+// ====================
 .navbar {
   background-color: $bg;
   border-bottom: 1px solid #e5e5e5;
@@ -39,45 +40,57 @@ body {
     font-family: "Comfortaa", cursive;
   }
 
+  .menu-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: $text;
+    cursor: pointer;
+  }
+
   .nav-links {
     list-style: none;
     display: flex;
     gap: 2rem;
 
-    li {
-      a {
-        text-decoration: none;
-        color: $text;
-        font-weight: 500;
-        font-size: 1rem;
-        position: relative;
+    li a {
+      text-decoration: none;
+      color: $text;
+      font-weight: 500;
+      font-size: 1rem;
+      position: relative;
+      cursor: pointer;
 
-        &:hover {
-          color: $accent;
+      &:hover {
+        color: $accent;
 
-          &::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -4px;
-            width: 100%;
-            height: 2px;
-            background-color: $accent;
-          }
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -4px;
+          width: 100%;
+          height: 2px;
+          background-color: $accent;
         }
       }
     }
   }
 }
 
-// Main content area
+// ====================
+// 📄 MAIN CONTENT
+// ====================
 main {
   flex: 1 0 auto;
   padding: 2rem;
   background-color: $light-gray;
 }
 
-// Footer
+// ====================
+// 📎 FOOTER
+// ====================
 .footer {
   flex-shrink: 0;
   height: 50px;
@@ -90,3 +103,44 @@ main {
   font-size: 0.85rem;
   border-top: 1px solid #e5e5e5;
 }
+
+// ====================
+// 📱 RESPONSIVE (Mobile/Tablet)
+// ====================
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    position: relative;
+  }
+
+  .menu-toggle {
+    display: block !important;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: $text;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: none !important;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    &.open {
+      display: flex !important;
+    }
+
+    li a {
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+}
+
+

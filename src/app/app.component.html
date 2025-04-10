@@ -1,15 +1,26 @@
-<header>
-  <nav class="navbar">
-    <a routerLink="/" class="logo">Chiara & Simone</a>
-    <ul class="nav-links">
-      <li><a routerLink="/">Home</a></li>
-      <li><a routerLink="/our-story">La nostra storia</a></li>
-      <li><a routerLink="/church">Chiesa</a></li>
-      <li><a routerLink="/reception">Ricevimento</a></li>
-      <li><a routerLink="/rsvp">Conferma</a></li>
-      <li><a routerLink="/contact">Contattaci</a></li>
-    </ul>
-  </nav>
+<header class="navbar">
+  <a class="logo" routerLink="/">Chiara & Simone</a>
+
+  <!-- Hamburger icon (visible only on small screens) -->
+  <button
+    class="menu-toggle"
+    (click)="toggleMenu()"
+    aria-label="Apri menu"
+    [attr.aria-expanded]="menuOpen"
+    aria-controls="main-navigation"
+  >
+    &#9776;
+  </button>
+
+  <!-- Navigation links -->
+  <ul class="nav-links" [class.open]="menuOpen" id="main-navigation">
+    <li><a routerLink="/" (click)="closeMenu()">Home</a></li>
+    <li><a routerLink="/our-story" (click)="closeMenu()">La nostra storia</a></li>
+    <li><a routerLink="/church" (click)="closeMenu()">Chiesa</a></li>
+    <li><a routerLink="/reception" (click)="closeMenu()">Ricevimento</a></li>
+    <li><a routerLink="/rsvp" (click)="closeMenu()">Conferma</a></li>
+    <li><a routerLink="/contact" (click)="closeMenu()">Contattaci</a></li>
+  </ul>
 </header>
 
 <main>
