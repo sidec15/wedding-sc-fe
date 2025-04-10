@@ -5,7 +5,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-story-block',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './story-block.component.html',
   styleUrls: ['./story-block.component.scss'],
