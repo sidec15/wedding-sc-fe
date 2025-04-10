@@ -1,22 +1,25 @@
 <header class="navbar">
   <a class="logo" routerLink="/">Chiara & Simone</a>
 
+  <!-- Language Selector -->
+  <select (change)="onLanguageChange($event)" [value]="currentLanguage">
+    <option value="it">Italiano</option>
+    <option value="en">English</option>
+  </select>
+
   <!-- Hamburger icon (visible only on small screens) -->
-  <button
-    class="menu-toggle"
-    (click)="toggleMenu()"
-  >
+  <button class="menu-toggle" (click)="toggleMenu()">
     {{ isMenuOpen ? '✖' : '☰' }}
   </button>
 
   <!-- Navigation links -->
   <ul class="nav-links" [class.open]="isMenuOpen" id="main-navigation">
-    <li><a routerLink="/" (click)="closeMenu()">Home</a></li>
-    <li><a routerLink="/our-story" (click)="closeMenu()">La nostra storia</a></li>
-    <li><a routerLink="/church" (click)="closeMenu()">Chiesa</a></li>
-    <li><a routerLink="/reception" (click)="closeMenu()">Ricevimento</a></li>
-    <li><a routerLink="/rsvp" (click)="closeMenu()">Conferma</a></li>
-    <li><a routerLink="/contact" (click)="closeMenu()">Contattaci</a></li>
+    <li><a routerLink="/" (click)="closeMenu()">{{ 'nav.home' | translate }}</a></li>
+    <li><a routerLink="/our-story" (click)="closeMenu()">{{ 'nav.our_story' | translate }}</a></li>
+    <li><a routerLink="/church" (click)="closeMenu()">{{ 'nav.church' | translate }}</a></li>
+    <li><a routerLink="/reception" (click)="closeMenu()">{{ 'nav.reception' | translate }}</a></li>
+    <li><a routerLink="/confirm" (click)="closeMenu()">{{ 'nav.confirm' | translate }}</a></li>
+    <li><a routerLink="/contact" (click)="closeMenu()">{{ 'nav.contact' | translate }}</a></li>
   </ul>
 </header>
 
@@ -25,5 +28,5 @@
 </main>
 
 <footer class="footer">
-  <p>© {{ currentYear }} Chiara & Simone</p>
+  <p>{{ 'footer.copyright' | translate:{ year: currentYear } }}</p>
 </footer>

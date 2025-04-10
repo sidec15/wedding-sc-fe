@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "home": "Home",
+    "our_story": "Our Story",
+    "church": "Church",
+    "reception": "Reception",
+    "confirm": "Confirm your attendance",
+    "contact": "Contact Us"
+  },
+  "footer": {
+    "copyright": "© {{year}} Chiara & Simone"
+  }
+}
