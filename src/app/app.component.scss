@@ -146,6 +146,10 @@ main {
     display: flex;
     transition: right 0.5s ease-in-out; // Smooth transition effect
 
+    &.open {
+      right: 0; // Slide in when open
+    }
+
     li a {
       font-size: 1.3rem !important;
       font-weight: bold !important;
