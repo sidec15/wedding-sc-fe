@@ -9,5 +9,12 @@
   },
   "footer": {
     "copyright": "© {{year}} Chiara & Simone"
+  },
+  "home": {
+    "welcome": "Benvenuti!",
+    "description_line1": "Il nostro grande giorno si avvicina e non vediamo l'ora",
+    "description_line2": "di condividerlo con voi.",
+    "names": "Chiara & Simone",
+    "date": "10 Ottobre 2025"
   }
 }

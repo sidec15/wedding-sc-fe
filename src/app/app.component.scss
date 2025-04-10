@@ -43,6 +43,34 @@ body {
     font-family: "Comfortaa", cursive;
   }
 
+  .language-selector {
+    // position: fixed; // Fix the position
+    top: 1rem; // Adjust the vertical position
+    right: 1rem; // Adjust the horizontal position
+    z-index: 1000; // Ensure it stays above other elements
+    font-family: 'Comfortaa', sans-serif;
+    background-color: white;
+    color: $text;
+    border: 1px solid $accent;
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    appearance: none; // Hide native dropdown arrow on most browsers
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23cf9a72' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 12px;
+  
+    &:hover {
+      border-color: darken($accent, 10%);
+    }
+  
+    option {
+      background: white;
+      color: $text;
+    }
+  }
+
   .menu-toggle {
     display: none; // Hidden by default
   }
@@ -51,26 +79,53 @@ body {
     list-style: none;
     display: flex;
     gap: 2rem;
+    align-items: center; // Align items vertically
 
-    li a {
-      text-decoration: none;
-      color: $text;
-      font-weight: 500;
-      font-size: 1rem;
-      position: relative;
-      cursor: pointer;
+    li {
+      a {
+        text-decoration: none;
+        color: $text;
+        font-weight: 500;
+        font-size: 1rem;
+        position: relative;
+        cursor: pointer;
 
-      &:hover {
-        color: $accent;
+        &:hover {
+          color: $accent;
 
-        &::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          bottom: -4px;
-          width: 100%;
-          height: 2px;
-          background-color: $accent;
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 2px;
+            background-color: $accent;
+          }
+        }
+      }
+
+      .language-selector {
+        font-family: 'Comfortaa', sans-serif;
+        background-color: white;
+        color: $text;
+        border: 1px solid $accent;
+        border-radius: 6px;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.9rem;
+        appearance: none; // Hide native dropdown arrow on most browsers
+        background-image: url("data:image/svg+xml;utf8,<svg fill='%23cf9a72' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 0.5rem center;
+        background-size: 12px;
+
+        &:hover {
+          border-color: darken($accent, 10%);
+        }
+
+        option {
+          background: white;
+          color: $text;
         }
       }
     }
@@ -142,7 +197,7 @@ main {
     padding: 6rem 2rem 2rem;
     gap: 2rem;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start !important;
     display: flex;
     transition: right 0.5s ease-in-out; // Smooth transition effect
 

@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -18,14 +19,18 @@ export class AppComponent {
   private touchStartX = 0;
   private touchEndX = 0;
 
-  constructor(private translateService: TranslateService) {
-    // Get the saved language from localStorage or default to 'it'
-    const savedLanguage = localStorage.getItem('language') || 'it';
-    this.currentLanguage = savedLanguage;
-
-    // Set the language in the translation service
-    this.translateService.setDefaultLang('it');
-    this.translateService.use(savedLanguage);
+  constructor(
+    private translateService: TranslateService,
+    private storageService: StorageService
+  ) {
+    const savedLang = this.storageService.get('language');
+    const browserLang = translateService.getBrowserLang();
+  
+    this.currentLanguage =
+      savedLang ?? (browserLang?.match(/en|it/) ? browserLang : 'it');
+  
+    translateService.setDefaultLang('it');
+    translateService.use(this.currentLanguage);
   }
 
   onLanguageChange(event: Event): void {
@@ -33,9 +38,7 @@ export class AppComponent {
     const language = select.value;
     this.currentLanguage = language;
     this.translateService.use(language);
-    // Save the user's choice in localStorage
-    localStorage.setItem('language', language);
-    this.currentLanguage = language;
+    this.storageService.set('language', language);
   }
 
   toggleMenu(): void {

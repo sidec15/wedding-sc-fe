@@ -1,12 +1,6 @@
 <header class="navbar">
   <a class="logo" routerLink="/">Chiara & Simone</a>
 
-  <!-- Language Selector -->
-  <select (change)="onLanguageChange($event)" [value]="currentLanguage">
-    <option value="it">Italiano</option>
-    <option value="en">English</option>
-  </select>
-
   <!-- Hamburger icon (visible only on small screens) -->
   <button class="menu-toggle" (click)="toggleMenu()">
     {{ isMenuOpen ? '✖' : '☰' }}
@@ -20,6 +14,14 @@
     <li><a routerLink="/reception" (click)="closeMenu()">{{ 'nav.reception' | translate }}</a></li>
     <li><a routerLink="/confirm" (click)="closeMenu()">{{ 'nav.confirm' | translate }}</a></li>
     <li><a routerLink="/contact" (click)="closeMenu()">{{ 'nav.contact' | translate }}</a></li>
+
+    <!-- Language Selector -->
+    <li>
+      <select class="language-selector" (change)="onLanguageChange($event)" [value]="currentLanguage">
+        <option value="it">Italiano</option>
+        <option value="en">English</option>
+      </select>
+    </li>
   </ul>
 </header>
 
