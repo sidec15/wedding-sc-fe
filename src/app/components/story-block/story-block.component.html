@@ -1,1 +1,10 @@
-<p>story-block works!</p>
+<div #storyBlock class="story-block">
+  <div class="image">
+    <img [src]="story.image" [alt]="story.title" />
+  </div>
+  <div class="content">
+    <h2>{{ story.title }}</h2>
+    <p class="date">{{ formatDate() }}</p>
+    <p class="description">{{ story.description }}</p>
+  </div>
+</div>

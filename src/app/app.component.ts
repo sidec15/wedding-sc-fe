@@ -1,11 +1,11 @@
 import { Component, HostListener } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TranslateModule],
+  imports: [RouterOutlet, RouterLink, TranslateModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -20,7 +20,8 @@ export class AppComponent {
 
   constructor(
     private translateService: TranslateService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public router: Router
   ) {
     const savedLang = this.storageService.get('language');
     const browserLang = translateService.getBrowserLang();

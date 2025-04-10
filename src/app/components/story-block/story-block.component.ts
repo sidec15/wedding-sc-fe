@@ -1,25 +1,25 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoryBlock } from '../../models/story-block.model'; // Create this interface file
 import { trigger, transition, style, animate } from '@angular/animations';
+import { StoryBlock } from '../../models/story-block.model'; // adjust path if needed
 
 @Component({
   selector: 'app-story-block',
   imports: [CommonModule],
   templateUrl: './story-block.component.html',
-  styleUrls: ['./story-block.component.scss'],
+  styleUrl: './story-block.component.scss',
   animations: [
-    trigger('fadeIn', [
+    trigger('fadeInSlide', [
       transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(30px)' }),
-        animate('600ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+        style({ opacity: 0, transform: 'translateY(40px)' }),
+        animate('800ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
       ]),
     ]),
-  ],
+  ]
 })
 export class StoryBlockComponent {
   @Input() story!: StoryBlock;
-  @Input() visible = true;
+  @Input() visible: boolean = false;
 
   formatDate(): string {
     const { year, month, day } = this.story.date;

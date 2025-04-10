@@ -1,0 +1,18 @@
+<div class="story-list">
+  <div
+    #storyBlock
+    class="story-block"
+    *ngFor="let story of storyBlocks; let i = index"
+    [class.in-focus]="story === focusedStory"
+    [class.out-of-focus]="story !== focusedStory"
+  >
+    <div class="image">
+      <img [src]="story.image" [alt]="story.title" />
+    </div>
+    <div class="content">
+      <h2>{{ story.title }}</h2>
+      <p class="date">{{ story.date.year }}</p>
+      <p class="description">{{ story.description }}</p>
+    </div>
+  </div>
+</div>
