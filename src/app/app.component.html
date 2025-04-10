@@ -6,14 +6,14 @@
     class="menu-toggle"
     (click)="toggleMenu()"
     aria-label="Apri menu"
-    [attr.aria-expanded]="menuOpen"
+    [attr.aria-expanded]="isMenuOpen"
     aria-controls="main-navigation"
   >
-    &#9776;
+  {{ isMenuOpen ? '✖' : '☰' }}
   </button>
 
   <!-- Navigation links -->
-  <ul class="nav-links" [class.open]="menuOpen" id="main-navigation">
+  <ul class="nav-links" [class.open]="isMenuOpen" id="main-navigation">
     <li><a routerLink="/" (click)="closeMenu()">Home</a></li>
     <li><a routerLink="/our-story" (click)="closeMenu()">La nostra storia</a></li>
     <li><a routerLink="/church" (click)="closeMenu()">Chiesa</a></li>
@@ -28,5 +28,5 @@
 </main>
 
 <footer class="footer">
-  <p>© 2025 Chiara & Simone</p>
+  <p>© {{currentYear}} Chiara & Simone</p>
 </footer>

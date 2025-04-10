@@ -31,6 +31,8 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 1000;
 
   .logo {
     font-size: 1.8rem;
@@ -105,9 +107,19 @@ main {
 }
 
 // ====================
-// 📱 RESPONSIVE (Mobile/Tablet)
+// 📱 MOBILE MENU OVERLAY
 // ====================
 @media (max-width: 768px) {
+  .menu-toggle {
+    display: block !important;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: $text;
+    cursor: pointer;
+    z-index: 1000; // Ensure it stays above the menu
+  }
+
   .navbar {
     flex-direction: row;
     justify-content: space-between;
@@ -116,31 +128,30 @@ main {
     position: relative;
   }
 
-  .menu-toggle {
-    display: block !important;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    color: $text;
-    cursor: pointer;
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%; // Initially hidden off-screen
+    width: 80%;
+    height: 100vh;
+    background-color: #001f3f; // Dark blue background
+    z-index: 999;
+    padding: 6rem 2rem 2rem;
+    gap: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    display: flex;
+    transition: right 0.3s ease-in-out; // Smooth transition effect
   }
 
-  .nav-links {
-    display: none !important;
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
-    margin-top: 1rem;
+  .nav-links.open {
+    right: 0; // Slide in when open
+  }
 
-    &.open {
-      display: flex !important;
-    }
-
-    li a {
-      font-size: 1.1rem;
-      padding: 0.5rem 1rem;
-    }
+  li a {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: white; // White text for better contrast
+    padding: 0.5rem 0;
   }
 }
-
-

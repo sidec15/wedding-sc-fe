@@ -10,14 +10,14 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'wedding-sc-fe';
-  menuOpen = false;
+  isMenuOpen = false;
   currentYear = 2025;
 
   toggleMenu(): void {
-    this.menuOpen = !this.menuOpen;
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   closeMenu(): void {
-    this.menuOpen = false;
+    this.isMenuOpen = false;
   }
 }

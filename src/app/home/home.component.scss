@@ -1,7 +1,7 @@
-@import "../../styles/variables";
+@use "../../styles/variables.scss" as *;
 
 .hero-image {
-  background-image: url("/images/home-02.jpg"); // Assicurati che l’immagine esista
+  background-image: url("/images/home-02.jpg");
   background-size: cover;
   background-position: center;
   height: 80vh;
@@ -11,15 +11,41 @@
   position: relative;
   text-align: center;
   background-color: white;
-  padding: 6rem 1rem;
+  padding: 6rem 0; // 🔧 Remove horizontal padding
   overflow: hidden;
   z-index: 0;
 
+  // Ensure full width for background shapes
+  width: 100%;
+
+  // Shape backgrounds
+  .top-shape,
+  .bottom-shape {
+    position: absolute;
+    width: 100%;
+    height: 120px;
+    z-index: 1;
+  }
+
+  .top-shape {
+    top: 0;
+    background: linear-gradient(to right, #d3e8ec 50%, #dcd2ea 50%);
+    clip-path: polygon(0 0, 0 100%, 50% 0, 100% 100%, 100% 0);
+  }
+
+  .bottom-shape {
+    bottom: 0;
+    background: linear-gradient(to right, #d3e8ec 50%, #dcd2ea 50%);
+    clip-path: polygon(0 100%, 0 0, 50% 100%, 100% 0, 100% 100%);
+  }
+
+  // Inner text content
   .content {
     position: relative;
     z-index: 2;
     max-width: 700px;
     margin: 0 auto;
+    padding: 0 1rem; // Optional: some breathing space on mobile
 
     h1 {
       font-size: 2rem;
@@ -43,25 +69,5 @@
       color: $accent;
       margin-top: 1rem;
     }
-  }
-
-  .top-shape,
-  .bottom-shape {
-    position: absolute;
-    width: 100%;
-    height: 120px;
-    z-index: 1;
-  }
-  
-  .top-shape {
-    top: 0;
-    background: linear-gradient(to right, #d3e8ec 50%, #dcd2ea 50%);
-    clip-path: polygon(0 0, 0 100%, 50% 0, 100% 100%, 100% 0);
-  }
-  
-  .bottom-shape {
-    bottom: 0;
-    background: linear-gradient(to right, #d3e8ec 50%, #dcd2ea 50%);
-    clip-path: polygon(0 100%, 0 0, 50% 100%, 100% 0, 100% 100%);
   }
 }
