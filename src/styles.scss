@@ -2,8 +2,15 @@ $font-family-base: 'Comfortaa', 'Segoe UI', sans-serif;
 
 body, html {
   font-family: $font-family-base;
+  margin: 0;
 }
 
 .navbar .nav-links li a {
   cursor: pointer;
+}
+
+@media (max-width: 768px){
+  body, html {
+    margin: 0;
+  }
 }

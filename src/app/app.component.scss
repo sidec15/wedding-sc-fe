@@ -7,7 +7,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   font-family: "Comfortaa", "Segoe UI", sans-serif;
   background-color: $light-gray;
@@ -18,7 +19,7 @@ html, body {
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 30vh; // Ensure the layout spans the full viewport height
 }
 
 // ====================
@@ -85,8 +86,10 @@ html, body {
 // 📄 MAIN CONTENT
 // ====================
 main {
-  flex: 1 0 auto;
-  padding: 2rem;
+  flex: 1; // Allow the main content to grow and fill available space
+  display: flex;
+  flex-direction: column;
+  padding: 0;
   background-color: $light-gray;
 }
 
@@ -94,7 +97,7 @@ main {
 // 📎 FOOTER
 // ====================
 .footer {
-  flex-shrink: 0;
+  flex-shrink: 0; // Prevent the footer from shrinking
   height: 50px;
   padding: 0 1rem;
   display: flex;
@@ -109,23 +112,28 @@ main {
 // ====================
 // 📱 MOBILE MENU OVERLAY
 // ====================
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block !important;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    color: $text;
-    cursor: pointer;
-    z-index: 1000; // Ensure it stays above the menu
+@media screen and (max-width: 768px) {
+  main {
+    padding: 0; // Remove padding on mobile
   }
 
   .navbar {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.5rem;
-    position: relative;
+    display: none; // Completely hide the navbar
+  }
+
+  .menu-toggle {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: block;
+    font-size: 2rem;
+    background: #001f3f; // Dark blue background
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000; // Ensure it overlays the content
   }
 
   .nav-links {
@@ -146,6 +154,10 @@ main {
 
   .nav-links.open {
     right: 0; // Slide in when open
+  }
+
+  main {
+    width: 100%; // Ensure main content takes full width
   }
 
   li a {
