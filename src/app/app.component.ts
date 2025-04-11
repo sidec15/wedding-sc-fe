@@ -1,11 +1,12 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StorageService } from './services/storage.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, TranslateModule],
+  imports: [RouterOutlet, RouterLink, TranslateModule, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -33,12 +34,19 @@ export class AppComponent {
     translateService.use(this.currentLanguage);
   }
 
-  onLanguageChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    const language = select.value;
-    this.currentLanguage = language;
-    this.translateService.use(language);
-    this.storageService.set('language', language);
+  @ViewChild('languageDropdown') languageDropdownRef!: ElementRef;
+
+  languageDropdownOpen = false;
+
+  toggleLanguageDropdown(): void {
+    this.languageDropdownOpen = !this.languageDropdownOpen;
+  }
+  
+  selectLanguage(lang: string): void {
+    this.currentLanguage = lang;
+    this.languageDropdownOpen = false; // Close the dropdown
+    this.translateService.use(lang);
+    localStorage.setItem('language', lang);
   }
 
   toggleMenu(): void {
@@ -62,6 +70,16 @@ export class AppComponent {
   onTouchEnd(event: TouchEvent): void {
     this.touchEndX = event.changedTouches[0].screenX;
     this.handleSwipeGesture();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    if (
+      this.languageDropdownRef &&
+      !this.languageDropdownRef.nativeElement.contains(event.target)
+    ) {
+      this.languageDropdownOpen = false; // Close the dropdown if clicked outside
+    }
   }
 
   private handleSwipeGesture(): void {

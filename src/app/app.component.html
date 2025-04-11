@@ -17,10 +17,14 @@
 
     <!-- Language Selector -->
     <li>
-      <select class="language-selector" (change)="onLanguageChange($event)" [value]="currentLanguage">
-        <option value="it">Italiano</option>
-        <option value="en">English</option>
-      </select>
+      <div class="custom-language-selector" #languageDropdown (click)="toggleLanguageDropdown()"
+        [class.open]="languageDropdownOpen">
+        <span>{{ currentLanguage === 'it' ? 'Italiano' : 'English' }}</span>
+        <ul *ngIf="languageDropdownOpen" class="language-options" (click)="$event.stopPropagation()">
+          <li (click)="selectLanguage('it')">Italiano</li>
+          <li (click)="selectLanguage('en')">English</li>
+        </ul>
+      </div>
     </li>
   </ul>
 </header>

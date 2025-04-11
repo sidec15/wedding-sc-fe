@@ -73,7 +73,14 @@ export class OurStoryComponent implements AfterViewInit {
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const docHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight,
+      document.documentElement.clientHeight
+    ) - window.innerHeight;
+
     this.scrollPercent = Math.min(100, Math.round((scrollTop / docHeight) * 100));
   }
   

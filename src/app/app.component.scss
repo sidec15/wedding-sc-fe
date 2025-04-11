@@ -100,29 +100,68 @@ body {
         }
       }
 
-      .language-selector {
-        font-family: 'Comfortaa', sans-serif;
+      .custom-language-selector {
+        position: relative;
         background-color: white;
-        color: $text;
-        border: 1px solid $accent;
-        border-radius: 6px;
-        padding: 0.3rem 0.6rem;
+        border: 1px solid #ccc;
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
         font-size: 0.9rem;
-        appearance: none; // Hide native dropdown arrow on most browsers
-        background-image: url("data:image/svg+xml;utf8,<svg fill='%23cf9a72' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-        background-repeat: no-repeat;
-        background-position: right 0.5rem center;
-        background-size: 12px;
-
-        &:hover {
-          border-color: darken($accent, 10%);
+        cursor: pointer;
+        user-select: none;
+        color: $text;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+      
+        &.open,
+        &:hover,
+        &:has(.language-options:hover) { // 👈 modern way to keep border on hover inside
+          border-color: $accent;
+          box-shadow: 0 0 6px rgba(207, 154, 114, 0.2);
         }
-
-        option {
+      
+        .language-options {
+          position: absolute;
+          top: 110%;
+          left: 0;
+          right: 0;
           background: white;
-          color: $text;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          z-index: 1000;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+          overflow: hidden; // 🔒 ensures border radius stays clean
+        
+          li {
+            padding: 0.5rem 0.7rem;
+            border: none; // remove inner borders if not needed
+            border-radius: 0;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        
+            &:hover {
+              background-color: $accent;
+              color: white;
+            }
+        
+            &:first-child {
+              border-top-left-radius: 8px;
+              border-top-right-radius: 8px;
+            }
+        
+            &:last-child {
+              border-bottom-left-radius: 8px;
+              border-bottom-right-radius: 8px;
+            }
+          }
         }
+        
+
       }
+      
+      
     }
   }
 
