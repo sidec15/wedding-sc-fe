@@ -1,21 +1,37 @@
-<div class="story-list">
-  <div
-    #storyBlock
-    class="story-block"
-    *ngFor="let story of storyBlocks; let i = index"
-    [class.in-focus]="story === focusedStory"
-    [class.out-of-focus]="story !== focusedStory"
+<div class="our-story-wrapper">
+  <!-- Intro Section -->
+  <section class="story-section intro">
+    <div class="section-content">
+      <h1>La nostra storia</h1>
+      <p>Un viaggio tra i momenti più belli della nostra vita insieme ✨</p>
+    </div>
+  </section>
+
+  <!-- Timeline Sections -->
+  <section
+    class="story-section"
+    *ngFor="let story of storyBlocks"
   >
-    <div class="image">
-      <img [src]="story.image" [alt]="story.title" />
+    <div class="section-content">
+      <div class="image">
+        <img [src]="story.image" [alt]="story.title" />
+      </div>
+      <div class="text">
+        <h2>{{ story.title }}</h2>
+        <p class="date">{{ story.date.year }}</p>
+        <p class="description">{{ story.description }}</p>
+      </div>
     </div>
-    <div class="content">
-      <h2>{{ story.title }}</h2>
-      <p class="date">{{ story.date.year }}</p>
-      <p class="description">{{ story.description }}</p>
+  </section>
+
+  <!-- Final Section -->
+  <section class="story-section outro">
+    <div class="section-content">
+      <h2>To be continued...</h2>
     </div>
-  </div>
+  </section>
 </div>
+
 <div class="scroll-ring" (click)="scrollToTop()" [ngStyle]="{ opacity: scrollPercent > 0 ? '1' : '0' }">
   <svg class="progress-ring" width="60" height="60">
     <circle class="ring-background" cx="30" cy="30" r="26" />

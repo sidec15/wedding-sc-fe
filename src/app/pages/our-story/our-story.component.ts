@@ -8,7 +8,7 @@ import { StoryBlock } from '../../models/story-block.model';
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
 })
-export class OurStoryComponent implements AfterViewInit {
+export class OurStoryComponent {
   storyBlocks: StoryBlock[] = [
     {
       title: 'Dove tutto è iniziato',
@@ -29,42 +29,6 @@ export class OurStoryComponent implements AfterViewInit {
       image: '/images/our-story/our-story-20151023.jpg',
     },
   ];
-
-  focusedStory: StoryBlock | null = null;
-
-  @ViewChildren('storyBlock') storyBlockElements!: QueryList<ElementRef>;
-
-  ngAfterViewInit(): void {
-    // console.log('StoryBlockElements:', this.storyBlockElements.toArray()); // Debug log
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const story = this.storyBlocks[+entry.target.getAttribute('data-index')!];
-          if (entry.isIntersecting) {
-            // console.log('In focus:', story); // Debug log
-            this.focusedStory = story;
-          }
-        });
-      },
-      { threshold: 0.5 } // Trigger when 50% of the block is visible
-    );
-
-    // Observe each story block
-    this.storyBlockElements.forEach((block, index) => {
-      block.nativeElement.setAttribute('data-index', index.toString());
-      observer.observe(block.nativeElement);
-    });
-
-    // Manually check which block is in the viewport on page load
-    this.storyBlockElements.forEach((block, index) => {
-      const rect = block.nativeElement.getBoundingClientRect();
-      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-        this.focusedStory = this.storyBlocks[index];
-        // console.log('Initial focus:', this.focusedStory); // Debug log
-      }
-    });
-  }
 
 
   scrollPercent = 0;
