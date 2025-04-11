@@ -26,14 +26,18 @@ body {
 // 🌐 NAVBAR (Desktop)
 // ====================
 .navbar {
+  position: static; // Default for mobile
+  top: 0;
+  left: 0;
+  width: 100%; // Full width
+  z-index: 1000; // Ensure it stays above other elements
   background-color: $bg;
   border-bottom: 1px solid #e5e5e5;
   padding: 1.5rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-  z-index: 1000;
+  height: 80px; // Set a consistent height for the header
 
   .logo {
     font-size: 1.8rem;
@@ -44,10 +48,6 @@ body {
   }
 
   .language-selector {
-    // position: fixed; // Fix the position
-    top: 1rem; // Adjust the vertical position
-    right: 1rem; // Adjust the horizontal position
-    z-index: 1000; // Ensure it stays above other elements
     font-family: 'Comfortaa', sans-serif;
     background-color: white;
     color: $text;
@@ -55,19 +55,14 @@ body {
     border-radius: 6px;
     padding: 0.3rem 0.6rem;
     font-size: 0.9rem;
-    appearance: none; // Hide native dropdown arrow on most browsers
+    appearance: none;
     background-image: url("data:image/svg+xml;utf8,<svg fill='%23cf9a72' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
     background-repeat: no-repeat;
     background-position: right 0.5rem center;
     background-size: 12px;
-  
+
     &:hover {
       border-color: darken($accent, 10%);
-    }
-  
-    option {
-      background: white;
-      color: $text;
     }
   }
 
@@ -130,6 +125,10 @@ body {
       }
     }
   }
+
+  @media screen and (min-width: 768px) {
+    position: fixed; // Fixed only for desktop
+  }
 }
 
 // ====================
@@ -139,16 +138,27 @@ main {
   flex: 1; // Allow the main content to grow and fill available space
   display: flex;
   flex-direction: column;
-  padding: 0;
+  padding-top: 0; // Default for mobile
+  padding-bottom: 0; // Default for mobile
   background-color: $light-gray;
+  overflow-y: auto; // Ensure the main content is scrollable
+
+  @media screen and (min-width: 768px) {
+    padding-top: 80px; // Add padding equal to the height of the fixed header
+    padding-bottom: 60px; // Add padding equal to the height of the fixed footer
+  }
 }
 
 // ====================
 // 📎 FOOTER
 // ====================
 .footer {
-  flex-shrink: 0; // Prevent the footer from shrinking
-  height: 50px;
+  position: static; // Default for mobile
+  bottom: 0;
+  left: 0;
+  width: 100%; // Ensure it spans the full width
+  z-index: 1000; // Ensure it stays above other elements
+  height: 60px;
   padding: 0 1rem;
   display: flex;
   align-items: center;
@@ -157,6 +167,10 @@ main {
   color: $text;
   font-size: 0.85rem;
   border-top: 1px solid #e5e5e5;
+
+  @media screen and (min-width: 768px) {
+    position: fixed; // Fixed only for desktop
+  }
 }
 
 // ====================
