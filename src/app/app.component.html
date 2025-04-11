@@ -3,7 +3,7 @@
 
   <!-- Hamburger icon (visible only on small screens) -->
   <button class="menu-toggle" (click)="toggleMenu()">
-    {{ isMenuOpen ? '✖' : '☰' }}
+    <i [class]="isMenuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
   </button>
 
   <!-- Navigation links -->

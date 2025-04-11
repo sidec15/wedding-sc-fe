@@ -221,21 +221,35 @@ main {
   }
 
   .menu-toggle {
-    display: block !important; // Make it visible in mobile view
+    display: block !important; // Ensure it's visible in mobile view
     position: absolute;
     top: 1rem;
     right: 1rem;
-    font-size: 1.5rem;
-    background: $accent; // Use the accent color for consistency
+    width: 50px; // Fixed width
+    height: 50px; // Fixed height
+    font-size: 1.7rem;
+    background: $accent; // Use your accent color
     color: white; // White text for contrast
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    border-radius: 8px; // Make it circular
     cursor: pointer;
     z-index: 1000; // Ensure it overlays the content
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add a subtle shadow for depth
-    &:focus {
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5); // Add a custom focus style
+    display: flex;
+    align-items: center;
+    justify-content: center; // Center the icon inside the button
+
+    // &:hover {
+    //   background: darken($accent, 10%); // Darken the background on hover
+    // }
+
+    // &:focus {
+    //   outline: none; // Remove default focus outline
+    //   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5); // Add a custom focus style
+    // }
+
+    i {
+      font-size: 1.5rem; // Adjust icon size
     }
   }
 
@@ -243,7 +257,7 @@ main {
     position: fixed;
     top: 0;
     right: -100%; // Initially hidden off-screen
-    width: 70%;
+    width: 60%;
     height: 100vh;
     background-color: $light-gray; // Updated background color (dark blue-gray)
     z-index: 999;
@@ -259,7 +273,7 @@ main {
     }
 
     li a {
-      font-size: 1.3rem !important;
+      font-size: 1.2rem !important;
       font-weight: bold !important;
       padding: 0.5rem 0;
       text-decoration: none;
