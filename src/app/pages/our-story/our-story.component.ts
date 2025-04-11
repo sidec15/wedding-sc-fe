@@ -1,11 +1,10 @@
 import { Component, AfterViewInit, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoryBlock } from '../../models/story-block.model';
-import { StoryBlockComponent } from '../../components/story-block/story-block.component';
 
 @Component({
   selector: 'app-our-story',
-  imports: [CommonModule, StoryBlockComponent],
+  imports: [CommonModule],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
 })
@@ -36,14 +35,14 @@ export class OurStoryComponent implements AfterViewInit {
   @ViewChildren('storyBlock') storyBlockElements!: QueryList<ElementRef>;
 
   ngAfterViewInit(): void {
-    console.log('StoryBlockElements:', this.storyBlockElements.toArray()); // Debug log
+    // console.log('StoryBlockElements:', this.storyBlockElements.toArray()); // Debug log
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const story = this.storyBlocks[+entry.target.getAttribute('data-index')!];
           if (entry.isIntersecting) {
-            console.log('In focus:', story); // Debug log
+            // console.log('In focus:', story); // Debug log
             this.focusedStory = story;
           }
         });
@@ -62,7 +61,7 @@ export class OurStoryComponent implements AfterViewInit {
       const rect = block.nativeElement.getBoundingClientRect();
       if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
         this.focusedStory = this.storyBlocks[index];
-        console.log('Initial focus:', this.focusedStory); // Debug log
+        // console.log('Initial focus:', this.focusedStory); // Debug log
       }
     });
   }
