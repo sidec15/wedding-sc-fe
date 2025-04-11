@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, QueryList, ViewChildren, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoryBlock } from '../../models/story-block.model';
 
@@ -65,4 +65,21 @@ export class OurStoryComponent implements AfterViewInit {
       }
     });
   }
+
+
+  scrollPercent = 0;
+  circumference = 2 * Math.PI * 26; // r = 26 (radius of the SVG circle)
+  
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    this.scrollPercent = Math.min(100, Math.round((scrollTop / docHeight) * 100));
+  }
+  
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
+
 }
