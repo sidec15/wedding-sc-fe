@@ -34,7 +34,7 @@ export class ParallaxShowcaseComponent {
       date: { year: 2023, month: 12, day: 10 },
       description: 'Una proposta emozionante sotto le stelle.',
       image: '/images/our-story/our-story-20151023.jpg',
-      textPosition: 'left'
+      textPosition: 'right'
     },
     {
       type: 'outro',
