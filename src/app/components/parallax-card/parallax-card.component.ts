@@ -19,6 +19,8 @@ export class ParallaxCardComponent implements AfterViewInit {
   @Input() title = '';
   @Input() description = '';
   @Input() image = '';
+  @Input() date?: { year: number; month?: number; day?: number };
+  @Input() type: 'card' | 'intro' | 'outro' = 'card';
 
   @ViewChild('card', { static: true }) cardEl!: ElementRef;
   @ViewChild('content', { static: true }) contentEl!: ElementRef;

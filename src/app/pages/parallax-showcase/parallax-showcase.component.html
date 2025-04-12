@@ -1,8 +1,8 @@
-<div style="padding: 4rem 2rem;">
-  <app-parallax-card
-    *ngFor="let card of cards"
-    [title]="card.title"
-    [description]="card.description"
-    [image]="card.image"
-  ></app-parallax-card>
-</div>
+<app-parallax-card
+  *ngFor="let card of cards"
+  [title]="card.title"
+  [description]="card.description"
+  [image]="card.image || ''"
+  [type]="card.type || 'card'"
+  [date]="card.date"
+></app-parallax-card>

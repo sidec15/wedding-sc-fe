@@ -14,17 +14,19 @@ export class ParallaxShowcaseComponent {
   cards: ParallaxCardModel[] = [
     {
       title: 'Dove tutto è iniziato',
+      date: { year: 1989, month: 1, day: 1 },
       description: 'Ci siamo conosciuti per la prima volta al liceo...',
       image: '/images/our-story/our-story-19890101.jpg',
     },
     {
       title: 'Primo viaggio insieme',
-      date: { year: 1989 },
+      date: { year: 2008, month: 8, day: 2 },
       description: 'Quell’estate in Spagna è stata indimenticabile.',
       image: '/images/our-story/our-story-20080802.jpg',
     },
     {
       title: 'Ha detto sì!',
+      date: { year: 2023, month: 12, day: 10 },
       description: 'Una proposta emozionante sotto le stelle.',
       image: '/images/our-story/our-story-20151023.jpg',
     }

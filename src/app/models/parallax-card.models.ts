@@ -7,5 +7,5 @@ export interface ParallaxCardModel {
     month?: number;
     day?: number;
   };
-  type?: 'card' | 'intro' | 'outro'; // optional with fallback
+  type?: 'card' | 'intro' | 'outro';
 }
