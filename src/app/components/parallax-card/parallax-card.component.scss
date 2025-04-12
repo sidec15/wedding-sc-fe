@@ -1,37 +1,41 @@
 .parallax-card {
   width: 100%;
   margin: 4rem 0;
+  position: relative;
 
   &.card {
     .image-overlay {
       position: relative;
+      display: flex;
+      flex-direction: row;
       overflow: hidden;
 
       img {
         width: 100%;
         display: block;
-        transition: transform 0.3s ease;
+        transition: transform 0.4s ease;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       }
 
       .text-overlay {
         position: absolute;
         top: 50%;
-        left: 5%;
         transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.95);
         padding: 1.5rem;
         max-width: 500px;
         transition: opacity 0.6s ease, transform 0.6s ease;
         opacity: 0;
         transform: translateY(60px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 
         h3 {
-          margin: 0 0 0.5rem;
+          margin-bottom: 0.5rem;
           color: #cf9a72;
         }
 
         .date {
+          font-style: italic;
           font-size: 0.95rem;
           color: #777;
           margin-bottom: 1rem;
@@ -48,17 +52,33 @@
         }
       }
     }
+
+    // Left or right positioning
+    &.left .text-overlay {
+      left: 5%;
+      right: auto;
+    }
+
+    &.right .text-overlay {
+      right: 5%;
+      left: auto;
+      text-align: right;
+    }
   }
 
+  // 📘 Fullscreen intro/outro
   &.intro,
   &.outro {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
     padding: 4rem 2rem;
-    background-color: #f9f9f9;
+    background: #f9f9f9;
 
     .text-only-content {
       max-width: 800px;
-      margin: 0 auto;
+      text-align: center;
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.5s ease, transform 0.5s ease;
@@ -69,13 +89,15 @@
       }
 
       h3 {
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: #cf9a72;
+        margin-bottom: 1.5rem;
       }
 
       .description {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         color: #444;
+        line-height: 1.6;
       }
     }
   }

@@ -4,9 +4,11 @@ import {
   Input,
   AfterViewInit,
   HostListener,
-  ViewChild
+  ViewChild,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-parallax-card',
@@ -16,38 +18,47 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./parallax-card.component.scss'],
 })
 export class ParallaxCardComponent implements AfterViewInit {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   @Input() title = '';
   @Input() description = '';
   @Input() image = '';
   @Input() date?: { year: number; month?: number; day?: number };
   @Input() type: 'card' | 'intro' | 'outro' = 'card';
+  @Input() textPosition: 'left' | 'right' = 'left';
 
-  @ViewChild('card', { static: false }) cardEl!: ElementRef<HTMLElement>;
-  @ViewChild('content', { static: false }) contentEl!: ElementRef<HTMLElement>;
+
+  @ViewChild('card', { static: false }) cardEl?: ElementRef<HTMLElement>;
+  @ViewChild('content', { static: false }) contentEl?: ElementRef<HTMLElement>;
 
 
   ngAfterViewInit(): void {
-    this.updateParallax();
+    if (!isPlatformBrowser(this.platformId)) return;
+    requestAnimationFrame(() => this.updateParallax());
   }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.updateParallax();
   }
-
-  updateParallax() {
-    if (!this.cardEl || !this.cardEl.nativeElement) return;
   
-    const cardRect = this.cardEl.nativeElement.getBoundingClientRect();
-    const content = this.contentEl?.nativeElement;
-    const img = this.cardEl.nativeElement.querySelector('img');
+  updateParallax(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
   
-    const scrollAmount = cardRect.top * 0.15;
+    const card = this.cardEl?.nativeElement as HTMLElement;
+    const content = this.contentEl?.nativeElement as HTMLElement;
+  
+    if (!card || typeof card.getBoundingClientRect !== 'function') return;
+  
+    const rect = card.getBoundingClientRect();
+    const scrollAmount = rect.top * 0.15;
+  
+    const img = card.querySelector('img');
     if (img && this.type === 'card') {
       img.style.transform = `translateY(${scrollAmount}px)`;
     }
   
-    const isVisible = cardRect.top < window.innerHeight * 0.8;
+    const isVisible = rect.top < window.innerHeight * 0.8;
     if (content) {
       content.classList.toggle('visible', isVisible);
     }

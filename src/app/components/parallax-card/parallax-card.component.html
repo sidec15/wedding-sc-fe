@@ -1,7 +1,7 @@
-<div class="parallax-card" [ngClass]="type" #card>
+<div class="parallax-card" [ngClass]="[type, textPosition]" #card>
   <ng-container [ngSwitch]="type">
 
-    <!-- Main photo card -->
+    <!-- 🖼️ Main photo card -->
     <ng-container *ngSwitchCase="'card'">
       <div class="image-overlay">
         <img [src]="image" [alt]="title" />
@@ -13,7 +13,7 @@
       </div>
     </ng-container>
 
-    <!-- Intro / Outro cards -->
+    <!-- 📘 Intro/Outro full screen text -->
     <ng-container *ngSwitchDefault>
       <div class="text-only-content" #content>
         <h3>{{ title }}</h3>

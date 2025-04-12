@@ -8,4 +8,5 @@ export interface ParallaxCardModel {
     day?: number;
   };
   type?: 'card' | 'intro' | 'outro';
+  textPosition?: 'left' | 'right'; // optional for intro/outro
 }
