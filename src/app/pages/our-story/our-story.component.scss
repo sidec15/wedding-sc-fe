@@ -1,6 +1,6 @@
 .story-block {
   display: flex;
-  flex-direction: row; // Default for desktop
+  flex-direction: row-reverse; // Default for desktop: image on the right, info on the left
   align-items: flex-start; // Align items to the top
   justify-content: space-between; // Space between image and content
   background-color: white;
@@ -10,20 +10,20 @@
   margin: 2rem auto;
   width: 100%; // Full width for desktop
   max-width: none; // Remove max-width restriction
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  // transition: opacity 0.5s ease, transform 0.5s ease;
 
-  opacity: 0.5; // Default opacity for out-of-focus blocks
-  transform: scale(0.95); // Slightly shrink out-of-focus blocks
+  // opacity: 0.5; // Default opacity for out-of-focus blocks
+  // transform: scale(0.95); // Slightly shrink out-of-focus blocks
 
-  &.in-focus {
-    opacity: 1; // Fully visible
-    transform: scale(1); // Restore size
-  }
+  // &.in-focus {
+  //   opacity: 1; // Fully visible
+  //   transform: scale(1); // Restore size
+  // }
 
-  &.out-of-focus {
-    opacity: 0.3; // More transparent
-    transform: scale(0.9); // Shrink further
-  }
+  // &.out-of-focus {
+  //   opacity: 0.3; // More transparent
+  //   transform: scale(0.9); // Shrink further
+  // }
 
   .image {
     width: 50%; // Image takes half the width
@@ -43,7 +43,7 @@
   .content {
     width: 50%; // Content takes half the width
     text-align: left; // Align text to the left
-    padding-left: 1rem; // Add spacing between content and image
+    padding-right: 2rem; // Add spacing between content and image
 
     h2 {
       font-size: 1.8rem;

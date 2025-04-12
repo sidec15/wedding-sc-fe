@@ -1,14 +1,33 @@
 import { Component, AfterViewInit, ElementRef, QueryList, ViewChildren, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoryBlock } from '../../models/story-block.model';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-our-story',
   imports: [CommonModule],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
+  animations: [
+    trigger('fadeInUp', [
+      state('hidden', style({
+        opacity: 0,
+        transform: 'translateY(50px)',
+      })),
+      state('visible', style({
+        opacity: 1,
+        transform: 'translateY(0)',
+      })),
+      transition('hidden => visible', [
+        animate('1200ms ease-out') // Slower entrance
+      ]),
+      transition('visible => hidden', [
+        animate('800ms ease-in') // Disappears smoothly
+      ])
+    ])
+  ]
 })
-export class OurStoryComponent implements AfterViewInit {
+export class OurStoryComponent {
   storyBlocks: StoryBlock[] = [
     {
       title: 'Dove tutto è iniziato',
@@ -30,48 +49,28 @@ export class OurStoryComponent implements AfterViewInit {
     },
   ];
 
-  focusedStory: StoryBlock | null = null;
-
-  @ViewChildren('storyBlock') storyBlockElements!: QueryList<ElementRef>;
-
-  ngAfterViewInit(): void {
-    // console.log('StoryBlockElements:', this.storyBlockElements.toArray()); // Debug log
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const story = this.storyBlocks[+entry.target.getAttribute('data-index')!];
-          if (entry.isIntersecting) {
-            // console.log('In focus:', story); // Debug log
-            this.focusedStory = story;
-          }
-        });
-      },
-      { threshold: 0.5 } // Trigger when 50% of the block is visible
-    );
-
-    // Observe each story block
-    this.storyBlockElements.forEach((block, index) => {
-      block.nativeElement.setAttribute('data-index', index.toString());
-      observer.observe(block.nativeElement);
-    });
-
-    // Manually check which block is in the viewport on page load
-    this.storyBlockElements.forEach((block, index) => {
-      const rect = block.nativeElement.getBoundingClientRect();
-      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-        this.focusedStory = this.storyBlocks[index];
-        // console.log('Initial focus:', this.focusedStory); // Debug log
-      }
-    });
-  }
-
-
   scrollPercent = 0;
   circumference = 2 * Math.PI * 26; // r = 26 (radius of the SVG circle)
-  
+  visibleIndexes = new Set<number>();
+
+  @ViewChildren('storyBlock', { read: ElementRef }) storyBlockElements!: QueryList<ElementRef>;
+
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
+    const windowHeight = window.innerHeight;
+  
+    this.storyBlockElements.forEach((el, index) => {
+      const rect = el.nativeElement.getBoundingClientRect();
+      const isVisible = rect.top < windowHeight * 0.75 && rect.bottom > 0;
+  
+      if (isVisible) {
+        this.visibleIndexes.add(index);
+      } else {
+        this.visibleIndexes.delete(index); // 👈 Remove when not visible
+      }
+    });
+  
+    // Scroll percentage ring
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const docHeight = Math.max(
       document.body.scrollHeight,
@@ -80,7 +79,7 @@ export class OurStoryComponent implements AfterViewInit {
       document.documentElement.offsetHeight,
       document.documentElement.clientHeight
     ) - window.innerHeight;
-
+  
     this.scrollPercent = Math.min(100, Math.round((scrollTop / docHeight) * 100));
   }
   
@@ -88,5 +87,8 @@ export class OurStoryComponent implements AfterViewInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   
+  isVisible(index: number): boolean {
+    return this.visibleIndexes.has(index);
+  }
 
 }

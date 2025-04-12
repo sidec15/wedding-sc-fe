@@ -3,8 +3,7 @@
     #storyBlock
     class="story-block"
     *ngFor="let story of storyBlocks; let i = index"
-    [class.in-focus]="story === focusedStory"
-    [class.out-of-focus]="story !== focusedStory"
+    [@fadeInUp]="isVisible(i) ? 'visible' : 'hidden'"
   >
     <div class="image">
       <img [src]="story.image" [alt]="story.title" />
@@ -16,6 +15,8 @@
     </div>
   </div>
 </div>
+
+
 <div class="scroll-ring" (click)="scrollToTop()" [ngStyle]="{ opacity: scrollPercent > 0 ? '1' : '0' }">
   <svg class="progress-ring" width="60" height="60">
     <circle class="ring-background" cx="30" cy="30" r="26" />
