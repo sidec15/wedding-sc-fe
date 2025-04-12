@@ -13,6 +13,11 @@ import { ParallaxCardModel } from '../../models/parallax-card.models';
 export class ParallaxShowcaseComponent {
   cards: ParallaxCardModel[] = [
     {
+      type: 'intro',
+      title: 'La nostra storia',
+      description: 'Un viaggio tra i ricordi più belli di Chiara & Simone. Dall’infanzia fino a oggi.'
+    },
+    {
       title: 'Dove tutto è iniziato',
       date: { year: 1989, month: 1, day: 1 },
       description: 'Ci siamo conosciuti per la prima volta al liceo...',
@@ -29,6 +34,11 @@ export class ParallaxShowcaseComponent {
       date: { year: 2023, month: 12, day: 10 },
       description: 'Una proposta emozionante sotto le stelle.',
       image: '/images/our-story/our-story-20151023.jpg',
+    },
+    {
+      type: 'outro',
+      title: 'To be continued...',
+      description: 'Siamo solo all’inizio. Ci aspettano ancora mille avventure.'
     }
   ];
 }
