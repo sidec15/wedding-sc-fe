@@ -1,0 +1,47 @@
+.parallax-card {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  margin: 2rem 0;
+
+  .image-container {
+    flex: 1;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transform: translateY(0);
+      transition: transform 0.2s ease-out;
+    }
+  }
+
+  .content {
+
+    h3 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #cf9a72;
+    }
+
+    p {
+      margin-top: 1rem;
+      color: #333;
+    }
+
+    flex: 1;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+    transform: translateY(20px); // default starting position
+    opacity: 0;                  // default hidden
+  
+    &.visible {
+      transform: translateY(0);  // animated to visible
+      opacity: 1;
+    }
+  }
+}
