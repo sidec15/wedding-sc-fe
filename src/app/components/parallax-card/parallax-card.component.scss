@@ -82,7 +82,7 @@
       max-width: 800px;
       text-align: center;
       opacity: 0;
-      transition: opacity 2.5s ease-out;
+      transition: opacity 2s ease-out;
 
       &.visible {
         opacity: 1;

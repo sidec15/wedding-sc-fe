@@ -16,5 +16,27 @@
     "description_line2": "to share it with you.",
     "names": "Chiara & Simone",
     "date": "October 10, 2025"
+  },
+  "our_story": {
+    "intro": {
+      "title": "Our Story",
+      "description": "A journey through the most beautiful memories of Chiara & Simone. From childhood to today."
+    },
+    "start": {
+      "title": "Where It All Began",
+      "description": "We first met in high school..."
+    },
+    "first_trip": {
+      "title": "First Trip Together",
+      "description": "That summer in Spain was unforgettable."
+    },
+    "proposal": {
+      "title": "She Said Yes!",
+      "description": "An exciting proposal under the stars."
+    },
+    "outro": {
+      "title": "To Be Continued...",
+      "description": "This is just the beginning. A thousand adventures await us."
+    }
   }
 }

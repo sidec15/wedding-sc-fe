@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OurStoryComponent } from './our-story.component';
 
-describe('OurStoryComponent', () => {
+describe('ParallaxShowcaseComponent', () => {
   let component: OurStoryComponent;
   let fixture: ComponentFixture<OurStoryComponent>;
 

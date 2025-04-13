@@ -6,9 +6,9 @@
       <div class="image-overlay">
         <img [src]="image" [alt]="title" />
         <div class="text-overlay" #content>
-          <h3>{{ title }}</h3>
+          <h3>{{ title | translate }}</h3>
           <p class="date" *ngIf="date">{{ formatDate(date) }}</p>
-          <p class="description">{{ description }}</p>
+          <p class="description">{{ description | translate }}</p>
         </div>
       </div>
     </ng-container>
@@ -16,8 +16,8 @@
     <!-- 📘 Intro/Outro full screen text -->
     <ng-container *ngSwitchDefault>
       <div class="text-only-content" #content>
-        <h3>{{ title }}</h3>
-        <p class="description">{{ description }}</p>
+        <h3>{{ title | translate }}</h3>
+        <p class="description">{{ description | translate }}</p>
       </div>
     </ng-container>
 

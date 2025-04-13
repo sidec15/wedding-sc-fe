@@ -16,5 +16,27 @@
     "description_line2": "di condividerlo con voi.",
     "names": "Chiara & Simone",
     "date": "10 Ottobre 2025"
+  },
+  "our_story": {
+    "intro": {
+      "title": "La nostra storia",
+      "description": "Un viaggio tra i ricordi più belli di Chiara & Simone. Dall’infanzia fino a oggi."
+    },
+    "start": {
+      "title": "Dove tutto è iniziato",
+      "description": "Ci siamo conosciuti per la prima volta al liceo..."
+    },
+    "first_trip": {
+      "title": "Primo viaggio insieme",
+      "description": "Quell’estate in Spagna è stata indimenticabile."
+    },
+    "proposal": {
+      "title": "Ha detto sì!",
+      "description": "Una proposta emozionante sotto le stelle."
+    },
+    "outro": {
+      "title": "To be continued...",
+      "description": "Siamo solo all’inizio. Ci aspettano ancora mille avventure."
+    }
   }
 }
