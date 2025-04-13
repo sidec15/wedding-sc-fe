@@ -11,8 +11,8 @@ html,
 body {
   height: 100%;
   font-family: "Comfortaa", "Segoe UI", sans-serif;
-  background-color: $light-gray;
-  color: $text;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 // Full-height layout
@@ -31,8 +31,8 @@ body {
   left: 0;
   width: 100%; // Full width
   z-index: 1000; // Ensure it stays above other elements
-  background-color: $bg;
-  border-bottom: 1px solid #e5e5e5;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--light-gray);
   padding: 1.5rem 2rem;
   display: flex;
   justify-content: space-between;
@@ -49,16 +49,16 @@ body {
   .logo {
     font-size: 1.8rem;
     font-weight: bold;
-    color: $accent;
+    color: var(--accent);
     text-decoration: none;
     font-family: "Comfortaa", cursive;
   }
 
   .language-selector {
     font-family: 'Comfortaa', sans-serif;
-    background-color: white;
-    color: $text;
-    border: 1px solid $accent;
+    background-color: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--accent);
     border-radius: 6px;
     padding: 0.3rem 0.6rem;
     font-size: 0.9rem;
@@ -69,7 +69,7 @@ body {
     background-size: 12px;
 
     &:hover {
-      border-color: darken($accent, 10%);
+      border-color: var(--hover);
     }
   }
 
@@ -203,10 +203,10 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $bg;
-  color: $text;
+  background-color: var(--bg);
+  color: var(--text);
   font-size: 0.85rem;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid var(--light-gray);
 }
 
 // ====================

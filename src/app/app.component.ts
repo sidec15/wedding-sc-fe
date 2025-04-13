@@ -17,7 +17,9 @@ export class AppComponent {
   currentLanguage: string;
   isHeaderHidden = false; // Track whether the header is hidden
   lastScrollTop = 0; // Track the last scroll position
-
+  isDarkMode = false;
+  languageDropdownOpen = false;
+  
   private touchStartX = 0;
   private touchEndX = 0;
 
@@ -38,7 +40,11 @@ export class AppComponent {
 
   @ViewChild('languageDropdown') languageDropdownRef!: ElementRef;
 
-  languageDropdownOpen = false;
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    const theme = this.isDarkMode ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  }
 
   toggleLanguageDropdown(): void {
     this.languageDropdownOpen = !this.languageDropdownOpen;
