@@ -126,14 +126,19 @@
       
         .text-overlay {
           position: static;
-          transform: none;
-          opacity: 1;
+          transform: translateY(-10px); // Start closer to the image
+          opacity: 0; // Semi-transparent by default
           padding: 1rem;
-          background: rgba(255, 255, 255, 0.95);
           box-shadow: none;
           margin-top: 0;
           border-radius: 0 0 8px 8px;
           z-index: 2;
+          transition: opacity 0.4s ease, transform 0.4s ease; // Faster and smoother animation
+
+          &.visible {
+            opacity: 0.5; // Fully visible when in focus
+            transform: translateY(0); // Align perfectly with the image
+          }
       
           h3 {
             font-size: 1.5rem;
