@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ParallaxCardComponent } from '../../components/parallax-card/parallax-card.component';
 import { ParallaxCardModel } from '../../models/parallax-card.models';
+import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 
 @Component({
   selector: 'app-parallax-showcase',
   standalone: true,
-  imports: [CommonModule, ParallaxCardComponent],
+  imports: [CommonModule, ParallaxCardComponent, RingScrollComponent],
   templateUrl: './parallax-showcase.component.html',
   styleUrls: ['./parallax-showcase.component.scss']
 })
