@@ -19,7 +19,7 @@ body {
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 30vh; // Ensure the layout spans the full viewport height
+  min-height: 100vh; // Ensure the layout spans the full viewport height
 }
 
 // ====================
@@ -184,27 +184,21 @@ main {
   flex: 1; // Allow the main content to grow and fill available space
   display: flex;
   flex-direction: column;
-  padding-top: 0; // Default for mobile
-  padding-bottom: 0; // Default for mobile
+  padding-top: 80px; // Add padding equal to the height of the fixed header
+  padding-bottom: 0; // No padding needed for the footer
   background-color: $light-gray;
   overflow-y: auto; // Ensure the main content is scrollable
-
-  @media screen and (min-width: 768px) {
-    padding-top: 80px; // Add padding equal to the height of the fixed header
-    padding-bottom: 60px; // Add padding equal to the height of the fixed footer
-  }
 }
 
 // ====================
 // 📎 FOOTER
 // ====================
 .footer {
-  position: static; // Default for mobile
+  position: static; // Default position
   bottom: 0;
   left: 0;
   width: 100%; // Ensure it spans the full width
-  z-index: 1000; // Ensure it stays above other elements
-  height: 60px;
+  height: 60px; // Set a consistent height
   padding: 0 1rem;
   display: flex;
   align-items: center;
@@ -213,10 +207,6 @@ main {
   color: $text;
   font-size: 0.85rem;
   border-top: 1px solid #e5e5e5;
-
-  @media screen and (min-width: 768px) {
-    position: fixed; // Fixed only for desktop
-  }
 }
 
 // ====================
