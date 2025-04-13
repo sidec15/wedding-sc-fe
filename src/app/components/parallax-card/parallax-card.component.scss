@@ -3,6 +3,11 @@
   position: relative;
 
   &.card {
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+
     .image-overlay {
       position: relative;
       display: flex;
@@ -11,9 +16,10 @@
 
       img {
         width: 100%;
-        display: block;
-        transition: transform 0.4s ease;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        height: auto;
+        object-fit: cover;
+        box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.15); // Top-only shadow
+        border-radius: 8px;
       }
 
       .text-overlay {
@@ -71,19 +77,15 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    // padding: 4rem 2rem;
-    // background: #f9f9f9;
 
     .text-only-content {
       max-width: 800px;
       text-align: center;
       opacity: 0;
-      transform: translateY(80px);
-      transition: opacity 1s ease-out, transform 1s ease-out;
+      transition: opacity 2.5s ease-out;
 
       &.visible {
         opacity: 1;
-        transform: translateY(0);
       }
 
       h3 {
@@ -99,5 +101,4 @@
       }
     }
   }
-
 }

@@ -59,9 +59,12 @@ export class ParallaxCardComponent implements AfterViewInit {
     }
   
     const isVisible = rect.top < window.innerHeight * 0.8;
-    if (content) {
-      content.classList.toggle('visible', isVisible);
+    if (isVisible && content) {
+      content.classList.add('visible');
+    } else {
+      content.classList.remove('visible'); // Needed for fade-out
     }
+    
   }
   
 
