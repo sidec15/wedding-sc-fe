@@ -8,13 +8,15 @@ import { NgIf } from '@angular/common';
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, TranslateModule, NgIf],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'wedding-sc-fe';
   isMenuOpen = false;
   currentYear = new Date().getFullYear();
   currentLanguage: string;
+  isHeaderHidden = false; // Track whether the header is hidden
+  lastScrollTop = 0; // Track the last scroll position
 
   private touchStartX = 0;
   private touchEndX = 0;
@@ -80,6 +82,20 @@ export class AppComponent {
     ) {
       this.languageDropdownOpen = false; // Close the dropdown if clicked outside
     }
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Hide the header when scrolling down, show it when scrolling up
+    if (currentScroll > this.lastScrollTop && currentScroll > 100) {
+      this.isHeaderHidden = true; // Hide header
+    } else {
+      this.isHeaderHidden = false; // Show header
+    }
+
+    this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Prevent negative scroll values
   }
 
   private handleSwipeGesture(): void {

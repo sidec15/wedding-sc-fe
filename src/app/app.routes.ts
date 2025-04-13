@@ -5,6 +5,6 @@ import { ParallaxShowcaseComponent } from './pages/parallax-showcase/parallax-sh
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Default route
-  { path: 'our-story', component: OurStoryComponent }, // Our Story route
+  { path: 'our-story', component: ParallaxShowcaseComponent }, // Our Story route
   { path: 'parallax', component: ParallaxShowcaseComponent }
 ];
