@@ -264,6 +264,7 @@ main {
     align-items: flex-start !important;
     display: flex;
     transition: right 0.5s ease-in-out; // Smooth transition effect
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2); // Add shadow on the left side
 
     &.open {
       right: 0; // Slide in when open
