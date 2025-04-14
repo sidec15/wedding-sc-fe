@@ -19,7 +19,7 @@
 .wedding-announcement {
   position: relative;
   text-align: center;
-  background-color: white;
+  background-color: var(--bg); // Use theme background color
   padding: 6rem 0; // 🔧 Remove horizontal padding
   overflow: hidden;
   z-index: 0;
@@ -58,14 +58,14 @@
 
     h1 {
       font-size: 2rem;
-      color: $accent;
+      color: var(--accent); // Use theme accent color
       margin-bottom: 1rem;
     }
 
     p {
       font-size: 1.1rem;
       margin: 0.5rem 0;
-      color: $text;
+      color: var(--text); // Use theme text color
     }
 
     .names {
@@ -75,7 +75,7 @@
 
     .wedding-date {
       font-size: 1.2rem;
-      color: $accent;
+      color: var(--accent); // Use theme accent color
       margin-top: 1rem;
     }
   }
@@ -99,7 +99,7 @@
     .top-shape {
       clip-path: polygon(0 0, 0 70%, 50% 0, 100% 70%, 100% 0);
     }
-  
+
     .bottom-shape {
       clip-path: polygon(0 100%, 0 30%, 50% 100%, 100% 30%, 100% 100%);
     }

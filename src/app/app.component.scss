@@ -51,7 +51,6 @@ body {
     font-weight: bold;
     color: var(--accent);
     text-decoration: none;
-    font-family: "Comfortaa", cursive;
   }
 
   .language-selector {
@@ -86,14 +85,14 @@ body {
     li {
       a {
         text-decoration: none;
-        color: $text;
+        color: var(--text);
         font-weight: 500;
         font-size: 1rem;
         position: relative;
         cursor: pointer;
 
         &:hover {
-          color: $accent;
+          color: var(--accent);
 
           &::after {
             content: "";
@@ -102,7 +101,7 @@ body {
             bottom: -4px;
             width: 100%;
             height: 2px;
-            background-color: $accent;
+            background-color: var(--accent);
           }
         }
       }
@@ -116,13 +115,13 @@ body {
         font-size: 0.9rem;
         cursor: pointer;
         user-select: none;
-        color: $text;
+        color: var(--text);
         transition: box-shadow 0.2s ease, border-color 0.2s ease;
       
         &.open,
         &:hover,
         &:has(.language-options:hover) { // 👈 modern way to keep border on hover inside
-          border-color: $accent;
+          border-color: var(--accent);
           box-shadow: 0 0 6px rgba(207, 154, 114, 0.2);
         }
       
@@ -149,7 +148,7 @@ body {
             transition: background-color 0.2s ease;
         
             &:hover {
-              background-color: $accent;
+              background-color: var(--accent);
               color: white;
             }
         
@@ -186,7 +185,7 @@ main {
   flex-direction: column;
   padding-top: 80px; // Add padding equal to the height of the fixed header
   padding-bottom: 0; // No padding needed for the footer
-  background-color: $light-gray;
+  background-color: var(--light-gray);
   overflow-y: auto; // Ensure the main content is scrollable
 }
 
@@ -225,7 +224,7 @@ main {
     width: 50px; // Fixed width
     height: 50px; // Fixed height
     font-size: 1.7rem;
-    background: $accent; // Use your accent color
+    background: var(--accent); // Use your accent color
     color: white; // White text for contrast
     border: none;
     border-radius: 8px; // Make it circular
@@ -237,7 +236,7 @@ main {
     justify-content: center; // Center the icon inside the button
 
     // &:hover {
-    //   background: darken($accent, 10%); // Darken the background on hover
+    //   background: darken(var(--accent), 10%); // Darken the background on hover
     // }
 
     // &:focus {
@@ -256,7 +255,7 @@ main {
     right: -100%; // Initially hidden off-screen
     width: 60%;
     height: 100vh;
-    background-color: $light-gray; // Updated background color (dark blue-gray)
+    background-color: var(--light-gray); // Updated background color (dark blue-gray)
     z-index: 999;
     padding: 6rem 2rem 2rem;
     gap: 2rem;
