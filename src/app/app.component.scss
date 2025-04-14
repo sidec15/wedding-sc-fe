@@ -108,8 +108,8 @@ body {
 
       .custom-language-selector {
         position: relative;
-        background-color: white;
-        border: 1px solid #ccc;
+        background-color: var(--bg);
+        border: 1px solid var(--light-gray);
         padding: 0.4rem 0.8rem;
         border-radius: 8px;
         font-size: 0.9rem;
@@ -117,57 +117,53 @@ body {
         user-select: none;
         color: var(--text);
         transition: box-shadow 0.2s ease, border-color 0.2s ease;
-      
+
         &.open,
         &:hover,
-        &:has(.language-options:hover) { // 👈 modern way to keep border on hover inside
+        &:has(.language-options:hover) {
           border-color: var(--accent);
-          box-shadow: 0 0 6px rgba(207, 154, 114, 0.2);
+          box-shadow: 0 0 6px var(--box-shadow-medium);
         }
-      
+
         .language-options {
           position: absolute;
           top: 110%;
           left: 0;
           right: 0;
-          background: white;
-          border: 1px solid #ccc;
+          background: var(--bg);
+          border: 1px solid var(--light-gray);
           border-radius: 8px;
           list-style: none;
           margin: 0;
           padding: 0;
           z-index: 1000;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-          overflow: hidden; // 🔒 ensures border radius stays clean
-        
+          box-shadow: 0 4px 10px var(--box-shadow-heavy);
+          overflow: hidden;
+
           li {
             padding: 0.5rem 0.7rem;
-            border: none; // remove inner borders if not needed
+            border: none;
             border-radius: 0;
             cursor: pointer;
             transition: background-color 0.2s ease;
-        
+
             &:hover {
               background-color: var(--accent);
-              color: white;
+              color: var(--bg);
             }
-        
+
             &:first-child {
               border-top-left-radius: 8px;
               border-top-right-radius: 8px;
             }
-        
+
             &:last-child {
               border-bottom-left-radius: 8px;
               border-bottom-right-radius: 8px;
             }
           }
         }
-        
-
       }
-      
-      
     }
   }
 
@@ -225,24 +221,15 @@ main {
     height: 50px; // Fixed height
     font-size: 1.7rem;
     background: var(--accent); // Use your accent color
-    color: white; // White text for contrast
+    color: var(--bg); // White text for contrast
     border: none;
     border-radius: 8px; // Make it circular
     cursor: pointer;
     z-index: 1000; // Ensure it overlays the content
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add a subtle shadow for depth
+    box-shadow: var(--box-shadow-light); // Add a subtle shadow for depth
     display: flex;
     align-items: center;
     justify-content: center; // Center the icon inside the button
-
-    // &:hover {
-    //   background: darken(var(--accent), 10%); // Darken the background on hover
-    // }
-
-    // &:focus {
-    //   outline: none; // Remove default focus outline
-    //   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5); // Add a custom focus style
-    // }
 
     i {
       font-size: 1.5rem; // Adjust icon size
@@ -255,7 +242,7 @@ main {
     right: -100%; // Initially hidden off-screen
     width: 60%;
     height: 100vh;
-    background-color: var(--light-gray); // Updated background color (dark blue-gray)
+    background-color: var(--light-gray); // Updated background color
     z-index: 999;
     padding: 6rem 2rem 2rem;
     gap: 2rem;
@@ -263,7 +250,7 @@ main {
     align-items: flex-start !important;
     display: flex;
     transition: right 0.5s ease-in-out; // Smooth transition effect
-    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2); // Add shadow on the left side
+    box-shadow: -4px 0 10px var(--box-shadow-medium); // Add shadow on the left side
 
     &.open {
       right: 0; // Slide in when open
@@ -275,20 +262,5 @@ main {
       padding: 0.5rem 0;
       text-decoration: none;
     }
-  }
-
-  .nav-links.open {
-    right: 0; // Slide in when open
-  }
-
-  main {
-    width: 100%; // Ensure main content takes full width
-  }
-
-  li a {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: white; // White text for better contrast
-    padding: 0.5rem 0;
   }
 }
