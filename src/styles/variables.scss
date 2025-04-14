@@ -1,10 +1,10 @@
 // Light theme
 :root {
-  --bg: #fff; // Background color
-  --text: #333; // Text color
-  --accent: #cf9a72; // Accent color
-  --hover: #b87f5e; // Hover color
-  --light-gray: #f7f7f7; // Light gray for borders and backgrounds
+  --bg: 255, 255, 255; // Background color (RGB)
+  --text: 51, 51, 51; // Text color (RGB)
+  --accent: 207, 154, 114; // Accent color (RGB)
+  --hover: 184, 127, 94; // Hover color (RGB)
+  --light-gray: 247, 247, 247; // Light gray for borders and backgrounds (RGB)
   --box-shadow-light: rgba(0, 0, 0, 0.1); // Light box shadow
   --box-shadow-medium: rgba(0, 0, 0, 0.2); // Medium box shadow
   --box-shadow-heavy: rgba(0, 0, 0, 0.05); // Heavy box shadow
@@ -12,11 +12,11 @@
 
 // Dark theme
 [data-theme='dark'] {
-  --bg: #1e1e1e; // Background color for dark mode
-  --text: #f5f5f5; // Text color for dark mode
-  --accent: #e3a86d; // Accent color for dark mode
-  --hover: #d18a4f; // Hover color for dark mode
-  --light-gray: #2a2a2a; // Light gray for dark mode
+  --bg: 30, 30, 30; // Background color for dark mode (RGB)
+  --text: 245, 245, 245; // Text color for dark mode (RGB)
+  --accent: 227, 168, 109; // Accent color for dark mode (RGB)
+  --hover: 209, 138, 79; // Hover color for dark mode (RGB)
+  --light-gray: 42, 42, 42; // Light gray for dark mode (RGB)
   --box-shadow-light: rgba(255, 255, 255, 0.1); // Light box shadow for dark mode
   --box-shadow-medium: rgba(255, 255, 255, 0.2); // Medium box shadow for dark mode
   --box-shadow-heavy: rgba(255, 255, 255, 0.05); // Heavy box shadow for dark mode

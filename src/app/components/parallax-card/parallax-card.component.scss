@@ -1,3 +1,5 @@
+@use "../../../styles/variables.scss" as *;
+
 .parallax-card {
   width: 100%;
   position: relative;
@@ -20,7 +22,7 @@
         width: 100%;
         height: auto;
         object-fit: cover;
-        box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.15); // Top-only shadow
+        box-shadow: 0 -8px 20px var(--box-shadow-medium); // Top-only shadow
         border-radius: 8px;
       }
 
@@ -28,32 +30,29 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.95);
+        background-color: rgba(var(--bg), 0.95);
         padding: 1.5rem;
         max-width: 500px;
         transition: opacity 0.6s ease, transform 0.6s ease;
         opacity: 0;
         transform: translateY(60px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        background: rgba(var(--bg), 0.95);
+        box-shadow: 0 4px 10px var(--box-shadow-heavy);
         color: var(--text);
 
         h3 {
           margin-bottom: 0.5rem;
-          color: #cf9a72;
           color: var(--accent);
         }
 
         .date {
           font-style: italic;
           font-size: 0.95rem;
-          color: #777;
+          color: var(--hover); // Use hover color for subtle contrast
           margin-bottom: 1rem;
         }
 
         .description {
           font-size: 1.1rem;
-          color: #333;
           color: var(--text);
         }
 
@@ -96,13 +95,13 @@
 
       h3 {
         font-size: 2.5rem;
-        color: #cf9a72;
+        color: var(--accent);
         margin-bottom: 1.5rem;
       }
 
       .description {
         font-size: 1.3rem;
-        color: #444;
+        color: var(--text);
         line-height: 1.6;
       }
     }
@@ -117,19 +116,19 @@
       .image-overlay {
         position: relative;
         flex-direction: column;
-      
+
         img {
           width: 100%;
           height: auto;
           border-radius: 8px 8px 0 0;
           position: relative;
           z-index: 1;
-      
+
           // Optional: apply a soft gradient fade at the bottom edge
           mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
           -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
         }
-      
+
         .text-overlay {
           position: static;
           transform: translateY(-10px); // Start closer to the image
@@ -145,17 +144,20 @@
             opacity: 0.5; // Fully visible when in focus
             transform: translateY(0); // Align perfectly with the image
           }
-      
+
           h3 {
             font-size: 1.5rem;
+            color: var(--accent);
           }
-      
+
           .description {
             font-size: 1rem;
+            color: var(--text);
           }
-      
+
           .date {
             font-size: 0.9rem;
+            color: var(--hover); // Use hover color for subtle contrast
           }
         }
       }
