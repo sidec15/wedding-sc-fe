@@ -7,7 +7,7 @@ import { Theme } from './models/theme';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, TranslateModule, NgIf, NgSwitch, NgClass],
+  imports: [RouterOutlet, RouterLink, TranslateModule, NgIf, NgClass],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
   isHeaderHidden = false; // Track whether the header is hidden
   lastScrollTop = 0; // Track the last scroll position
   currentTheme: Theme = Theme.Light;
-  themeDropdownOpen = false;
 
   private touchStartX = 0;
   private touchEndX = 0;
@@ -49,8 +48,10 @@ export class AppComponent implements OnInit {
   
 
   @ViewChild('languageDropdown') languageDropdownRef!: ElementRef;
-
   languageDropdownOpen = false;
+
+  @ViewChild('themeDropdown') themeDropdownRef!: ElementRef;
+  themeDropdownOpen = false;
 
   toggleLanguageDropdown(): void {
     this.languageDropdownOpen = !this.languageDropdownOpen;
@@ -113,6 +114,12 @@ export class AppComponent implements OnInit {
       !this.languageDropdownRef.nativeElement.contains(event.target)
     ) {
       this.languageDropdownOpen = false; // Close the dropdown if clicked outside
+    }
+    if (
+      this.themeDropdownRef &&
+      !this.themeDropdownRef.nativeElement.contains(event.target)
+    ) {
+      this.themeDropdownOpen = false; // Close the dropdown if clicked outside
     }
   }
 

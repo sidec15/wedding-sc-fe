@@ -7,9 +7,9 @@
     "confirm": "Confirm your attendance",
     "contact": "Contact Us",
     "theme": {
-      "light": "Light theme",
-      "dark": "Dark theme",
-      "system": "System default"
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
     }
   },
   "footer": {

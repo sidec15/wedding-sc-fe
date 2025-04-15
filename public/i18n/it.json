@@ -7,9 +7,9 @@
     "confirm": "Conferma",
     "contact": "Contattaci",
     "theme": {
-      "light": "Tema chiaro",
-      "dark": "Tema scuro",
-      "system": "Tema di sistema"
+      "light": "Chiaro",
+      "dark": "Scuro",
+      "system": "Sistema"
     }
   },
   "footer": {
