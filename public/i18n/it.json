@@ -5,7 +5,12 @@
     "church": "Chiesa",
     "reception": "Ricevimento",
     "confirm": "Conferma",
-    "contact": "Contattaci"
+    "contact": "Contattaci",
+    "theme": {
+      "light": "Tema chiaro",
+      "dark": "Tema scuro",
+      "system": "Tema di sistema"
+    }
   },
   "footer": {
     "copyright": "© {{year}} Chiara & Simone"
