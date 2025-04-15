@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./parallax-card.component.scss'],
 })
 export class ParallaxCardComponent implements AfterViewInit {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
   @Input() title = '';
   @Input() description = '';
@@ -53,13 +53,12 @@ export class ParallaxCardComponent implements AfterViewInit {
     const img = card.querySelector('img') as HTMLElement;
 
     const cardRect = card.getBoundingClientRect();
-    const imgRect = img.getBoundingClientRect();
-    const contentRect = content.getBoundingClientRect();
+    const imgRect = img?.getBoundingClientRect();
+    const contentRect = content?.getBoundingClientRect();
     const scrollAmount = cardRect.top * 0.15;
 
     if (img && this.type === 'card') {
-      // Mobile: stop animating when image bottom reaches content top
-      const shouldAnimate = !isMobile || imgRect.bottom > contentRect.top;
+      const shouldAnimate = !isMobile || scrollAmount > 0 || imgRect.bottom > contentRect.top;
       if (shouldAnimate) {
         img.style.transform = `translateY(${scrollAmount}px)`;
       }

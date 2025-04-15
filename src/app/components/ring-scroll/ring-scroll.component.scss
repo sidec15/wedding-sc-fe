@@ -1,3 +1,5 @@
+@use "../../../styles/variables.scss" as *;
+
 .scroll-ring {
   position: fixed;
   bottom: 30px;
@@ -14,13 +16,13 @@
 
   .ring-background {
     fill: none;
-    stroke: #e6e6e6;
+    stroke: rgb(var(--light-gray));
     stroke-width: 6;
   }
 
   .ring-fill {
     fill: none;
-    stroke: #cf9a72;
+    stroke: rgb(var(--accent));
     stroke-width: 6;
     stroke-linecap: round;
     transition: stroke-dashoffset 0.3s ease;
@@ -33,7 +35,7 @@
     transform: translate(-50%, -50%);
     font-size: 0.8rem;
     font-weight: bold;
-    color: #333;
+    color: rgb(var(--text));
     pointer-events: none;
   }
 }

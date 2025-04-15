@@ -3,8 +3,8 @@
 .parallax-card {
   width: 100%;
   position: relative;
-  background-color: var(--bg);
-  color: var(--text);
+  // background-color: rgb(var(--bg));
+  color: rgb(var(--text));
 
   &.card {
     align-items: center;
@@ -16,14 +16,16 @@
       position: relative;
       display: flex;
       flex-direction: row;
-      overflow: hidden;
+      // overflow: hidden;
 
       img {
         width: 100%;
         height: auto;
         object-fit: cover;
-        box-shadow: 0 -8px 20px var(--box-shadow-medium); // Top-only shadow
-        border-radius: 8px;
+        // Box shadow effect on the bottom-right corner
+        box-shadow: 
+        10px 10px 15px var(--box-shadow-heavy), // Bottom-right shadow
+        
       }
 
       .text-overlay {
@@ -37,23 +39,23 @@
         opacity: 0;
         transform: translateY(60px);
         box-shadow: 0 4px 10px var(--box-shadow-heavy);
-        color: var(--text);
+        color: rgb(var(--text));
 
         h3 {
           margin-bottom: 0.5rem;
-          color: var(--accent);
+          color: rgb(var(--accent));
         }
 
         .date {
           font-style: italic;
           font-size: 0.95rem;
-          color: var(--hover); // Use hover color for subtle contrast
+          color: rgb(var(--hover)); // Use hover color for subtle contrast
           margin-bottom: 1rem;
         }
 
         .description {
           font-size: 1.1rem;
-          color: var(--text);
+          color: rgb(var(--text));
         }
 
         &.visible {
@@ -95,13 +97,13 @@
 
       h3 {
         font-size: 2.5rem;
-        color: var(--accent);
+        color: rgb(var(--accent));
         margin-bottom: 1.5rem;
       }
 
       .description {
         font-size: 1.3rem;
-        color: var(--text);
+        color: rgb(var(--text));
         line-height: 1.6;
       }
     }
@@ -120,13 +122,21 @@
         img {
           width: 100%;
           height: auto;
-          border-radius: 8px 8px 0 0;
+          // border-radius: 8px 8px 0 0;
           position: relative;
           z-index: 1;
 
-          // Optional: apply a soft gradient fade at the bottom edge
-          mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-          -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+          // Apply a soft gradient fade at the bottom edge
+          mask-image: linear-gradient(
+            to bottom,
+            rgb(var(--mask-black)) 80%,
+            var(--mask-transparent) 100%
+          );
+          -webkit-mask-image: linear-gradient(
+            to bottom,
+            rgb(var(--mask-black)) 80%,
+            var(--mask-transparent) 100%
+          );
         }
 
         .text-overlay {
@@ -147,17 +157,17 @@
 
           h3 {
             font-size: 1.5rem;
-            color: var(--accent);
+            color: rgb(var(--accent));
           }
 
           .description {
             font-size: 1rem;
-            color: var(--text);
+            color: rgb(var(--text));
           }
 
           .date {
             font-size: 0.9rem;
-            color: var(--hover); // Use hover color for subtle contrast
+            color: rgb(var(--hover)); // Use hover color for subtle contrast
           }
         }
       }
@@ -171,4 +181,3 @@
     }
   }
 }
-

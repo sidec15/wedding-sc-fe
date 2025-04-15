@@ -5,9 +5,13 @@
   --accent: 207, 154, 114; // Accent color (RGB)
   --hover: 184, 127, 94; // Hover color (RGB)
   --light-gray: 247, 247, 247; // Light gray for borders and backgrounds (RGB)
-  --box-shadow-light: rgba(0, 0, 0, 0.1); // Light box shadow
-  --box-shadow-medium: rgba(0, 0, 0, 0.2); // Medium box shadow
-  --box-shadow-heavy: rgba(0, 0, 0, 0.05); // Heavy box shadow
+  --gradient-start: 211, 232, 236; // Start color for gradients (RGB)
+  --gradient-end: 220, 210, 234; // End color for gradients (RGB)
+  --mask-black: 0, 0, 0; // Black color for mask (RGB)
+  --mask-transparent: transparent; // Transparent color for mask
+  --box-shadow-heavy: rgba(0, 0, 0, 0.4);
+  --box-shadow-medium: rgba(0, 0, 0, 0.2);
+  --box-shadow-light: rgba(0, 0, 0, 0.05);
 }
 
 // Dark theme
@@ -17,7 +21,11 @@
   --accent: 227, 168, 109; // Accent color for dark mode (RGB)
   --hover: 209, 138, 79; // Hover color for dark mode (RGB)
   --light-gray: 42, 42, 42; // Light gray for dark mode (RGB)
-  --box-shadow-light: rgba(255, 255, 255, 0.1); // Light box shadow for dark mode
-  --box-shadow-medium: rgba(255, 255, 255, 0.2); // Medium box shadow for dark mode
-  --box-shadow-heavy: rgba(255, 255, 255, 0.05); // Heavy box shadow for dark mode
+  --gradient-start: 50, 60, 70; // Start color for gradients in dark mode (RGB)
+  --gradient-end: 80, 70, 90; // End color for gradients in dark mode (RGB)
+  --mask-black: 0, 0, 0; // Black color for mask (RGB)
+  --mask-transparent: transparent; // Transparent color for mask
+  --box-shadow-heavy: rgba(255, 255, 255, 0.1);
+  --box-shadow-medium: rgba(255, 255, 255, 0.05);
+  --box-shadow-light: rgba(255, 255, 255, 0.02);
 }

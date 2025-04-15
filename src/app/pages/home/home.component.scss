@@ -19,8 +19,8 @@
 .wedding-announcement {
   position: relative;
   text-align: center;
-  background-color: var(--bg); // Use theme background color
-  padding: 6rem 0; // 🔧 Remove horizontal padding
+  background-color: rgb(var(--bg));
+  padding: 6rem 0;
   overflow: hidden;
   z-index: 0;
 
@@ -38,13 +38,21 @@
 
   .top-shape {
     top: 0;
-    background: linear-gradient(to right, #d3e8ec 50%, #dcd2ea 50%);
+    background: linear-gradient(
+      to right,
+      rgb(var(--gradient-start)) 50%,
+      rgb(var(--gradient-end)) 50%
+    );
     clip-path: polygon(0 0, 0 100%, 50% 0, 100% 100%, 100% 0);
   }
 
   .bottom-shape {
     bottom: 0;
-    background: linear-gradient(to right, #d3e8ec 50%, #dcd2ea 50%);
+    background: linear-gradient(
+      to right,
+      rgb(var(--gradient-start)) 50%,
+      rgb(var(--gradient-end)) 50%
+    );
     clip-path: polygon(0 100%, 0 0, 50% 100%, 100% 0, 100% 100%);
   }
 
@@ -58,14 +66,14 @@
 
     h1 {
       font-size: 2rem;
-      color: var(--accent); // Use theme accent color
+      color: rgb(var(--accent)); // Use theme accent color
       margin-bottom: 1rem;
     }
 
     p {
       font-size: 1.1rem;
       margin: 0.5rem 0;
-      color: var(--text); // Use theme text color
+      color: rgb(var(--text));
     }
 
     .names {
@@ -75,7 +83,7 @@
 
     .wedding-date {
       font-size: 1.2rem;
-      color: var(--accent); // Use theme accent color
+      color: rgb(var(--accent));
       margin-top: 1rem;
     }
   }
