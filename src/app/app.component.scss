@@ -53,25 +53,6 @@ body {
     text-decoration: none;
   }
 
-  .language-selector {
-    font-family: 'Comfortaa', sans-serif;
-    background-color: rgb(var(--bg)); // Use RGB variable for background
-    color: rgb(var(--text)); // Use RGB variable for text
-    border: 1px solid rgb(var(--accent)); // Use RGB variable for accent color
-    border-radius: 6px;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.9rem;
-    appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='%23cf9a72' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 0.5rem center;
-    background-size: 12px;
-
-    &:hover {
-      border-color: rgb(var(--hover)); // Use RGB variable for hover color
-    }
-  }
-
   .menu-toggle {
     display: none; // Hidden by default
   }
@@ -108,14 +89,14 @@ body {
 
       .custom-language-selector {
         position: relative;
-        background-color: rgb(var(--bg)); // Use RGB variable for background
-        border: 1px solid rgb(var(--light-gray)); // Use RGB variable for light gray
+        background-color: rgb(var(--bg));
+        border: 1px solid rgb(var(--light-gray));
+        color: rgb(var(--text));
         padding: 0.4rem 0.8rem;
         border-radius: 8px;
         font-size: 0.9rem;
         cursor: pointer;
         user-select: none;
-        color: rgb(var(--text)); // Use RGB variable for text
         transition: box-shadow 0.2s ease, border-color 0.2s ease;
 
         &.open,
@@ -130,14 +111,14 @@ body {
           top: 110%;
           left: 0;
           right: 0;
-          background: rgb(var(--bg)); // Use RGB variable for background
-          border: 1px solid rgb(var(--light-gray)); // Use RGB variable for light gray
+          background: rgb(var(--bg));
+          border: 1px solid rgb(var(--light-gray));
+          box-shadow: 0 4px 10px var(--box-shadow-heavy);
           border-radius: 8px;
           list-style: none;
           margin: 0;
           padding: 0;
           z-index: 1000;
-          box-shadow: 0 4px 10px var(--box-shadow-heavy); // Use box-shadow variable
           overflow: hidden;
 
           li {
@@ -148,8 +129,94 @@ body {
             transition: background-color 0.2s ease;
 
             &:hover {
-              background-color: rgb(var(--accent)); // Use RGB variable for accent color
-              color: rgb(var(--bg)); // Use RGB variable for background
+              background-color: rgb(var(--accent));
+              color: rgb(var(--bg));
+            }
+
+            &:first-child {
+              border-top-left-radius: 8px;
+              border-top-right-radius: 8px;
+            }
+
+            &:last-child {
+              border-bottom-left-radius: 8px;
+              border-bottom-right-radius: 8px;
+            }
+          }
+        }
+      }
+
+      .custom-theme-selector {
+        position: relative;
+        background-color: rgb(var(--bg));
+        border: 1px solid rgb(var(--light-gray));
+        color: rgb(var(--text));
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        user-select: none;
+        color: rgb(var(--text));
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+
+        i {
+          font-size: 1rem;
+          color: rgb(var(--accent));
+        }
+
+        &.open,
+        &:hover,
+        &:has(.theme-options:hover) {
+          border-color: rgb(var(--accent)); // Use RGB variable for accent color
+          box-shadow: 0 0 6px var(--box-shadow-medium); // Use box-shadow variable
+        }
+
+        .theme-options {
+          position: absolute;
+          top: 110%;
+          left: 50%; // 🔁 Start from the center
+          transform: translateX(-50%); // 🔁 Center horizontally
+          background: rgb(var(--bg));
+          border: 1px solid rgb(var(--light-gray));
+          box-shadow: 0 4px 10px var(--box-shadow-heavy);
+          border-radius: 8px;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          z-index: 1000;
+
+          li {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 0.95rem;
+        
+            i {
+              width: 1.5rem; // ✅ fixed width for alignment
+              text-align: center;
+              font-size: 1.1rem;
+              color: rgb(var(--accent));
+              flex-shrink: 0;
+            }
+        
+            span {
+              flex: 1;
+              color: rgb(var(--text));
+            }
+        
+            &:hover {
+              background-color: rgb(var(--accent));
+        
+              i,
+              span {
+                color: rgb(var(--bg));
+              }
             }
 
             &:first-child {

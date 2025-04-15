@@ -6,7 +6,7 @@ import {
   HostListener,
   ViewChild,
   Inject,
-  PLATFORM_ID
+  PLATFORM_ID,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,10 +28,8 @@ export class ParallaxCardComponent implements AfterViewInit {
   @Input() type: 'card' | 'intro' | 'outro' = 'card';
   @Input() textPosition: 'left' | 'right' = 'left';
 
-
   @ViewChild('card', { static: false }) cardEl?: ElementRef<HTMLElement>;
   @ViewChild('content', { static: false }) contentEl?: ElementRef<HTMLElement>;
-
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
@@ -42,32 +40,38 @@ export class ParallaxCardComponent implements AfterViewInit {
   onWindowScroll() {
     this.updateParallax();
   }
-  
+
   updateParallax(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-  
+    const isMobile = window.innerWidth <= 768;
+
     const card = this.cardEl?.nativeElement as HTMLElement;
     const content = this.contentEl?.nativeElement as HTMLElement;
-  
+
     if (!card || typeof card.getBoundingClientRect !== 'function') return;
-  
-    const rect = card.getBoundingClientRect();
-    const scrollAmount = rect.top * 0.15;
-  
-    const img = card.querySelector('img');
+
+    const img = card.querySelector('img') as HTMLElement;
+
+    const cardRect = card.getBoundingClientRect();
+    const imgRect = img.getBoundingClientRect();
+    const contentRect = content.getBoundingClientRect();
+    const scrollAmount = cardRect.top * 0.15;
+
     if (img && this.type === 'card') {
-      img.style.transform = `translateY(${scrollAmount}px)`;
+      // Mobile: stop animating when image bottom reaches content top
+      const shouldAnimate = !isMobile || imgRect.bottom > contentRect.top;
+      if (shouldAnimate) {
+        img.style.transform = `translateY(${scrollAmount}px)`;
+      }
     }
-  
-    const isVisible = rect.top < window.innerHeight * 0.8;
+
+    const isVisible = cardRect.top < window.innerHeight * 0.8;
     if (isVisible && content) {
       content.classList.add('visible');
     } else {
       content.classList.remove('visible'); // Needed for fade-out
     }
-    
   }
-  
 
   formatDate(date: { year: number; month?: number; day?: number }): string {
     const parts: string[] = [];
