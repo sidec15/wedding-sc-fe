@@ -1,3 +1,5 @@
+@use "../../../styles/variables.scss" as *;
+
 :host {
   display: block;
   width: 100%;
@@ -15,7 +17,7 @@
   justify-content: center;
 
   .hero-image {
-    background-image: url('/assets/images/church-hero.jpg'); // 👈 Replace with your actual image path
+    background-image: url('/images/church/church-01.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -52,7 +54,7 @@
   min-height: 60vh;
 
   .parallax-bg {
-    background-image: url('/assets/images/church-outside.jpg'); // 👈 Replace with another suitable photo
+    background-image: url('/assets/images/church-01.jpg');
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
