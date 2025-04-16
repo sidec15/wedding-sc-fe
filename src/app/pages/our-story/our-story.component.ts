@@ -3,20 +3,27 @@ import { CommonModule } from '@angular/common';
 import { ParallaxCardComponent } from '../../components/parallax-card/parallax-card.component';
 import { ParallaxCardModel } from '../../models/parallax-card.models';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { VisibilityService } from '../../services/visibility.service';
 
 @Component({
   selector: 'app-parallax-showcase',
   standalone: true,
-  imports: [CommonModule, ParallaxCardComponent, RingScrollComponent],
+  imports: [
+    CommonModule,
+    ParallaxCardComponent,
+    RingScrollComponent,
+    TranslateModule,
+  ],
   templateUrl: './our-story.component.html',
-  styleUrls: ['./our-story.component.scss']
+  styleUrls: ['./our-story.component.scss'],
 })
 export class OurStoryComponent {
   cards: ParallaxCardModel[] = [
     {
       type: 'intro',
       title: 'our_story.intro.title',
-      description: 'our_story.intro.description'
+      description: 'our_story.intro.description',
     },
     {
       title: 'our_story.start.title',
@@ -35,12 +42,44 @@ export class OurStoryComponent {
       date: { year: 2023, month: 12, day: 10 },
       description: 'our_story.proposal.description',
       image: '/images/our-story/our-story-20151023.jpg',
-      textPosition: 'right'
+      textPosition: 'right',
     },
     {
       type: 'outro',
       title: 'our_story.outro.title',
-      description: 'our_story.outro.description'
-    }
+      description: 'our_story.outro.description',
+    },
   ];
+
+  currentIndex: number = 0;
+  currentCard: ParallaxCardModel = this.cards[0];
+  isGalleryOpen: boolean = false;
+
+  constructor(private visibilityService: VisibilityService) {}
+
+  openGallery(index: number): void {
+    this.currentIndex = index;
+    this.currentCard = this.cards[index];
+    this.isGalleryOpen = true;
+    this.visibilityService.setRingScrollEnabled(false);
+  }
+
+  closeGallery(): void {
+    this.isGalleryOpen = false;
+    this.visibilityService.setRingScrollEnabled(true);
+  }
+
+  prevCard(): void {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      this.currentCard = this.cards[this.currentIndex];
+    }
+  }
+
+  nextCard(): void {
+    if (this.currentIndex < this.cards.length - 1) {
+      this.currentIndex++;
+      this.currentCard = this.cards[this.currentIndex];
+    }
+  }
 }

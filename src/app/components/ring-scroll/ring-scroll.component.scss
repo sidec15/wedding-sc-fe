@@ -1,5 +1,9 @@
 @use "../../../styles/variables.scss" as *;
 
+.disabled {
+  display: none;
+}
+
 .scroll-ring {
   position: fixed;
   bottom: 30px;

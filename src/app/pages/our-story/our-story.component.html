@@ -1,10 +1,30 @@
 <app-parallax-card
-  *ngFor="let card of cards"
+  *ngFor="let card of cards; let i = index"
   [title]="card.title"
   [description]="card.description"
   [image]="card.image || ''"
   [type]="card.type || 'card'"
   [date]="card.date"
   [textPosition]="card.textPosition || 'left'"
+  (click)="openGallery(i)"
 ></app-parallax-card>
 <app-ring-scroll></app-ring-scroll>
+
+<!-- Modal for the gallery -->
+<div class="gallery-modal" *ngIf="isGalleryOpen">
+  <div class="gallery-content">
+    <button class="close-btn" (click)="closeGallery()">
+      <i class="fas fa-times"></i>
+    </button>
+    <button class="prev-btn" (click)="prevCard()">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="gallery-image">
+      <img [src]="currentCard.image" [alt]="currentCard.title || 'Image description'" />
+      <p class="gallery-description">{{ (currentCard.description || '') | translate }}</p>
+    </div>
+    <button class="next-btn" (click)="nextCard()">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>

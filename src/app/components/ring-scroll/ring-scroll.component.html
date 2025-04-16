@@ -1,9 +1,20 @@
-<div class="scroll-ring" (click)="scrollToTop()" [ngStyle]="{ opacity: scrollPercent > 0 ? '1' : '0' }">
+<div
+  class="scroll-ring"
+  (click)="scrollToTop()"
+  [ngClass]="{ disabled: !isEnabled }"
+  [ngStyle]="{ opacity: scrollPercent > 0 ? '1' : '0' }"
+>
   <svg class="progress-ring" width="60" height="60">
     <circle class="ring-background" cx="30" cy="30" r="26" />
-    <circle class="ring-fill" cx="30" cy="30" r="26"
+    <circle
+      class="ring-fill"
+      cx="30"
+      cy="30"
+      r="26"
       [attr.stroke-dasharray]="circumference"
-      [attr.stroke-dashoffset]="circumference - (scrollPercent / 100) * circumference"
+      [attr.stroke-dashoffset]="
+        circumference - (scrollPercent / 100) * circumference
+      "
     />
   </svg>
   <div class="percentage-text">{{ scrollPercent }}%</div>
