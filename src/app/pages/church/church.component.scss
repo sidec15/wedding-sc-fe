@@ -1,0 +1,80 @@
+:host {
+  display: block;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+// HERO SECTION
+.church-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .hero-image {
+    background-image: url('/assets/images/church-hero.jpg'); // 👈 Replace with your actual image path
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+// ATMOSPHERE SECTION
+.church-atmosphere {
+  position: relative;
+  background-color: #fafafa;
+  padding: 6rem 2rem;
+  text-align: center;
+  min-height: 60vh;
+
+  .parallax-bg {
+    background-image: url('/assets/images/church-outside.jpg'); // 👈 Replace with another suitable photo
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    filter: brightness(0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .text-container {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #333;
+    font-size: 1.25rem;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
