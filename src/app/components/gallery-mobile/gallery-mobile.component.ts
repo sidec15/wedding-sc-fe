@@ -31,7 +31,8 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
     private storyCardsProviderService: StoryCardsProviderService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.cards = this.storyCardsProviderService.getCards();
+    this.cards = this.storyCardsProviderService.getCards()
+    .filter((card) => card.type === 'card');
   }
 
   ngOnInit(): void {

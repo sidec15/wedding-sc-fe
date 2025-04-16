@@ -12,18 +12,21 @@ export class StoryCardsProviderService {
       description: 'our_story.intro.description',
     },
     {
+      type: 'card',
       title: 'our_story.start.title',
       date: { year: 1989, month: 1, day: 1 },
       description: 'our_story.start.description',
       image: '/images/our-story/our-story-19890101.jpg',
     },
     {
+      type: 'card',
       title: 'our_story.first_trip.title',
       date: { year: 2008, month: 8, day: 2 },
       description: 'our_story.first_trip.description',
       image: '/images/our-story/our-story-20080802.jpg',
     },
     {
+      type: 'card',
       title: 'our_story.proposal.title',
       date: { year: 2023, month: 12, day: 10 },
       description: 'our_story.proposal.description',

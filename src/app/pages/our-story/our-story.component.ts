@@ -32,11 +32,14 @@ export class OurStoryComponent {
   }
 
   openGallery(index: number): void {
-    this.visibilityService.setRingScrollEnabled(false);
-    this.visibilityService.setGalleryStatus({
-      isOpen: true,
-      currentIndex: index,
-    });
+    const currentCard = this.storycardsProvider.getCard(index);
+    if (currentCard?.type === 'card') {
+      this.visibilityService.setRingScrollEnabled(false);
+      this.visibilityService.setGalleryStatus({
+        isOpen: true,
+        currentIndex: index - 1,
+      });
+    }
   }
 
   closeGallery(): void {

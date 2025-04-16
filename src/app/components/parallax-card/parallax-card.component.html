@@ -17,6 +17,7 @@
     <ng-container *ngSwitchDefault>
       <div class="text-only-content" #content>
         <h3>{{ title | translate }}</h3>
+        <p class="date" *ngIf="date">{{ formatDate(date) }}</p>
         <p class="description">{{ description | translate }}</p>
       </div>
     </ng-container>
