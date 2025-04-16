@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   Inject,
   OnDestroy,
@@ -22,14 +23,15 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
 
   cards: ParallaxCardModel[] = [];
-  currentIndex: number = 0;
+  currentCardIndex: number = 0;
   currentCard: ParallaxCardModel = {} as ParallaxCardModel;
   isGalleryOpen: boolean = false;
 
   constructor(
     private visibilityService: VisibilityService,
     private storyCardsProviderService: StoryCardsProviderService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private checngeDetector: ChangeDetectorRef
   ) {
     this.cards = this.storyCardsProviderService.getCards()
     .filter((card) => card.type === 'card');
@@ -54,11 +56,12 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
 
   openGallery(index: number): void {
     const isMobile = window.innerWidth <= 768;
-    if (isMobile) {
-      this.currentIndex = index;
+    if (isMobile && this.cards.length > 0) {
+      this.currentCardIndex = index;
       this.currentCard = this.cards[index];
       this.isGalleryOpen = true;
       this.lockScroll();
+      this.checngeDetector.detectChanges(); // Ensure the view is updated
     }
   }
 
@@ -68,16 +71,18 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
   }
 
   prevCard(): void {
-    if (this.currentIndex > 0) {
-      this.currentIndex--;
-      this.currentCard = this.cards[this.currentIndex];
+    if (this.currentCardIndex > 0) {
+      this.currentCardIndex--;
+      this.currentCard = this.cards[this.currentCardIndex];
+      this.checngeDetector.detectChanges(); // Ensure the view is updated
     }
   }
 
   nextCard(): void {
-    if (this.currentIndex < this.cards.length - 1) {
-      this.currentIndex++;
-      this.currentCard = this.cards[this.currentIndex];
+    if (this.currentCardIndex < this.cards.length - 1) {
+      this.currentCardIndex++;
+      this.currentCard = this.cards[this.currentCardIndex];
+      this.checngeDetector.detectChanges(); // Ensure the view is updated
     }
   }
 
