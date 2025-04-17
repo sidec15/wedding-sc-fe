@@ -43,5 +43,12 @@
       "title": "Next stop: the wedding!",
       "description": "And yes, this time no questionable outfits... we hope."
     }
+  },
+  "church": {
+    "intro": {
+      "title": "Sant'Andrea delle Fratte",
+      "subtitle": "A special corner of Rome, between art and spirituality.",
+      "description": "We are just a stone's throw from Piazza di Spagna, but here, as soon as you step inside, it feels like entering another dimension: silence, art, spirituality. A true hidden gem."
+    }
   }
 }

@@ -43,5 +43,12 @@
       "title": "Prossima fermata: matrimonio!",
       "description": "E sì, stavolta niente outfit discutibili... forse."
     }
+  },
+  "church": {
+    "intro": {
+      "title": "Sant'Andrea delle Fratte",
+      "subtitle": "Un angolo speciale di Roma, tra arte e spiritualità.",
+      "description": "Ci troviamo a due passi da Piazza di Spagna, ma qui, appena varchi l'ingresso, sembra di entrare in un'altra dimensione: silenzio, arte, spiritualità. Un vero gioiello nascosto."
+    }
   }
 }
