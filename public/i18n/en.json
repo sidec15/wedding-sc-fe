@@ -24,8 +24,8 @@
   },
   "our_story": {
     "intro": {
-      "title": "Our Story",
-      "description": "A journey through the most beautiful memories of Chiara & Simone. From childhood to today."
+      "title": "How did we end up here?",
+      "description": "It all started with a bunch of vintage photos (and yes, some of them probably should’ve stayed in the drawer…). You’ll see us as kids, with questionable faces, awkward poses, and outfits that might be trendy today… on Mars. Then came the years when we met and started writing our story together. The rest? It’s all here: hugs, holidays, silly moments, and memories that brought us to where we are now. This is our story: a mix of sweet, funny, and unforgettable moments. Scroll through and enjoy with us!"
     },
     "start": {
       "title": "Where It All Began",
@@ -40,8 +40,8 @@
       "description": "An exciting proposal under the stars."
     },
     "outro": {
-      "title": "To Be Continued...",
-      "description": "This is just the beginning. A thousand adventures await us."
+      "title": "Next stop: the wedding!",
+      "description": "And yes, this time no questionable outfits... we hope."
     }
   }
 }
