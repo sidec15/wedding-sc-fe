@@ -1,9 +1,32 @@
 @use "../../../styles/variables.scss" as *;
 
-:host {
-  display: block;
+html, body {
+  height: 100%;
+  overflow: auto; // ✅ allow native scrollbar to appear
+}
+
+.scroll-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  overflow-x: hidden;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none; // disables interactions on wrapper (optional)
+}
+
+.scroll-content {
+  position: absolute;
+  width: 100%;
+  will-change: transform;
+  transform: translateY(0);
+  pointer-events: auto; // re-enable interactions inside content
+}
+
+
+
+section {
+  margin-bottom: 80px;
 }
 
 // HERO SECTION
@@ -34,7 +57,6 @@
     text-align: center;
     padding: 2rem;
     background: rgba(var(--mask-black), 0.5);
-    backdrop-filter: blur(2px);
     h1 {
       color: rgb(var(--accent));
       font-size: 3rem;
@@ -43,6 +65,72 @@
     p {
       font-size: 1.5rem;
       color: rgb(var(--text-mask));
+    }
+  }
+
+  // Add shadow effect at the bottom
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; // Adjust height to control the size of the shadow area
+    z-index: 1;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent); // Simulates a shadow fading upward
+    pointer-events: none;
+  }
+}
+
+// ORIGINI E STORIA SECTION
+.church-history {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  min-height: 80vh;
+  overflow: hidden;
+
+  .image-parallax {
+    flex: 1;
+    background-image: url('/images/church/church-01.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    min-height: 100%;
+  }
+
+  .text-content {
+    flex: 1;
+    padding: 4rem 2rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #444;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    .image-parallax {
+      height: 40vh;
+      background-attachment: scroll;
+    }
+
+    .text-content {
+      padding: 2rem;
     }
   }
 }
