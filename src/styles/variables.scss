@@ -3,12 +3,13 @@
   --bg: 255, 255, 255; // Background color (RGB)
   --text: 51, 51, 51; // Text color (RGB)
   --text-mask: 255, 255, 255; // Text mask color
+  --mask: 0, 0, 0; // Text mask color
   --accent: 207, 154, 114; // Accent color (RGB)
   --hover: 184, 127, 94; // Hover color (RGB)
   --light-gray: 247, 247, 247; // Light gray for borders and backgrounds (RGB)
   --gradient-start: 211, 232, 236; // Start color for gradients (RGB)
   --gradient-end: 220, 210, 234; // End color for gradients (RGB)
-  --mask-black: 0, 0, 0; // Black color for mask (RGB)
+  --inner-shadow: 255, 255, 255;
   --mask-transparent: transparent; // Transparent color for mask
   --box-shadow-heavy: rgba(0, 0, 0, 0.4);
   --box-shadow-medium: rgba(0, 0, 0, 0.2);
@@ -16,17 +17,17 @@
 }
 
 // Dark theme
-[data-theme='dark'] {
-  --bg: 30, 30, 30; // Background color for dark mode (RGB)
-  --text: 245, 245, 245; // Text color for dark mode (RGB)
-  --accent: 227, 168, 109; // Accent color for dark mode (RGB)
-  --hover: 209, 138, 79; // Hover color for dark mode (RGB)
-  --light-gray: 42, 42, 42; // Light gray for dark mode (RGB)
-  --gradient-start: 50, 60, 70; // Start color for gradients in dark mode (RGB)
-  --gradient-end: 80, 70, 90; // End color for gradients in dark mode (RGB)
-  --mask-black: 0, 0, 0; // Black color for mask (RGB)
-  --mask-transparent: transparent; // Transparent color for mask
-  --box-shadow-heavy: rgba(255, 255, 255, 0.1);
-  --box-shadow-medium: rgba(255, 255, 255, 0.05);
-  --box-shadow-light: rgba(255, 255, 255, 0.02);
+[data-theme="dark"] {
+  --bg: 18, 18, 18; // Darker background for better contrast
+  --text: 230, 230, 230; // Slightly lighter text for readability
+  --accent: 227, 168, 109; // Keep the accent color consistent
+  --hover: 209, 138, 79; // Keep hover color consistent
+  --light-gray: 50, 50, 50; // Adjust light gray for better contrast in dark mode
+  --gradient-start: 40, 50, 60; // Slightly darker gradient start for dark mode
+  --gradient-end: 60, 50, 70; // Slightly darker gradient end for dark mode
+  --inner-shadow: 0, 0, 0; // Keep inner shadow black for dark mode
+  --mask-transparent: transparent; // No change needed
+  --box-shadow-heavy: rgba(0, 0, 0, 0.6); // Heavier shadow for dark mode
+  --box-shadow-medium: rgba(0, 0, 0, 0.4); // Medium shadow for dark mode
+  --box-shadow-light: rgba(0, 0, 0, 0.2); // Lighter shadow for subtle effects
 }

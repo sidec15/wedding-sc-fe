@@ -38,7 +38,7 @@ section {
     z-index: 2;
     text-align: center;
     padding: 2rem;
-    background: rgba(var(--mask-black), 0.5);
+    background: rgba(var(--mask), 0.7);
     transition: opacity 0.2s ease-out;
     will-change: opacity, transform;
     h1 {
@@ -63,7 +63,7 @@ section {
     z-index: 1;
     background: linear-gradient(
       to top,
-      rgba(var(--mask-black), 0.8),
+      rgba(var(--inner-shadow), 0.8),
       transparent
     ); // Simulates a shadow fading upward
     pointer-events: none;
