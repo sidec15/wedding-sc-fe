@@ -1,6 +1,7 @@
 @use "../../../styles/variables.scss" as *;
 
-html, body {
+html,
+body {
   height: 100%;
   scroll-behavior: auto;
   overflow-y: auto;
@@ -21,7 +22,7 @@ section {
   justify-content: center;
 
   .hero-image {
-    background-image: url('/images/church/church-02.jpg');
+    background-image: url("/images/church/church-02.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -31,13 +32,15 @@ section {
     z-index: 1;
   }
 
-  .overlay {
+  .hero-overlay {
     width: 100%;
     position: relative;
     z-index: 2;
     text-align: center;
     padding: 2rem;
-    background: rgba(var(--mask-black), 0.8);
+    background: rgba(var(--mask-black), 0.5);
+    transition: opacity 0.2s ease-out;
+    will-change: opacity, transform;
     h1 {
       color: rgb(var(--accent));
       font-size: 3rem;
@@ -51,14 +54,18 @@ section {
 
   // Add shadow effect at the bottom
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 20%; // Adjust height to control the size of the shadow area
     z-index: 1;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent); // Simulates a shadow fading upward
+    background: linear-gradient(
+      to top,
+      rgba(var(--mask-black), 0.8),
+      transparent
+    ); // Simulates a shadow fading upward
     pointer-events: none;
   }
 }
@@ -73,7 +80,7 @@ section {
 
   .image-parallax {
     flex: 1;
-    background-image: url('/images/church/church-01.jpg');
+    background-image: url("/images/church/church-01.jpg");
     background-attachment: fixed;
     background-position: center;
     background-size: cover;

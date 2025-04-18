@@ -1,5 +1,28 @@
 @use "../styles/variables.scss" as *;
 
+/* Overlay covers the whole screen on load */
+.reveal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white; // Or black, or your brand color
+  z-index: 10000;
+  animation: revealDown 3s ease-out forwards;
+  pointer-events: none;
+}
+
+/* Keyframes for reveal animation */
+@keyframes revealDown {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
 // Base reset
 * {
   margin: 0;
@@ -31,7 +54,7 @@ body {
   left: 0;
   width: 100%; // Full width
   z-index: 1000; // Ensure it stays above other elements
-  background-color: rgb(var(--bg)); // Use RGB variable for background
+  background-color: rgba(var(--bg), 1); // Use RGB variable for background
   border-bottom: 1px solid rgb(var(--light-gray)); // Use RGB variable for light gray
   padding: 1.5rem 2rem;
   display: flex;
@@ -246,9 +269,9 @@ main {
   flex: 1; // Allow the main content to grow and fill available space
   display: flex;
   flex-direction: column;
-  padding-top: 80px; // Add padding equal to the height of the fixed header
+  // padding-top: 80px; // Add padding equal to the height of the fixed header
   padding-bottom: 0; // No padding needed for the footer
-  background-color: rgb(var(--light-gray)); // Use RGB variable for light gray
+  background-color: rgb(var(--bg)); // Use RGB variable for light gray
   overflow-y: auto; // Ensure the main content is scrollable
 }
 
