@@ -49,6 +49,11 @@
       "title": "Sant'Andrea delle Fratte",
       "subtitle": "A special corner of Rome, between art and spirituality.",
       "description": "We are just a stone's throw from Piazza di Spagna, but here, as soon as you step inside, it feels like entering another dimension: silence, art, spirituality. A true hidden gem."
+    },
+    "origin": {
+      "title": "Origins and History",
+      "p1": "The name “delle Fratte” comes from the fact that, once upon a time, this area was full of gardens and brambles.",
+      "p2": "The church already existed in medieval times, but it was in the 17th century that it was rebuilt by the great architect Borromini, who also designed the beautiful dome and bell tower."
     }
   }
 }

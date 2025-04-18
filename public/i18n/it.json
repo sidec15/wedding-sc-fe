@@ -49,6 +49,11 @@
       "title": "Sant'Andrea delle Fratte",
       "subtitle": "Un angolo speciale di Roma, tra arte e spiritualità.",
       "description": "Ci troviamo a due passi da Piazza di Spagna, ma qui, appena varchi l'ingresso, sembra di entrare in un'altra dimensione: silenzio, arte, spiritualità. Un vero gioiello nascosto."
+    },
+    "origin": {
+      "title": "Origini e Storia",
+      "p1": "Il nome “delle Fratte” deriva dal fatto che, un tempo, questa zona era piena di orti e sterpaglie.",
+      "p2": "La chiesa esisteva già in epoca medievale, ma è nel Seicento che viene ricostruita su progetto del grande architetto Borromini, che disegnò anche la bellissima cupola e il campanile."
     }
   }
 }
