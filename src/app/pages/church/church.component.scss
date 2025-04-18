@@ -2,8 +2,10 @@
 
 html, body {
   height: 100%;
-  overflow: auto; // ✅ allow native scrollbar to appear
+  scroll-behavior: auto;
+  overflow-y: auto;
 }
+
 
 .scroll-wrapper {
   position: fixed;
@@ -12,7 +14,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  pointer-events: none; // disables interactions on wrapper (optional)
+  pointer-events: none;
 }
 
 .scroll-content {
@@ -20,9 +22,8 @@ html, body {
   width: 100%;
   will-change: transform;
   transform: translateY(0);
-  pointer-events: auto; // re-enable interactions inside content
+  pointer-events: auto;
 }
-
 
 
 section {
