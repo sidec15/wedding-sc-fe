@@ -2,17 +2,35 @@
 <section class="church-hero" #heroSection>
   <div class="hero-image"></div>
   <div class="hero-overlay" #heroOverlay>
-    <h1>{{ 'church.intro.title' | translate }}</h1>
-    <p>{{ 'church.intro.subtitle' | translate }}</p>
-    <p>{{ 'church.intro.description' | translate }}</p>
+    <h1>{{ "church.intro.title1" | translate }}</h1>
+    <h2>{{ "church.intro.title2" | translate }}</h2>
+    <p>{{ "church.intro.subtitle" | translate }}</p>
+    <p>{{ "church.intro.description" | translate }}</p>
   </div>
 </section>
 <!-- History Section -->
 <section class="church-history">
-  <div class="image-parallax"></div>
+  <div class="image-container">
+    <div class="scroll-track">
+      <!-- First set of images -->
+      <img
+        *ngFor="let img of churchHistoryImages"
+        class="image"
+        [src]="img.src"
+        [alt]="img.alt"
+      />
+      <!-- Duplicate for seamless loop -->
+      <img
+        *ngFor="let img of churchHistoryImages"
+        class="image"
+        [src]="img.src"
+        [alt]="img.alt"
+      />
+    </div>
+  </div>
   <div class="text-content">
-    <h2>{{'church.origin.title' | translate}}</h2>
-    <p>{{"church.origin.p1" | translate}}</p>
-    <p>{{"church.origin.p2" | translate}}</p>
+    <h2>{{ "church.origin.title" | translate }}</h2>
+    <p>{{ "church.origin.p1" | translate }}</p>
+    <p>{{ "church.origin.p2" | translate }}</p>
   </div>
 </section>

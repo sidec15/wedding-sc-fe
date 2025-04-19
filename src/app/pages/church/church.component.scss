@@ -1,5 +1,20 @@
 @use "../../../styles/variables.scss" as *;
 
+@mixin shadow-gradient($direction: to top) {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 20%; // Adjust height to control the size of the shadow area
+  z-index: 3;
+  background: linear-gradient(
+    $direction,
+    rgba(var(--inner-shadow), 0.8),
+    transparent
+  ); // Simulates a shadow fading in the specified direction
+  pointer-events: none;
+}
+
 html,
 body {
   height: 100%;
@@ -11,11 +26,26 @@ section {
   margin-bottom: 80px;
 }
 
+h1 {
+  color: rgb(var(--accent));
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+h2 {
+  color: rgb(var(--accent));
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+p {
+  font-size: 1.5rem;
+  color: rgb(var(--text));
+}
+
 // HERO SECTION
 .church-hero {
-  position: relative;
+  position: relative; // Required for pseudo-elements to position correctly
   width: 100%;
-  height: 100vh;
+  height: 100vh; // Full viewport height
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -33,40 +63,26 @@ section {
   }
 
   .hero-overlay {
-    width: 100%;
+    width: 70%;
     position: relative;
     z-index: 2;
     text-align: center;
-    padding: 2rem;
-    background: rgba(var(--mask), 0.7);
+    padding: 1rem;
+    background: rgba(var(--text-mask), 0.9);
     transition: opacity 0.2s ease-out;
     will-change: opacity, transform;
-    h1 {
-      color: rgb(var(--accent));
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-    p {
-      font-size: 1.5rem;
-      color: rgb(var(--text-mask));
-    }
+  }
+
+  // Add shadow effect at the top
+  &::before {
+    @include shadow-gradient(to bottom); // Shadow fades downward
+    top: 0; // Position at the top
   }
 
   // Add shadow effect at the bottom
   &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 20%; // Adjust height to control the size of the shadow area
-    z-index: 1;
-    background: linear-gradient(
-      to top,
-      rgba(var(--inner-shadow), 0.8),
-      transparent
-    ); // Simulates a shadow fading upward
-    pointer-events: none;
+    @include shadow-gradient(to top); // Shadow fades upward
+    bottom: 0; // Position at the bottom
   }
 }
 
@@ -75,50 +91,93 @@ section {
   position: relative;
   display: flex;
   flex-direction: row;
-  min-height: 80vh;
   overflow: hidden;
 
-  .image-parallax {
-    flex: 1;
-    background-image: url("/images/church/origins/origins-01.png");
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-    min-height: 100%;
+  .image-container {
+    overflow: hidden;
+    width: 100%;
+    height: 70vh;
+    position: relative;
+  
+    .scroll-track {
+      display: flex;
+      width: max-content;
+      height: 100%;
+      animation: scroll-horizontal 30s linear infinite;
+    }
+  
+    .image {
+      flex: 0 0 auto;
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+    }
   }
-
+  
   .text-content {
-    flex: 1;
-    padding: 4rem 2rem;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    position: absolute; // Overlay the text on the image
+    right: 0; // Attach the text to the right corner
+    top: 0; // Start at the top of the image
+    height: 100%; // Span the full height of the image
+    width: 30%; // Take up 30% of the width
+    padding-left: 1rem; // Add padding to the left
+    padding-right: 1rem; // Add padding to the right
+    background-color: rgba(var(--text-mask), 0.9); // Semi-transparent background for readability
+    color: rgb(var(--text)); // Use the text color from variables
+    z-index: 2; // Ensure the text is above the image
+    justify-content: center; // Center the text vertically
 
     h2 {
       font-size: 2.5rem;
       margin-bottom: 1.5rem;
-      color: #444;
+      color: rgb(var(--accent)); // Accent color for the title
     }
 
     p {
       font-size: 1.2rem;
       line-height: 1.8;
-      color: #555;
+      color: rgb(var(--text)); // Text color for paragraphs
       margin-bottom: 1rem;
     }
+  }
+
+  // Add shadow effect at the top
+  &::before {
+    @include shadow-gradient(to bottom); // Shadow fades downward
+    top: 0;
+  }
+
+  // Add shadow effect at the bottom
+  &::after {
+    @include shadow-gradient(to top); // Shadow fades upward
+    bottom: 0;
   }
 
   @media (max-width: 768px) {
     flex-direction: column;
 
     .image-parallax {
-      height: 40vh;
-      background-attachment: scroll;
+      height: 40vh; // Adjust height for smaller screens
     }
 
     .text-content {
-      padding: 2rem;
+      position: relative; // Stack text below the image
+      width: 100%; // Full width for smaller screens
+      height: auto; // Adjust height for smaller screens
+      top: auto;
+      transform: none;
+      padding: 1.5rem;
+      background-color: rgba(0, 0, 0, 0.7); // Slightly darker background for readability
     }
+  }
+}
+
+// Keyframes for horizontal scrolling
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }

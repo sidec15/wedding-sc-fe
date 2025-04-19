@@ -134,7 +134,7 @@ export class AppComponent implements OnInit {
     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
     // Hide the header when scrolling down, show it when scrolling up
-    if (currentScroll > this.lastScrollTop && currentScroll > 100) {
+    if (currentScroll > this.lastScrollTop && currentScroll > 50) {
       this.isHeaderHidden = true; // Hide header
     } else {
       this.isHeaderHidden = false; // Show header

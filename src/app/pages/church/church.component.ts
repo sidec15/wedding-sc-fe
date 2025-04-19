@@ -7,27 +7,35 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgFor } from '@angular/common';
 import Lenis from 'lenis';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-church',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, NgFor],
   templateUrl: './church.component.html',
-  styleUrls: ['./church.component.scss']
+  styleUrls: ['./church.component.scss'],
 })
 export class ChurchComponent implements AfterViewInit, OnDestroy {
-
   private lenis!: Lenis;
   private rafId = 0;
   private isBrowser: boolean;
 
   private heroHeight = 300; // fallback value
 
-  @ViewChild('heroOverlay', { static: false }) heroOverlayRef!: ElementRef<HTMLElement>;
-  @ViewChild('heroSection', { static: false }) heroSectionRef!: ElementRef<HTMLElement>;
+  churchHistoryImages = [
+    { src: 'images/church/origins/origins-01.png', alt: 'History Image 1' },
+    { src: 'images/church/origins/origins-02.png', alt: 'History Image 2' },
+    { src: 'images/church/origins/origins-03.png', alt: 'History Image 3' },
+    { src: 'images/church/origins/origins-04.png', alt: 'History Image 4' },
+  ];
+
+  @ViewChild('heroOverlay', { static: false })
+  heroOverlayRef!: ElementRef<HTMLElement>;
+  @ViewChild('heroSection', { static: false })
+  heroSectionRef!: ElementRef<HTMLElement>;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -70,10 +78,10 @@ export class ChurchComponent implements AfterViewInit, OnDestroy {
 
   private animateHero(scrollY: number) {
     if (!this.heroOverlayRef) return;
-  
+
     const opacity = Math.max(0, 1 - scrollY / this.heroHeight);
     const translateY = Math.min(scrollY * 0.05, 30);
-  
+
     const el = this.heroOverlayRef.nativeElement;
     el.style.opacity = `${opacity}`;
     el.style.transform = `translateY(${translateY}px)`;
