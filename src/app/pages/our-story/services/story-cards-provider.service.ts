@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ParallaxCardModel } from '../pages/our-story/models/parallax-card.models';
+import { ParallaxCardModel } from '../models/parallax-card.models';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class StoryCardsProviderService {
   private readonly cards: ParallaxCardModel[] = [
     {

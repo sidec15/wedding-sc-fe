@@ -6,18 +6,17 @@ import {
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { isPlatformBrowser, NgIf } from '@angular/common';
-import { StoryCardsProviderService } from '../../../../services/story-cards-provider.service';
+import { StoryCardsProviderService } from '../../services/story-cards-provider.service';
 import { ParallaxCardModel } from '../../models/parallax-card.models';
 import { OurStoryVisibilityService } from '../../services/our-story-visibility.service';
 import { PlatformService } from '../../../../services/platform.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-gallery-mobile',
   imports: [TranslateModule, NgIf],
   templateUrl: './gallery-mobile.component.html',
   styleUrl: './gallery-mobile.component.scss',
-  providers: [OurStoryVisibilityService]
 })
 export class GalleryMobileComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
@@ -38,6 +37,7 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (!this.platformService.isBrowser()) return;
     this.subscription = this.ourStoryVisibilityService.galleryStatus$.subscribe(
       (status) => {
         if (status.isOpen) {
@@ -50,6 +50,7 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (!this.platformService.isBrowser()) return;
     this.subscription.unsubscribe();
     this.unlockScroll();
   }
