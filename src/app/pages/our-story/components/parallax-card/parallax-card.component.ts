@@ -5,12 +5,11 @@ import {
   AfterViewInit,
   HostListener,
   ViewChild,
-  Inject,
-  PLATFORM_ID,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
+import { DateTimeService } from '../../../../services/date-time.service';
 
 @Component({
   selector: 'app-parallax-card',
@@ -20,8 +19,9 @@ import { PlatformService } from '../../../../services/platform.service';
   styleUrls: ['./parallax-card.component.scss'],
 })
 export class ParallaxCardComponent implements AfterViewInit {
-  constructor(private platformService: PlatformService) {}
 
+  readonly dateTimeService: DateTimeService;
+  
   @Input() title = '';
   @Input() description = '';
   @Input() image = '';
@@ -31,6 +31,13 @@ export class ParallaxCardComponent implements AfterViewInit {
 
   @ViewChild('card', { static: false }) cardEl?: ElementRef<HTMLElement>;
   @ViewChild('content', { static: false }) contentEl?: ElementRef<HTMLElement>;
+
+  constructor(
+    private platformService: PlatformService,
+    dateTimeService: DateTimeService
+  ) {
+    this.dateTimeService = dateTimeService;
+  }
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
@@ -74,11 +81,4 @@ export class ParallaxCardComponent implements AfterViewInit {
     }
   }
 
-  formatDate(date: { year: number; month?: number; day?: number }): string {
-    const parts: string[] = [];
-    if (date.day) parts.push(date.day.toString().padStart(2, '0'));
-    if (date.month) parts.push(date.month.toString().padStart(2, '0'));
-    parts.push(date.year.toString());
-    return parts.join('/');
-  }
 }

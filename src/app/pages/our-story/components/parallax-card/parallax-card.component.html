@@ -7,7 +7,7 @@
         <img [src]="image" [alt]="title" />
         <div class="text-overlay" #content>
           <h3>{{ title | translate }}</h3>
-          <p class="date" *ngIf="date">{{ formatDate(date) }}</p>
+          <p class="date" *ngIf="date">{{ dateTimeService.formatDate(date) }}</p>
           <p class="description">{{ description | translate }}</p>
         </div>
       </div>
@@ -17,7 +17,6 @@
     <ng-container *ngSwitchDefault>
       <div class="text-only-content" #content>
         <h3>{{ title | translate }}</h3>
-        <p class="date" *ngIf="date">{{ formatDate(date) }}</p>
         <p class="description">{{ description | translate }}</p>
       </div>
     </ng-container>

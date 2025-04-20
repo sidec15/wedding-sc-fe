@@ -11,4 +11,10 @@ export class PlatformService {
   isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
   }
+
+  isMobile(): boolean {
+    return this.isBrowser() && window.innerWidth <= 768;
+  }
+
+
 }

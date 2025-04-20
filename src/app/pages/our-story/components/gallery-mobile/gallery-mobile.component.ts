@@ -11,6 +11,7 @@ import { ParallaxCardModel } from '../../models/parallax-card.models';
 import { OurStoryVisibilityService } from '../../services/our-story-visibility.service';
 import { PlatformService } from '../../../../services/platform.service';
 import { NgIf } from '@angular/common';
+import { DateTimeService } from '../../../../services/date-time.service';
 
 @Component({
   selector: 'app-gallery-mobile',
@@ -20,6 +21,8 @@ import { NgIf } from '@angular/common';
 })
 export class GalleryMobileComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
+
+  readonly dateTimeService: DateTimeService;
 
   cards: ParallaxCardModel[] = [];
   currentCardIndex: number = 0;
@@ -31,7 +34,9 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
     private ourStoryVisibilityService: OurStoryVisibilityService,
     private storyCardsProviderService: StoryCardsProviderService,
     private checngeDetector: ChangeDetectorRef,
+    dateTimeService: DateTimeService
   ) {
+    this.dateTimeService = dateTimeService;
     this.cards = this.storyCardsProviderService.getCards()
     .filter((card) => card.type === 'card');
   }
@@ -56,8 +61,7 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
   }
 
   openGallery(index: number): void {
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile && this.cards.length > 0) {
+    if (this.cards.length > 0) {
       this.currentCardIndex = index;
       this.currentCard = this.cards[index];
       this.isGalleryOpen = true;

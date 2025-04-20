@@ -7,12 +7,23 @@
     <button class="prev-btn" (click)="prevCard()" *ngIf="currentCardIndex > 0">
       <i class="fas fa-chevron-left"></i>
     </button>
-    <div class="gallery-image">
-      <img [src]="currentCard.image" [alt]="currentCard.title || 'Image description'" />
-      <p class="gallery-description">{{ (currentCard.description || '') | translate }}</p>
-    </div>
-    <button class="next-btn" (click)="nextCard()" *ngIf="currentCardIndex < cards.length - 1">
+    <button
+      class="next-btn"
+      (click)="nextCard()"
+      *ngIf="currentCardIndex < cards.length - 1"
+    >
       <i class="fas fa-chevron-right"></i>
     </button>
+    <div class="gallery-image">
+      <img
+        [src]="currentCard.image"
+        [alt]="currentCard.title || 'Image description'"
+      />
+      <h3>{{ currentCard.title | translate }}</h3>
+      <p class="date" *ngIf="currentCard.date">{{ dateTimeService.formatDate(currentCard.date) }}</p>
+      <p class="gallery-description">
+        {{ currentCard.description || "" | translate }}
+      </p>
+    </div>
   </div>
 </div>
