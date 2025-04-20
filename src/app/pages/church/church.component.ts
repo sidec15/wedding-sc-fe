@@ -2,8 +2,6 @@ import {
   Component,
   AfterViewInit,
   OnDestroy,
-  Inject,
-  PLATFORM_ID,
 } from '@angular/core';
 import Lenis from 'lenis';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,11 +9,12 @@ import { IntroComponent } from './components/intro/intro.component';
 import { PlatformService } from '../../services/platform.service';
 import { EventService } from './services/event.service';
 import { OriginsComponent } from './components/origins/origins.component';
+import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 
 @Component({
   selector: 'app-church',
   standalone: true,
-  imports: [TranslateModule, IntroComponent, OriginsComponent],
+  imports: [TranslateModule, IntroComponent, OriginsComponent, RingScrollComponent],
   templateUrl: './church.component.html',
   styleUrls: ['./church.component.scss'],
   providers: [EventService],
