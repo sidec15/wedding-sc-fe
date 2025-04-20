@@ -1,4 +1,12 @@
-@use "../../../../styles/variables.scss" as *;
+@use "../../../../../styles/variables.scss" as *;
+@use '../../styles/our-story-styles.scss' as ourstory;
+
+:host {
+  display: block;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
 
 .parallax-card {
   width: 100%;
@@ -36,7 +44,7 @@
         padding: 1.5rem;
         max-width: 500px;
         transition: opacity 0.6s ease, transform 0.6s ease;
-        opacity: 0;
+        opacity: 1;
         transform: translateY(60px);
         box-shadow: 0 4px 10px var(--box-shadow-heavy);
         color: rgb(var(--text));
@@ -58,10 +66,6 @@
           color: rgb(var(--text));
         }
 
-        &.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
       }
     }
 
@@ -89,7 +93,7 @@
       max-width: 800px;
       text-align: center;
       opacity: 0;
-      transition: opacity 2s ease-out;
+      transition: opacity 3s ease-out;
 
       &.visible {
         opacity: 1;

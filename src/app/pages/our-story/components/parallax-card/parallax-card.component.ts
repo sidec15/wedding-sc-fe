@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { PlatformService } from '../../../../services/platform.service';
 
 @Component({
   selector: 'app-parallax-card',
@@ -19,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./parallax-card.component.scss'],
 })
 export class ParallaxCardComponent implements AfterViewInit {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(private platformService: PlatformService) {}
 
   @Input() title = '';
   @Input() description = '';
@@ -32,7 +33,7 @@ export class ParallaxCardComponent implements AfterViewInit {
   @ViewChild('content', { static: false }) contentEl?: ElementRef<HTMLElement>;
 
   ngAfterViewInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+    if (!this.platformService.isBrowser()) return;
     requestAnimationFrame(() => this.updateParallax());
   }
 
@@ -42,7 +43,7 @@ export class ParallaxCardComponent implements AfterViewInit {
   }
 
   updateParallax(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+    if (!this.platformService.isBrowser()) return;
     const isMobile = window.innerWidth <= 768;
 
     const card = this.cardEl?.nativeElement as HTMLElement;
@@ -58,7 +59,8 @@ export class ParallaxCardComponent implements AfterViewInit {
     const scrollAmount = cardRect.top * 0.15;
 
     if (img && this.type === 'card') {
-      const shouldAnimate = !isMobile || scrollAmount > 0 || imgRect.bottom > contentRect.top;
+      const shouldAnimate =
+        !isMobile || scrollAmount > 0 || imgRect.bottom > contentRect.top;
       if (shouldAnimate) {
         img.style.transform = `translateY(${scrollAmount}px)`;
       }

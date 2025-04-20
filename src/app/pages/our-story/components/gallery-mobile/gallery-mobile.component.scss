@@ -1,4 +1,6 @@
-@use '../../../../styles/variables.scss';
+@use "../../../../../styles/variables.scss" as *;
+@use '../../styles/our-story-styles.scss' as ourstory;
+
 
 .gallery-modal {
   position: fixed;

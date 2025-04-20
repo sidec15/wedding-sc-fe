@@ -46,8 +46,8 @@
   },
   "church": {
     "intro": {
-      "title1": "Sanctuary of Our Lady of the Miracle",
-      "title2": "Sant'Andrea delle Fratte",
+      "title1": "Sant'Andrea delle Fratte",
+      "title2": "Sanctuary of Our Lady of the Miracle",
       "subtitle": "A special corner of Rome, between art and spirituality.",
       "description": "We are just a stone's throw from Piazza di Spagna, but here, as soon as you step inside, it feels like entering another dimension: silence, art, spirituality. A true hidden gem."
     },
@@ -55,6 +55,10 @@
       "title": "Origins and History",
       "p1": "The name “delle Fratte” comes from the fact that, once upon a time, this area was full of gardens and brambles.",
       "p2": "The church already existed in medieval times, but it was in the 17th century that it was rebuilt by the great architect Borromini, who also designed the beautiful dome and bell tower."
+    },
+    "angels": {
+      "title": "The Angels",
+      "p1": "Among the most striking elements of the church are two angels sculpted by Gian Lorenzo Bernini, originally intended for Ponte Sant'Angelo. Considered too beautiful to remain outdoors, they were brought here to be preserved. One angel holds the crown of thorns, a symbol of Christ's suffering; the other displays the cartouche with the inscription \"INRI\", placed on the cross."
     }
   }
 }

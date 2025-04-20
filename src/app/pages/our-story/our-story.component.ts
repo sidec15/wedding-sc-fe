@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ParallaxCardModel } from '../../models/parallax-card.models';
+import { ParallaxCardModel } from './models/parallax-card.models';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { VisibilityService } from '../../services/visibility.service';
 import { StoryCardsProviderService } from '../../services/story-cards-provider.service';
-import { ParallaxCardComponent } from './parallax-card/parallax-card.component';
-import { GalleryMobileComponent } from './gallery-mobile/gallery-mobile.component';
+import { ParallaxCardComponent } from './components/parallax-card/parallax-card.component';
+import { GalleryMobileComponent } from './components/gallery-mobile/gallery-mobile.component';
+import { OurStoryVisibilityService } from './services/our-story-visibility.service';
 
 @Component({
   selector: 'app-parallax-showcase',
@@ -20,12 +21,14 @@ import { GalleryMobileComponent } from './gallery-mobile/gallery-mobile.componen
   ],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
+  providers: [OurStoryVisibilityService]
 })
 export class OurStoryComponent {
   cards: ParallaxCardModel[] = [];
 
   constructor(
     private visibilityService: VisibilityService,
+    private ourStoryVisibilityService: OurStoryVisibilityService,
     private storycardsProvider: StoryCardsProviderService
   ) {
     this.cards = this.storycardsProvider.getCards();
@@ -34,8 +37,8 @@ export class OurStoryComponent {
   openGallery(index: number): void {
     const currentCard = this.storycardsProvider.getCard(index);
     if (currentCard?.type === 'card') {
-      this.visibilityService.setRingScrollEnabled(false);
-      this.visibilityService.setGalleryStatus({
+      this.visibilityService.emitRingScrollEnabled(false);
+      this.ourStoryVisibilityService.emitGalleryStatus({
         isOpen: true,
         currentIndex: index - 1,
       });
@@ -43,8 +46,8 @@ export class OurStoryComponent {
   }
 
   closeGallery(): void {
-    this.visibilityService.setRingScrollEnabled(true);
-    this.visibilityService.setGalleryStatus({
+    this.visibilityService.emitRingScrollEnabled(true);
+    this.ourStoryVisibilityService.emitGalleryStatus({
       isOpen: false,
       currentIndex: 0,
     });

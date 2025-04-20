@@ -1,23 +1,23 @@
 import {
   ChangeDetectorRef,
   Component,
-  Inject,
   OnDestroy,
   OnInit,
-  PLATFORM_ID,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { isPlatformBrowser, NgIf } from '@angular/common';
-import { ParallaxCardModel } from '../../../models/parallax-card.models';
-import { VisibilityService } from '../../../services/visibility.service';
-import { StoryCardsProviderService } from '../../../services/story-cards-provider.service';
+import { StoryCardsProviderService } from '../../../../services/story-cards-provider.service';
+import { ParallaxCardModel } from '../../models/parallax-card.models';
+import { OurStoryVisibilityService } from '../../services/our-story-visibility.service';
+import { PlatformService } from '../../../../services/platform.service';
 
 @Component({
   selector: 'app-gallery-mobile',
   imports: [TranslateModule, NgIf],
   templateUrl: './gallery-mobile.component.html',
   styleUrl: './gallery-mobile.component.scss',
+  providers: [OurStoryVisibilityService]
 })
 export class GalleryMobileComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
@@ -28,17 +28,17 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
   isGalleryOpen: boolean = false;
 
   constructor(
-    private visibilityService: VisibilityService,
+    private platformService: PlatformService,
+    private ourStoryVisibilityService: OurStoryVisibilityService,
     private storyCardsProviderService: StoryCardsProviderService,
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private checngeDetector: ChangeDetectorRef
+    private checngeDetector: ChangeDetectorRef,
   ) {
     this.cards = this.storyCardsProviderService.getCards()
     .filter((card) => card.type === 'card');
   }
 
   ngOnInit(): void {
-    this.subscription = this.visibilityService.galleryStatus$.subscribe(
+    this.subscription = this.ourStoryVisibilityService.galleryStatus$.subscribe(
       (status) => {
         if (status.isOpen) {
           this.openGallery(status.currentIndex);
@@ -87,14 +87,12 @@ export class GalleryMobileComponent implements OnInit, OnDestroy {
   }
 
   private lockScroll(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      document.body.style.overflow = 'hidden';
-    }
+    if(!this.platformService.isBrowser()) return;
+    document.body.style.overflow = 'hidden';
   }
 
   private unlockScroll(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      document.body.style.overflow = '';
-    }
+    if(!this.platformService.isBrowser()) return;
+    document.body.style.overflow = '';
   }
 }

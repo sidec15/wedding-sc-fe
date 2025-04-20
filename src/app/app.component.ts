@@ -3,7 +3,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StorageService } from './services/storage.service';
 import { isPlatformBrowser, NgClass, NgIf, NgSwitch } from '@angular/common';
-import { Theme } from './models/theme';
+import { Theme } from './pages/our-story/models/theme';
 
 @Component({
   selector: 'app-root',
