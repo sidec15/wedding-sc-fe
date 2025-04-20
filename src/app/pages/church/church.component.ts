@@ -4,50 +4,36 @@ import {
   OnDestroy,
   Inject,
   PLATFORM_ID,
-  ViewChild,
-  ElementRef,
 } from '@angular/core';
-import { isPlatformBrowser, NgFor } from '@angular/common';
 import Lenis from 'lenis';
 import { TranslateModule } from '@ngx-translate/core';
+import { IntroComponent } from './components/intro/intro.component';
+import { PlatformService } from '../../services/platform.service';
+import { EventService } from './services/event.service';
+import { OriginsComponent } from './components/origins/origins.component';
 
 @Component({
   selector: 'app-church',
   standalone: true,
-  imports: [TranslateModule, NgFor],
+  imports: [TranslateModule, IntroComponent, OriginsComponent],
   templateUrl: './church.component.html',
   styleUrls: ['./church.component.scss'],
+  providers: [EventService],
 })
 export class ChurchComponent implements AfterViewInit, OnDestroy {
   private lenis!: Lenis;
   private rafId = 0;
   private isBrowser: boolean;
 
-  private heroHeight = 300; // fallback value
-
-  churchHistoryImages = [
-    { src: 'images/church/origins/origins-01.png', alt: 'History Image 1' },
-    { src: 'images/church/origins/origins-02.png', alt: 'History Image 2' },
-    { src: 'images/church/origins/origins-03.png', alt: 'History Image 3' },
-    { src: 'images/church/origins/origins-04.png', alt: 'History Image 4' },
-  ];
-
-  @ViewChild('heroOverlay', { static: false })
-  heroOverlayRef!: ElementRef<HTMLElement>;
-  @ViewChild('heroSection', { static: false })
-  heroSectionRef!: ElementRef<HTMLElement>;
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
+  constructor(
+    platformService: PlatformService,
+    private eventService: EventService
+  ) {
+    this.isBrowser = platformService.isBrowser();
   }
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
-
-    const heroSection = this.heroSectionRef?.nativeElement;
-    if (heroSection) {
-      this.heroHeight = heroSection.offsetHeight;
-    }
 
     this.lenis = new Lenis({
       duration: 2.5,
@@ -60,8 +46,8 @@ export class ChurchComponent implements AfterViewInit, OnDestroy {
       // Get scroll position from Lenis
       const scrollY = this.lenis.scroll;
 
-      // Apply scroll-based fade to hero overlay
-      this.animateHero(scrollY);
+      // Emit scroll event with scroll position
+      this.eventService.emitScrollEvent(scrollY);
 
       this.rafId = requestAnimationFrame(raf);
     };
@@ -74,16 +60,5 @@ export class ChurchComponent implements AfterViewInit, OnDestroy {
       cancelAnimationFrame(this.rafId);
       this.lenis.destroy();
     }
-  }
-
-  private animateHero(scrollY: number) {
-    if (!this.heroOverlayRef) return;
-
-    const opacity = Math.max(0, 1 - scrollY / this.heroHeight);
-    const translateY = Math.min(scrollY * 0.05, 30);
-
-    const el = this.heroOverlayRef.nativeElement;
-    el.style.opacity = `${opacity}`;
-    el.style.transform = `translateY(${translateY}px)`;
   }
 }

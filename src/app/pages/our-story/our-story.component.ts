@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ParallaxCardComponent } from '../../components/parallax-card/parallax-card.component';
 import { ParallaxCardModel } from '../../models/parallax-card.models';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { GalleryMobileComponent } from '../../components/gallery-mobile/gallery-mobile.component';
 import { VisibilityService } from '../../services/visibility.service';
 import { StoryCardsProviderService } from '../../services/story-cards-provider.service';
+import { ParallaxCardComponent } from './parallax-card/parallax-card.component';
+import { GalleryMobileComponent } from './gallery-mobile/gallery-mobile.component';
 
 @Component({
   selector: 'app-parallax-showcase',

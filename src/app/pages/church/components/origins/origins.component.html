@@ -1,0 +1,26 @@
+<!-- History Section -->
+<section class="church-history">
+  <div class="image-container">
+    <div class="scroll-track">
+      <!-- First set of images -->
+      <img
+        *ngFor="let img of churchHistoryImages"
+        class="image"
+        [src]="img.src"
+        [alt]="img.alt"
+      />
+      <!-- Duplicate for seamless loop -->
+      <img
+        *ngFor="let img of churchHistoryImages"
+        class="image"
+        [src]="img.src"
+        [alt]="img.alt"
+      />
+    </div>
+  </div>
+  <div class="text-content">
+    <h2>{{ "church.origin.title" | translate }}</h2>
+    <p>{{ "church.origin.p1" | translate }}</p>
+    <p>{{ "church.origin.p2" | translate }}</p>
+  </div>
+</section>

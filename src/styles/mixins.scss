@@ -1,0 +1,16 @@
+@use 'variables' as *; // Import variables for color and other styles
+
+@mixin shadow-gradient($direction: to top) {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 20%; // Adjust height to control the size of the shadow area
+  z-index: 3;
+  background: linear-gradient(
+    $direction,
+    rgba(var(--inner-shadow), 0.8),
+    transparent
+  ); // Simulates a shadow fading in the specified direction
+  pointer-events: none;
+}
