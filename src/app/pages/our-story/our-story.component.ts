@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ParallaxCardModel } from './models/parallax-card.models';
+import { ParallaxCardModel } from './models/parallax-card';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { VisibilityService } from '../../services/visibility.service';

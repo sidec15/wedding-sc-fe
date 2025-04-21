@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ParallaxCardModel } from '../models/parallax-card.models';
+import { ParallaxCardModel } from '../models/parallax-card';
 
 @Injectable()
 export class StoryCardsProviderService {

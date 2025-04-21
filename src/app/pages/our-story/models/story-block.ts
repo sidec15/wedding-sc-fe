@@ -1,4 +1,4 @@
-import { DateModel } from "./date.models";
+import { DateModel } from "./date";
 
 export interface StoryBlock {
   title: string;
