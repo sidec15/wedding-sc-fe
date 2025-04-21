@@ -40,7 +40,7 @@
 
     .prev-btn,
     .next-btn {
-      position: absolute;
+      // position: absolute;
       background: none;
       border: none;
       color: rgb(var(--bg));
@@ -51,20 +51,60 @@
       z-index: 1001; // Ensure it appears above everything
     }
 
-    .prev-btn {
-      left: 10px; // Position the button on the left side
-    }
+    // .prev-btn {
+    //   left: 10px; // Position the button on the left side
+    // }
 
-    .next-btn {
-      right: 10px; // Position the button on the right side
+    // .next-btn {
+    //   right: 10px; // Position the button on the right side
+    // }
+
+    .gallery-image-wrapper {
+      display: flex;
+      flex-direction: column; // Stack the image and buttons vertically
+      align-items: center; // Center the buttons horizontally
+      position: relative;
+
+      .gallery-image {
+        img {
+          max-width: 90%;
+          max-height: 80vh;
+          margin-bottom: 1rem; // Add spacing between the image and buttons
+        }
+      }
+
+      .prev-btn,
+      .next-btn {
+        background: rgba(0, 0, 0, 0.5); // Semi-transparent background for better visibility
+        border: none;
+        color: rgb(var(--bg));
+        font-size: 2rem; // Adjust size for mobile
+        cursor: pointer;
+        z-index: 1001; // Ensure the buttons appear above other elements
+        padding: 0.5rem 1rem;
+        border-radius: 5px; // Optional: Add rounded corners
+        margin: 0.5rem; // Add spacing between the buttons
+      }
+
+      .prev-btn {
+        align-self: flex-start; // Align the button to the left
+      }
+
+      .next-btn {
+        align-self: flex-end; // Align the button to the right
+      }
     }
 
     .gallery-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: relative;
+
       img {
         max-width: 90%;
         max-height: 80vh;
-        margin-bottom: 1rem;
+        display: block; // Ensure the image does not overflow
       }
 
       h3 {
@@ -83,6 +123,16 @@
       .gallery-description {
         font-size: 1.2rem;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gallery-image-wrapper {
+    .prev-btn,
+    .next-btn {
+      font-size: 1.5rem; // Smaller size for mobile
+      padding: 0.5rem; // Adjust padding for smaller screens
     }
   }
 }

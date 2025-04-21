@@ -24,17 +24,16 @@
       position: relative;
       display: flex;
       flex-direction: row;
-      cursor: pointer;
       // overflow: hidden;
 
       img {
         width: 100%;
         height: auto;
         object-fit: cover;
+        cursor: pointer;
         // Box shadow effect on the bottom-right corner
         box-shadow: 
         10px 10px 15px var(--box-shadow-heavy), // Bottom-right shadow
-        
       }
 
       .text-overlay {
