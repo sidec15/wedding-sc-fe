@@ -24,7 +24,7 @@
   .gallery-content {
     position: relative;
     text-align: center;
-    color: rgb(var(--bg));
+    color: rgb(var(--text-mask));
 
     .close-btn {
       position: fixed; // Make the button fixed relative to the viewport
@@ -32,7 +32,7 @@
       right: 10px; // Adjust the position to always stay visible
       background: none;
       border: none;
-      color: rgb(var(--bg));
+      color: rgb(var(--text-mask));
       font-size: 2.5rem;
       cursor: pointer;
       z-index: 1001; // Ensure it appears above everything
@@ -43,7 +43,7 @@
       // position: absolute;
       background: none;
       border: none;
-      color: rgb(var(--bg));
+      color: rgb(var(--text-mask));
       font-size: 3rem;
       cursor: pointer;
       top: 0;
@@ -51,13 +51,22 @@
       z-index: 1001; // Ensure it appears above everything
     }
 
-    // .prev-btn {
-    //   left: 10px; // Position the button on the left side
-    // }
+    h3 {
+      margin-bottom: 0.5rem;
+      color: rgb(var(--accent));
+      // font-size: 2rem;
+    }
 
-    // .next-btn {
-    //   right: 10px; // Position the button on the right side
-    // }
+    .date {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgb(var(--accent)); // Use hover color for subtle contrast
+      margin-bottom: 1rem;
+    }
+
+    .gallery-description {
+      font-size: 1.2rem;
+    }
 
     .gallery-image-wrapper {
       display: flex;
@@ -66,18 +75,24 @@
       position: relative;
 
       .gallery-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+  
         img {
           max-width: 90%;
           max-height: 80vh;
-          margin-bottom: 1rem; // Add spacing between the image and buttons
+          display: block; // Ensure the image does not overflow
         }
+  
       }
 
       .prev-btn,
       .next-btn {
-        background: rgba(0, 0, 0, 0.5); // Semi-transparent background for better visibility
+        background: rgba(var(--mask), 0.95);
         border: none;
-        color: rgb(var(--bg));
+        color: rgb(var(--text-mask));
         font-size: 2rem; // Adjust size for mobile
         cursor: pointer;
         z-index: 1001; // Ensure the buttons appear above other elements
@@ -95,35 +110,6 @@
       }
     }
 
-    .gallery-image {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-
-      img {
-        max-width: 90%;
-        max-height: 80vh;
-        display: block; // Ensure the image does not overflow
-      }
-
-      h3 {
-        margin-bottom: 0.5rem;
-        color: rgb(var(--accent));
-        // font-size: 2rem;
-      }
-
-      .date {
-        font-style: italic;
-        font-size: 0.95rem;
-        color: rgb(var(--accent)); // Use hover color for subtle contrast
-        margin-bottom: 1rem;
-      }
-
-      .gallery-description {
-        font-size: 1.2rem;
-      }
-    }
   }
 }
 
