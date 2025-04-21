@@ -10,11 +10,12 @@ import { PlatformService } from '../../services/platform.service';
 import { EventService } from './services/event.service';
 import { OriginsComponent } from './components/origins/origins.component';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
+import { AngelsComponent } from './components/angels/angels.component';
 
 @Component({
   selector: 'app-church',
   standalone: true,
-  imports: [TranslateModule, IntroComponent, OriginsComponent, RingScrollComponent],
+  imports: [TranslateModule, IntroComponent, OriginsComponent, RingScrollComponent, AngelsComponent],
   templateUrl: './church.component.html',
   styleUrls: ['./church.component.scss'],
   providers: [EventService],

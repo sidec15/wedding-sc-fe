@@ -57,8 +57,10 @@
       "p2": "La chiesa esisteva già in epoca medievale, ma è nel Seicento che viene ricostruita su progetto del grande architetto Borromini, che disegnò anche la bellissima cupola e il campanile."
     },
     "angels": {
-      "title": "Gli angeli",
-      "p1": "Tra gli elementi più suggestivi della chiesa ci sono due angeli scolpiti da Gian Lorenzo Bernini, originariamente destinati al Ponte Sant'Angelo. Considerati troppo belli per restare all'aperto, furono accolti qui per preservarli.Uno angelo regge la corona di spine, simbolo del dolore di Cristo; l'altro mostra il cartiglio con l'iscrizione \"INRI\", posta sulla croce."
+      "title": "Gli Angeli",
+      "description": "Tra gli elementi più suggestivi della chiesa ci sono due angeli scolpiti da Gian Lorenzo Bernini, originariamente destinati al Ponte Sant'Angelo. Considerati troppo belli per restare all'aperto, furono accolti qui per preservarli. Uno angelo regge la corona di spine, simbolo del dolore di Cristo; l'altro mostra il cartiglio con l'iscrizione 'INRI', posta sulla croce.",
+      "left_alt": "Angelo con la corona di spine",
+      "right_alt": "Angelo con il cartiglio 'INRI'"
     }
   }
 }
