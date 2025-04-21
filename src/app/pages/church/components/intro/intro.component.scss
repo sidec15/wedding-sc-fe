@@ -13,7 +13,7 @@
   justify-content: center;
 
   .hero-image {
-    background-image: url("/images/church/church-02.jpg");
+    background-image: url("/images/church/intro/church-02.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -21,6 +21,12 @@
     width: 100%;
     height: 100%;
     z-index: 1;
+
+    // Add shadow effect at the bottom
+    &::after {
+      @include shadow-gradient(to top); // Shadow fades upward
+      bottom: 0;
+    }
   }
 
   .hero-overlay {
