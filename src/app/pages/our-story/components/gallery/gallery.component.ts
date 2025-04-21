@@ -14,12 +14,12 @@ import { NgIf } from '@angular/common';
 import { DateTimeService } from '../../../../services/date-time.service';
 
 @Component({
-  selector: 'app-gallery-mobile',
+  selector: 'app-gallery',
   imports: [TranslateModule, NgIf],
-  templateUrl: './gallery-mobile.component.html',
-  styleUrl: './gallery-mobile.component.scss',
+  templateUrl: './gallery.component.html',
+  styleUrl: './gallery.component.scss',
 })
-export class GalleryMobileComponent implements OnInit, OnDestroy {
+export class GalleryComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
 
   readonly dateTimeService: DateTimeService;

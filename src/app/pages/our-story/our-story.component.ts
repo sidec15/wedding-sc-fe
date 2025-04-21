@@ -6,8 +6,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { VisibilityService } from '../../services/visibility.service';
 import { StoryCardsProviderService } from './services/story-cards-provider.service';
 import { ParallaxCardComponent } from './components/parallax-card/parallax-card.component';
-import { GalleryMobileComponent } from './components/gallery-mobile/gallery-mobile.component';
 import { OurStoryVisibilityService } from './services/our-story-visibility.service';
+import { GalleryComponent } from './components/gallery/gallery.component';
 
 @Component({
   selector: 'app-parallax-showcase',
@@ -17,7 +17,7 @@ import { OurStoryVisibilityService } from './services/our-story-visibility.servi
     ParallaxCardComponent,
     RingScrollComponent,
     TranslateModule,
-    GalleryMobileComponent,
+    GalleryComponent
   ],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
