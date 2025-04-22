@@ -56,18 +56,6 @@
     }
   }
 
-  // Add shadow effect at the top
-  &::before {
-    @include shadow-gradient(to bottom); // Shadow fades downward
-    top: 0;
-  }
-
-  // Add shadow effect at the bottom
-  &::after {
-    @include shadow-gradient(to top); // Shadow fades upward
-    bottom: 0;
-  }
-
   @media (max-width: 768px) {
     flex-direction: column;
 

@@ -19,10 +19,8 @@ import { Subscription } from 'rxjs';
 export class AngelsComponent implements OnInit, OnDestroy {
   private scrollEventSubscription!: Subscription;
 
-  @ViewChild('angelLeft', { static: false })
-  angelLeftRef!: ElementRef<HTMLElement>;
-  @ViewChild('angelRight', { static: false })
-  angelRightRef!: ElementRef<HTMLElement>;
+  @ViewChild('description', { static: false })
+  descriptionRef!: ElementRef<HTMLElement>;
 
   constructor(
     private platformService: PlatformService,
@@ -32,11 +30,11 @@ export class AngelsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (!this.platformService.isBrowser) return; // Ensure this runs only in the browser
 
-    // this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
-    //   (scrollY: number) => {
-    //     this.animateAngels(scrollY);
-    //   }
-    // );
+    this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
+      (scrollY: number) => {
+        this.animateDescription(scrollY);
+      }
+    );
   }
   ngOnDestroy(): void {
     if (this.scrollEventSubscription) {
@@ -44,19 +42,23 @@ export class AngelsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private animateAngels(scrollY: number) {
-    const speed = 0.1;
+  private animateDescription(scrollY: number) {
+    if (!this.descriptionRef) return;
   
-    const angelLeftImg = this.angelLeftRef?.nativeElement;
-    const angelRightImg = this.angelRightRef?.nativeElement;
+    const el = this.descriptionRef.nativeElement;
+    const rect = el.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
   
-    if (angelLeftImg) {
-      (angelLeftImg as HTMLElement).style.transform = `translateY(${scrollY * 0.5 * speed}px)`;
-    }
+    // Progress from 0 (bottom of screen) to 1 (center)
+    const visibleRatio = 1 - Math.min(Math.max((rect.top - windowHeight * 0.3) / (windowHeight * 0.5), 0), 1);
   
-    if (angelRightImg) {
-      (angelRightImg as HTMLElement).style.transform = `translateY(${scrollY * 0.5 * speed}px)`;
-    }
+    // Clamp + ease
+    const opacity = visibleRatio;
+    const translateY = (1 - visibleRatio) * 40;
+    const scale = 0.975 + visibleRatio * 0.025;
+  
+    el.style.opacity = `${opacity}`;
+    el.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
   }
   
 }
