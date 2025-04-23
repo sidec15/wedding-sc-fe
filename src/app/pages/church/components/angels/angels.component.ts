@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
@@ -16,7 +17,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './angels.component.html',
   styleUrl: './angels.component.scss',
 })
-export class AngelsComponent implements OnInit, OnDestroy {
+export class AngelsComponent implements AfterViewInit, OnDestroy {
   private scrollEventSubscription!: Subscription;
 
   @ViewChild('description', { static: false })
@@ -27,8 +28,8 @@ export class AngelsComponent implements OnInit, OnDestroy {
     private eventService: EventService
   ) {}
 
-  ngOnInit(): void {
-    if (!this.platformService.isBrowser) return; // Ensure this runs only in the browser
+  ngAfterViewInit(): void {
+    if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
     this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
       (scrollY: number) => {
@@ -43,7 +44,7 @@ export class AngelsComponent implements OnInit, OnDestroy {
   }
 
   private animateDescription(scrollY: number) {
-    if (!this.descriptionRef) return;
+    if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
   
     const el = this.descriptionRef.nativeElement;
     const rect = el.getBoundingClientRect();
