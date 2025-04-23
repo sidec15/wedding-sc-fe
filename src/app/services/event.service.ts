@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class EventService {
   private scrollEventSubject = new BehaviorSubject<number>(0);
   scrollEvent$ = this.scrollEventSubject.asObservable();

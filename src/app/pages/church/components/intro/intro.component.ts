@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription, interval } from 'rxjs';
-import { EventService } from '../../services/event.service';
+import { EventService } from '../../../../services/event.service';
 import { PlatformService } from '../../../../services/platform.service';
 
 @Component({

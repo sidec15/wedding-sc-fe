@@ -1,9 +1,22 @@
-import { Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  ViewChild,
+} from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StorageService } from './services/storage.service';
 import { isPlatformBrowser, NgClass, NgIf, NgSwitch } from '@angular/common';
 import { Theme } from './models/theme';
+import { PlatformService } from './services/platform.service';
+import Lenis from 'lenis';
+import { EventService } from './services/event.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +24,7 @@ import { Theme } from './models/theme';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   Theme = Theme; // expose enum to template if needed
 
   title = 'wedding-sc-fe';
@@ -24,7 +37,10 @@ export class AppComponent implements OnInit {
 
   languageDropdownOpen = false;
   themeDropdownOpen = false;
-  
+
+  private lenis!: Lenis;
+  private rafId = 0;
+
   private touchStartX = 0;
   private touchEndX = 0;
 
@@ -35,14 +51,15 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
     private storageService: StorageService,
     public router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private platformService: PlatformService,
+    private eventService: EventService
   ) {
     const savedLang = this.storageService.get('language');
     const browserLang = translateService.getBrowserLang();
-  
+
     this.currentLanguage =
       savedLang ?? (browserLang?.match(/en|it/) ? browserLang : 'it');
-  
+
     translateService.setDefaultLang('it');
     translateService.use(this.currentLanguage);
   }
@@ -53,10 +70,39 @@ export class AppComponent implements OnInit {
     this.applyTheme(this.currentTheme);
   }
 
+  ngAfterViewInit(): void {
+    if (!this.platformService.isBrowser()) return;
+
+    this.lenis = new Lenis({
+      duration: 2.5,
+      // smooth: true,
+    });
+
+    const raf = (time: number) => {
+      this.lenis.raf(time);
+
+      // Get scroll position from Lenis
+      const scrollY = this.lenis.scroll;
+
+      // Emit scroll event with scroll position
+      this.eventService.emitScrollEvent(scrollY);
+
+      this.rafId = requestAnimationFrame(raf);
+    };
+
+    this.rafId = requestAnimationFrame(raf);
+  }
+
+  ngOnDestroy(): void {
+    if (!this.platformService.isBrowser()) return;
+    cancelAnimationFrame(this.rafId);
+    this.lenis.destroy();
+  }
+
   toggleLanguageDropdown(): void {
     this.languageDropdownOpen = !this.languageDropdownOpen;
   }
-  
+
   selectLanguage(lang: string): void {
     this.currentLanguage = lang;
     this.languageDropdownOpen = false; // Close the dropdown
@@ -67,28 +113,28 @@ export class AppComponent implements OnInit {
   toggleThemeDropdown(): void {
     this.themeDropdownOpen = !this.themeDropdownOpen;
   }
-  
+
   selectTheme(theme: Theme): void {
     this.currentTheme = theme;
     this.themeDropdownOpen = false;
     this.storageService.set('theme', theme);
     this.applyTheme(theme);
   }
-  
+
   applyTheme(theme: Theme): void {
-    if (!isPlatformBrowser(this.platformId)) return; // ✅ avoid SSR crash
-  
+    // avoid SSR crash
+    if (!this.platformService.isBrowser()) return;
+
     let themeToApply = theme;
     if (theme === Theme.System) {
-      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDarkScheme = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
       themeToApply = prefersDarkScheme ? Theme.Dark : Theme.Light;
     }
-  
+
     document.documentElement.setAttribute('data-theme', themeToApply);
   }
-
-
-
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
@@ -131,7 +177,8 @@ export class AppComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    const currentScroll =
+      window.pageYOffset || document.documentElement.scrollTop;
 
     // Hide the header when scrolling down, show it when scrolling up
     if (currentScroll > this.lastScrollTop && currentScroll > 50) {

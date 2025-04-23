@@ -3,7 +3,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { PlatformService } from '../../../../services/platform.service';
-import { EventService } from '../../services/event.service';
+import { EventService } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-origins',
