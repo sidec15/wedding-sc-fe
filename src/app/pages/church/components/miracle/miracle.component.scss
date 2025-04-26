@@ -2,84 +2,82 @@
 @use "../../../../../styles/mixins.scss" as *;
 @use "../../styles/church-styles.scss" as church; // Use the forwarded styles
 
-.miracle-carousel {
-  position: relative;
+.miracle-section {
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  height: 800px;
+  background: rgb(var(--bg));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  position: relative;
 
   .miracle-title {
-    position: absolute;
-    top: 2rem;
-    width: 100%;
-    text-align: center;
     font-size: 2.5rem;
-    color: #fff;
-    z-index: 3;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     font-weight: bold;
-    font-family: "Georgia", serif;
+    color: rgb(var(--accent));
+    text-align: center;
+    // margin-bottom: 2rem;
   }
 
-  .carousel-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
+  .miracle-content {
     width: 100%;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 2s ease-in-out;
+    position: relative;
+    overflow: hidden;
 
-    &.visible {
-      opacity: 1;
-      z-index: 1;
+    .miracle-image {
+      width: 100%;
+      object-fit: contain; // Ensure the image scales proportionally to fit within the container
+      object-position: center; // Center the image within the container
+      display: block;
     }
-  }
 
-  .miracle-overlay-text {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    width: 100%;
-    max-width: 900px;
-    z-index: 2;
-    padding: 2rem;
-
-    .overlay-background {
-      background-color: rgba(0, 0, 0, 0.8); // 🔥 80% black background
+    .miracle-overlay-text {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
       padding: 2rem;
-      border-radius: 8px;
-      color: #fff;
-      max-width: 500px;
-      margin-left: 2rem;
-      text-align: left;
 
-      h2 {
-        font-size: 1.5rem;
-        font-style: italic;
-        margin-bottom: 1rem;
-      }
+      .overlay-background {
+        background-color: rgba(var(--text-mask), 0.8);
+        padding: 2rem;
+        border-radius: 10px;
+        color: rgb(var(--text));
+        max-width: 400px;
+        margin-left: 2rem;
+        text-align: left;
 
-      p {
-        font-size: 1.1rem;
-        line-height: 1.8;
-        margin-bottom: 0.5rem;
+        p {
+          font-size: 1rem;
+          line-height: 1.4;
+          margin-bottom: 0.5rem;
+        }
       }
     }
   }
 
   @media screen and (max-width: 768px) {
+    padding: 3rem 1rem;
+
     .miracle-title {
-      font-size: 1.8rem;
+      font-size: 2rem;
     }
 
-    .overlay-background {
-      margin-left: 0;
-      max-width: 100%;
-      padding: 1.5rem;
+    .miracle-content {
+      height: 50vh;
+
+      .miracle-overlay-text {
+        top: auto;
+        bottom: 2rem;
+        transform: none;
+
+        .overlay-background {
+          margin-left: 0;
+          max-width: 90%;
+          padding: 1.5rem;
+        }
+      }
     }
   }
 }

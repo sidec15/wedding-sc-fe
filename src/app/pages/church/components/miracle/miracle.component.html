@@ -1,17 +1,15 @@
-<section class="miracle-carousel" #carousel>
+<section class="miracle-section" id="miracle">
   <h1 class="miracle-title">{{ "church.miracle.title" | translate }}</h1>
 
-  <div class="carousel-image"
-       *ngFor="let img of carouselImages; let i = index"
-       [class.visible]="i === currentImageIndex"
-       [ngStyle]="{ 'background-image': 'url(' + img + ')' }">
-  </div>
+  <div class="miracle-content">
+    <img class="miracle-image" src="images/church/miracle/miracle-02.jpg" />
 
-  <div class="miracle-overlay-text">
-    <div class="overlay-background">
-      <h2>{{ "church.miracle.description1" | translate }}</h2>
-      <p>{{ "church.miracle.description2" | translate }}</p>
-      <p>{{ "church.miracle.description3" | translate }}</p>
+    <div class="miracle-overlay-text">
+      <div class="overlay-background">
+        <p>{{ "church.miracle.description1" | translate }}</p>
+        <p>{{ "church.miracle.description2" | translate }}</p>
+        <p>{{ "church.miracle.description3" | translate }}</p>
+      </div>
     </div>
   </div>
 </section>
