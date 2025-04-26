@@ -1,15 +1,13 @@
 @use "../../../../../styles/variables.scss" as *;
 @use "../../../../../styles/mixins.scss" as *;
-@use "../../styles/church-styles.scss" as church; // Use the forwarded styles
+@use "../../styles/church-styles.scss" as church;
 
 .miracle-section {
   width: 100%;
-  height: 800px;
   background: rgb(var(--bg));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
   position: relative;
 
   .miracle-title {
@@ -17,66 +15,69 @@
     font-weight: bold;
     color: rgb(var(--accent));
     text-align: center;
-    // margin-bottom: 2rem;
+    margin-bottom: 2rem;
+    z-index: 2;
+    position: relative;
   }
 
-  .miracle-content {
+  .miracle-image-wrapper {
     width: 100%;
+    height: 100vh; // Full screen section height
+    background-image: url("/images/church/miracle/miracle-02.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
     position: relative;
     overflow: hidden;
 
-    .miracle-image {
-      width: 100%;
-      object-fit: contain; // Ensure the image scales proportionally to fit within the container
-      object-position: center; // Center the image within the container
-      display: block;
-    }
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+  }
 
-    .miracle-overlay-text {
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
+  .miracle-overlay-text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 3;
+
+    .overlay-background {
+      background-color: rgba(var(--text-mask), 0.7);
       padding: 2rem;
+      color: rgb(var(--text));
+      max-width: 400px;
+      margin-left: 2rem;
+      text-align: left;
 
-      .overlay-background {
-        background-color: rgba(var(--text-mask), 0.8);
-        padding: 2rem;
-        border-radius: 10px;
-        color: rgb(var(--text));
-        max-width: 400px;
-        margin-left: 2rem;
-        text-align: left;
+      height: 100%; // 🟢 Make background fill the full height!
+      display: flex; // 🟢 Flexbox to center text inside
+      flex-direction: column;
+      justify-content: center; // 🟢 Center the text vertically
 
-        p {
-          font-size: 1rem;
-          line-height: 1.4;
-          margin-bottom: 0.5rem;
-        }
+      p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
       }
     }
   }
 
-  @media screen and (max-width: 768px) {
-    padding: 3rem 1rem;
+  @media (max-width: 768px) {
+    .miracle-overlay-text {
+      top: auto;
+      bottom: 2rem;
+      transform: none;
+      padding: 1rem;
 
-    .miracle-title {
-      font-size: 2rem;
-    }
-
-    .miracle-content {
-      height: 50vh;
-
-      .miracle-overlay-text {
-        top: auto;
-        bottom: 2rem;
-        transform: none;
-
-        .overlay-background {
-          margin-left: 0;
-          max-width: 90%;
-          padding: 1.5rem;
-        }
+      .overlay-background {
+        margin-left: 0;
+        max-width: 90%;
+        padding: 1.5rem;
       }
     }
   }
