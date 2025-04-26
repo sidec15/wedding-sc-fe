@@ -13,6 +13,7 @@ import { EventService } from '../../../../services/event.service';
 })
 export class MiracleComponent implements AfterViewInit, OnDestroy {
   @ViewChild('miracleImage', { static: false }) miracleImageRef!: ElementRef<HTMLElement>;
+  @ViewChild('miracleTitleBackground', { static: false }) miracleTitleBackgroundRef!: ElementRef<HTMLElement>;
 
   private scrollSubscription!: Subscription;
 
@@ -25,7 +26,8 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
     if (!this.platform.isBrowser()) return;
 
     this.scrollSubscription = this.eventService.scrollEvent$.subscribe((scrollY: number) => {
-      this.updateParallax(scrollY);
+      // this.updateParallax(scrollY);
+      this.updateTitleParallax(scrollY);
     });
   }
 
@@ -33,21 +35,13 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
     this.scrollSubscription?.unsubscribe();
   }
 
-  private updateParallax(scrollY: number) {
-    const el = this.miracleImageRef?.nativeElement;
-    if (!el) return;
-
-    const rect = el.getBoundingClientRect();
-    const sectionTop = rect.top;
-    const sectionHeight = rect.height;
-
-    if (sectionTop < window.innerHeight && sectionTop > -sectionHeight) {
-      const scrollPercent = 1 - (sectionTop / window.innerHeight);
-
-      const translateY = scrollPercent * 50; // move max 50px
-      const scale = 1 + scrollPercent * 0.05; // zoom max +5%
-
-      el.style.transform = `translateY(${translateY}px) scale(${scale})`;
-    }
+  private updateTitleParallax(scrollY: number) {
+    const titleBgEl = this.miracleTitleBackgroundRef?.nativeElement;
+    if (!titleBgEl) return;
+  
+    const move = scrollY * 0.03; // Small soft parallax
+    titleBgEl.style.transform = `translate(-50%, calc(-50% + ${move}px))`;
   }
+  
+
 }

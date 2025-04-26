@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: row;
   overflow: hidden;
+  box-shadow: 10px 10px 15px var(--box-shadow-medium); // Bottom-right shadow
 
   .image-container {
     overflow: hidden;
