@@ -60,7 +60,7 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
     const windowHeight = window.innerHeight;
 
     // Progress from 0 (bottom of screen) to 1 (center)
-    const visibleRatio = 1 - Math.min(Math.max((descriptionRect.top - windowHeight * 0.3) / (windowHeight * 0.5), 0), 1);
+    const visibleRatio = 1 - Math.min(Math.max((descriptionRect.top - windowHeight * 0.3) / (windowHeight * 0.8), 0), 1);
 
     // Clamp + ease
     const opacity = visibleRatio;
@@ -72,19 +72,15 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
 
     // Animate the left angel image
     const angelLeftEl = this.angelLeftRef.nativeElement;
-    const angelLeftRect = angelLeftEl.getBoundingClientRect();
-    const angelLeftVisibleRatio = 1 - Math.min(Math.max((angelLeftRect.top - windowHeight * 0.3) / (windowHeight * 0.5), 0), 1);
-
-    const angelLeftScale = 1 + angelLeftVisibleRatio * 0.1; // Zoom in by 10%
-    angelLeftEl.style.transform = `scale(${angelLeftScale})`;
-
-    // Animate the right angel image
     const angelRightEl = this.angelRightRef.nativeElement;
-    const angelRightRect = angelRightEl.getBoundingClientRect();
-    const angelRightVisibleRatio = 1 - Math.min(Math.max((angelRightRect.top - windowHeight * 0.3) / (windowHeight * 0.5), 0), 1);
 
-    const angelRightScale = 1 + angelRightVisibleRatio * 0.1; // Zoom in by 10%
-    angelRightEl.style.transform = `scale(${angelRightScale})`;
+    const angelRect = angelLeftEl.getBoundingClientRect();
+    const angelVisibleRatio = 1 - Math.min(Math.max((angelRect.top - windowHeight * 0.3) / (windowHeight * 0.5), 0), 1);
+
+    let angelScale = 1 + angelVisibleRatio * 0.1; // Zoom in by 10%
+    // angelScale = Math.min(1, angelScale);
+    angelLeftEl.style.transform = `scale(${angelScale})`;
+    angelRightEl.style.transform = `scale(${angelScale})`;
   }
 
   private checkVisibility(element: HTMLElement): void {

@@ -13,32 +13,36 @@
 
   .angel-image-container {
     flex: 1;
-    max-width: 30%;
-    height: 80vh;
+    max-width: 50%;
+    height: 90vh;
     overflow: hidden;
     position: relative;
 
     .angel-image {
       width: 100%;
       height: 100%;
+      border-radius: 8px;
       background-size: cover;
-      background-position: center;
+      background-position: top center; // Focus on the top of the image
       background-repeat: no-repeat;
-      transform: scale(0.8); // Start with a smaller size (tiny)
-      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); // Smooth zoom-in effect
+      box-shadow: 10px 10px 15px var(--box-shadow-heavy); // Bottom-right shadow
+      transform: scale(0.9); // Start with a smaller size (tiny)
+      transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: transform;
     }
 
     &.left .angel-image {
-      background-image: url('/images/church/angels/angels-02.jpg');
+      background-image: url("/images/church/angels/angels-02.jpg");
     }
 
     &.right .angel-image {
-      background-image: url('/images/church/angels/angels-01.jpg');
+      background-image: url("/images/church/angels/angels-01.jpg");
     }
 
-    &.visible .angel-image {
-      transform: scale(1); // Scale up to the normal size when visible
-    }
+    // &.visible .angel-image {
+    //   transform: scale(1); // Scale up to the normal size when visible
+    //   background-position: 10% center; // Pull the bottom slightly by focusing higher
+    // }
   }
 
   .angels-description {
