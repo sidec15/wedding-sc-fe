@@ -38,10 +38,9 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
   private updateTitleParallax(scrollY: number) {
     const titleBgEl = this.miracleTitleBackgroundRef?.nativeElement;
     if (!titleBgEl) return;
-  
-    const move = scrollY * 0.03; // Small soft parallax
+
+    // Adjust the multiplier to reduce the movement
+    const move = Math.min(scrollY * 0.01, 30); // Limit the movement to a maximum of 30px
     titleBgEl.style.transform = `translate(-50%, calc(-50% + ${move}px))`;
   }
-  
-
 }
