@@ -62,23 +62,19 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
     // Progress from 0 (bottom of screen) to 1 (center)
     const visibleRatio = 1 - Math.min(Math.max((descriptionRect.top - windowHeight * 0.3) / (windowHeight * 0.8), 0), 1);
 
-    // Clamp + ease
-    const opacity = visibleRatio;
-    const translateY = (1 - visibleRatio) * 40;
-    const scale = 0.975 + visibleRatio * 0.025;
+    // Clamp + ease for description
+    const descriptionScale = 0.7 + visibleRatio * 0.5; // Scale from 0.7 to 1.2
+    const descriptionOpacity = visibleRatio;
+    const descriptionTranslateY = (1 - visibleRatio) * 40;
 
-    descriptionEl.style.opacity = `${opacity}`;
-    descriptionEl.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
+    descriptionEl.style.opacity = `${descriptionOpacity}`;
+    descriptionEl.style.transform = `translate3d(0, ${descriptionTranslateY}px, 0) scale(${descriptionScale})`;
 
-    // Animate the left angel image
+    // Animate the angel images based on the same visibility ratio
     const angelLeftEl = this.angelLeftRef.nativeElement;
     const angelRightEl = this.angelRightRef.nativeElement;
 
-    const angelRect = angelLeftEl.getBoundingClientRect();
-    const angelVisibleRatio = 1 - Math.min(Math.max((angelRect.top - windowHeight * 0.3) / (windowHeight * 0.5), 0), 1);
-
-    let angelScale = 1 + angelVisibleRatio * 0.1; // Zoom in by 10%
-    // angelScale = Math.min(1, angelScale);
+    const angelScale = 0.7 + visibleRatio * 0.5; // Scale from 0.7 to 1.2
     angelLeftEl.style.transform = `scale(${angelScale})`;
     angelRightEl.style.transform = `scale(${angelScale})`;
   }

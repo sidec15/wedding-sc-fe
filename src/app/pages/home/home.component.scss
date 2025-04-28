@@ -13,7 +13,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 500px;
+  height: 100vh; // Full viewport height
 }
 
 .wedding-announcement {
@@ -82,7 +82,8 @@
     }
 
     .wedding-date {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
+      font-weight: bold;
       color: rgb(var(--accent));
       margin-top: 1rem;
     }
