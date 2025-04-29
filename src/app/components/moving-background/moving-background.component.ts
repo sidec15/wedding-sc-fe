@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  input,
   Input,
+  InputSignal,
   OnDestroy,
   ViewChild,
 } from '@angular/core';
@@ -22,13 +24,15 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
   @Input()
   content: string = '';
 
+  maxOpacity: InputSignal<number> = input(0.1); // Default value for maxOpacity
+
   private scrollEventSubscription!: Subscription;
 
   @ViewChild('movingBackground', { static: false })
   movingBackgroundRef!: ElementRef<HTMLElement>;
 
   private parallaxOffset: number = 0;
-  private speedFactor: number = 0.1;
+  private speedFactor: number = 0.2;
   private isVisible: boolean = false;
   private notVisibleReason: 'scroll-top' | 'scroll-bottom' = 'scroll-top';
 
@@ -57,6 +61,10 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
   }
 
   private updateTitleParallax(scrollEvent: ScrollEvent): void {
+
+    console.log('maxOpacity:', this.maxOpacity());
+
+
     const movingBgEl = this.movingBackgroundRef?.nativeElement;
     // now get the container element of movingBgEl
     const containerEl = movingBgEl?.parentElement || null;
@@ -101,10 +109,10 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
     movingBgEl.style.transform = `translate(-50%, -50%) translateY(${this.parallaxOffset}px)`;
 
     // Update opacity: from 0 to 1 as scroll increases
-    const maxScrollForFullOpacity = 300; // You can adjust this value for how "fast" it fades in
+    const maxScrollForFullOpacity = 200; // You can adjust this value for how "fast" it fades in
     const opacity = Math.min(
       Math.max(this.parallaxOffset / maxScrollForFullOpacity, 0),
-      1
+      Math.min(this.maxOpacity(), 1)
     );
 
     movingBgEl.style.opacity = opacity.toString();
