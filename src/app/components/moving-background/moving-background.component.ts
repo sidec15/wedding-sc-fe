@@ -20,7 +20,6 @@ import { Subscription } from 'rxjs';
   styleUrl: './moving-background.component.scss',
 })
 export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
-
   content: InputSignal<string> = input.required<string>();
   maxOpacity: InputSignal<number> = input(0.5);
   /**
@@ -31,7 +30,8 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
    * For example, if you set this value to 100, the background will be fully opaque when the scroll position is 100.
    */
   maxScrollForFullOpacity: InputSignal<number> = input(200);
-  speedFactor: InputSignal<number> = input(0.05);
+  parallaxSpeedFactor: InputSignal<number> = input(0.05);
+  opacitySpeedFactor: InputSignal<number> = input(0.05);
 
   private scrollEventSubscription!: Subscription;
 
@@ -39,6 +39,7 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
   movingBackgroundRef!: ElementRef<HTMLElement>;
 
   private parallaxOffset: number = 0;
+  private opacityScrollOffset: number = 0;
   private isVisible: boolean = false;
   private notVisibleReason: 'scroll-top' | 'scroll-bottom' = 'scroll-top';
 
@@ -67,7 +68,6 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
   }
 
   private updateTitleParallax(scrollEvent: ScrollEvent): void {
-
     const movingBgEl = this.movingBackgroundRef?.nativeElement;
     // get the first parent element that is not app-moving-background
     const containerEl = this.getContainerElement();
@@ -87,7 +87,8 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
         if (this.notVisibleReason === 'scroll-top') {
           // reset the parallax background element to its initial status
           this.parallaxOffset = 0; // Reset the parallax offset
-          movingBgEl.style.transform = `translate(-50%, -50%) translateY(0px)`; // Reset the transform
+          this.opacityScrollOffset = 0; // Reset the opacity offset
+          movingBgEl.style.transform = `translate(-50%, -50%) translateY(${this.parallaxOffset}px)`; // Reset the transform
           movingBgEl.style.opacity = '0'; // Reset the opacity
         }
 
@@ -104,41 +105,44 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
     const currentParallaxOffset = this.parallaxOffset;
     /** 1 for down, -1 for up */
     let direction = scrollEvent.scrollDirection() === 'up' ? -1 : 1;
-    const distance = Math.abs(scrollYOffset) * this.speedFactor() * direction;
+    const distance =
+      Math.abs(scrollYOffset) * this.parallaxSpeedFactor() * direction;
     this.parallaxOffset = currentParallaxOffset + distance;
 
     // Update movement
     movingBgEl.style.transform = `translate(-50%, -50%) translateY(${this.parallaxOffset}px)`;
 
-    // Update opacity: from 0 to 1 as scroll increases
-    const opacity = Math.min(
-      Math.max(this.parallaxOffset / this.maxScrollForFullOpacity(), 0),
-      Math.min(this.maxOpacity(), 1)
-    );
+    // === Opacity (independent of movement) ===
+    // Total effective scroll tracked separately
+    this.opacityScrollOffset = (this.opacityScrollOffset ?? 0) + scrollYOffset;
 
-    movingBgEl.style.opacity = opacity.toString();
+    // Normalize opacity between 0 and maxOpacity based on scroll range
+    const rawOpacity =
+      (this.opacityScrollOffset / this.maxScrollForFullOpacity()) *
+      this.maxOpacity();
+
+    const clampedOpacity = Math.min(Math.max(rawOpacity, 0), this.maxOpacity());
+    
+    movingBgEl.style.opacity = clampedOpacity.toString();
+
   }
 
   private isElementInViewport(el: HTMLElement): boolean {
     if (!this.platformService.isBrowser()) return false; // Ensure this runs only in the browser
     const rect = el.getBoundingClientRect();
-    return (
-      rect.top <= window.innerHeight &&
-      rect.bottom >= 0
-    );
+    return rect.top <= window.innerHeight && rect.bottom >= 0;
   }
 
   private getContainerElement(): HTMLElement | null {
-    const movingBgEl = this.movingBackgroundRef?.nativeElement as HTMLElement | null;
-  
+    const movingBgEl = this.movingBackgroundRef
+      ?.nativeElement as HTMLElement | null;
+
     let parent = movingBgEl;
-  
+
     while (parent && parent.tagName === 'APP-MOVING-BACKGROUND') {
       parent = parent.parentElement;
     }
-  
+
     return parent;
   }
-  
-  
 }

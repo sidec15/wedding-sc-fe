@@ -1,36 +1,52 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
-import { Subscription } from 'rxjs';
-import { EventService, ScrollEvent } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-miracle',
-  standalone: true,
   imports: [TranslateModule],
   templateUrl: './miracle.component.html',
   styleUrl: './miracle.component.scss',
 })
-export class MiracleComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('miracleImage', { static: false }) miracleImageRef!: ElementRef<HTMLElement>;
+export class MiracleComponent implements OnDestroy {
+  @ViewChild('miracleImage', { static: true }) miracleImageRef!: ElementRef;
 
-  private scrollSubscription!: Subscription;
+  private imageConfigs: { url: string; position: string }[] = [
+    { url: '/images/church/miracle/miracle-02.jpg', position: 'top center' },
+    { url: '/images/church/miracle/miracle-06.png', position: 'center center' },
+    { url: '/images/church/miracle/miracle-07.png', position: 'center center' },
+  ];
 
-  constructor(
-    private platform: PlatformService,
-    private eventService: EventService
-  ) {}
+  private currentImageIndex = 0;
+  private intervalId!: any;
 
-  ngAfterViewInit(): void {
-    if (!this.platform.isBrowser()) return;
+  constructor(private platformService: PlatformService) {}
 
-    this.scrollSubscription = this.eventService.scrollEvent$.subscribe((scrollEvent: ScrollEvent) => {
-      //todo_here
-    });
+  ngOnInit(): void {
+    if(!this.platformService.isBrowser()) return;
+    this.startImageCarousel();
   }
 
   ngOnDestroy(): void {
-    this.scrollSubscription?.unsubscribe();
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
+  private startImageCarousel(): void {
+    this.updateBackgroundImage(); // Set the initial image
+    this.intervalId = setInterval(() => {
+      this.currentImageIndex =
+        (this.currentImageIndex + 1) % this.imageConfigs.length; // Cycle through images
+      this.updateBackgroundImage();
+    }, 5000); // Change image every 5 seconds
+  }
+
+  private updateBackgroundImage(): void {
+    const miracleImageEl = this.miracleImageRef.nativeElement;
+    const currentImage = this.imageConfigs[this.currentImageIndex];
+    miracleImageEl.style.backgroundImage = `url('${currentImage.url}')`;
+    miracleImageEl.style.backgroundPosition = currentImage.position;
+  }
+  
 }

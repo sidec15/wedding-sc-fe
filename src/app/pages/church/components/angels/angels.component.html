@@ -5,9 +5,10 @@
   <div class="angels-description-container" #descriptionContainer>
     <app-moving-background
       [content]="'church.angels.moving_background' | translate"
-      [maxOpacity]="0.5"
-      [speedFactor]="0.2"
-      [maxScrollForFullOpacity]="150"
+      [maxOpacity]="0.3"
+      [parallaxSpeedFactor]="0.05"
+      [opacitySpeedFactor]="0.005"
+      [maxScrollForFullOpacity]="300"
     >
     </app-moving-background>
     <!-- <div class="title-background" #angelsTitleBackground>ANGELI</div> -->
