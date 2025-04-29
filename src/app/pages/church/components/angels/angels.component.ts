@@ -46,6 +46,11 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
+    // Initialize parallaxOffset based on current scroll position
+    const initialScrollY = window.scrollY || 0;
+
+    this.initializeParallaxOffset(initialScrollY);
+
     this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
       (e: ScrollEvent) => {
         // Update the parallax effect for the title background
@@ -56,10 +61,6 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
         this.checkVisibility(this.angelRightRef.nativeElement);
       }
     );
-
-    // Immediately trigger the first update after view initialized
-    const initialScrollY = window.scrollY || 0;
-    this.updateTitleParallax({ scrollYOffset: initialScrollY } as ScrollEvent);
   }
 
   ngOnDestroy(): void {
@@ -121,6 +122,38 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
     } else {
       element.classList.remove('visible'); // Remove the effect when out of view
     }
+  }
+
+  private initializeParallaxOffset(initialScrollY: number): void {
+    const titleBgEl = this.angelsTitleBackgroundRef?.nativeElement;
+    const containerEl = this.descriptionContainerRef?.nativeElement;
+
+    if (!titleBgEl || !containerEl) return;
+
+    const rect = containerEl.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Check if container is visible (important on page load)
+    if (rect.bottom < 0 || rect.top > windowHeight) {
+      return;
+    }
+
+    /** Initialize parallaxOffset based on initial scroll */
+    const direction = initialScrollY > 0 ? 1 : -1;
+    const distance = Math.abs(initialScrollY) * this.speedFactor * direction;
+    this.parallaxOffset = distance; // ✅ no accumulation, set properly
+
+    // Immediately apply the transform and opacity based on the initialized offset
+
+    titleBgEl.style.transform = `translate(-50%, -50%) translateY(${this.parallaxOffset}px)`;
+
+    const maxScrollForFullOpacity = 300; // or use a constant
+    const opacity = Math.min(
+      Math.max(this.parallaxOffset / maxScrollForFullOpacity, 0),
+      1
+    );
+
+    titleBgEl.style.opacity = opacity.toString();
   }
 
   private updateTitleParallax(scrollEvent: ScrollEvent): void {
