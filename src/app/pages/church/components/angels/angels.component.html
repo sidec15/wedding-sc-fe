@@ -3,7 +3,8 @@
     <div class="angel-image"></div>
   </div>
   <div class="angels-description-container" #descriptionContainer>
-    <div class="title-background" #angelsTitleBackground>ANGELI</div>
+    <app-moving-background [content]="'church.angels.moving_background' | translate"></app-moving-background>
+    <!-- <div class="title-background" #angelsTitleBackground>ANGELI</div> -->
     <div class="angels-description" #description>
       <h2>{{ 'church.angels.title' | translate }}</h2>
       <p>{{ 'church.angels.description' | translate }}</p>

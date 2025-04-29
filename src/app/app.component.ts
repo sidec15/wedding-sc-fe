@@ -68,15 +68,16 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
 
-    // Temporarily disable smooth scrolling
-    this.resetScroll(); // give browser 100ms to really scroll to top
-
     const savedTheme = this.storageService.get('theme') as Theme | null;
     this.currentTheme = savedTheme ?? Theme.Light;
     this.applyTheme(this.currentTheme);
+
+    this.resetScroll(); // Reset scroll position on app load
   }
 
+  // todo_here: check if is possible to directly avoid the broswer save the previous scroll position
   private resetScroll() {
+    if (!this.platformService.isBrowser()) return;
     document.documentElement.style.scrollBehavior = 'auto';
     document.body.style.scrollBehavior = 'auto';
 
