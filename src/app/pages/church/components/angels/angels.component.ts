@@ -54,6 +54,10 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
   private animateDescription(scrollY: number) {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
+    const minScale = 0.7; // Minimum scale for the description and angels
+    const maxScaleDescription = 1.1; // Maximum scale for the description
+    const maxScaleAngels = 1.2; // Maximum scale for the angels
+
     // Animate the description
     const descriptionEl = this.descriptionRef.nativeElement;
     const descriptionRect = descriptionEl.getBoundingClientRect();
@@ -63,7 +67,7 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
     const visibleRatio = 1 - Math.min(Math.max((descriptionRect.top - windowHeight * 0.3) / (windowHeight * 0.8), 0), 1);
 
     // Clamp + ease for description
-    const descriptionScale = 0.7 + visibleRatio * 0.5; // Scale from 0.7 to 1.2
+    const descriptionScale = minScale + visibleRatio * (maxScaleDescription - minScale); // Scale from min to max scale
     const descriptionOpacity = visibleRatio;
     const descriptionTranslateY = (1 - visibleRatio) * 40;
 
@@ -74,7 +78,7 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
     const angelLeftEl = this.angelLeftRef.nativeElement;
     const angelRightEl = this.angelRightRef.nativeElement;
 
-    const angelScale = 0.7 + visibleRatio * 0.5; // Scale from 0.7 to 1.2
+    const angelScale = minScale + visibleRatio * (maxScaleAngels - minScale); // Scale from min to max scale
     angelLeftEl.style.transform = `scale(${angelScale})`;
     angelRightEl.style.transform = `scale(${angelScale})`;
   }
