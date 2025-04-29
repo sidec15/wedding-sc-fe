@@ -3,15 +3,17 @@
     <div class="angel-image"></div>
   </div>
   <div class="angels-description-container" #descriptionContainer>
-    <app-moving-background 
-    [content]="'church.angels.moving_background' | translate"
-    [maxOpacity]="0.9"
+    <app-moving-background
+      [content]="'church.angels.moving_background' | translate"
+      [maxOpacity]="0.5"
+      [speedFactor]="0.2"
+      [maxScrollForFullOpacity]="100"
     >
-  </app-moving-background>
+    </app-moving-background>
     <!-- <div class="title-background" #angelsTitleBackground>ANGELI</div> -->
     <div class="angels-description" #description>
-      <h2>{{ 'church.angels.title' | translate }}</h2>
-      <p>{{ 'church.angels.description' | translate }}</p>
+      <h2>{{ "church.angels.title" | translate }}</h2>
+      <p>{{ "church.angels.description" | translate }}</p>
     </div>
   </div>
   <div class="angel-image-container right" #angelRight>

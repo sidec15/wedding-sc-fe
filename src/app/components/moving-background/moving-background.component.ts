@@ -21,10 +21,17 @@ import { Subscription } from 'rxjs';
 })
 export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
 
-  @Input()
-  content: string = '';
-
-  maxOpacity: InputSignal<number> = input(0.1); // Default value for maxOpacity
+  content: InputSignal<string> = input.required<string>();
+  maxOpacity: InputSignal<number> = input(0.5);
+  /**
+   * The maximum scroll distance for the background to be fully opaque.
+   * This is used to calculate the opacity of the background based on the scroll position.
+   * The opacity will be 0 when the scroll position is 0, and will increase to 1 as the scroll position reaches this value.
+   * You can adjust this value to control how "fast" the background fades in.
+   * For example, if you set this value to 100, the background will be fully opaque when the scroll position is 100.
+   */
+  maxScrollForFullOpacity: InputSignal<number> = input(200);
+  speedFactor: InputSignal<number> = input(0.05);
 
   private scrollEventSubscription!: Subscription;
 
@@ -32,7 +39,6 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
   movingBackgroundRef!: ElementRef<HTMLElement>;
 
   private parallaxOffset: number = 0;
-  private speedFactor: number = 0.2;
   private isVisible: boolean = false;
   private notVisibleReason: 'scroll-top' | 'scroll-bottom' = 'scroll-top';
 
@@ -50,8 +56,8 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
       }
     );
 
-    const initialScrollY = window.scrollY || document.documentElement.scrollTop;
-    this.updateTitleParallax(new ScrollEvent(initialScrollY, 0));
+    // const initialScrollY = window.scrollY || document.documentElement.scrollTop;
+    // this.updateTitleParallax(new ScrollEvent(initialScrollY, 0));
   }
 
   ngOnDestroy(): void {
@@ -62,13 +68,9 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
 
   private updateTitleParallax(scrollEvent: ScrollEvent): void {
 
-    console.log('maxOpacity:', this.maxOpacity());
-
-
     const movingBgEl = this.movingBackgroundRef?.nativeElement;
-    // now get the container element of movingBgEl
-    const containerEl = movingBgEl?.parentElement || null;
-
+    // get the first parent element that is not app-moving-background
+    const containerEl = this.getContainerElement();
 
     if (!movingBgEl || !containerEl) return;
 
@@ -101,17 +103,16 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
 
     const currentParallaxOffset = this.parallaxOffset;
     /** 1 for down, -1 for up */
-    let direction = scrollYOffset > 0 ? 1 : -1;
-    const distance = Math.abs(scrollYOffset) * this.speedFactor * direction;
+    let direction = scrollEvent.scrollDirection() === 'up' ? -1 : 1;
+    const distance = Math.abs(scrollYOffset) * this.speedFactor() * direction;
     this.parallaxOffset = currentParallaxOffset + distance;
 
     // Update movement
     movingBgEl.style.transform = `translate(-50%, -50%) translateY(${this.parallaxOffset}px)`;
 
     // Update opacity: from 0 to 1 as scroll increases
-    const maxScrollForFullOpacity = 200; // You can adjust this value for how "fast" it fades in
     const opacity = Math.min(
-      Math.max(this.parallaxOffset / maxScrollForFullOpacity, 0),
+      Math.max(this.parallaxOffset / this.maxScrollForFullOpacity(), 0),
       Math.min(this.maxOpacity(), 1)
     );
 
@@ -122,8 +123,22 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
     if (!this.platformService.isBrowser()) return false; // Ensure this runs only in the browser
     const rect = el.getBoundingClientRect();
     return (
-      rect.top < window.innerHeight && // Element's top is above bottom of viewport
-      rect.bottom > 0 // Element's bottom is below top of viewport
+      rect.top <= window.innerHeight &&
+      rect.bottom >= 0
     );
   }
+
+  private getContainerElement(): HTMLElement | null {
+    const movingBgEl = this.movingBackgroundRef?.nativeElement as HTMLElement | null;
+  
+    let parent = movingBgEl;
+  
+    while (parent && parent.tagName === 'APP-MOVING-BACKGROUND') {
+      parent = parent.parentElement;
+    }
+  
+    return parent;
+  }
+  
+  
 }

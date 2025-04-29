@@ -75,21 +75,27 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resetScroll(); // Reset scroll position on app load
   }
 
-  // todo_here: check if is possible to directly avoid the broswer save the previous scroll position
   private resetScroll() {
     if (!this.platformService.isBrowser()) return;
+  
+    // Prevent browser from restoring scroll position
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  
+    // Temporarily disable smooth scroll for instant scroll-to-top
     document.documentElement.style.scrollBehavior = 'auto';
     document.body.style.scrollBehavior = 'auto';
-
-    // Force scroll to top instantly
-    window.scrollTo(0, 0);
-
+  
+    window.scrollTo(0, 0); // Force scroll to top
+  
     // Restore smooth scrolling
     setTimeout(() => {
       document.documentElement.style.scrollBehavior = '';
       document.body.style.scrollBehavior = '';
     }, 100);
   }
+  
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
