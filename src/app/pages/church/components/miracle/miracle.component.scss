@@ -9,38 +9,19 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  overflow: hidden; // 🟢 Important to keep the background text inside
+  overflow: hidden; // Important to keep the background text inside
 
   .miracle-title-container {
     width: 100%;
     position: relative;
-    padding: 5rem 1rem 2rem 1rem; // Some nice space
+    padding: 0 1rem 2rem 1rem; // Some nice space
     text-align: center;
-    z-index: 2; // 🟢 The title container is above background image
-
-    .miracle-title-background {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translate(-50%, -50%) translateY(0); // 🟢 will animate Y axis on scroll
-      color: rgb(var(--accent));
-      opacity: 0.2;
-      font-size: 6rem;
-      font-weight: bold;
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 1; // 🟢 Behind the title
-      transition: transform 0.3s ease-out;
-      will-change: transform;
-      user-select: none;
-    }
 
     .miracle-title {
       font-size: 2.5rem;
       font-weight: bold;
       color: rgb(var(--accent));
       position: relative;
-      z-index: 2; // 🟢 Above the background faded text
     }
   }
 
@@ -69,17 +50,16 @@
     z-index: 3;
 
     .overlay-background {
-      background-color: rgba(var(--text-mask), 0.7);
+      background-color: rgba(var(--text-mask), 0.9);
       padding: 2rem;
       color: rgb(var(--text));
       max-width: 400px;
       margin-left: 2rem;
       text-align: left;
 
-      height: 100%; // 🟢 Make background fill the full height!
-      display: flex; // 🟢 Flexbox to center text inside
+      height: 100%; // Make background fill the full height!
+      display: flex; // Flexbox to center text inside
       flex-direction: column;
-      justify-content: center; // 🟢 Center the text vertically
 
       p {
         font-size: 1.2rem;

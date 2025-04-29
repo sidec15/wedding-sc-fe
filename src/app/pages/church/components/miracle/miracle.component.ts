@@ -13,7 +13,6 @@ import { EventService, ScrollEvent } from '../../../../services/event.service';
 })
 export class MiracleComponent implements AfterViewInit, OnDestroy {
   @ViewChild('miracleImage', { static: false }) miracleImageRef!: ElementRef<HTMLElement>;
-  @ViewChild('miracleTitleBackground', { static: false }) miracleTitleBackgroundRef!: ElementRef<HTMLElement>;
 
   private scrollSubscription!: Subscription;
 
