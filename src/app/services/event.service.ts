@@ -5,15 +5,25 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class EventService {
-  private scrollEventSubject = new BehaviorSubject<ScrollEvent>({scrollY: 0, scrollYOffset: 0});
+  private scrollEventSubject = new BehaviorSubject<ScrollEvent>(new ScrollEvent(0, 0));
   scrollEvent$ = this.scrollEventSubject.asObservable();
 
   emitScrollEvent(scrollY: number, scrollYOffset: number): void {
-    this.scrollEventSubject.next({ scrollY, scrollYOffset });
+    this.scrollEventSubject.next(new ScrollEvent(scrollY, scrollYOffset));
   }
 }
 
-export interface ScrollEvent {
+export class ScrollEvent {
   scrollY: number;
   scrollYOffset: number;
+
+  constructor(scrollY: number, scrollYOffset: number) {
+    this.scrollY = scrollY;
+    this.scrollYOffset = scrollYOffset;
+  }
+  
+  // create a method to identify the scroll y direction according to the offset
+  public scrollDirection(): 'up' | 'down' {
+    return this.scrollYOffset > 0 ? 'down' : 'up';
+  }
 }

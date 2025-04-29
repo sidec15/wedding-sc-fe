@@ -67,9 +67,27 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    // Temporarily disable smooth scrolling
+    this.resetScroll(); // give browser 100ms to really scroll to top
+
     const savedTheme = this.storageService.get('theme') as Theme | null;
     this.currentTheme = savedTheme ?? Theme.Light;
     this.applyTheme(this.currentTheme);
+  }
+
+  private resetScroll() {
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.body.style.scrollBehavior = 'auto';
+
+    // Force scroll to top instantly
+    window.scrollTo(0, 0);
+
+    // Restore smooth scrolling
+    setTimeout(() => {
+      document.documentElement.style.scrollBehavior = '';
+      document.body.style.scrollBehavior = '';
+    }, 100);
   }
 
   ngAfterViewInit(): void {

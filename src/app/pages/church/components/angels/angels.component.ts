@@ -37,6 +37,8 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
 
   private parallaxOffset: number = 0;
   private speedFactor: number = 0.1;
+  private isVisible: boolean = false;
+  private notVisibleReason: 'scroll-top' | 'scroll-bottom' = 'scroll-top';
 
   constructor(
     private platformService: PlatformService,
@@ -45,11 +47,6 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
-
-    // Initialize parallaxOffset based on current scroll position
-    const initialScrollY = window.scrollY || 0;
-
-    this.initializeParallaxOffset(initialScrollY);
 
     this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
       (e: ScrollEvent) => {
@@ -61,6 +58,9 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
         this.checkVisibility(this.angelRightRef.nativeElement);
       }
     );
+
+    const initialScrollY = window.scrollY || document.documentElement.scrollTop;
+    this.updateTitleParallax(new ScrollEvent(initialScrollY, 0));
   }
 
   ngOnDestroy(): void {
@@ -124,50 +124,39 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private initializeParallaxOffset(initialScrollY: number): void {
-    const titleBgEl = this.angelsTitleBackgroundRef?.nativeElement;
-    const containerEl = this.descriptionContainerRef?.nativeElement;
-
-    if (!titleBgEl || !containerEl) return;
-
-    const rect = containerEl.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // Check if container is visible (important on page load)
-    if (rect.bottom < 0 || rect.top > windowHeight) {
-      return;
-    }
-
-    /** Initialize parallaxOffset based on initial scroll */
-    const direction = initialScrollY > 0 ? 1 : -1;
-    const distance = Math.abs(initialScrollY) * this.speedFactor * direction;
-    this.parallaxOffset = distance; // ✅ no accumulation, set properly
-
-    // Immediately apply the transform and opacity based on the initialized offset
-
-    titleBgEl.style.transform = `translate(-50%, -50%) translateY(${this.parallaxOffset}px)`;
-
-    const maxScrollForFullOpacity = 300; // or use a constant
-    const opacity = Math.min(
-      Math.max(this.parallaxOffset / maxScrollForFullOpacity, 0),
-      1
-    );
-
-    titleBgEl.style.opacity = opacity.toString();
-  }
-
   private updateTitleParallax(scrollEvent: ScrollEvent): void {
     const titleBgEl = this.angelsTitleBackgroundRef?.nativeElement;
     const containerEl = this.descriptionContainerRef?.nativeElement;
 
     if (!titleBgEl || !containerEl) return;
 
-    const scrollYOffset = scrollEvent.scrollYOffset; // Get the scroll offset from the event
-
     // Check if container is visible in viewport
     if (!this.isElementInViewport(containerEl)) {
+      
+      // if it was previously visible, set the not visible reason to scroll-top or scroll-bottom
+      if (this.isVisible) {
+        // set the not visible reason according to the scroll direction
+        if (scrollEvent.scrollDirection() === 'up') {
+          this.notVisibleReason = 'scroll-top'; // Set the reason for not visible
+        } else {
+          this.notVisibleReason = 'scroll-bottom'; // Set the reason for not visible
+        }
+        if (this.notVisibleReason === 'scroll-top') {
+          // reset the parallax background element to its initial status
+          this.parallaxOffset = 0; // Reset the parallax offset
+          titleBgEl.style.transform = `translate(-50%, -50%) translateY(0px)`; // Reset the transform
+          titleBgEl.style.opacity = '0'; // Reset the opacity
+        }
+
+        this.isVisible = false; // Set the visibility to false if the container is not in viewport
+      }
+
       return;
     }
+
+    this.isVisible = true; // Set the visibility to true if the container is in viewport
+
+    const scrollYOffset = scrollEvent.scrollYOffset; // Get the scroll offset from the event
 
     const currentParallaxOffset = this.parallaxOffset;
     /** 1 for down, -1 for up */
