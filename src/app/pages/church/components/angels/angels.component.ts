@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { EventService } from '../../../../services/event.service';
+import { EventService, ScrollEvent } from '../../../../services/event.service';
 import { PlatformService } from '../../../../services/platform.service';
 import { Subscription } from 'rxjs';
 
@@ -29,6 +29,15 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
   @ViewChild('angelRight', { static: false })
   angelRightRef!: ElementRef<HTMLElement>;
 
+  @ViewChild('angelsTitleBackground', { static: false })
+  angelsTitleBackgroundRef!: ElementRef<HTMLElement>;
+
+  @ViewChild('descriptionContainer', { static: false })
+  descriptionContainerRef!: ElementRef<HTMLElement>;
+
+  private parallaxOffset: number = 0;
+  private speedFactor: number = 0.1;
+
   constructor(
     private platformService: PlatformService,
     private eventService: EventService
@@ -38,13 +47,21 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
     this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
-      (scrollY: number) => {
+      (e: ScrollEvent) => {
+        // Update the parallax effect for the title background
+        const scrollY = e.scrollY;
+        this.updateTitleParallax(e);
         this.animateDescription(scrollY);
         this.checkVisibility(this.angelLeftRef.nativeElement);
         this.checkVisibility(this.angelRightRef.nativeElement);
       }
     );
+
+    // Immediately trigger the first update after view initialized
+    const initialScrollY = window.scrollY || 0;
+    this.updateTitleParallax({ scrollYOffset: initialScrollY } as ScrollEvent);
   }
+
   ngOnDestroy(): void {
     if (this.scrollEventSubscription) {
       this.scrollEventSubscription.unsubscribe();
@@ -64,10 +81,19 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
     const windowHeight = window.innerHeight;
 
     // Progress from 0 (bottom of screen) to 1 (center)
-    const visibleRatio = 1 - Math.min(Math.max((descriptionRect.top - windowHeight * 0.3) / (windowHeight * 0.8), 0), 1);
+    const visibleRatio =
+      1 -
+      Math.min(
+        Math.max(
+          (descriptionRect.top - windowHeight * 0.3) / (windowHeight * 0.8),
+          0
+        ),
+        1
+      );
 
     // Clamp + ease for description
-    const descriptionScale = minScale + visibleRatio * (maxScaleDescription - minScale); // Scale from min to max scale
+    const descriptionScale =
+      minScale + visibleRatio * (maxScaleDescription - minScale); // Scale from min to max scale
     const descriptionOpacity = visibleRatio;
     const descriptionTranslateY = (1 - visibleRatio) * 40;
 
@@ -95,5 +121,46 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
     } else {
       element.classList.remove('visible'); // Remove the effect when out of view
     }
+  }
+
+  private updateTitleParallax(scrollEvent: ScrollEvent): void {
+    const titleBgEl = this.angelsTitleBackgroundRef?.nativeElement;
+    const containerEl = this.descriptionContainerRef?.nativeElement;
+
+    if (!titleBgEl || !containerEl) return;
+
+    const scrollYOffset = scrollEvent.scrollYOffset; // Get the scroll offset from the event
+
+    // Check if container is visible in viewport
+    if (!this.isElementInViewport(containerEl)) {
+      return;
+    }
+
+    const currentParallaxOffset = this.parallaxOffset;
+    /** 1 for down, -1 for up */
+    let direction = scrollYOffset > 0 ? 1 : -1;
+    const distance = Math.abs(scrollYOffset) * this.speedFactor * direction;
+    this.parallaxOffset = currentParallaxOffset + distance;
+
+    // Update movement
+    titleBgEl.style.transform = `translate(-50%, -50%) translateY(${this.parallaxOffset}px)`;
+
+    // Update opacity: from 0 to 1 as scroll increases
+    const maxScrollForFullOpacity = 300; // You can adjust this value for how "fast" it fades in
+    const opacity = Math.min(
+      Math.max(this.parallaxOffset / maxScrollForFullOpacity, 0),
+      1
+    );
+
+    titleBgEl.style.opacity = opacity.toString();
+  }
+
+  private isElementInViewport(el: HTMLElement): boolean {
+    if (!this.platformService.isBrowser()) return false; // Ensure this runs only in the browser
+    const rect = el.getBoundingClientRect();
+    return (
+      rect.top < window.innerHeight && // Element's top is above bottom of viewport
+      rect.bottom > 0 // Element's bottom is below top of viewport
+    );
   }
 }

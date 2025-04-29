@@ -44,6 +44,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private touchStartX = 0;
   private touchEndX = 0;
 
+  private previousScrollYValue = 0; // Store the previous scroll Y value
+
   @ViewChild('languageDropdown') languageDropdownRef!: ElementRef;
   @ViewChild('themeDropdown') themeDropdownRef!: ElementRef;
 
@@ -84,8 +86,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       // Get scroll position from Lenis
       const scrollY = this.lenis.scroll;
 
-      // Emit scroll event with scroll position
-      this.eventService.emitScrollEvent(scrollY);
+      // Emit scroll event with scroll position only if the scroll really changed
+      if (Math.abs(scrollY - this.previousScrollYValue) > 0.1) {
+        this.eventService.emitScrollEvent(scrollY, scrollY - this.previousScrollYValue); // Emit the scroll event
+        this.previousScrollYValue = scrollY; // Update the previous scroll Y value
+      }
 
       this.rafId = requestAnimationFrame(raf);
     };

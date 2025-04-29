@@ -53,9 +53,9 @@ export class IntroComponent implements AfterViewInit, OnInit, OnDestroy {
 
     // Subscribe to scroll events
     this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
-      (scrollY) => {
+      (scrollEvent) => {
         if (this.heroOverlayRef) {
-          this.animateHero(scrollY);
+          this.animateHero(scrollEvent.scrollY);
         }
       }
     );

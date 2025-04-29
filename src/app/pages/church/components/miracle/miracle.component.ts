@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild, OnDestroy } from '@ang
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
 import { Subscription } from 'rxjs';
-import { EventService } from '../../../../services/event.service';
+import { EventService, ScrollEvent } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-miracle',
@@ -25,9 +25,8 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platform.isBrowser()) return;
 
-    this.scrollSubscription = this.eventService.scrollEvent$.subscribe((scrollY: number) => {
-      // this.updateParallax(scrollY);
-      this.updateTitleParallax(scrollY);
+    this.scrollSubscription = this.eventService.scrollEvent$.subscribe((scrollEvent: ScrollEvent) => {
+      //todo_here
     });
   }
 
@@ -35,12 +34,4 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
     this.scrollSubscription?.unsubscribe();
   }
 
-  private updateTitleParallax(scrollY: number) {
-    const titleBgEl = this.miracleTitleBackgroundRef?.nativeElement;
-    if (!titleBgEl) return;
-
-    // Adjust the multiplier to reduce the movement
-    const move = Math.min(scrollY * 0.01, 30); // Limit the movement to a maximum of 30px
-    titleBgEl.style.transform = `translate(-50%, calc(-50% + ${move}px))`;
-  }
 }

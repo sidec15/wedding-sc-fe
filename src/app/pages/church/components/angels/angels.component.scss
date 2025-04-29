@@ -45,27 +45,55 @@
     // }
   }
 
-  .angels-description {
+  .angels-description-container {
+    position: relative;
+    display: flex;
     flex: 2;
-    text-align: center;
-    padding: 0 2rem;
+    height: 50vh; // 🔥 Make this high enough to allow scroll movement to be visible
+    
+    align-items: center;
+    justify-content: center;
+    // border: 1px solid red; // 🔴 just for debug to see how big the container really is
 
-    h2 {
-      font-size: 2.5rem;
+
+    .title-background {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%) translateY(0); // 🟢 will animate Y axis on scroll
+      opacity: 0;
       color: rgb(var(--accent));
-      margin-bottom: 1rem;
+      font-size: 10rem;
+      font-weight: bold;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 1; // 🟢 Behind the title
+      transition: transform 0.3s ease-out;
+      will-change: transform, opacity;
+      user-select: none;
     }
 
-    p {
-      font-size: 1.5rem;
-      color: rgb(var(--text));
-      line-height: 1.6;
-    }
+    .angels-description {
+      text-align: center;
+      padding: 0 2rem;
 
-    opacity: 0;
-    transform: translate3d(0, 60px, 0) scale(0.7);
-    will-change: opacity, transform;
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      h2 {
+        font-size: 2.5rem;
+        color: rgb(var(--accent));
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1.5rem;
+        color: rgb(var(--text));
+        line-height: 1.6;
+      }
+
+      opacity: 0;
+      transform: translate3d(0, 60px, 0) scale(0.7);
+      will-change: opacity, transform;
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
   }
 
   @media screen and (max-width: 768px) {
