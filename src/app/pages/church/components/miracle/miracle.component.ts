@@ -9,6 +9,8 @@ import { PlatformService } from '../../../../services/platform.service';
   styleUrl: './miracle.component.scss',
 })
 export class MiracleComponent implements OnDestroy {
+
+
   @ViewChild('miracleImage', { static: true }) miracleImageRef!: ElementRef;
 
   private imageConfigs: { url: string; position: string }[] = [
@@ -16,6 +18,8 @@ export class MiracleComponent implements OnDestroy {
     { url: '/images/church/miracle/miracle-06.png', position: 'center center' },
     { url: '/images/church/miracle/miracle-07.png', position: 'center center' },
   ];
+
+  private readonly timeout = 10000; // milliseconds
 
   private currentImageIndex = 0;
   private intervalId!: any;
@@ -39,14 +43,14 @@ export class MiracleComponent implements OnDestroy {
       this.currentImageIndex =
         (this.currentImageIndex + 1) % this.imageConfigs.length; // Cycle through images
       this.updateBackgroundImage();
-    }, 5000); // Change image every 5 seconds
+    }, this.timeout); // Change image every 5 seconds
   }
 
   private updateBackgroundImage(): void {
     const miracleImageEl = this.miracleImageRef.nativeElement;
     const currentImage = this.imageConfigs[this.currentImageIndex];
     miracleImageEl.style.backgroundImage = `url('${currentImage.url}')`;
-    miracleImageEl.style.backgroundPosition = currentImage.position;
+    // miracleImageEl.style.backgroundPosition = currentImage.position;
   }
   
 }
