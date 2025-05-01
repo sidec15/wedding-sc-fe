@@ -2,11 +2,14 @@
 @use "../../../../../styles/mixins.scss" as *;
 
 .miracle-section {
+  // debug_sdc
+  // margin-bottom: 400px;
+
   // padding: 4rem 1rem;
   background: rgb(var(--bg));
   display: flex;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
   width: 100%;
 
   .miracle-container {
@@ -15,7 +18,7 @@
     gap: 3rem;
     // max-width: 1200px;
     width: 100%;
-    align-items: center;
+    // align-items: center;
 
     @media (max-width: 768px) {
       flex-direction: column;
@@ -29,7 +32,7 @@
     overflow: hidden;
     display: flex;
     align-items: start;
-    justify-content: center;
+    // justify-content: center;
   }
 
   .miracle-img-cent {
@@ -40,10 +43,10 @@
 
   .miracle-img {
     width: 100%;
-    height: auto;
+    height: 700px;
     object-fit: cover;
     will-change: transform;
-    transition: transform 0.2s ease-out;
+    transition: transform 0.1s linear;
   }
 
   .miracle-text {

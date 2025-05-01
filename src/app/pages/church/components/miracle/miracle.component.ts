@@ -25,6 +25,7 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
   @ViewChild('miracleSection', { static: true }) miracleSectionRef!: ElementRef;
 
   private parallaxOffset: number = 0;
+  private parallaxSpeedFactor: number = 0.5;
 
   constructor(
     private platformService: PlatformService,
@@ -58,7 +59,7 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
     /** 1 for down, -1 for up */
     let direction = scrollEvent.scrollDirection() === 'up' ? -1 : 1;
     const distance =
-      Math.abs(scrollYOffset) * 0.1 * direction;
+      Math.abs(scrollYOffset) * this.parallaxSpeedFactor * direction;
     this.parallaxOffset = currentParallaxOffset + distance;
 
 
