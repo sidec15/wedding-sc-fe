@@ -1,56 +1,44 @@
-import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  HostListener,
+} from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
 
 @Component({
   selector: 'app-miracle',
+  standalone: true,
   imports: [TranslateModule],
   templateUrl: './miracle.component.html',
   styleUrl: './miracle.component.scss',
 })
-export class MiracleComponent implements OnDestroy {
-
-
+export class MiracleComponent implements AfterViewInit {
   @ViewChild('miracleImage', { static: true }) miracleImageRef!: ElementRef;
-
-  private imageConfigs: { url: string; position: string }[] = [
-    { url: '/images/church/miracle/miracle-02.jpg', position: 'top center' },
-    { url: '/images/church/miracle/miracle-06.png', position: 'center center' },
-    { url: '/images/church/miracle/miracle-07.png', position: 'center center' },
-  ];
-
-  private readonly timeout = 10000; // milliseconds
-
-  private currentImageIndex = 0;
-  private intervalId!: any;
 
   constructor(private platformService: PlatformService) {}
 
-  ngOnInit(): void {
-    if(!this.platformService.isBrowser()) return;
-    this.startImageCarousel();
-  }
-
-  ngOnDestroy(): void {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
+  ngAfterViewInit(): void {
+    if (this.platformService.isBrowser()) {
+      this.onScroll(); // initialize immediately
     }
   }
 
-  private startImageCarousel(): void {
-    this.updateBackgroundImage(); // Set the initial image
-    this.intervalId = setInterval(() => {
-      this.currentImageIndex =
-        (this.currentImageIndex + 1) % this.imageConfigs.length; // Cycle through images
-      this.updateBackgroundImage();
-    }, this.timeout); // Change image every 5 seconds
-  }
+  @HostListener('window:scroll')
+  onScroll(): void {
+    if (!this.miracleImageRef) return;
 
-  private updateBackgroundImage(): void {
-    const miracleImageEl = this.miracleImageRef.nativeElement;
-    const currentImage = this.imageConfigs[this.currentImageIndex];
-    miracleImageEl.style.backgroundImage = `url('${currentImage.url}')`;
-    // miracleImageEl.style.backgroundPosition = currentImage.position;
+    const el = this.miracleImageRef.nativeElement as HTMLElement;
+    const rect = el.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Compute how much of the section is visible
+    const progress = 1 - rect.top / windowHeight;
+
+    // Apply subtle parallax effect
+    const translateY = Math.min(Math.max(progress * 50, -50), 50); // clamp between -50 and 50px
+    el.style.transform = `translateY(${translateY}px)`;
   }
-  
 }
