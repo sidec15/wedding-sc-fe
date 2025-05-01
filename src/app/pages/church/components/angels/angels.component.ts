@@ -101,11 +101,8 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
   }
 
   private checkVisibility(element: HTMLElement): void {
-    const rect = element.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
     // Check if the element is in the viewport
-    const isVisible = rect.top < windowHeight && rect.bottom > 0;
+    const isVisible = this.platformService.isVisible(element);
 
     if (isVisible) {
       element.classList.add('visible'); // Add the zoom-in effect

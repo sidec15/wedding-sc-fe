@@ -4,9 +4,12 @@ import {
   ViewChild,
   AfterViewInit,
   HostListener,
+  OnDestroy,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
+import { Subscription } from 'rxjs';
+import { EventService, ScrollEvent } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-miracle',
@@ -15,30 +18,54 @@ import { PlatformService } from '../../../../services/platform.service';
   templateUrl: './miracle.component.html',
   styleUrl: './miracle.component.scss',
 })
-export class MiracleComponent implements AfterViewInit {
-  @ViewChild('miracleImage', { static: true }) miracleImageRef!: ElementRef;
+export class MiracleComponent implements AfterViewInit, OnDestroy {
+  private scrollEventSubscription!: Subscription;
 
-  constructor(private platformService: PlatformService) {}
+  @ViewChild('miracleImage', { static: true }) miracleImageRef!: ElementRef;
+  @ViewChild('miracleSection', { static: true }) miracleSectionRef!: ElementRef;
+
+  private parallaxOffset: number = 0;
+
+  constructor(
+    private platformService: PlatformService,
+    private eventService: EventService
+  ) {}
 
   ngAfterViewInit(): void {
-    if (this.platformService.isBrowser()) {
-      this.onScroll(); // initialize immediately
-    }
+    if (!this.platformService.isBrowser()) return;
+
+    this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
+      (e: ScrollEvent) => this.animateImage(e)
+    );
   }
 
-  @HostListener('window:scroll')
-  onScroll(): void {
-    if (!this.miracleImageRef) return;
+  ngOnDestroy(): void {
+    this.scrollEventSubscription?.unsubscribe();
+  }
 
-    const el = this.miracleImageRef.nativeElement as HTMLElement;
-    const rect = el.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
+  animateImage(scrollEvent: ScrollEvent): void {
+    if (!this.platformService.isBrowser()) return;
 
-    // Compute how much of the section is visible
-    const progress = 1 - rect.top / windowHeight;
+    const section = this.miracleSectionRef.nativeElement as HTMLElement;
 
-    // Apply subtle parallax effect
-    const translateY = Math.min(Math.max(progress * 50, -50), 50); // clamp between -50 and 50px
-    el.style.transform = `translateY(${translateY}px)`;
+    if(!this.platformService.isVisible(section)) return;
+
+    const rect = section.getBoundingClientRect();
+
+    const scrollYOffset = scrollEvent.scrollYOffset; // Get the scroll offset from the event
+
+    const currentParallaxOffset = this.parallaxOffset;
+    /** 1 for down, -1 for up */
+    let direction = scrollEvent.scrollDirection() === 'up' ? -1 : 1;
+    const distance =
+      Math.abs(scrollYOffset) * 0.1 * direction;
+    this.parallaxOffset = currentParallaxOffset + distance;
+
+
+    const imageContainer = this.miracleImageRef.nativeElement as HTMLElement;
+
+    imageContainer.querySelector(
+      'img'
+    )!.style.transform = `translateY(${this.parallaxOffset}px)`;
   }
 }

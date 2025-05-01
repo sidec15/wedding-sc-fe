@@ -16,5 +16,15 @@ export class PlatformService {
     return this.isBrowser() && window.innerWidth <= 768;
   }
 
+  isVisible(element: HTMLElement): boolean {
+    if (!this.isBrowser()) return false; // Ensure this runs only in the browser
+    const rect = element.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Check if the element is in the viewport
+    const isVisible = rect.top < windowHeight && rect.bottom > 0;
+
+    return isVisible;
+  }
 
 }
