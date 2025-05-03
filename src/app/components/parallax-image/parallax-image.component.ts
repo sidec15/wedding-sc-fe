@@ -12,6 +12,7 @@ import { PlatformService } from '../../services/platform.service';
 
 @Component({
   selector: 'app-parallax-image',
+  standalone: true,
   imports: [],
   templateUrl: './parallax-image.component.html',
   styleUrl: './parallax-image.component.scss',
@@ -44,6 +45,7 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log('Unsubscribing from scroll event'); // Debug log
     this.scrollSubscription?.unsubscribe();
   }
 
