@@ -25,7 +25,7 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
   @ViewChild('miracleSection', { static: true }) miracleSectionRef!: ElementRef;
 
   private parallaxOffset: number = 0;
-  private parallaxSpeedFactor: number = 0.5;
+  private parallaxSpeedFactor: number = 0.1;
 
   constructor(
     private platformService: PlatformService,
@@ -51,8 +51,6 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
 
     if(!this.platformService.isVisible(section)) return;
 
-    const rect = section.getBoundingClientRect();
-
     const scrollYOffset = scrollEvent.scrollYOffset; // Get the scroll offset from the event
 
     const currentParallaxOffset = this.parallaxOffset;
@@ -65,8 +63,6 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
 
     const imageContainer = this.miracleImageRef.nativeElement as HTMLElement;
 
-    imageContainer.querySelector(
-      'img'
-    )!.style.transform = `translateY(${this.parallaxOffset}px)`;
+    imageContainer.style.transform = `translateY(${this.parallaxOffset}px)`;
   }
 }
