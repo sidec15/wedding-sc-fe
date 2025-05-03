@@ -13,48 +13,36 @@
 
     .miracle-image-wrapper {
       flex: 1;
-      height: 400px;
+      height: 500px;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-    
-      .miracle-img-cent {
-        width: 100%;
-        height: 600px;
-        overflow: hidden;
-        position: relative;
-      
-        .miracle-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          will-change: transform;
-          transition: transform 0.1s linear;
-        }
+
+      .miracle-img {
+        height: 650px;
+        object-fit: cover;
+        will-change: transform;
+        transition: transform 0.1s linear;
       }
-    
     }
-  
+
     .miracle-text {
       flex: 1;
       color: rgb(var(--text));
-  
+
       .miracle-title {
         font-size: 2.5rem;
         font-weight: bold;
         color: rgb(var(--accent));
         margin-bottom: 1rem;
       }
-  
+
       p {
         font-size: 1.2rem;
         line-height: 1.6;
         margin-bottom: 1rem;
       }
     }
-
   }
-
 }
-
