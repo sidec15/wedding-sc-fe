@@ -1,0 +1,13 @@
+.parallax-image-wrapper {
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.parallax-image {
+  width: 100%;
+  object-fit: cover;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}

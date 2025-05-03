@@ -1,13 +1,12 @@
 <section class="miracle-section" id="miracle" #miracleSection>
   <div class="miracle-container">
-    <div class="miracle-image-wrapper" #miracleImageWrapper>
-      <img
-        src="/images/church/miracle/miracle-02.jpg"
-        alt="Miracle"
-        class="miracle-img"
-        #miracleImage
-      />
-    </div>
+    <app-parallax-image
+      class="parallax-image"
+      src="/images/church/miracle/miracle-02.jpg"
+      [speedFactor]="0.1"
+      [containerHeight]="500"
+      [imageHeight]="650"
+    ></app-parallax-image>
 
     <div class="miracle-text">
       <h2 class="miracle-title">{{ "church.miracle.title" | translate }}</h2>

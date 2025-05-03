@@ -1,0 +1,65 @@
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { EventService, ScrollEvent } from '../../services/event.service';
+import { PlatformService } from '../../services/platform.service';
+
+@Component({
+  selector: 'app-parallax-image',
+  imports: [],
+  templateUrl: './parallax-image.component.html',
+  styleUrl: './parallax-image.component.scss',
+})
+export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
+  @Input() src!: string;
+  @Input() alt = '';
+  @Input() containerHeight = 500;
+  @Input() imageHeight = 650;
+  @Input() speedFactor = 0.1;
+
+  @ViewChild('image', { static: true }) imageRef!: ElementRef;
+  @ViewChild('wrapper', { static: true }) wrapperRef!: ElementRef;
+
+  private parallaxOffset = 0;
+  private scrollSubscription!: Subscription;
+
+  constructor(
+    private eventService: EventService,
+    private platformService: PlatformService
+  ) {}
+
+  ngAfterViewInit(): void {
+    this.scrollSubscription = this.eventService.scrollEvent$.subscribe(
+      (e: ScrollEvent) => {
+        console.log('Scroll event received:', e); // Debug log
+        this.animate(e);
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.scrollSubscription?.unsubscribe();
+  }
+
+  animate(scrollEvent: ScrollEvent): void {
+    if (!this.platformService.isBrowser()) return;
+    const wrapper = this.wrapperRef.nativeElement as HTMLElement;
+
+    if(!this.platformService.isVisible(wrapper)) return;
+
+    const direction = scrollEvent.scrollDirection() === 'up' ? -1 : 1;
+    const distance =
+      Math.abs(scrollEvent.scrollYOffset) * this.speedFactor * direction;
+
+    this.parallaxOffset += distance;
+
+    const img = this.imageRef.nativeElement as HTMLElement;
+    img.style.transform = `translateY(${this.parallaxOffset}px)`;
+  }
+}

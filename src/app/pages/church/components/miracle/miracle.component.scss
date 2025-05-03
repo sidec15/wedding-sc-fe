@@ -11,20 +11,8 @@
     align-items: stretch; // ensures both columns stretch equally
     gap: 3rem;
 
-    .miracle-image-wrapper {
+    .parallax-image {
       flex: 1;
-      height: 500px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .miracle-img {
-        height: 650px;
-        object-fit: cover;
-        will-change: transform;
-        transition: transform 0.1s linear;
-      }
     }
 
     .miracle-text {
