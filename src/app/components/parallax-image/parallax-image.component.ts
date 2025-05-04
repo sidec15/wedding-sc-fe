@@ -44,7 +44,6 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('Unsubscribing from scroll event'); // Debug log
     this.scrollSubscription?.unsubscribe();
   }
 

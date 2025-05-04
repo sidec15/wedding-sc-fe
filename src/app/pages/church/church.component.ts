@@ -8,11 +8,12 @@ import { OriginsComponent } from './components/origins/origins.component';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { AngelsComponent } from './components/angels/angels.component';
 import { MiracleComponent } from './components/miracle/miracle.component';
+import { RatisbonneComponent } from "./components/ratisbonne/ratisbonne.component";
 
 @Component({
   selector: 'app-church',
   standalone: true,
-  imports: [TranslateModule, IntroComponent, OriginsComponent, RingScrollComponent, AngelsComponent, MiracleComponent],
+  imports: [TranslateModule, IntroComponent, OriginsComponent, RingScrollComponent, AngelsComponent, MiracleComponent, RatisbonneComponent],
   templateUrl: './church.component.html',
   styleUrls: ['./church.component.scss'],
 })

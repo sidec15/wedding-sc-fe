@@ -5,14 +5,14 @@
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translate(-50%, -50%) translateY(0); // 🟢 will animate Y axis on scroll
+  transform: translate(-50%, -50%) translateY(0);
   opacity: 0;
   color: rgb(var(--accent));
   font-size: 10rem;
   font-weight: bold;
   pointer-events: none;
   white-space: nowrap;
-  z-index: 1; // 🟢 Behind the title
+  z-index: 1;
   transition: transform 0.3s ease-out;
   will-change: transform, opacity;
   user-select: none;

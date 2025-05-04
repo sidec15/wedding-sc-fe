@@ -1,12 +1,15 @@
 @use "../../../../../styles/variables.scss" as *;
 @use "../../../../../styles/mixins.scss" as *;
+@use "../../styles/church-styles.scss" as church; // Use the forwarded styles
 
 .miracle-section {
+  margin-bottom: 80px;
   background: rgb(var(--bg));
   display: flex;
   width: 100%;
 
   .miracle-container {
+    position: relative;
     display: flex;
     align-items: stretch; // ensures both columns stretch equally
     gap: 3rem;
@@ -16,6 +19,7 @@
     }
 
     .miracle-text {
+      position: relative;
       flex: 1;
       color: rgb(var(--text));
       padding-right: 10px;
@@ -37,5 +41,9 @@
         }
       }
     }
+  }
+
+  ::ng-deep .moving-background {
+    font-size: 8rem; // Override the font size
   }
 }

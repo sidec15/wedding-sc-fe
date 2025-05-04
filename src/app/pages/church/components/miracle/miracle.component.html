@@ -1,4 +1,4 @@
-<section class="miracle-section" id="miracle" #miracleSection>
+<section class="miracle-section" #miracleSection>
   <div class="miracle-container">
     <app-parallax-image
       class="flex-grow"
@@ -8,6 +8,14 @@
       [imageHeight]="650"
     ></app-parallax-image>
 
+    <app-moving-background
+      [content]="'APPARITION'"
+      [maxOpacity]="0.3"
+      [parallaxSpeedFactor]="0.05"
+      [opacitySpeedFactor]="0.005"
+      [maxScrollForFullOpacity]="300"
+    >
+    </app-moving-background>
     <div class="miracle-text">
       <h2 class="miracle-title">{{ "church.miracle.title" | translate }}</h2>
       <p>{{ "church.miracle.description1" | translate }}</p>

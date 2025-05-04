@@ -133,14 +133,21 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
     return rect.top <= window.innerHeight && rect.bottom >= 0;
   }
 
-  private getContainerElement(): HTMLElement | null {
+  private getContainerElement(): HTMLElement | null | undefined {
     const movingBgEl = this.movingBackgroundRef
       ?.nativeElement as HTMLElement | null;
 
-    let parent = movingBgEl;
+    let parent = movingBgEl?.parentElement;
 
     while (parent && parent.tagName === 'APP-MOVING-BACKGROUND') {
       parent = parent.parentElement;
+    }
+
+    // print parent class name
+    if (parent) {
+      console.log('Parent class name:', parent.className);
+    } else {
+      console.log('No parent found');
     }
 
     return parent;

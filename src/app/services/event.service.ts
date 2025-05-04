@@ -9,7 +9,6 @@ export class EventService {
   scrollEvent$ = this.scrollEventSubject.asObservable();
 
   emitScrollEvent(scrollY: number, scrollYOffset: number): void {
-    console.log(`Emitting scroll event: scrollY: ${scrollY}, scrollYOffset: ${scrollYOffset}`);
     this.scrollEventSubject.next(new ScrollEvent(scrollY, scrollYOffset));
   }
 }
