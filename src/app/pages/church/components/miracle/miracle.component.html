@@ -1,13 +1,5 @@
 <section class="miracle-section" #miracleSection>
   <div class="miracle-container">
-    <app-parallax-image
-      class="flex-grow"
-      src="/images/church/miracle/miracle-02.jpg"
-      [speedFactor]="0.1"
-      [containerHeight]="500"
-      [imageHeight]="650"
-    ></app-parallax-image>
-
     <app-moving-background
       [content]="'APPARITION'"
       [maxOpacity]="0.3"
@@ -16,6 +8,17 @@
       [maxScrollForFullOpacity]="300"
     >
     </app-moving-background>
+
+    <app-parallax-image
+      class="flex-grow"
+      src="/images/church/miracle/miracle-02.jpg"
+      [speedFactor]="0.1"
+      [containerHeight]="500"
+      [imageHeight]="650"
+
+      style="z-index: 1;"
+    ></app-parallax-image>
+
     <div class="miracle-text">
       <h2 class="miracle-title">{{ "church.miracle.title" | translate }}</h2>
       <p>{{ "church.miracle.description1" | translate }}</p>
@@ -23,5 +26,6 @@
       <p>{{ "church.miracle.description3" | translate }}</p>
       <p class="sign">{{ "church.miracle.sign" | translate }}</p>
     </div>
+
   </div>
 </section>

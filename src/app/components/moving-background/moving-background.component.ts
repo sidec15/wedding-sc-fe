@@ -32,6 +32,7 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
   maxScrollForFullOpacity: InputSignal<number> = input(200);
   parallaxSpeedFactor: InputSignal<number> = input(0.05);
   opacitySpeedFactor: InputSignal<number> = input(0.05);
+  fontSize: InputSignal<string> = input('10rem');
 
   private scrollEventSubscription!: Subscription;
 
@@ -51,14 +52,18 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
+    // Set the font size of the moving background element
+    const movingBgEl = this.movingBackgroundRef?.nativeElement;
+    if (movingBgEl) {
+      movingBgEl.style.fontSize = this.fontSize();
+    }
+
     this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
       (e: ScrollEvent) => {
         this.updateTitleParallax(e);
       }
     );
 
-    // const initialScrollY = window.scrollY || document.documentElement.scrollTop;
-    // this.updateTitleParallax(new ScrollEvent(initialScrollY, 0));
   }
 
   ngOnDestroy(): void {
