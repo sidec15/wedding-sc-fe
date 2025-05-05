@@ -9,6 +9,7 @@
   width: 100%;
 
   .miracle-container {
+    padding-top: 40px;
     position: relative;
     display: flex;
     align-items: stretch; // ensures both columns stretch equally
@@ -43,7 +44,4 @@
     }
   }
 
-  // ::ng-deep .moving-background {
-  //   font-size: 8rem; // Override the font size
-  // }
 }
