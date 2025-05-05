@@ -3,85 +3,10 @@
 @use "../../styles/church-styles.scss" as church;
 
 .angels-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: rgb(var(--bg));
-  position: relative;
-  overflow: hidden;
-
-  .image-container {
-    flex: 1;
-    max-width: 50%;
-    height: 90vh;
-    overflow: hidden;
-    position: relative;
-
-    .image {
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-      background-size: cover;
-      background-position: top center; // Focus on the top of the image
-      background-repeat: no-repeat;
-      box-shadow: 10px 10px 15px var(--box-shadow-heavy); // Bottom-right shadow
-      transform: scale(0.7); // Start with a smaller size (tiny)
-      transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
-      will-change: transform;
-    }
-
-    &.left .image {
-      background-image: url("/images/church/angels/angels-02.jpg");
-    }
-
-    &.right .image {
-      background-image: url("/images/church/angels/angels-01.jpg");
-    }
-
-  }
-
-  .angels-description-container {
-    position: relative;
-    display: flex;
-    flex: 2;
-    height: 50vh; // Make this high enough to allow scroll movement to be visible
-    align-items: center;
-    justify-content: center;
-
-    .angels-description {
-      text-align: center;
-      padding: 0 2rem;
-
-      h2 {
-        font-size: 2.5rem;
-        color: rgb(var(--accent));
-        margin-bottom: 1rem;
-      }
-
-      p {
-        font-size: 1.5rem;
-        color: rgb(var(--text));
-        line-height: 1.6;
-      }
-
-      opacity: 0;
-      transform: translate3d(0, 60px, 0) scale(0.7);
-      will-change: opacity, transform;
-      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    text-align: center;
-
-    .image-container {
-      max-width: 80%;
-      margin-bottom: 1rem;
-    }
-
-    .angels-description {
-      padding: 0;
-    }
-  }
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-between;
+  // background-color: rgb(var(--bg));
+  // position: relative;
+  // overflow: hidden;
 }

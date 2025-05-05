@@ -148,13 +148,6 @@ export class MovingBackgroundComponent implements AfterViewInit, OnDestroy {
       parent = parent.parentElement;
     }
 
-    // print parent class name
-    if (parent) {
-      console.log('Parent class name:', parent.className);
-    } else {
-      console.log('No parent found');
-    }
-
     return parent;
   }
 }

@@ -18,13 +18,13 @@ import { PlatformService } from '../../../../../services/platform.service';
   templateUrl: './two-images.component.html',
   styleUrl: './two-images.component.scss',
 })
-export class AngelsComponent implements AfterViewInit, OnDestroy {
+export class TwoImagesComponent implements AfterViewInit, OnDestroy {
   private scrollEventSubscription!: Subscription;
 
   @ViewChild('description', { static: false })
   descriptionRef!: ElementRef<HTMLElement>;
 
-  @ViewChild('imagelLeft', { static: false })
+  @ViewChild('imageLeft', { static: false })
   imageLeftRef!: ElementRef<HTMLElement>;
 
   @ViewChild('imageRight', { static: false })
@@ -46,8 +46,6 @@ export class AngelsComponent implements AfterViewInit, OnDestroy {
         // Update the parallax effect for the title background
         const scrollY = e.scrollY;
         this.animateDescription(scrollY);
-        this.checkVisibility(this.imageLeftRef.nativeElement);
-        this.checkVisibility(this.imageRightRef.nativeElement);
       }
     );
 
