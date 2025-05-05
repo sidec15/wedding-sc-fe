@@ -1,0 +1,23 @@
+<section class="two-images-section">
+  <div class="image-container left" #imageLeft>
+    <div class="image"></div>
+  </div>
+  <div class="description-container" #descriptionContainer>
+    <app-moving-background
+      [content]="'church.angels.moving_background' | translate"
+      [maxOpacity]="0.3"
+      [parallaxSpeedFactor]="0.05"
+      [opacitySpeedFactor]="0.005"
+      [maxScrollForFullOpacity]="300"
+    >
+    </app-moving-background>
+    
+    <div class="description" #description>
+      <h2>{{ "church.angels.title" | translate }}</h2>
+      <p>{{ "church.angels.description" | translate }}</p>
+    </div>
+  </div>
+  <div class="image-container right" #imageRight>
+    <div class="image"></div>
+  </div>
+</section>
