@@ -15,11 +15,11 @@ import {
   ScrollEvent,
 } from '../../../../../services/event.service';
 import { PlatformService } from '../../../../../services/platform.service';
-import { NgFor, NgStyle } from '@angular/common';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-two-images',
-  imports: [TranslateModule, MovingBackgroundComponent, NgFor, NgStyle],
+  imports: [TranslateModule, MovingBackgroundComponent, NgFor],
   templateUrl: './two-images.component.html',
   styleUrl: './two-images.component.scss',
 })
