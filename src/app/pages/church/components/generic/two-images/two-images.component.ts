@@ -2,24 +2,35 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  input,
+  NgZone,
   OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MovingBackgroundComponent } from '../../../../../components/moving-background/moving-background.component';
 import { Subscription } from 'rxjs';
-import { EventService, ScrollEvent } from '../../../../../services/event.service';
+import {
+  EventService,
+  ScrollEvent,
+} from '../../../../../services/event.service';
 import { PlatformService } from '../../../../../services/platform.service';
+import { NgFor, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-two-images',
-  imports: [TranslateModule, MovingBackgroundComponent],
+  imports: [TranslateModule, MovingBackgroundComponent, NgFor, NgStyle],
   templateUrl: './two-images.component.html',
   styleUrl: './two-images.component.scss',
 })
 export class TwoImagesComponent implements AfterViewInit, OnDestroy {
   private scrollEventSubscription!: Subscription;
+
+  movingBackgroundText = input.required<string>();
+  contentTitle = input.required<string>();
+  contentDescriptions = input.required<string[]>();
+  imageUrlLeft = input.required<string>();
+  imageUrlRight = input.required<string>();
 
   @ViewChild('description', { static: false })
   descriptionRef!: ElementRef<HTMLElement>;
@@ -35,7 +46,7 @@ export class TwoImagesComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private platformService: PlatformService,
-    private eventService: EventService
+    private eventService: EventService,
   ) {}
 
   ngAfterViewInit(): void {
@@ -48,7 +59,6 @@ export class TwoImagesComponent implements AfterViewInit, OnDestroy {
         this.animateDescription(scrollY);
       }
     );
-
   }
 
   ngOnDestroy(): void {
@@ -97,16 +107,4 @@ export class TwoImagesComponent implements AfterViewInit, OnDestroy {
     imageLeftEl.style.transform = `scale(${angelScale})`;
     imageRightEl.style.transform = `scale(${angelScale})`;
   }
-
-  private checkVisibility(element: HTMLElement): void {
-    // Check if the element is in the viewport
-    const isVisible = this.platformService.isVisible(element);
-
-    if (isVisible) {
-      element.classList.add('visible'); // Add the zoom-in effect
-    } else {
-      element.classList.remove('visible'); // Remove the effect when out of view
-    }
-  }
-
 }

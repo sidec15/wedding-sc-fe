@@ -59,9 +59,7 @@
     "angels": {
       "title": "Gli Angeli",
       "moving_background": "ANGELI",
-      "description": "Tra gli elementi più suggestivi della chiesa ci sono due angeli scolpiti da Gian Lorenzo Bernini, originariamente destinati al Ponte Sant'Angelo. Considerati troppo belli per restare all'aperto, furono accolti qui per preservarli. Uno angelo regge la corona di spine, simbolo del dolore di Cristo; l'altro mostra il cartiglio con l'iscrizione 'INRI', posta sulla croce.",
-      "left_alt": "Angelo con la corona di spine",
-      "right_alt": "Angelo con il cartiglio 'INRI'"
+      "description": "Tra gli elementi più suggestivi della chiesa ci sono due angeli scolpiti da Gian Lorenzo Bernini, originariamente destinati al Ponte Sant'Angelo. Considerati troppo belli per restare all'aperto, furono accolti qui per preservarli. Uno angelo regge la corona di spine, simbolo del dolore di Cristo; l'altro mostra il cartiglio con l'iscrizione 'INRI', posta sulla croce."
     },
     "miracle": {
       "title": "Il Miracolo dell'Apparizione",
@@ -70,6 +68,11 @@
       "description2": "A tal vista io caddi in ginocchio là dov'ero. [...] Potei a stento fissare lo sguardo nelle mani di Maria, e vidi in esse l'espressione del perdono e della misericordia.",
       "description3": "[...] sebbene non mi dicesse parola, io compresi a fondo l'orrore dello stato in cui ero, la bellezza della religione cattolica, in una parola io capii tutto.\"",
       "sign": "M. A. Ratisbonne"
+    },
+    "ratisbonne": {
+      "title": "La Conversione di Ratisbonne",
+      "description1": "Il 20 gennaio 1842, un giovane ebreo francese di nome Alphonse Ratisbonne, noto per il suo profondo scetticismo e la sua posizione anticristiana, entrò a Sant'Andrea delle Fratte apparentemente per caso. Aveva accettato la sfida di un amico di indossare la Medaglia Miracolosa, ma ciò che accadde dopo cambiò la sua vita per sempre: presso l'altare laterale, vide la Vergine Maria.",
+      "description2": "L'esperienza lo colpì così profondamente che si convertì al cattolicesimo, divenne sacerdote gesuita e dedicò la sua vita a diffondere la fede. La sua conversione, riconosciuta come miracolosa, divenne un potente simbolo di devozione mariana nella Chiesa."
     }
   }
 }
