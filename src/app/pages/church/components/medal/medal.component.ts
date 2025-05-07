@@ -53,7 +53,7 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
     const minScale = 0.2;
-    const maxScale = 1; // Maximum scale for the angels
+    const maxScale = 1.2; // Maximum scale for the angels
 
     // Animate the description
     const descriptionLeftEl = this.descriptionLeftRef.nativeElement;

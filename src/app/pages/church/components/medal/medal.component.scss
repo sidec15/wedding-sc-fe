@@ -15,6 +15,8 @@
   }
 
   .medal-subtitle {
+    z-index: 2;
+    position: relative;
     font-size: 1.5rem;
     color: rgb(var(--accent));
     margin-bottom: 2rem;
@@ -29,12 +31,23 @@
     .medal-description-left,
     .medal-description-right {
       flex: 1;
-      font-size: 0.8rem;
-      color: rgb(var(--text));
-      line-height: 1.5;
       opacity: 0;
       will-change: opacity;
-      transition: opacity 0.5s ease-out;
+      transition: opacity 1s ease-out;
+
+      p {
+        font-size: 1.2rem;
+        color: rgb(var(--text));
+        line-height: 1.5;
+      }
+    }
+
+    .medal-description-left {
+      padding-right: 1.7rem;
+    }
+
+    .medal-description-right {
+      padding-left: 1.7rem;
     }
 
     .medal-image {
@@ -42,9 +55,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      // margin: 0 0.5rem 0 0.5rem;
       transform: scale(0.3); // Start with a smaller size (tiny)
       transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
       will-change: transform;
+      margin-top: 1rem;
+      z-index: 1;
 
       img {
         max-width: 100%;
@@ -54,5 +70,4 @@
       }
     }
   }
-
 }
