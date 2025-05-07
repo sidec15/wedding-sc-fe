@@ -56,7 +56,7 @@ export class TwoImagesComponent implements AfterViewInit, OnDestroy {
       (e: ScrollEvent) => {
         // Update the parallax effect for the title background
         const scrollY = e.scrollY;
-        this.animateDescription(scrollY);
+        this.animate(scrollY);
       }
     );
   }
@@ -67,7 +67,7 @@ export class TwoImagesComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private animateDescription(scrollY: number) {
+  private animate(scrollY: number) {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
     const minScale = 0.7; // Minimum scale for the description and angels

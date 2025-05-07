@@ -1,3 +1,58 @@
 @use "../../../../../styles/variables.scss" as *;
 @use "../../../../../styles/mixins.scss" as *;
 @use "../../styles/church-styles.scss" as church; // Use the forwarded styles
+
+.medal-section {
+  padding: 0 2rem 2rem 2rem;
+  background: rgb(var(--bg));
+  text-align: center;
+
+  .medal-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgb(var(--accent));
+    margin-bottom: 1rem;
+  }
+
+  .medal-subtitle {
+    font-size: 1.5rem;
+    color: rgb(var(--accent));
+    margin-bottom: 2rem;
+  }
+
+  .medal-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+
+    .medal-description-left,
+    .medal-description-right {
+      flex: 1;
+      font-size: 0.8rem;
+      color: rgb(var(--text));
+      line-height: 1.5;
+      opacity: 0;
+      will-change: opacity;
+      transition: opacity 0.5s ease-out;
+    }
+
+    .medal-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: scale(0.3); // Start with a smaller size (tiny)
+      transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: transform;
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(var(--box-shadow-heavy));
+      }
+    }
+  }
+
+}
