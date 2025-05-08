@@ -1,10 +1,15 @@
 <section class="minimi-section">
   <h2 class="minimi-title">{{ "church.minimi.title" | translate }}</h2>
 
-  <div class="carousel" [@fadeSlide]="fadeState">
-    <img [src]="currentSlide.imageUrl" alt="Slide Image" />
-    <div class="overlay">
-      <p>{{ currentSlide.text }}</p>
-    </div>
+  <div class="carousel">
+    <ng-container *ngFor="let slide of activeSlides">
+      <img [src]="slide.imageUrl"
+           alt="Slide Image"
+           class="slide"
+           [@fadeSlide]="slide.visible ? 'visible' : 'hidden'" />
+      <div class="overlay" [@fadeSlide]="slide.visible ? 'visible' : 'hidden'">
+        <p>{{ slide.text }}</p>
+      </div>
+    </ng-container>
   </div>
 </section>
