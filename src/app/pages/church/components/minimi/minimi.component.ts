@@ -57,7 +57,7 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
         this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
         this.currentSlide = this.slides[this.currentSlideIndex];
         this.fadeState = 'visible';
-      }, 0); // match the hide animation duration
+      }, 1000); // match the hide animation duration
     });
   }
 
