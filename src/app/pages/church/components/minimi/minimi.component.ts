@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { interval, Subscription } from 'rxjs';
 import { PlatformService } from '../../../../services/platform.service';
@@ -55,6 +61,9 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
     },
   ];
 
+  @ViewChild('carouselSection', { static: false })
+  carouselSectionRef!: ElementRef<HTMLElement>;
+
   currentSlideIndex = 0;
   activeSlides: { imageUrl: string; text: string; visible: boolean }[] = [];
   fadeState: 'visible' | 'hidden' = 'visible';
@@ -65,33 +74,18 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
   constructor(private platformService: PlatformService) {}
 
   ngAfterViewInit(): void {
-    // check if the platform is broswer
     if (!this.platformService.isBrowser()) return;
 
-    // Show the first slide
-    this.activeSlides = [{ ...this.slides[0], visible: true }];
+    // Use requestAnimationFrame to ensure the DOM has fully rendered and the element's
+    // position is accurate before checking visibility. Without this, getBoundingClientRect()
+    // may return incorrect values on initial load, especially when this section is the first visible one.
+    requestAnimationFrame(() => {
+      if (
+        !this.platformService.isVisible(this.carouselSectionRef.nativeElement)
+      )
+        return;
 
-    this.slideSub = interval(MinimiComponent.intervalValue).subscribe(() => {
-      // Reset progress bar
-      this.progress = 100; // 100 to 0
-      if (this.rafId) cancelAnimationFrame(this.rafId);
-
-      // Start progress bar animation
-      this.startProgressBar(MinimiComponent.intervalValue);
-
-      const nextIndex = (this.currentSlideIndex + 1) % this.slides.length;
-
-      // Hide current
-      this.activeSlides[0].visible = false;
-
-      // Show next
-      this.activeSlides.unshift({ ...this.slides[nextIndex], visible: true });
-
-      // Remove old slide after fade-out
-      setTimeout(() => {
-        this.activeSlides.pop();
-        this.currentSlideIndex = nextIndex;
-      }, MinimiComponent.fadeOutDuration);
+      this.startSlideShow();
     });
   }
 
@@ -100,20 +94,54 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
     if (this.rafId) cancelAnimationFrame(this.rafId);
   }
 
-  startProgressBar(duration: number) {
-    const start = performance.now();  // Get the start time in ms
-  
+  private startSlideShow(): void {
+    this.activeSlides = [{ ...this.slides[0], visible: true }];
+    this.startProgressBar(MinimiComponent.intervalValue);
+
+    this.slideSub = interval(MinimiComponent.intervalValue).subscribe(() => {
+      this.handlePrograsBarAnimation();
+      this.handleSlideAnimation();
+    });
+  }
+
+  private startProgressBar(duration: number) {
+    const start = performance.now(); // Get the start time in ms
+
     const loop = (now: number) => {
-      const elapsed = now - start;   // How much time has passed since we started
+      const elapsed = now - start; // How much time has passed since we started
       const percent = 100 - Math.min((elapsed / duration) * 100, 100); // Compute % progress
-      this.progress = percent;       // Update the bound variable (Angular redraws the bar)
-  
+      this.progress = percent; // Update the bound variable (Angular redraws the bar)
+
       if (percent > 0) {
         this.rafId = requestAnimationFrame(loop); // Call again before next repaint
       }
     };
-  
+
     this.rafId = requestAnimationFrame(loop); // Start the loop
   }
-  
+
+  private handlePrograsBarAnimation() {
+    // Reset progress bar
+    this.progress = 100; // 100 to 0
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+
+    // Start progress bar animation
+    this.startProgressBar(MinimiComponent.intervalValue);
+  }
+
+  private handleSlideAnimation() {
+    const nextIndex = (this.currentSlideIndex + 1) % this.slides.length;
+
+    // Hide current
+    this.activeSlides[0].visible = false;
+
+    // Show next
+    this.activeSlides.unshift({ ...this.slides[nextIndex], visible: true });
+
+    // Remove old slide after fade-out
+    setTimeout(() => {
+      this.activeSlides.pop();
+      this.currentSlideIndex = nextIndex;
+    }, MinimiComponent.fadeOutDuration);
+  }
 }
