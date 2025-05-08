@@ -11,5 +11,10 @@
         <p>{{ slide.text }}</p>
       </div>
     </ng-container>
+
+    <!-- This is now outside the ngFor and always rendered -->
+    <div class="progress-bar-container">
+      <div class="progress-bar" [style.width.%]="progress"></div>
+    </div>
   </div>
 </section>

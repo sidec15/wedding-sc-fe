@@ -2,7 +2,13 @@ import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { interval, Subscription } from 'rxjs';
 import { PlatformService } from '../../../../services/platform.service';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -14,8 +20,12 @@ import { NgFor } from '@angular/common';
     trigger('fadeSlide', [
       state('visible', style({ opacity: 1 })),
       state('hidden', style({ opacity: 0 })),
-      transition('visible => hidden', [animate(MinimiComponent.fadeOutDuration + 'ms ease-out')]),
-      transition('hidden => visible', [animate(MinimiComponent.fadeInDuration + 'ms ease-in')]),
+      transition('visible => hidden', [
+        animate(MinimiComponent.fadeOutDuration + 'ms ease-out'),
+      ]),
+      transition('hidden => visible', [
+        animate(MinimiComponent.fadeInDuration + 'ms ease-in'),
+      ]),
     ]),
   ],
 })
@@ -49,6 +59,9 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
   activeSlides: { imageUrl: string; text: string; visible: boolean }[] = [];
   fadeState: 'visible' | 'hidden' = 'visible';
 
+  progress = 100; // 100 to 0
+  private rafId: number | null = null;
+
   constructor(private platformService: PlatformService) {}
 
   ngAfterViewInit(): void {
@@ -59,6 +72,13 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
     this.activeSlides = [{ ...this.slides[0], visible: true }];
 
     this.slideSub = interval(MinimiComponent.intervalValue).subscribe(() => {
+      // Reset progress bar
+      this.progress = 100; // 100 to 0
+      if (this.rafId) cancelAnimationFrame(this.rafId);
+
+      // Start progress bar animation
+      this.startProgressBar(MinimiComponent.intervalValue);
+
       const nextIndex = (this.currentSlideIndex + 1) % this.slides.length;
 
       // Hide current
@@ -77,5 +97,23 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.slideSub?.unsubscribe();
+    if (this.rafId) cancelAnimationFrame(this.rafId);
   }
+
+  startProgressBar(duration: number) {
+    const start = performance.now();  // Get the start time in ms
+  
+    const loop = (now: number) => {
+      const elapsed = now - start;   // How much time has passed since we started
+      const percent = 100 - Math.min((elapsed / duration) * 100, 100); // Compute % progress
+      this.progress = percent;       // Update the bound variable (Angular redraws the bar)
+  
+      if (percent > 0) {
+        this.rafId = requestAnimationFrame(loop); // Call again before next repaint
+      }
+    };
+  
+    this.rafId = requestAnimationFrame(loop); // Start the loop
+  }
+  
 }
