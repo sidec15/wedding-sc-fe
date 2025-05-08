@@ -1,7 +1,7 @@
 <section class="minimi-section">
   <h2 class="minimi-title">{{ "church.minimi.title" | translate }}</h2>
 
-  <div class="carousel">
+  <div class="carousel" [@fadeSlide]="fadeState">
     <img [src]="currentSlide.imageUrl" alt="Slide Image" />
     <div class="overlay">
       <p>{{ currentSlide.text }}</p>
