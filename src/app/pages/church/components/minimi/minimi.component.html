@@ -1,8 +1,8 @@
 <section class="minimi-section">
   <h2 class="minimi-title">{{ "church.minimi.title" | translate }}</h2>
-  <div 
-  style="background-image: url('/images/origins/origins-01.png');"
-  >
+
+  <div class="carousel">
+    <img [src]="currentSlide.imageUrl" alt="Slide Image" />
     <div class="overlay">
       <p>{{ currentSlide.text }}</p>
     </div>
