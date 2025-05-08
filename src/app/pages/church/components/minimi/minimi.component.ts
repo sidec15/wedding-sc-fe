@@ -22,7 +22,7 @@ import { NgFor } from '@angular/common';
 export class MinimiComponent implements AfterViewInit, OnDestroy {
   public static fadeOutDuration: number = 2000; // Duration for fade-out animation in milliseconds
   public static fadeInDuration: number = 3000; // Duration for fade-in animation in milliseconds
-  private intervalValue: number = 8000; // Interval duration in milliseconds (8 seconds)
+  public static intervalValue: number = 8000; // Interval duration in milliseconds (8 seconds)
 
   private slideSub!: Subscription;
 
@@ -58,7 +58,7 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
     // Show the first slide
     this.activeSlides = [{ ...this.slides[0], visible: true }];
 
-    this.slideSub = interval(this.intervalValue).subscribe(() => {
+    this.slideSub = interval(MinimiComponent.intervalValue).subscribe(() => {
       const nextIndex = (this.currentSlideIndex + 1) % this.slides.length;
 
       // Hide current
