@@ -81,6 +81,35 @@
       "moving_background": "MEDAGLIA",
       "description1": "La Medaglia Miracolosa nasce dalle apparizioni della Vergine Maria a santa Caterina Labouré nel 1830 a Parigi. Durante una visione, Maria chiese di coniare una medaglia con la promessa che chi l'avesse portata con fede avrebbe ricevuto grandi grazie. La medaglia raffigura Maria su un globo, che schiaccia un serpente, con raggi di luce che simboleggiano le grazie concesse. Sul retro compaiono due cuori (di Gesù e di Maria) e la lettera M intrecciata a una croce.",
       "description2": "La medaglia si diffuse rapidamente, specialmente durante un'epidemia di colera. Il caso più celebre è la conversione miracolosa di Alfonso Ratisbonne, ebreo non credente, che la portava per scherzo e fu colpito da una visione della Vergine. La medaglia è oggi simbolo di protezione, fede e conversione spirituale."
+    },
+    "minimi": {
+      "title": "I frati Minimi",
+      "slides": {
+        "0": {
+          "title": "Custodi di Sant'Andrea delle Fratte",
+          "description": "La chiesa è affidata all'Ordine dei Minimi, che portano avanti una missione secolare di preghiera e servizio a Sant'Andrea delle Fratte, custodendone il patrimonio spirituale e artistico."
+        },
+        "1": {
+          "title": "All'Ombra della Roccia",
+          "description": "Francesco nacque nel 1416 a Paola, un paese della Calabria meridionale. Fin da giovane mostrò una profonda spiritualità: a 13 anni fece un pellegrinaggio e poco dopo scelse di vivere da eremita in una grotta vicino al suo paese. Abbracciando la solitudine, la preghiera e una povertà estrema, attirò seguaci affascinati dal suo stile di vita radicale basato su umiltà e penitenza. Da quell'esperienza nacque l'Ordine dei Minimi."
+        },
+        "2": {
+          "title": "Una Vita di Miracoli e Misericordia",
+          "description": "San Francesco era noto per atti miracolosi: guarigioni, moltiplicazione del pane e persino camminare sull'acqua usando il suo mantello. Tra i suoi prodigi più amati c'è quello di Martinello, un agnellino che lo seguiva come un amico. Quando l'animale fu ucciso, cucinato e servito per errore da un operaio, Francesco pianse e pregò e Martinello tornò miracolosamente in vita, simbolo tenero della sua compassione per ogni creatura."
+        },
+        "3": {
+          "title": "Una Vita di Servizio e Contemplazione",
+          "description": "I Minimi vivono nella semplicità e nel silenzio, dedicando le loro giornate alla preghiera, alla fraternità e al servizio umile. La loro presenza è discreta ma costante: offrono guida spirituale, custodiscono luoghi sacri e testimoniano una fede radicata nell'umiltà e nella devozione."
+        },
+        "4": {
+          "title": "Vivere la Missione Oggi",
+          "description": "I Frati Minimi che oggi abitano a Sant'Andrea delle Fratte incarnano con gioia e gentilezza lo spirito del loro fondatore. Sempre pronti ad accogliere, ascoltare e accompagnare, creano un ambiente aperto attraverso la preghiera, il dialogo e attività comunitarie. La loro presenza semplice ma luminosa continua a ispirare e ad avvicinare le persone alla fede nella vita di ogni giorno."
+        },
+        "5": {
+          "title": "Lo Sapevi che non Mangiano Carne?",
+          "description": "I Minimi sono l'unico ordine religioso della Chiesa a osservare un voto di astinenza perpetua. Lo sapevi che evitano non solo la carne, ma anche latticini e uova? Non è una scelta salutistica, ma un gesto quotidiano di umiltà, pace e devozione spirituale, radicato nella via radicale tracciata da San Francesco di Paola."
+        }
+      }
     }
   }
 }

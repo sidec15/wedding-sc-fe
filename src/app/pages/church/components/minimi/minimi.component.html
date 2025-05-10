@@ -8,7 +8,8 @@
            class="slide"
            [@fadeSlide]="slide.visible ? 'visible' : 'hidden'" />
       <div class="overlay" [@fadeSlide]="slide.visible ? 'visible' : 'hidden'">
-        <p>{{ slide.text }}</p>
+        <h3>{{ slide.title | translate }}</h3>
+        <p>{{ slide.description | translate }}</p>
       </div>
     </ng-container>
 

@@ -36,28 +36,37 @@ import { NgFor } from '@angular/common';
   ],
 })
 export class MinimiComponent implements AfterViewInit, OnDestroy {
-  public static fadeOutDuration: number = 2000; // Duration for fade-out animation in milliseconds
-  public static fadeInDuration: number = 3000; // Duration for fade-in animation in milliseconds
-  public static intervalValue: number = 8000; // Interval duration in milliseconds (8 seconds)
+  public static fadeOutDuration: number = 3000; // Duration for fade-out animation in milliseconds
+  public static fadeInDuration: number = 4000; // Duration for fade-in animation in milliseconds
+  public static intervalValue: number = 15000; // Interval duration in milliseconds (8 seconds)
 
   private slideSub!: Subscription;
 
-  slides = [
+  slides: Slide[] = [
     {
       imageUrl: '/images/church/origins/origins-01.png',
-      text: 'The Sanctuary of San Francesco di Paola in Calabria, spiritual heart of the Order of Minims.',
+      title: 'church.minimi.slides.0.title',
+      description: 'church.minimi.slides.0.description',
     },
     {
       imageUrl: '/images/church/origins/origins-02.png',
-      text: 'The Order of Minims lives in humility, penance, and charity, following the path of their founder.',
+      title: 'church.minimi.slides.1.title',
+      description: 'church.minimi.slides.1.description',
     },
     {
       imageUrl: '/images/church/origins/origins-03.png',
-      text: 'San Francesco di Paola, a man of miracles and peace, called all to a life of simplicity and love.',
+      title: 'church.minimi.slides.2.title',
+      description: 'church.minimi.slides.2.description',
     },
     {
       imageUrl: '/images/church/origins/origins-04.png',
-      text: 'In silence and contemplation, the Frati Minimi dedicate their lives to prayer and service.',
+      title: 'church.minimi.slides.3.title',
+      description: 'church.minimi.slides.3.description',
+    },
+    {
+      imageUrl: '/images/church/origins/origins-04.png',
+      title: 'church.minimi.slides.4.title',
+      description: 'church.minimi.slides.4.description',
     },
   ];
 
@@ -65,7 +74,7 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
   carouselSectionRef!: ElementRef<HTMLElement>;
 
   currentSlideIndex = 0;
-  activeSlides: { imageUrl: string; text: string; visible: boolean }[] = [];
+  activeSlides: Slide[] = [];
   fadeState: 'visible' | 'hidden' = 'visible';
 
   progress = 100; // 100 to 0
@@ -144,4 +153,11 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
       this.currentSlideIndex = nextIndex;
     }, MinimiComponent.fadeOutDuration);
   }
+}
+
+export interface Slide {
+  imageUrl: string,
+  title: string,
+  description: string,
+  visible?: boolean
 }
