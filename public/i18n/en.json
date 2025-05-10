@@ -81,6 +81,35 @@
       "moving_background": "MEDAL",
       "description1": "The Miraculous Medal originated from the apparitions of the Virgin Mary to Saint Catherine Labouré in 1830 in Paris. During one vision, Mary asked for a medal to be struck, promising that whoever wore it with faith would receive great graces. The medal depicts Mary standing on a globe, crushing a serpent, with rays of light symbolizing the graces granted. On the reverse appear two hearts (of Jesus and Mary) and the letter M intertwined with a cross.",
       "description2": "The medal spread rapidly, especially during a cholera outbreak. The most well-known case is the miraculous conversion of Alphonse Ratisbonne, a non-believing Jew who wore it mockingly and was struck by a vision of the Virgin. Today, the medal is a symbol of protection, faith, and spiritual conversion."
+    },
+    "minimi": {
+      "title": "The Minims friars",
+      "slides": [
+        {
+          "title": "Custodians of Sant'Andrea delle Fratte",
+          "description": "The church is entrusted to the Order of Minims, who continue their centuries-old mission of prayer and service at Sant'Andrea delle Fratte, preserving its spiritual and artistic heritage."
+        },
+        {
+          "title": "In the Shadow of the Rock",
+          "description": "Francesco was born in 1416 in Paola, a town in Calabria, southern Italy. Devout from a young age, he made a pilgrimage at 13 and soon after chose to live as a hermit in a cave near his hometown. Embracing solitude, prayer, and extreme poverty, he attracted followers drawn to his radical lifestyle of humility and penance. This would eventually lead to the birth of the Order of Minims."
+        },
+        {
+          "title": "A Life of Miracles and Mercy",
+          "description": "San Francesco was known for miraculous acts: healing the sick, multiplying loaves, and even walking on water using his cloak. Among his many wonders, one of the most beloved is the story of Martinello, a little lamb who followed him like a friend. When the lamb was unknowingly slaughtered, cooked, and served by a worker, Francesco wept and prayed — and Martinello miraculously returned to life, a tender symbol of his compassion for all creation."
+        },
+        {
+          "title": "A Life of Service and Contemplation",
+          "description": "The Minims live in quiet simplicity, dedicating their days to prayer, fraternity, and humble service. Their presence is discreet but constant, offering spiritual guidance, maintaining sacred spaces, and living as witnesses of a faith rooted in humility and devotion."
+        },
+        {
+          "title": "Living the Mission Today",
+          "description": "The Frati Minimi who live today at Sant’Andrea delle Fratte embody the spirit of their founder with kindness and joy. Always ready to greet, listen, and guide, they cultivate a welcoming environment through prayer, conversation, and community activities. Their simple yet radiant presence continues to inspire and bring people closer to faith in everyday life."
+        },
+        {
+          "title": "Did You Know They Don't Eat Meat?",
+          "description": "Minims are the only religious order with a vow of abstinence. They refrain from meat, dairy, and eggs not for health, but as an act of humility, peace, and spiritual discipline — a daily reminder of their founder’s radical path."
+        }
+      ]
     }
   }
 }
