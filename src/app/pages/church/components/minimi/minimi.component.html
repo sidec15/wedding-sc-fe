@@ -6,6 +6,7 @@
       <img [src]="slide.imageUrl"
            alt="Slide Image"
            class="slide"
+           [ngStyle]="slide.style"
            [@fadeSlide]="slide.visible ? 'visible' : 'hidden'" />
       <div class="overlay" [@fadeSlide]="slide.visible ? 'visible' : 'hidden'">
         <h3>{{ slide.title | translate }}</h3>

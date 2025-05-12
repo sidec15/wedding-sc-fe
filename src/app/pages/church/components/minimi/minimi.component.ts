@@ -15,11 +15,11 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { NgFor } from '@angular/common';
+import { NgFor, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-minimi',
-  imports: [TranslateModule, NgFor],
+  imports: [TranslateModule, NgFor, NgStyle],
   templateUrl: './minimi.component.html',
   styleUrl: './minimi.component.scss',
   animations: [
@@ -36,37 +36,42 @@ import { NgFor } from '@angular/common';
   ],
 })
 export class MinimiComponent implements AfterViewInit, OnDestroy {
-  public static fadeOutDuration: number = 3000; // Duration for fade-out animation in milliseconds
-  public static fadeInDuration: number = 4000; // Duration for fade-in animation in milliseconds
+  public static fadeOutDuration: number = 4000; // Duration for fade-out animation in milliseconds
+  public static fadeInDuration: number = 5000; // Duration for fade-in animation in milliseconds
   public static intervalValue: number = 15000; // Interval duration in milliseconds (8 seconds)
 
   private slideSub!: Subscription;
 
   slides: Slide[] = [
     {
-      imageUrl: '/images/church/origins/origins-01.png',
+      imageUrl: '/images/church/minimi/minimi-01.png',
       title: 'church.minimi.slides.0.title',
       description: 'church.minimi.slides.0.description',
+      style: { top: '-60%' },
     },
     {
-      imageUrl: '/images/church/origins/origins-02.png',
+      imageUrl: '/images/church/minimi/minimi-02.png',
       title: 'church.minimi.slides.1.title',
       description: 'church.minimi.slides.1.description',
+      style: { top: '-50%' },
     },
     {
-      imageUrl: '/images/church/origins/origins-03.png',
+      imageUrl: '/images/church/minimi/minimi-03.png',
       title: 'church.minimi.slides.2.title',
       description: 'church.minimi.slides.2.description',
+      style: { top: '-50%' },
     },
     {
-      imageUrl: '/images/church/origins/origins-04.png',
+      imageUrl: '/images/church/minimi/minimi-04.png',
       title: 'church.minimi.slides.3.title',
       description: 'church.minimi.slides.3.description',
+      style: { top: '-30%', left: '0%' },
     },
     {
-      imageUrl: '/images/church/origins/origins-04.png',
+      imageUrl: '/images/church/minimi/minimi-05.png',
       title: 'church.minimi.slides.4.title',
       description: 'church.minimi.slides.4.description',
+      style: { top: '-50%', left: '0%' },
     },
   ];
 
@@ -156,8 +161,9 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
 }
 
 export interface Slide {
-  imageUrl: string,
-  title: string,
-  description: string,
-  visible?: boolean
+  imageUrl: string;
+  title: string;
+  description: string;
+  style?: { [key: string]: string };
+  visible?: boolean;
 }
