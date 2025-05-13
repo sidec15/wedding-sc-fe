@@ -4,6 +4,7 @@ import {
   ElementRef,
   OnDestroy,
   ViewChild,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { interval, Subscription } from 'rxjs';
@@ -91,7 +92,7 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
   progress = 100; // 100 to 0
   private rafId: number | null = null;
 
-  constructor(private platformService: PlatformService) {}
+  constructor(private platformService: PlatformService, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
@@ -113,6 +114,14 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
     this.slideSub?.unsubscribe();
     if (this.rafId) cancelAnimationFrame(this.rafId);
     if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
+  }
+
+  prevSlide(): void {
+    this.goToSlide(-1);
+  }
+
+  nextSlide(): void {
+    this.goToSlide(1);
   }
 
   private startSlideShow(): void {
@@ -163,6 +172,8 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
   }
 
   private handleSlideAnimation() {
+    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId); // Add this line
+    
     const nextIndex = (this.currentSlideIndex + 1) % this.slides.length;
 
     // Hide current
@@ -175,6 +186,31 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
     setTimeout(() => {
       this.activeSlides.pop();
       this.currentSlideIndex = nextIndex;
+    }, MinimiComponent.fadeOutDuration);
+  }
+
+  private goToSlide(direction: 1 | -1): void {
+    // Cancel any existing animations
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
+
+    const slidesCount = this.slides.length;
+    let newIndex = (this.currentSlideIndex + direction + slidesCount) % slidesCount;
+
+    // Hide current
+    this.activeSlides[0].visible = false;
+
+    // Show next
+    this.activeSlides.unshift({ ...this.slides[newIndex], visible: true });
+
+    this.currentSlideIndex = newIndex;
+
+    setTimeout(() => {
+      // Restart progress bar and auto-advance
+      const duration = this.slides[this.currentSlideIndex].duration ?? MinimiComponent.intervalValue;
+      this.startProgressBar(duration);
+      this.scheduleNextSlide();
+      this.cdr.detectChanges();
     }, MinimiComponent.fadeOutDuration);
   }
 }
