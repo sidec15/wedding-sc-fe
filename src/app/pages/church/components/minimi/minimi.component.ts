@@ -36,42 +36,48 @@ import { NgFor, NgStyle } from '@angular/common';
   ],
 })
 export class MinimiComponent implements AfterViewInit, OnDestroy {
-  public static fadeOutDuration: number = 4000; // Duration for fade-out animation in milliseconds
-  public static fadeInDuration: number = 5000; // Duration for fade-in animation in milliseconds
-  public static intervalValue: number = 15000; // Interval duration in milliseconds (8 seconds)
+  public static fadeOutDuration: number = 1000; // Duration for fade-out animation in milliseconds
+  public static fadeInDuration: number = 2000; // Duration for fade-in animation in milliseconds
+  public static intervalValue: number = 5000; // Interval duration in milliseconds (8 seconds)
 
   private slideSub!: Subscription;
+  private slideTimeoutId!: NodeJS.Timeout;
 
   slides: Slide[] = [
     {
       imageUrl: '/images/church/minimi/minimi-01.png',
       title: 'church.minimi.slides.0.title',
       description: 'church.minimi.slides.0.description',
-      style: { top: '-60%' },
+      style: { top: '-300px' },
+      duration: 10000,
     },
     {
       imageUrl: '/images/church/minimi/minimi-02.png',
       title: 'church.minimi.slides.1.title',
       description: 'church.minimi.slides.1.description',
       style: { top: '-50%' },
+      duration: 20000,
     },
     {
       imageUrl: '/images/church/minimi/minimi-03.png',
       title: 'church.minimi.slides.2.title',
       description: 'church.minimi.slides.2.description',
       style: { top: '-50%' },
+      duration: 20000,
     },
     {
       imageUrl: '/images/church/minimi/minimi-04.png',
       title: 'church.minimi.slides.3.title',
       description: 'church.minimi.slides.3.description',
       style: { top: '-30%', left: '0%' },
+      duration: 15000,
     },
     {
       imageUrl: '/images/church/minimi/minimi-05.png',
       title: 'church.minimi.slides.4.title',
       description: 'church.minimi.slides.4.description',
       style: { top: '-50%', left: '0%' },
+      duration: 15000,
     },
   ];
 
@@ -106,16 +112,27 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.slideSub?.unsubscribe();
     if (this.rafId) cancelAnimationFrame(this.rafId);
+    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
   }
 
   private startSlideShow(): void {
     this.activeSlides = [{ ...this.slides[0], visible: true }];
-    this.startProgressBar(MinimiComponent.intervalValue);
+    this.currentSlideIndex = 0;
+    this.startProgressBar(
+      this.slides[0].duration ?? MinimiComponent.intervalValue
+    );
+    this.scheduleNextSlide();
+  }
 
-    this.slideSub = interval(MinimiComponent.intervalValue).subscribe(() => {
+  private scheduleNextSlide(): void {
+    const currentSlide = this.slides[this.currentSlideIndex];
+    const duration = currentSlide.duration ?? MinimiComponent.intervalValue;
+
+    this.slideTimeoutId = setTimeout(() => {
       this.handlePrograsBarAnimation();
       this.handleSlideAnimation();
-    });
+      this.scheduleNextSlide();
+    }, duration);
   }
 
   private startProgressBar(duration: number) {
@@ -136,11 +153,13 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
 
   private handlePrograsBarAnimation() {
     // Reset progress bar
-    this.progress = 100; // 100 to 0
+    this.progress = 100;
     if (this.rafId) cancelAnimationFrame(this.rafId);
 
-    // Start progress bar animation
-    this.startProgressBar(MinimiComponent.intervalValue);
+    // Use the current slide's duration for the progress bar
+    const currentSlide = this.slides[this.currentSlideIndex];
+    const duration = currentSlide.duration ?? MinimiComponent.intervalValue;
+    this.startProgressBar(duration);
   }
 
   private handleSlideAnimation() {
@@ -166,4 +185,5 @@ export interface Slide {
   description: string;
   style?: { [key: string]: string };
   visible?: boolean;
+  duration?: number; // visibility time in milliseconds
 }

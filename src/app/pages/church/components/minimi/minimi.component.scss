@@ -19,7 +19,7 @@
     flex-grow: 1;
     width: 100%;
     overflow: hidden;
-  
+
     .slide {
       position: absolute;
       top: 0;
@@ -31,12 +31,13 @@
       pointer-events: none;
       transition: opacity 1s ease-in-out;
     }
-  
+
     .overlay {
       position: absolute;
       top: 0;
       bottom: 0;
       height: 100%;
+      overflow: hidden;
       width: 25%;
       right: 5%;
       background: rgba(var(--text-mask), 0.7);
@@ -71,16 +72,35 @@
       background-color: rgba(255, 255, 255, 0.2);
       overflow: hidden;
       z-index: 2;
-    }
-    
-    .progress-bar {
-      height: 100%;
-      background-color: rgb(var(--accent));
-      width: 100%;
-      transition: width 0s; // no transition, we're animating via frame loop
-    }
-    
 
+      .progress-bar {
+        height: 100%;
+        background-color: rgb(var(--accent));
+        width: 100%;
+        transition: width 0s; // no transition, we're animating via frame loop
+      }
+    }
+
+    .gallery-buttons {
+      position: absolute;
+      bottom: 2rem;
+      left: 80px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 3;
+
+      .prev-btn,
+      .next-btn {
+        background: rgba(var(--text-mask), 0.6);
+        border: none;
+        color: rgb(var(--text-mask));
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        margin: 0;
+      }
+    }
   }
-  
 }

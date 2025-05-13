@@ -3,11 +3,13 @@
 
   <div class="carousel">
     <ng-container *ngFor="let slide of activeSlides">
-      <img [src]="slide.imageUrl"
-           alt="Slide Image"
-           class="slide"
-           [ngStyle]="slide.style"
-           [@fadeSlide]="slide.visible ? 'visible' : 'hidden'" />
+      <img
+        [src]="slide.imageUrl"
+        alt="Slide Image"
+        class="slide"
+        [ngStyle]="slide.style"
+        [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
+      />
       <div class="overlay" [@fadeSlide]="slide.visible ? 'visible' : 'hidden'">
         <h3>{{ slide.title | translate }}</h3>
         <p>{{ slide.description | translate }}</p>
@@ -17,6 +19,15 @@
     <!-- This is now outside the ngFor and always rendered -->
     <div class="progress-bar-container">
       <div class="progress-bar" [style.width.%]="progress"></div>
+    </div>
+
+    <div class="gallery-buttons">
+      <button class="prev-btn">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="next-btn">
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
   </div>
 </section>
