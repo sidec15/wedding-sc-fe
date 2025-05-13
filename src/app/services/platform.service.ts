@@ -21,8 +21,9 @@ export class PlatformService {
     const rect = element.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Check if the element is in the viewport
+    // log element classes and rect and window height all in one log
     const isVisible = rect.top < windowHeight && rect.bottom > 0;
+    // console.debug(`Classes: ${Array.from(element.classList).join(', ')}, Is Visible: ${isVisible}, Rect: ${JSON.stringify(rect)}, Window Height: ${windowHeight}`);
 
     return isVisible;
   }

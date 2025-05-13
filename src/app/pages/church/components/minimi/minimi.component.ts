@@ -17,6 +17,7 @@ import {
   transition,
 } from '@angular/animations';
 import { NgFor, NgStyle } from '@angular/common';
+import { EventService, ScrollEvent } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-minimi',
@@ -42,7 +43,11 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
   public static intervalValue: number = 5000; // Interval duration in milliseconds (8 seconds)
 
   private slideSub!: Subscription;
+  private scrollEventSubscription!: Subscription;
+
   private slideTimeoutId!: NodeJS.Timeout;
+
+  private isSlideShowActive = false;
 
   slides: Slide[] = [
     {
@@ -77,8 +82,8 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
     },
   ];
 
-  @ViewChild('carouselSection', { static: false })
-  carouselSectionRef!: ElementRef<HTMLElement>;
+  @ViewChild('minimiSection', { static: false })
+  minimiSectionRef!: ElementRef<HTMLElement>;
 
   currentSlideIndex = 0;
   activeSlides: Slide[] = [];
@@ -87,7 +92,10 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
   progress = 100; // 100 to 0
   private rafId: number | null = null;
 
-  constructor(private platformService: PlatformService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private platformService: PlatformService,
+    private eventService: EventService
+  ) {}
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
@@ -96,19 +104,30 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
     // position is accurate before checking visibility. Without this, getBoundingClientRect()
     // may return incorrect values on initial load, especially when this section is the first visible one.
     requestAnimationFrame(() => {
-      if (
-        !this.platformService.isVisible(this.carouselSectionRef.nativeElement)
-      )
+      if (!this.platformService.isVisible(this.minimiSectionRef.nativeElement))
         return;
 
       this.startSlideShow();
     });
+
+    this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
+      (e: ScrollEvent) => {
+        if (
+          !this.platformService.isVisible(this.minimiSectionRef.nativeElement)
+        ) {
+          this.stopSlideShow();
+          return;
+        } else {
+          this.startSlideShow();
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
     this.slideSub?.unsubscribe();
-    if (this.rafId) cancelAnimationFrame(this.rafId);
-    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
+    this.scrollEventSubscription?.unsubscribe();
+    this.stopSlideShow();
   }
 
   prevSlide(): void {
@@ -120,6 +139,9 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
   }
 
   private startSlideShow(): void {
+    if (this.isSlideShowActive) return;
+    this.isSlideShowActive = true;
+    console.log('Starting slideshow');
     this.activeSlides = [{ ...this.slides[0], visible: true }];
     this.currentSlideIndex = 0;
     this.startProgressBar(
@@ -168,7 +190,7 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
 
   private handleSlideAnimation() {
     if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId); // Add this line
-    
+
     const nextIndex = (this.currentSlideIndex + 1) % this.slides.length;
 
     // Hide current
@@ -186,11 +208,11 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
 
   private goToSlide(direction: 1 | -1): void {
     // Cancel any existing animations
-    if (this.rafId) cancelAnimationFrame(this.rafId);
-    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
+    this.stopSlideShow();
 
     const slidesCount = this.slides.length;
-    let newIndex = (this.currentSlideIndex + direction + slidesCount) % slidesCount;
+    let newIndex =
+      (this.currentSlideIndex + direction + slidesCount) % slidesCount;
 
     // Hide current
     this.activeSlides[0].visible = false;
@@ -202,11 +224,19 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
 
     setTimeout(() => {
       // Restart progress bar and auto-advance
-      const duration = this.slides[this.currentSlideIndex].duration ?? MinimiComponent.intervalValue;
+      const duration =
+        this.slides[this.currentSlideIndex].duration ??
+        MinimiComponent.intervalValue;
       this.startProgressBar(duration);
       this.scheduleNextSlide();
-      this.cdr.detectChanges();
     }, MinimiComponent.fadeOutDuration);
+  }
+
+  private stopSlideShow() {
+    this.isSlideShowActive = false;
+    // console.log('Stopping slideshow');
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
   }
 }
 
