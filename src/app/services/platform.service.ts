@@ -2,11 +2,10 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlatformService {
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
@@ -23,9 +22,15 @@ export class PlatformService {
 
     // log element classes and rect and window height all in one log
     const isVisible = rect.top < windowHeight && rect.bottom > 0;
-    // console.debug(`Classes: ${Array.from(element.classList).join(', ')}, Is Visible: ${isVisible}, Rect: ${JSON.stringify(rect)}, Window Height: ${windowHeight}`);
+    if (element.classList.contains('minimi-section'))
+      console.debug(
+        `Classes: ${Array.from(element.classList).join(
+          ', '
+        )}, Is Visible: ${isVisible}, Rect top: ${rect.top}, Rect bottom: ${
+          rect.bottom
+        }, Window Height: ${windowHeight}`
+      );
 
     return isVisible;
   }
-
 }

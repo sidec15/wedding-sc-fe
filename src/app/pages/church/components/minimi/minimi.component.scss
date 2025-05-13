@@ -3,6 +3,7 @@
 @use "../../styles/church-styles.scss" as church;
 
 .minimi-section {
+  margin-bottom: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -33,6 +34,7 @@
     }
 
     .overlay {
+      min-height: 1px; // garantisce che occupi altezza anche se è vuoto
       position: absolute;
       top: 0;
       bottom: 0;

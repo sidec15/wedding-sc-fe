@@ -115,7 +115,9 @@ export class MinimiComponent implements AfterViewInit, OnDestroy {
         if (
           !this.platformService.isVisible(this.minimiSectionRef.nativeElement)
         ) {
-          this.stopSlideShow();
+          if (this.isSlideShowActive) {
+            this.stopSlideShow();
+          }
           return;
         } else {
           this.startSlideShow();
