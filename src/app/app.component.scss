@@ -288,6 +288,10 @@ main {
     padding: 0; // Remove padding on mobile
   }
 
+  .navbar {
+    height: 80px;
+  }
+
   .menu-toggle {
     display: block !important; // Ensure it's visible in mobile view
     position: absolute;

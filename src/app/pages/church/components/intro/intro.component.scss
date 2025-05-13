@@ -44,3 +44,28 @@ section {
     will-change: opacity, transform;
   }
 }
+
+@media (max-width: 768px) {
+  .church-hero {
+    height: 100vh; // Reduce hero height on mobile
+
+    .hero-image {
+      // background-position: center top;
+      // background-attachment: scroll; // Prevent issues on mobile
+    }
+
+    .hero-overlay {
+      width: 95%;
+      padding: 0.5rem;
+      font-size: 1rem;
+
+      h1, h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}
