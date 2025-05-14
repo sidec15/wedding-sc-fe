@@ -91,7 +91,9 @@ body {
             bottom: -4px;
             width: 100%;
             height: 2px;
-            background-color: rgb(var(--accent)); // Use RGB variable for accent color
+            background-color: rgb(
+              var(--accent)
+            ); // Use RGB variable for accent color
           }
         }
       }
@@ -205,7 +207,7 @@ body {
             cursor: pointer;
             transition: background-color 0.2s ease;
             font-size: 0.95rem;
-        
+
             i {
               width: 1.5rem; // ✅ fixed width for alignment
               text-align: center;
@@ -213,15 +215,15 @@ body {
               color: rgb(var(--accent));
               flex-shrink: 0;
             }
-        
+
             span {
               flex: 1;
               color: rgb(var(--text));
             }
-        
+
             &:hover {
               background-color: rgb(var(--accent));
-        
+
               i,
               span {
                 color: rgb(var(--bg));
@@ -289,30 +291,30 @@ main {
   }
 
   .navbar {
-    height: 80px;
+    height: var(--header-height-mobile); // Use mobile header height
+    padding: 0.5rem 1.2rem; // Adjust padding for mobile
+    
+    .logo {
+      font-size: 1.3rem !important;
+    }
   }
 
   .menu-toggle {
     display: block !important; // Ensure it's visible in mobile view
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.3rem;
+    right: 0.3rem;
     width: 50px; // Fixed width
     height: 50px; // Fixed height
-    font-size: 1.7rem;
-    background: rgb(var(--accent)); // Use RGB variable for accent color
-    color: rgb(var(--bg)); // Use RGB variable for background
+    background: transparent !important; // Transparent background
     border: none;
-    border-radius: 8px; // Make it circular
+    color: rgb(var(--accent)); // Use RGB variable for background
     cursor: pointer;
     z-index: 1000; // Ensure it overlays the content
-    box-shadow: var(--box-shadow-light); // Use box-shadow variable
     display: flex;
-    align-items: center;
-    justify-content: center; // Center the icon inside the button
 
     i {
-      font-size: 1.5rem; // Adjust icon size
+      font-size: 1.8rem; // Adjust icon size
     }
   }
 
