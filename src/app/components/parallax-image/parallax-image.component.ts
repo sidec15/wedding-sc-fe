@@ -20,8 +20,8 @@ import { PlatformService } from '../../services/platform.service';
 export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
   @Input() src!: string;
   @Input() alt = '';
-  @Input() containerHeight = 500;
-  @Input() imageHeight = 650;
+  @Input() containerHeight = '500px';
+  @Input() imageHeight = '650px';
   @Input() speedFactor = 0.1;
 
   @ViewChild('image', { static: true }) imageRef!: ElementRef;

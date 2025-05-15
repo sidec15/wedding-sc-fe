@@ -22,14 +22,6 @@ export class PlatformService {
 
     // log element classes and rect and window height all in one log
     const isVisible = rect.top < windowHeight && rect.bottom > 0;
-    if (element.classList.contains('minimi-section'))
-      console.debug(
-        `Classes: ${Array.from(element.classList).join(
-          ', '
-        )}, Is Visible: ${isVisible}, Rect top: ${rect.top}, Rect bottom: ${
-          rect.bottom
-        }, Window Height: ${windowHeight}`
-      );
 
     return isVisible;
   }

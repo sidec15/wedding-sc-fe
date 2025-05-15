@@ -1,6 +1,13 @@
 <!-- Hero Section with Image Background -->
 <section class="church-hero" #heroSection>
-  <div class="hero-image"></div>
+  <app-parallax-image
+    class="flex-grow"
+    src="/images/church/intro/church-02.jpg"
+    [speedFactor]="0.3"
+    [containerHeight]="'100vh'"
+    [imageHeight]="'100vh'"
+  ></app-parallax-image>
+  <!-- <div class="hero-image"></div> -->
   <div class="hero-overlay" #heroOverlay>
     <h1>{{ "church.intro.title1" | translate }}</h1>
     <h2>{{ "church.intro.title2" | translate }}</h2>
