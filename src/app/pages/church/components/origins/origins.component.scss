@@ -57,24 +57,54 @@
     }
   }
 
-  @media (max-width: 768px) {
-    flex-direction: column;
+}
 
-    .image-parallax {
-      height: 40vh; // Adjust height for smaller screens
+@media (max-width: 768px) {
+  .church-history {
+    flex-direction: column;
+    box-shadow: none;
+
+    .image-container {
+      width: 100vw;
+      height: 40vh;
+      min-height: 200px;
+      position: relative;
+
+      .scroll-track {
+        height: 100%;
+      }
+      .image {
+        height: 100%;
+        width: auto;
+        object-fit: cover;
+      }
     }
 
     .text-content {
-      position: relative; // Stack text below the image
-      width: 100%; // Full width for smaller screens
-      height: auto; // Adjust height for smaller screens
-      top: auto;
-      transform: none;
-      padding: 1.5rem;
-      background-color: rgba(0, 0, 0, 0.7); // Slightly darker background for readability
+      position: static;
+      width: 100vw;
+      height: auto;
+      padding: 1rem;
+      background-color: rgba(var(--text-mask), 0.95);
+      color: rgb(var(--text));
+      z-index: 1;
+      display: block;
+      box-shadow: none;
+      text-align: left;
+
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: rgb(var(--accent));
+      }
+      p {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+      }
     }
   }
 }
+
 
 // Keyframes for horizontal scrolling
 @keyframes scroll-horizontal {
