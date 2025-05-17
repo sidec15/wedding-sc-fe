@@ -1,18 +1,25 @@
 <section class="medal-section">
-  <h2 class="medal-title">{{ 'church.medal.title' | translate }}</h2>
-  <h3 class="medal-subtitle">{{ 'church.medal.subtitle' | translate }}</h3>
+  <app-horizontal-moving-background
+    [upText]="'church.medal.title1'"
+    [downText]="'church.medal.title2'"
+  ></app-horizontal-moving-background>
+
+  <h3 class="medal-subtitle">{{ "church.medal.subtitle" | translate }}</h3>
 
   <div class="medal-container">
     <div class="medal-description-left" #descriptionLeft>
-      <p>{{ 'church.medal.description1' | translate }}</p>
+      <p>{{ "church.medal.description1" | translate }}</p>
     </div>
 
     <div class="medal-image" #imageContainer>
-      <img src="/images/church/medal/medal-03.png" alt="{{ 'church.medal.alt' | translate }}" />
+      <img
+        src="/images/church/medal/medal-03.png"
+        alt="{{ 'church.medal.alt' | translate }}"
+      />
     </div>
 
     <div class="medal-description-right" #descriptionRight>
-      <p>{{ 'church.medal.description2' | translate }}</p>
+      <p>{{ "church.medal.description2" | translate }}</p>
     </div>
   </div>
 </section>

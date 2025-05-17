@@ -9,10 +9,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
 import { EventService, ScrollEvent } from '../../../../services/event.service';
 import { Subscription } from 'rxjs';
+import { HorizontalScrollTextComponent } from '../../../../components/horizontal-moving-background/horizontal-moving-background.component';
 
 @Component({
   selector: 'app-medal',
-  imports: [TranslateModule],
+  imports: [TranslateModule, HorizontalScrollTextComponent],
   templateUrl: './medal.component.html',
   styleUrl: './medal.component.scss',
 })

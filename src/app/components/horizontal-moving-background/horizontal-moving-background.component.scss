@@ -1,0 +1,38 @@
+@use "../../../styles/variables.scss" as *;
+@use "../../../styles/mixins.scss" as *;
+
+.horizontal-scroll-bg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+
+  .scroll-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  .text-row {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 4rem;
+    will-change: transform;
+    transition: transform 0.2s linear;
+    opacity: 0.1;
+    border: 2px solid red;
+  }
+
+  .up {
+    top: 0;
+    left: 0;
+  }
+
+  .down {
+    bottom: 0;
+    right: 0;
+  }
+}

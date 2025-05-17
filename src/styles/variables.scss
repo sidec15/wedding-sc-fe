@@ -17,6 +17,8 @@
   --header-height: 60px; // Height of the header
   --footer-height: 50px; // Height of the footer
   --header-height-mobile: 60px; // Height of the header
+  --vertical-moving-background-font-size: 10rem; // Font size for vertical moving background
+  --horizontal-moving-background-font-size: 7rem; // Font size for horizontal moving background
 }
 
 // Dark theme
@@ -33,4 +35,6 @@
   --box-shadow-heavy: rgba(0, 0, 0, 0.6); // Heavier shadow for dark mode
   --box-shadow-medium: rgba(0, 0, 0, 0.4); // Medium shadow for dark mode
   --box-shadow-light: rgba(0, 0, 0, 0.2); // Lighter shadow for subtle effects
+  --vertical-moving-background-font-size: 5rem; // Font size for vertical moving background
+  --horizontal-moving-background-font-size: 3rem; // Font size for horizontal moving background
 }
