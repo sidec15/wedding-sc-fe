@@ -1,7 +1,4 @@
-<section class="minimi-section" #minimiSection>
-  <h2 class="minimi-title">{{ "church.minimi.title" | translate }}</h2>
-
-  <div class="carousel">
+<div class="carousel">
     <ng-container *ngFor="let slide of activeSlides">
       <img
         [src]="slide.imageUrl"
@@ -30,5 +27,3 @@
       </button>
     </div>
   </div>
-  
-</section>

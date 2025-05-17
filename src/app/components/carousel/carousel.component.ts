@@ -1,29 +1,16 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  input,
-  NgZone,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { MovingBackgroundComponent } from '../../../../../components/moving-background/moving-background.component';
+import { AfterViewInit, Component, ElementRef, input, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {
-  EventService,
-  ScrollEvent,
-} from '../../../../../services/event.service';
-import { PlatformService } from '../../../../../services/platform.service';
-import { NgFor } from '@angular/common';
+import { EventService, ScrollEvent } from '../../services/event.service';
+import { PlatformService } from '../../services/platform.service';
 
 @Component({
-  selector: 'app-two-images',
-  imports: [TranslateModule, MovingBackgroundComponent, NgFor],
-  templateUrl: './two-images.component.html',
-  styleUrl: './two-images.component.scss',
+  selector: 'app-carousel',
+  imports: [],
+  templateUrl: './carousel.component.html',
+  styleUrl: './carousel.component.scss'
 })
-export class TwoImagesComponent implements AfterViewInit, OnDestroy {
+export class CarouselComponent implements AfterViewInit, OnDestroy {
+
   private scrollEventSubscription!: Subscription;
 
   movingBackgroundText = input.required<string>();
@@ -109,4 +96,6 @@ export class TwoImagesComponent implements AfterViewInit, OnDestroy {
     imageLeftEl.style.transform = `scale(${angelScale})`;
     imageRightEl.style.transform = `scale(${angelScale})`;
   }
+
+
 }
