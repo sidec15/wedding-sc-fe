@@ -33,6 +33,8 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
   downTranslate = 0;
 
   private scrollSub!: Subscription;
+  private componentCenterY = 0;
+  private maxTranslation = 50; // % shift when far from center
 
   constructor(
     private eventService: EventService,
@@ -40,35 +42,63 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
-    if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
+    if (!this.platformService.isBrowser()) return;
+
+    const wrapper = this.scrollWrapperRef.nativeElement;
+    const upEl = wrapper.querySelector('.text-row.up') as HTMLElement;
+    const downEl = wrapper.querySelector('.text-row.down') as HTMLElement;
+
+    let hasInitializedCenter = false;
+    let centerOffsetUp = 0;
+    let centerOffsetDown = 0;
 
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (event: ScrollEvent) => {
-        if (
-          !this.platformService.isVisible(this.scrollWrapperRef.nativeElement)
-        )
-          return; // Ensure this runs only in the browser
+        if (!this.platformService.isVisible(wrapper)) return;
 
-        const direction = event.scrollDirection();
-        const delta = Math.min(Math.abs(event.scrollYOffset), 0.5); // tune speed
+        if (!hasInitializedCenter) {
+          // 1. Compute vertical center of component
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const scrollTop =
+            window.scrollY || document.documentElement.scrollTop;
+          const elementTop = wrapperRect.top + scrollTop;
+          const elementHeight = wrapperRect.height;
+          this.componentCenterY = elementTop + elementHeight / 2;
 
-        if (direction === 'down') {
-          this.upTranslate += delta; // move right
-          this.downTranslate -= delta; // move left
-        } else {
-          this.upTranslate -= delta; // move left
-          this.downTranslate += delta; // move right
+          // 2. Compute horizontal center of viewport
+          const viewportCenterX = window.innerWidth / 2;
+
+          // 3. Compute real center of UP text
+          const upRect = upEl.getBoundingClientRect();
+          const upLeft = upRect.left + window.scrollX;
+          const upCenterX = upLeft + upRect.width / 2;
+          centerOffsetUp = viewportCenterX - upCenterX;
+
+          // 4. Compute real center of DOWN text
+          const downRect = downEl.getBoundingClientRect();
+          const downLeft = downRect.left + window.scrollX;
+          const downCenterX = downLeft + downRect.width / 2;
+          centerOffsetDown = viewportCenterX - downCenterX;
+
+          hasInitializedCenter = true;
         }
 
-        // Cap movement so text goes off-screen and returns
-        this.upTranslate = this.clamp(this.upTranslate, -100, 100);
-        this.downTranslate = this.clamp(this.downTranslate, -100, 100);
+        // 5. Scroll progress based on distance from vertical center
+        const viewportHeight = window.innerHeight;
+        const viewportCenterY = event.scrollY + viewportHeight / 2;
+        const distanceFromCenter = viewportCenterY - this.componentCenterY;
+
+        // 6. Normalize scroll distance to [-1, 1] range
+        const normalized = Math.max(
+          -1,
+          Math.min(1, distanceFromCenter / viewportHeight)
+        );
+
+        // 7. Final transform
+        this.upTranslate = centerOffsetUp * normalized;
+        this.downTranslate = centerOffsetDown * normalized;
       }
     );
-  }
-
-  private clamp(value: number, min: number, max: number): number {
-    return Math.max(min, Math.min(max, value));
   }
 
   ngOnDestroy(): void {
