@@ -23,10 +23,12 @@
     display: inline-block; // ensures height is respected & text doesn't stack on same line
     position: relative;
     white-space: nowrap;
-    font-size: 4rem;
+    font-size: var(--horizontal-moving-background-font-size);
+    font-weight: bold;
+    color: rgb(var(--accent));
     will-change: transform;
     transition: transform 0.2s linear;
-    border: 2px solid red;
+    // border: 2px solid red;
   }
 
   .up {

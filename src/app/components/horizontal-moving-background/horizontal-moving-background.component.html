@@ -1,6 +1,6 @@
 <div
   class="horizontal-scroll-bg"
-  [ngStyle]="{ transform: 'translateY(' + translateYValue() + ')', 'z-index': zIndex().toString() }"
+  [ngStyle]="{ transform: 'translateY(' + translateYValue() + ')', 'z-index': zIndex().toString(), opacity: opacity() }"
 >
   <div class="scroll-wrapper" #scrollWrapper>
     <div

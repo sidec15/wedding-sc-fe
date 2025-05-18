@@ -25,6 +25,7 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
 
   translateYValue = input<string>('50%');
   zIndex = input<number>(0);
+  opacity = input<number>(0.5);
 
   @ViewChild('scrollWrapper', { static: false })
   scrollWrapperRef!: ElementRef<HTMLElement>;
