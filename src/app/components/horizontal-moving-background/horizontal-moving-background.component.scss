@@ -3,36 +3,37 @@
 
 .horizontal-scroll-bg {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
   width: 100%;
-  transform: translateY(-50%);
-  z-index: 0;
   pointer-events: none;
 
   .scroll-wrapper {
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; // full row width for control
+    gap: 2rem;
     width: 100%;
     position: relative;
+    overflow: hidden;
+    padding: 0 2rem; // optional padding on left/right
   }
 
   .text-row {
-    position: absolute;
+    display: inline-block; // ensures height is respected & text doesn't stack on same line
+    position: relative;
     white-space: nowrap;
     font-size: 4rem;
     will-change: transform;
     transition: transform 0.2s linear;
-    opacity: 0.1;
     border: 2px solid red;
   }
 
   .up {
-    top: 0;
-    left: 0;
+    align-self: flex-start; // stick to left
   }
 
   .down {
-    bottom: 0;
-    right: 0;
+    align-self: flex-end; // stick to right
   }
 }

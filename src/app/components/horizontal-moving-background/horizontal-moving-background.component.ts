@@ -23,8 +23,11 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
   upText = input.required<string>();
   downText = input.required<string>();
 
-  @ViewChild('horizontalScrollBg', { static: false })
-  descriptionLeftRef!: ElementRef<HTMLElement>;
+  translateYValue = input<string>('50%');
+  zIndex = input<number>(0);
+
+  @ViewChild('scrollWrapper', { static: false })
+  scrollWrapperRef!: ElementRef<HTMLElement>;
 
   upTranslate = 0;
   downTranslate = 0;
@@ -42,12 +45,12 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (event: ScrollEvent) => {
         if (
-          !this.platformService.isVisible(this.descriptionLeftRef.nativeElement)
+          !this.platformService.isVisible(this.scrollWrapperRef.nativeElement)
         )
           return; // Ensure this runs only in the browser
 
         const direction = event.scrollDirection();
-        const delta = Math.min(Math.abs(event.scrollYOffset), 2); // tune speed
+        const delta = Math.min(Math.abs(event.scrollYOffset), 0.5); // tune speed
 
         if (direction === 'down') {
           this.upTranslate += delta; // move right
