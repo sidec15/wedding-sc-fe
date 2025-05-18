@@ -37,6 +37,10 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
   private componentCenterY = 0;
   private maxTranslation = 50; // % shift when far from center
 
+  private hasInitializedCenter = false;
+  private centerOffsetUp = 0;
+  private centerOffsetDown = 0;
+
   constructor(
     private eventService: EventService,
     private platformService: PlatformService
@@ -49,40 +53,11 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
     const upEl = wrapper.querySelector('.text-row.up') as HTMLElement;
     const downEl = wrapper.querySelector('.text-row.down') as HTMLElement;
 
-    let hasInitializedCenter = false;
-    let centerOffsetUp = 0;
-    let centerOffsetDown = 0;
+    this.initializeCenterOffsets(wrapper, upEl, downEl);
 
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (event: ScrollEvent) => {
         if (!this.platformService.isVisible(wrapper)) return;
-
-        if (!hasInitializedCenter) {
-          // 1. Compute vertical center of component
-          const wrapperRect = wrapper.getBoundingClientRect();
-          const scrollTop =
-            window.scrollY || document.documentElement.scrollTop;
-          const elementTop = wrapperRect.top + scrollTop;
-          const elementHeight = wrapperRect.height;
-          this.componentCenterY = elementTop + elementHeight / 2;
-
-          // 2. Compute horizontal center of viewport
-          const viewportCenterX = window.innerWidth / 2;
-
-          // 3. Compute real center of UP text
-          const upRect = upEl.getBoundingClientRect();
-          const upLeft = upRect.left + window.scrollX;
-          const upCenterX = upLeft + upRect.width / 2;
-          centerOffsetUp = viewportCenterX - upCenterX;
-
-          // 4. Compute real center of DOWN text
-          const downRect = downEl.getBoundingClientRect();
-          const downLeft = downRect.left + window.scrollX;
-          const downCenterX = downLeft + downRect.width / 2;
-          centerOffsetDown = viewportCenterX - downCenterX;
-
-          hasInitializedCenter = true;
-        }
 
         // 5. Scroll progress based on distance from vertical center
         const viewportHeight = window.innerHeight;
@@ -96,10 +71,44 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
         );
 
         // 7. Final transform
-        this.upTranslate = centerOffsetUp * normalized;
-        this.downTranslate = centerOffsetDown * normalized;
+        this.upTranslate = this.centerOffsetUp * normalized;
+        this.downTranslate = this.centerOffsetDown * normalized;
       }
     );
+  }
+
+  private initializeCenterOffsets(
+    wrapper: HTMLElement,
+    upEl: HTMLElement,
+    downEl: HTMLElement
+  ) {
+    if (this.hasInitializedCenter) return;
+    // 1. Compute vertical center of component
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const elementTop = wrapperRect.top + scrollTop;
+    const elementHeight = wrapperRect.height;
+    this.componentCenterY = elementTop + elementHeight / 2;
+
+    // 2. Compute horizontal center of viewport
+    const viewportCenterX = window.innerWidth / 2;
+
+    // 3. Compute real center of UP text
+    const upRect = upEl.getBoundingClientRect();
+    const upLeft = upRect.left + window.scrollX;
+    const upCenterX = upLeft + upRect.width / 2;
+    this.centerOffsetUp = viewportCenterX - upCenterX;
+
+    // 4. Compute real center of DOWN text
+    const downRect = downEl.getBoundingClientRect();
+    const downLeft = downRect.left + window.scrollX;
+    const downCenterX = downLeft + downRect.width / 2;
+    this.centerOffsetDown = viewportCenterX - downCenterX;
+
+    // Set initial positions so there is no jump on first scroll
+    this.upTranslate = 0;
+    this.downTranslate = 0;
+    this.hasInitializedCenter = true;
   }
 
   ngOnDestroy(): void {
