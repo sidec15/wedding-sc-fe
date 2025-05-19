@@ -70,7 +70,10 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
 
         // 7. Final transform
         this.upTranslate = this.centerOffsetUp * normalized;
-        this.downTranslate = this.centerOffsetDown * normalized;
+        this.downTranslate = (this.centerOffsetDown - 500) * normalized;
+        console.log(
+          `upTranslate: ${this.upTranslate}, downTranslate: ${this.downTranslate}`
+        );
       }
     );
   }
@@ -84,12 +87,10 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
     // Wait until the elements have a width (are rendered)
     const upRect = upEl.getBoundingClientRect();
     const downRect = downEl.getBoundingClientRect();
-    if ((upRect.width === 0 || downRect.width === 0)) {
+    if (upRect.width === 0 || downRect.width === 0) {
       requestAnimationFrame(() => this.initializeCenterOffsets());
       return;
     }
-
-    console.log("Startint initializing center offsets");
 
     // 1. Compute vertical center of component
     const wrapperRect = wrapper.getBoundingClientRect();
@@ -101,15 +102,16 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
     // 2. Compute horizontal center of viewport
     const viewportCenterX = window.innerWidth / 2;
 
-    // 3. Compute real center of UP text
-    const upLeft = upRect.left + window.scrollX;
-    const upCenterX = upLeft + upRect.width / 2;
-    this.centerOffsetUp = viewportCenterX - upCenterX;
+    // 3. Compute left edge of UP text
+    const upOffset = viewportCenterX - upRect.left;
 
-    // 4. Compute real center of DOWN text
-    const downLeft = downRect.left + window.scrollX;
-    const downCenterX = downLeft + downRect.width / 2;
-    this.centerOffsetDown = viewportCenterX - downCenterX;
+    // 4. Compute right edge of DOWN text
+    const downOffset = viewportCenterX - downRect.right;
+
+    this.centerOffsetUp = upOffset;
+    this.centerOffsetDown = downOffset;
+
+    console.log(`Center offset up: ${this.centerOffsetUp}, down: ${this.centerOffsetDown}`);
 
     // Set initial positions so there is no jump on first scroll
     this.upTranslate = 0;
