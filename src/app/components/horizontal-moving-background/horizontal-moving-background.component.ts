@@ -58,6 +58,7 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (event: ScrollEvent) => {
         if (!this.platformService.isVisible(wrapper)) return;
+        if(!this.hasInitializedCenter) return;
 
         // 5. Scroll progress based on distance from vertical center
         const viewportHeight = window.innerHeight;
