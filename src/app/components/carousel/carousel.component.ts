@@ -203,6 +203,8 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.currentSlideIndex = newIndex;
 
+    this.isSlideShowActive = true;
+
     setTimeout(() => {
       // Restart progress bar and auto-advance
       const duration =
