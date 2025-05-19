@@ -2,20 +2,25 @@
   class="horizontal-scroll-bg"
   [ngStyle]="{
     transform: 'translateY(' + translateYValue() + ')',
-    'z-index': zIndex().toString(),
-    opacity: opacity()
+    'z-index': zIndex().toString()
   }"
 >
   <div class="scroll-wrapper" #scrollWrapper>
     <div
       class="text-row up"
-      [ngStyle]="{ transform: 'translateX(' + upTranslate() + ')' }"
+      [ngStyle]="{
+        transform: 'translateX(' + upTranslate() + ')',
+        opacity: upOpacity()
+      }"
     >
       {{ upText() | translate }}
     </div>
     <div
       class="text-row down"
-      [ngStyle]="{ transform: 'translateX(' + downTranslate() + ')' }"
+      [ngStyle]="{
+        transform: 'translateX(' + downTranslate() + ')',
+        opacity: downOpacity()
+      }"
     >
       {{ downText() | translate }}
     </div>
