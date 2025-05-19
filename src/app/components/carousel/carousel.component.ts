@@ -7,6 +7,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EventService, ScrollEvent } from '../../services/event.service';
@@ -18,38 +19,46 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import { MinimiComponent } from '../../pages/church/components/minimi/minimi.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgFor, NgStyle } from '@angular/common';
+import { NgFor, NgIf, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-carousel',
-  imports: [TranslateModule, NgFor, NgStyle],
+  imports: [TranslateModule, NgFor, NgStyle, NgIf],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
   animations: [
     trigger('fadeSlide', [
       state('visible', style({ opacity: 1 })),
       state('hidden', style({ opacity: 0 })),
-      transition('visible => hidden', [
-        //todo_here
-        animate(1000 + 'ms ease-out'),
-      ]),
-      transition('hidden => visible', [animate(2000 + 'ms ease-in')]),
+      transition('visible => hidden', [animate('1000ms ease-out')]),
+      transition('hidden => visible', [animate('2000ms ease-in')]),
     ]),
   ],
 })
 export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
-  /** Duration for fade-out animation in milliseconds */
+  /** Inputs */
   fadeOutDuration: InputSignal<number> = input(1000);
-  /** Duration for fade-in animation in milliseconds */
   fadeInDuration: InputSignal<number> = input(2000);
-  /** Interval duration in milliseconds */
   intervalValue: InputSignal<number> = input(5000);
-
-  /** Slides to be displayed in the carousel */
   slides: InputSignal<Slide[]> = input.required();
+  slidesMobile: InputSignal<Slide[]> = input([] as Slide[]);
 
+  /** DOM references */
+  @ViewChild('carousel', { static: false })
+  carouselSectionRef!: ElementRef<HTMLElement>;
+  @ViewChild('overlayRef', { static: false })
+  overlayRef!: ElementRef<HTMLElement>;
+
+  /** State */
+  currentSlideIndex = 0;
+  activeSlides: Slide[] = [];
+  fadeState: 'visible' | 'hidden' = 'visible';
+  progress = 100;
+  shouldShowMore = false;
+  expanded = false;
+
+  /** Internals */
   private slideSub!: Subscription;
   private scrollEventSubscription!: Subscription;
   private slideTimeoutId!: NodeJS.Timeout;
@@ -57,50 +66,41 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   private mySlides: Slide[] = [];
   private rafId: number | null = null;
 
-  @ViewChild('carousel', { static: false })
-  carouselSectionRef!: ElementRef<HTMLElement>;
-
-  currentSlideIndex = 0;
-  activeSlides: Slide[] = [];
-  fadeState: 'visible' | 'hidden' = 'visible';
-
-  progress = 100; // 100 to 0
-
   constructor(
     private platformService: PlatformService,
-    private eventService: EventService
+    private eventService: EventService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.mySlides = this.slides();
+    this.mySlides =
+      this.platformService.isMobile() && this.slidesMobile()?.length > 0
+        ? this.slidesMobile()
+        : this.slides();
   }
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
 
-    // Use requestAnimationFrame to ensure the DOM has fully rendered and the element's
-    // position is accurate before checking visibility. Without this, getBoundingClientRect()
-    // may return incorrect values on initial load, especially when this section is the first visible one.
     requestAnimationFrame(() => {
       if (
-        !this.platformService.isVisible(this.carouselSectionRef.nativeElement)
-      )
-        return;
-
-      this.startSlideShow();
+        this.platformService.isVisible(this.carouselSectionRef.nativeElement)
+      ) {
+        this.startSlideShow();
+      }
     });
 
     this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
-      (e: ScrollEvent) => {
-        if (
-          !this.platformService.isVisible(this.carouselSectionRef.nativeElement)
-        ) {
+      () => {
+        const isVisible = this.platformService.isVisible(
+          this.carouselSectionRef.nativeElement
+        );
+        if (!isVisible) {
           if (this.isSlideShowActive) {
             this.stopSlideShow();
+          } else {
+            this.startSlideShow();
           }
-          return;
-        } else {
-          this.startSlideShow();
         }
       }
     );
@@ -112,6 +112,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stopSlideShow();
   }
 
+  /** Public slide controls */
   prevSlide(): void {
     this.goToSlide(-1);
   }
@@ -120,113 +121,145 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.goToSlide(1);
   }
 
+  /** Slide management */
   private startSlideShow(): void {
     if (this.isSlideShowActive) return;
+
     this.isSlideShowActive = true;
-    this.activeSlides = [{ ...this.mySlides[0], visible: true }];
+    this.setActiveSlides([{ ...this.mySlides[0], visible: true }]);
     this.currentSlideIndex = 0;
-    this.startProgressBar(this.mySlides[0].duration ?? this.intervalValue());
+    this.onSlideVisible();
+
+    this.startProgressBar(this.getCurrentSlideDuration());
     this.scheduleNextSlide();
   }
 
-  private scheduleNextSlide(): void {
-    const currentSlide = this.mySlides[this.currentSlideIndex];
-    const duration = currentSlide.duration ?? this.intervalValue();
+  private stopSlideShow(): void {
+    this.isSlideShowActive = false;
+    this.expanded = false;
 
-    this.slideTimeoutId = setTimeout(() => {
-      this.handlePrograsBarAnimation();
-      this.handleSlideAnimation();
-      this.scheduleNextSlide();
-    }, duration);
-  }
-
-  private startProgressBar(duration: number) {
-    const start = performance.now(); // Get the start time in ms
-
-    const loop = (now: number) => {
-      const elapsed = now - start; // How much time has passed since we started
-      const percent = 100 - Math.min((elapsed / duration) * 100, 100); // Compute % progress
-      this.progress = percent; // Update the bound variable (Angular redraws the bar)
-
-      if (percent > 0) {
-        this.rafId = requestAnimationFrame(loop); // Call again before next repaint
-      }
-    };
-
-    this.rafId = requestAnimationFrame(loop); // Start the loop
-  }
-
-  private handlePrograsBarAnimation() {
-    // Reset progress bar
-    this.progress = 100;
     if (this.rafId) cancelAnimationFrame(this.rafId);
-
-    // Use the current slide's duration for the progress bar
-    const currentSlide = this.mySlides[this.currentSlideIndex];
-    const duration = currentSlide.duration ?? this.intervalValue();
-    this.startProgressBar(duration);
+    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
   }
 
-  private handleSlideAnimation() {
-    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId); // Add this line
+  private scheduleNextSlide(): void {
+    this.slideTimeoutId = setTimeout(() => {
+      this.handleProgressBarReset();
+      this.handleSlideTransition();
+      this.scheduleNextSlide();
+    }, this.getCurrentSlideDuration());
+  }
+
+  private handleSlideTransition(): void {
+    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
 
     const nextIndex = (this.currentSlideIndex + 1) % this.mySlides.length;
+    this.setSlideVisible(false, 0);
+    this.unshiftSlide({ ...this.mySlides[nextIndex], visible: true });
 
-    // Hide current
-    this.activeSlides[0].visible = false;
-
-    // Show next
-    this.activeSlides.unshift({ ...this.mySlides[nextIndex], visible: true });
-
-    // Remove old slide after fade-out
     setTimeout(() => {
-      this.activeSlides.pop();
+      this.popSlide();
       this.currentSlideIndex = nextIndex;
+      this.onSlideVisible();
     }, this.fadeOutDuration());
   }
 
   private goToSlide(direction: 1 | -1): void {
-    // Cancel any existing animations
     this.stopSlideShow();
 
-    const slidesCount = this.mySlides.length;
-    let newIndex =
-      (this.currentSlideIndex + direction + slidesCount) % slidesCount;
+    const total = this.mySlides.length;
+    const newIndex = (this.currentSlideIndex + direction + total) % total;
 
-    // Hide current
-    this.activeSlides[0].visible = false;
-
-    const mySlides = this.mySlides;
-
-    // Show next
-    this.activeSlides.unshift({ ...mySlides[newIndex], visible: true });
-
+    this.setSlideVisible(false, 0);
+    this.unshiftSlide({ ...this.mySlides[newIndex], visible: true });
     this.currentSlideIndex = newIndex;
 
-    this.isSlideShowActive = true;
-
     setTimeout(() => {
-      // Restart progress bar and auto-advance
-      const duration =
-        mySlides[this.currentSlideIndex].duration ?? this.intervalValue();
-      this.startProgressBar(duration);
+      this.startProgressBar(this.getCurrentSlideDuration());
       this.scheduleNextSlide();
+      this.onSlideVisible();
     }, this.fadeOutDuration());
   }
 
-  private stopSlideShow() {
-    this.isSlideShowActive = false;
-    // console.log('Stopping slideshow');
+  private getCurrentSlideDuration(): number {
+    return (
+      this.mySlides[this.currentSlideIndex].duration ?? this.intervalValue()
+    );
+  }
+
+  /** Progress bar handling */
+  private startProgressBar(duration: number): void {
+    const start = performance.now();
+
+    const loop = (now: number) => {
+      const elapsed = now - start;
+      const percent = 100 - Math.min((elapsed / duration) * 100, 100);
+      this.progress = percent;
+
+      if (percent > 0) {
+        this.rafId = requestAnimationFrame(loop);
+      }
+    };
+
+    this.rafId = requestAnimationFrame(loop);
+  }
+
+  private handleProgressBarReset(): void {
+    this.progress = 100;
     if (this.rafId) cancelAnimationFrame(this.rafId);
-    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
+    this.startProgressBar(this.getCurrentSlideDuration());
+  }
+
+  /** Overlay logic */
+  private onSlideVisible(): void {
+    this.expanded = false;
+    requestAnimationFrame(() => this.checkOverlayOverflow());
+  }
+
+  private checkOverlayOverflow(): void {
+    if (!this.platformService.isBrowser() || !this.overlayRef) return;
+
+    const el = this.overlayRef.nativeElement;
+    this.shouldShowMore = el.scrollHeight > el.clientHeight;
+  }
+
+  toggleExpandedState(state: boolean): void {
+    this.expanded = state;
+    if (!state) {
+      requestAnimationFrame(() => this.checkOverlayOverflow());
+    }
+  }
+
+  /** Slide mutation helpers (with detectChanges) */
+  private setActiveSlides(slides: Slide[]): void {
+    this.activeSlides = slides;
+    this.cdr.detectChanges();
+  }
+
+  private unshiftSlide(slide: Slide): void {
+    this.activeSlides.unshift(slide);
+    this.cdr.detectChanges();
+  }
+
+  private popSlide(): void {
+    this.activeSlides.pop();
+    this.cdr.detectChanges();
+  }
+
+  private setSlideVisible(visible: boolean, index: number): void {
+    if (this.activeSlides[index]) {
+      this.activeSlides[index].visible = visible;
+      this.cdr.detectChanges();
+    }
   }
 }
 
+/** Slide model */
 export interface Slide {
   imageUrl: string;
   title: string;
   description: string;
   style?: { [key: string]: string };
   visible?: boolean;
-  duration?: number; // visibility time in milliseconds
+  duration?: number;
 }

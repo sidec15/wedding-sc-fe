@@ -7,9 +7,31 @@
       [ngStyle]="slide.style"
       [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
     />
-    <div class="overlay" [@fadeSlide]="slide.visible ? 'visible' : 'hidden'">
+
+    <div
+      class="overlay"
+      [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
+      [class.expanded]="expanded"
+      #overlayRef
+    >
       <h3>{{ slide.title | translate }}</h3>
       <p>{{ slide.description | translate }}</p>
+
+      <button
+        class="show-more-btn"
+        *ngIf="shouldShowMore && !expanded"
+        (click)="toggleExpandedState(true)"
+      >
+        Show more
+      </button>
+
+      <button
+        class="show-more-btn"
+        *ngIf="shouldShowMore && expanded"
+        (click)="toggleExpandedState(false)"
+      >
+        Show less
+      </button>
     </div>
   </ng-container>
 

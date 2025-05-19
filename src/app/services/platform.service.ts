@@ -25,4 +25,18 @@ export class PlatformService {
 
     return isVisible;
   }
+
+  getPlatform(): PlatformType {
+    if (this.isMobile()) {
+      return PlatformType.Mobile;
+    } else {
+      return PlatformType.Desktop;
+    }
+  }
+
+}
+
+export enum PlatformType {
+  Desktop = 'desktop',
+  Mobile = 'mobile',
 }

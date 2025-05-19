@@ -92,3 +92,62 @@
     }
   }
 }
+
+
+@media (max-width: 768px) {
+  .carousel {
+    .overlay {
+      width: 100%;
+      bottom: 0;
+      top: auto;
+      left: 0;
+      right: 0;
+      background: rgba(var(--text-mask), 0.85);
+      backdrop-filter: blur(4px);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      padding: 1rem;
+      transition: max-height 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      max-height: 30vh;
+      overflow: hidden;
+
+      &.expanded {
+        max-height: 100vh;
+        overflow-y: auto;
+      }
+
+      h3,
+      p {
+        margin: 0;
+      }
+
+      p {
+        flex-shrink: 0;
+      }
+
+      .show-more-btn {
+        margin-top: auto;
+        align-self: center;
+        background: rgba(var(--text-mask), 0.6);
+        color: white;
+        padding: 0.4rem 1rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border: none;
+        z-index: 2;
+        border: 1px solid red;
+      }
+    }
+
+    .gallery-buttons{
+      display: none; // Hide buttons on mobile
+    }
+  }
+}
+
+
