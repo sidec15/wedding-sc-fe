@@ -1,41 +1,37 @@
-@use "../../../styles/variables.scss" as *;
-@use "../../../styles/mixins.scss" as *;
-
 .horizontal-scroll-bg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   pointer-events: none;
+  overflow: hidden;
 
   .scroll-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: stretch; // full row width for control
+    justify-content: center;
+    align-items: stretch;
     gap: 2rem;
     width: 100%;
-    position: relative;
-    overflow: hidden;
-    padding: 0 2rem; // optional padding on left/right
+    height: 100%;
   }
 
   .text-row {
-    display: inline-block; // ensures height is respected & text doesn't stack on same line
-    position: relative;
+    align-self: center; // Horizontally center as baseline
     white-space: nowrap;
     font-size: var(--horizontal-moving-background-font-size);
     font-weight: bold;
     color: rgb(var(--accent));
     will-change: transform;
     transition: transform 0.2s linear;
-    // border: 2px solid red;
+    border: 1px solid red;
   }
 
   .up {
-    align-self: flex-start; // stick to left
+    // top line — initial shift left via translateX(-X)
   }
 
   .down {
-    align-self: flex-end; // stick to right
+    // bottom line — initial shift right via translateX(X)
   }
 }

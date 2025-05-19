@@ -1,10 +1,10 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
-  input,
+  AfterViewInit,
   OnDestroy,
-  OnInit,
+  signal,
+  input,
+  ElementRef,
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -19,27 +19,30 @@ import { NgStyle } from '@angular/common';
   templateUrl: './horizontal-moving-background.component.html',
   styleUrl: './horizontal-moving-background.component.scss',
 })
-export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
+export class HorizontalMovingBackgroundComponent
+  implements AfterViewInit, OnDestroy
+{
   upText = input.required<string>();
   downText = input.required<string>();
 
-  translateYValue = input<string>('50%');
+  upOffset = input<string>('0px');
+  downOffset = input<string>('0px');
+
   zIndex = input<number>(0);
   opacity = input<number>(0.5);
+  translateYValue = input<string>('50%');
+
+  upTranslate = signal<string>('0px');
+  downTranslate = signal<string>('0px');
 
   @ViewChild('scrollWrapper', { static: false })
   scrollWrapperRef!: ElementRef<HTMLElement>;
 
-  upTranslate = 0;
-  downTranslate = 0;
+  private scrollSub?: Subscription;
+  private upCurrentOffset = 0; // in px
+  private downCurrentOffset = 0; // in px
 
-  private scrollSub!: Subscription;
-  private componentCenterY = 0;
-  private maxTranslation = 50; // % shift when far from center
-
-  private hasInitializedCenter = false;
-  private centerOffsetUp = 0;
-  private centerOffsetDown = 0;
+  private scrollSpeedFactor = 0.3; // Tune this for speed
 
   constructor(
     private eventService: EventService,
@@ -47,76 +50,31 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
-    if (!this.platformService.isBrowser()) return;
+    if(!this.platformService.isBrowser()) return;
 
-    this.initializeCenterOffsets();
+    // Start from normalized base offsets
+    this.upTranslate.set(this.upOffset());
+    this.downTranslate.set(this.downOffset());
 
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (event: ScrollEvent) => {
-        const wrapper = this.scrollWrapperRef.nativeElement;
-        if (!this.platformService.isVisible(wrapper)) return;
-        if (!this.hasInitializedCenter) return;
+        if(!this.platformService.isVisible(this.scrollWrapperRef.nativeElement)) return;
 
-        // 5. Scroll progress based on distance from vertical center
-        const viewportHeight = window.innerHeight;
-        const viewportCenterY = event.scrollY + viewportHeight / 2;
-        const distanceFromCenter = viewportCenterY - this.componentCenterY;
+        const delta = event.scrollYOffset;
 
-        // 6. Normalize scroll distance to [-1, 1] range
-        const normalized = Math.max(
-          -1,
-          Math.min(1, distanceFromCenter / viewportHeight)
+        // Increment offsets (up goes right, down goes left)
+        this.upCurrentOffset += delta * this.scrollSpeedFactor;
+        this.downCurrentOffset -= delta * this.scrollSpeedFactor;
+
+        // Compose final values
+        this.upTranslate.set(
+          `calc(${this.upOffset()} + ${this.upCurrentOffset}px)`
         );
-
-        // 7. Final transform
-        this.upTranslate = this.centerOffsetUp * normalized;
-        this.downTranslate = (this.centerOffsetDown - 500) * normalized;
-        console.log(
-          `upTranslate: ${this.upTranslate}, downTranslate: ${this.downTranslate}`
+        this.downTranslate.set(
+          `calc(${this.downOffset()} + ${this.downCurrentOffset}px)`
         );
       }
     );
-  }
-
-  private initializeCenterOffsets() {
-    if (this.hasInitializedCenter) return;
-    const wrapper = this.scrollWrapperRef.nativeElement;
-    const upEl = wrapper.querySelector('.text-row.up') as HTMLElement;
-    const downEl = wrapper.querySelector('.text-row.down') as HTMLElement;
-
-    // Wait until the elements have a width (are rendered)
-    const upRect = upEl.getBoundingClientRect();
-    const downRect = downEl.getBoundingClientRect();
-    if (upRect.width === 0 || downRect.width === 0) {
-      requestAnimationFrame(() => this.initializeCenterOffsets());
-      return;
-    }
-
-    // 1. Compute vertical center of component
-    const wrapperRect = wrapper.getBoundingClientRect();
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const elementTop = wrapperRect.top + scrollTop;
-    const elementHeight = wrapperRect.height;
-    this.componentCenterY = elementTop + elementHeight / 2;
-
-    // 2. Compute horizontal center of viewport
-    const viewportCenterX = window.innerWidth / 2;
-
-    // 3. Compute left edge of UP text
-    const upOffset = viewportCenterX - upRect.left;
-
-    // 4. Compute right edge of DOWN text
-    const downOffset = viewportCenterX - downRect.right;
-
-    this.centerOffsetUp = upOffset;
-    this.centerOffsetDown = downOffset;
-
-    console.log(`Center offset up: ${this.centerOffsetUp}, down: ${this.centerOffsetDown}`);
-
-    // Set initial positions so there is no jump on first scroll
-    this.upTranslate = 0;
-    this.downTranslate = 0;
-    this.hasInitializedCenter = true;
   }
 
   ngOnDestroy(): void {
