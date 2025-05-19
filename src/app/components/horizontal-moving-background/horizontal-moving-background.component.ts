@@ -81,6 +81,16 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
     const upEl = wrapper.querySelector('.text-row.up') as HTMLElement;
     const downEl = wrapper.querySelector('.text-row.down') as HTMLElement;
 
+    // Wait until the elements have a width (are rendered)
+    const upRect = upEl.getBoundingClientRect();
+    const downRect = downEl.getBoundingClientRect();
+    if ((upRect.width === 0 || downRect.width === 0)) {
+      requestAnimationFrame(() => this.initializeCenterOffsets());
+      return;
+    }
+
+    console.log("Startint initializing center offsets");
+
     // 1. Compute vertical center of component
     const wrapperRect = wrapper.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -92,13 +102,11 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
     const viewportCenterX = window.innerWidth / 2;
 
     // 3. Compute real center of UP text
-    const upRect = upEl.getBoundingClientRect();
     const upLeft = upRect.left + window.scrollX;
     const upCenterX = upLeft + upRect.width / 2;
     this.centerOffsetUp = viewportCenterX - upCenterX;
 
     // 4. Compute real center of DOWN text
-    const downRect = downEl.getBoundingClientRect();
     const downLeft = downRect.left + window.scrollX;
     const downCenterX = downLeft + downRect.width / 2;
     this.centerOffsetDown = viewportCenterX - downCenterX;
