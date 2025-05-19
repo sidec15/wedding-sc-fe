@@ -49,16 +49,13 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
 
-    const wrapper = this.scrollWrapperRef.nativeElement;
-    const upEl = wrapper.querySelector('.text-row.up') as HTMLElement;
-    const downEl = wrapper.querySelector('.text-row.down') as HTMLElement;
-
-    this.initializeCenterOffsets(wrapper, upEl, downEl);
+    this.initializeCenterOffsets();
 
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (event: ScrollEvent) => {
+        const wrapper = this.scrollWrapperRef.nativeElement;
         if (!this.platformService.isVisible(wrapper)) return;
-        if(!this.hasInitializedCenter) return;
+        if (!this.hasInitializedCenter) return;
 
         // 5. Scroll progress based on distance from vertical center
         const viewportHeight = window.innerHeight;
@@ -78,12 +75,12 @@ export class HorizontalScrollTextComponent implements AfterViewInit, OnDestroy {
     );
   }
 
-  private initializeCenterOffsets(
-    wrapper: HTMLElement,
-    upEl: HTMLElement,
-    downEl: HTMLElement
-  ) {
+  private initializeCenterOffsets() {
     if (this.hasInitializedCenter) return;
+    const wrapper = this.scrollWrapperRef.nativeElement;
+    const upEl = wrapper.querySelector('.text-row.up') as HTMLElement;
+    const downEl = wrapper.querySelector('.text-row.down') as HTMLElement;
+
     // 1. Compute vertical center of component
     const wrapperRect = wrapper.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
