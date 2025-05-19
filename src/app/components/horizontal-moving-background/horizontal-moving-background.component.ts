@@ -18,6 +18,7 @@ import { NgStyle } from '@angular/common';
   imports: [TranslateModule, NgStyle],
   templateUrl: './horizontal-moving-background.component.html',
   styleUrl: './horizontal-moving-background.component.scss',
+  standalone: true,
 })
 export class HorizontalMovingBackgroundComponent
   implements AfterViewInit, OnDestroy
@@ -31,6 +32,7 @@ export class HorizontalMovingBackgroundComponent
   zIndex = input<number>(0);
   opacity = input<number>(0.5);
   translateYValue = input<string>('50%');
+  speedFactor = input<number>(0.3); // Tune this for speed
 
   upTranslate = signal<string>('0px');
   downTranslate = signal<string>('0px');
@@ -42,15 +44,13 @@ export class HorizontalMovingBackgroundComponent
   private upCurrentOffset = 0; // in px
   private downCurrentOffset = 0; // in px
 
-  private scrollSpeedFactor = 0.3; // Tune this for speed
-
   constructor(
     private eventService: EventService,
     private platformService: PlatformService
   ) {}
 
   ngAfterViewInit(): void {
-    if(!this.platformService.isBrowser()) return;
+    if (!this.platformService.isBrowser()) return;
 
     // Start from normalized base offsets
     this.upTranslate.set(this.upOffset());
@@ -58,13 +58,20 @@ export class HorizontalMovingBackgroundComponent
 
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (event: ScrollEvent) => {
-        if(!this.platformService.isVisible(this.scrollWrapperRef.nativeElement)) return;
+        if (
+          !this.platformService.isVisible(this.scrollWrapperRef.nativeElement)
+        )
+          return;
 
         const delta = event.scrollYOffset;
 
         // Increment offsets (up goes right, down goes left)
-        this.upCurrentOffset += delta * this.scrollSpeedFactor;
-        this.downCurrentOffset -= delta * this.scrollSpeedFactor;
+        console.log(`speed factor: ${this.speedFactor()}`);
+        this.upCurrentOffset += delta * this.speedFactor();
+        this.downCurrentOffset -= delta * this.speedFactor();
+        console.log(
+          `upCurrentOffset: ${this.upCurrentOffset}, downCurrentOffset: ${this.downCurrentOffset}`
+        );
 
         // Compose final values
         this.upTranslate.set(
