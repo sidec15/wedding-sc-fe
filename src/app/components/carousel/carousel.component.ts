@@ -63,6 +63,13 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   private scrollEventSubscription!: Subscription;
   private slideTimeoutId!: NodeJS.Timeout;
   private isSlideShowActive = false;
+  private isPaused = false;
+  private pauseTimestamp = 0;
+  private remainingSlideDuration = 0;
+  private slideStartTimestamp = 0;
+  private slideDurationMs = 0;
+  private progressAtPause = 0;
+
   private mySlides: Slide[] = [];
   private rafId: number | null = null;
 
@@ -144,7 +151,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private stopSlideShow(): void {
-    if(!this.isSlideShowActive) return;
+    if (!this.isSlideShowActive) return;
 
     console.log('Stopping slideshow');
     this.isSlideShowActive = false;
@@ -154,12 +161,43 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
   }
 
-  private scheduleNextSlide(): void {
+  private pauseSlideshow(): void {
+    if (!this.isSlideShowActive || this.isPaused) return;
+
+    this.isPaused = true;
+    this.pauseTimestamp = performance.now();
+
+    if (this.slideTimeoutId) {
+      clearTimeout(this.slideTimeoutId);
+      this.remainingSlideDuration =
+        this.slideDurationMs - (this.pauseTimestamp - this.slideStartTimestamp);
+    }
+
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+
+    // Capture how far the progress bar was
+    this.progressAtPause = this.progress;
+
+    console.log('Slideshow paused');
+  }
+
+  private resumeSlideshow(): void {
+    if (!this.isSlideShowActive || !this.isPaused) return;
+
+    this.isPaused = false;
+
+    console.log('Resuming slideshow');
+    this.startProgressBar(this.remainingSlideDuration, this.progressAtPause);
+    this.scheduleNextSlide(this.remainingSlideDuration);
+  }
+
+  private scheduleNextSlide(duration?: number): void {
+    const delay = duration ?? this.getCurrentSlideDuration();
     this.slideTimeoutId = setTimeout(() => {
       this.handleProgressBarReset();
       this.handleSlideTransition();
       this.scheduleNextSlide();
-    }, this.getCurrentSlideDuration());
+    }, delay);
   }
 
   private handleSlideTransition(): void {
@@ -201,20 +239,24 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /** Progress bar handling */
-  private startProgressBar(duration: number): void {
-    const start = performance.now();
+  private startProgressBar(duration: number, initialProgress = 100): void {
+    this.slideDurationMs = duration;
+    this.slideStartTimestamp = performance.now();
+    const initialElapsed = ((100 - initialProgress) / 100) * duration;
 
-    const loop = (now: number) => {
-      const elapsed = now - start;
+    const animate = () => {
+      const now = performance.now();
+      const elapsed = now - this.slideStartTimestamp + initialElapsed;
       const percent = 100 - Math.min((elapsed / duration) * 100, 100);
+
       this.progress = percent;
 
-      if (percent > 0) {
-        this.rafId = requestAnimationFrame(loop);
+      if (this.progress > 0 && !this.isPaused) {
+        this.rafId = requestAnimationFrame(animate);
       }
     };
 
-    this.rafId = requestAnimationFrame(loop);
+    this.rafId = requestAnimationFrame(animate);
   }
 
   private handleProgressBarReset(): void {
@@ -235,14 +277,19 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     const el = this.overlayRef.nativeElement;
     const result = el.scrollHeight > el.clientHeight;
     this.shouldShowMore = result;
-    console.log('Checking overlay overflow. Result:', result);    
+    console.log('Checking overlay overflow. Result:', result);
   }
 
   toggleExpandedState(state: boolean): void {
     this.expanded = state;
-    if (!state) {
-      requestAnimationFrame(() => this.checkOverlayOverflow());
+    if (state) {
+      this.pauseSlideshow();
+    } else {
+      this.resumeSlideshow();
     }
+    // if (!state) {
+    //   requestAnimationFrame(() => this.checkOverlayOverflow());
+    // }
   }
 
   /** Slide mutation helpers (with detectChanges) */

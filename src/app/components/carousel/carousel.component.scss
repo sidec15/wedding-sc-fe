@@ -123,6 +123,8 @@
         max-height: 100dvh;
         overflow-y: auto;
         padding-bottom: 1rem; // Remove reserved space when expanded
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
       }
 
       h3,
@@ -148,12 +150,16 @@
         justify-content: center;
         align-items: center;
 
-        background: rgba(var(--text-mask), 0.7);
+        // background: rgba(var(--text-mask), 0.7);
         // backdrop-filter: blur(8px);
-        // -webkit-backdrop-filter: blur(6px); // for Safari support
+        // Add shadow effect at the bottom
+        &::after {
+          @include shadow-gradient(to top, 100%); // Shadow fades upward
+          bottom: 0;
+        }
 
         .show-btn {
-          background: rgba(var(--text-mask), 0.8);
+          background: rgba(var(--text-mask), 1);
           border: none;
           border-radius: 4px;
           padding: 0.3rem 0.8rem;
