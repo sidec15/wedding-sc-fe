@@ -233,7 +233,9 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.platformService.isBrowser() || !this.overlayRef) return;
 
     const el = this.overlayRef.nativeElement;
-    this.shouldShowMore = el.scrollHeight > el.clientHeight;
+    const result = el.scrollHeight > el.clientHeight;
+    this.shouldShowMore = result;
+    console.log('Checking overlay overflow. Result:', result);    
   }
 
   toggleExpandedState(state: boolean): void {

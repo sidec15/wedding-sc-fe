@@ -17,21 +17,23 @@
       <h3>{{ slide.title | translate }}</h3>
       <p>{{ slide.description | translate }}</p>
 
-      <button
-        class="show-more-btn"
-        *ngIf="shouldShowMore && !expanded"
-        (click)="toggleExpandedState(true)"
-      >
-        Show more
-      </button>
+      <div class="button-container">
+        <button
+          class="show-btn more-btn"
+          *ngIf="shouldShowMore && !expanded"
+          (click)="toggleExpandedState(true)"
+        >
+          Show more
+        </button>
 
-      <button
-        class="show-more-btn"
-        *ngIf="shouldShowMore && expanded"
-        (click)="toggleExpandedState(false)"
-      >
-        Show less
-      </button>
+        <button
+          class="show-btn less-btn"
+          *ngIf="shouldShowMore && expanded"
+          (click)="toggleExpandedState(false)"
+        >
+          Show less
+        </button>
+      </div>
     </div>
   </ng-container>
 

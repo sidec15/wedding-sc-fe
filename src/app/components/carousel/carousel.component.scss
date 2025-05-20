@@ -99,12 +99,14 @@
     .slide {
       height: 100%;
     }
+
     .overlay {
       width: 100%;
       bottom: 0;
       top: auto;
       left: 0;
       padding: 1rem;
+      padding-bottom: 3rem; // Reserve space for the Show More button
       background: rgba(var(--text-mask), 0.75);
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
@@ -120,6 +122,7 @@
         max-height: 100vh;
         max-height: 100dvh;
         overflow-y: auto;
+        padding-bottom: 1rem; // Remove reserved space when expanded
       }
 
       h3,
@@ -132,21 +135,34 @@
       }
 
       p {
-        // flex-shrink: 0;
         font-size: 1rem;
       }
 
-      .show-more-btn {
-        margin-top: auto;
-        align-self: center;
-        background: rgba(var(--text-mask), 0.6);
-        padding: 0.4rem 1rem;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        border: none;
-        z-index: 2;
-        border: 1px solid red;
+      .button-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0.5rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: rgba(var(--text-mask), 0.7);
+        // backdrop-filter: blur(8px);
+        // -webkit-backdrop-filter: blur(6px); // for Safari support
+
+        .show-btn {
+          background: rgba(var(--text-mask), 0.8);
+          border: none;
+          border-radius: 4px;
+          padding: 0.3rem 0.8rem;
+          font-size: 0.9rem;
+          font-weight: bold;
+          color: rgb(var(--accent));
+          cursor: pointer;
+          z-index: 1;
+        }
       }
     }
 
