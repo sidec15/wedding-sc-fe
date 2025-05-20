@@ -98,7 +98,9 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!isVisible) {
           if (this.isSlideShowActive) {
             this.stopSlideShow();
-          } else {
+          }
+        } else {
+          if (!this.isSlideShowActive) {
             this.startSlideShow();
           }
         }
@@ -121,11 +123,18 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.goToSlide(1);
   }
 
+  private activateslideShow(): void {
+    if (this.isSlideShowActive) return;
+    console.log('Activating slideshow');
+    this.isSlideShowActive = true;
+  }
+
   /** Slide management */
   private startSlideShow(): void {
     if (this.isSlideShowActive) return;
 
-    this.isSlideShowActive = true;
+    this.activateslideShow();
+    console.log('Starting slideshow');
     this.setActiveSlides([{ ...this.mySlides[0], visible: true }]);
     this.currentSlideIndex = 0;
     this.onSlideVisible();
@@ -135,6 +144,9 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private stopSlideShow(): void {
+    if(!this.isSlideShowActive) return;
+
+    console.log('Stopping slideshow');
     this.isSlideShowActive = false;
     this.expanded = false;
 
@@ -170,6 +182,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     const total = this.mySlides.length;
     const newIndex = (this.currentSlideIndex + direction + total) % total;
 
+    this.activateslideShow();
     this.setSlideVisible(false, 0);
     this.unshiftSlide({ ...this.mySlides[newIndex], visible: true });
     this.currentSlideIndex = newIndex;
