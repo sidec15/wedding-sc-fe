@@ -233,23 +233,23 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Slide mutation helpers (with detectChanges) */
   private setActiveSlides(slides: Slide[]): void {
     this.activeSlides = slides;
-    this.cdr.detectChanges();
+    this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
 
   private unshiftSlide(slide: Slide): void {
     this.activeSlides.unshift(slide);
-    this.cdr.detectChanges();
+    this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
 
   private popSlide(): void {
     this.activeSlides.pop();
-    this.cdr.detectChanges();
+    this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
 
   private setSlideVisible(visible: boolean, index: number): void {
     if (this.activeSlides[index]) {
       this.activeSlides[index].visible = visible;
-      this.cdr.detectChanges();
+      this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
     }
   }
 }

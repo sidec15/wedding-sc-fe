@@ -39,6 +39,7 @@
     padding-left: 1rem; // Add padding to the left
     padding-right: 1rem; // Add padding to the right
     background-color: rgba(var(--text-mask), 0.9); // Semi-transparent background for readability
+    backdrop-filter: var(--backdrop-filter); // Blur effect for the background
     color: rgb(var(--text)); // Use the text color from variables
     z-index: 2; // Ensure the text is above the image
     justify-content: center; // Center the text vertically

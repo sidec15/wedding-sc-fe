@@ -2,6 +2,13 @@
 
 $font-family-base: 'Comfortaa', 'Segoe UI', sans-serif;
 
+/* Global box-sizing reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body, html {
   font-family: $font-family-base;
   margin: 0;
@@ -9,14 +16,9 @@ body, html {
   -ms-touch-action: manipulation; // For older versions of Internet Explorer
   touch-action: manipulation; // For modern browsers
   scroll-behavior: smooth;
+  box-sizing: border-box;
 }
 
 .navbar .nav-links li a {
   cursor: pointer;
-}
-
-@media (max-width: 768px){
-  body, html {
-    margin: 0;
-  }
 }
