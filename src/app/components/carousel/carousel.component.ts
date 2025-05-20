@@ -61,7 +61,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Internals */
   private slideSub!: Subscription;
   private scrollEventSubscription!: Subscription;
-  private slideTimeoutId!: NodeJS.Timeout;
+  private slideTimeoutId!: NodeJS.Timeout | null;
   private isSlideShowActive = false;
   private isPaused = false;
   private pauseTimestamp = 0;
@@ -167,18 +167,20 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isPaused = true;
     this.pauseTimestamp = performance.now();
 
+    if (this.rafId) cancelAnimationFrame(this.rafId);
     if (this.slideTimeoutId) {
       clearTimeout(this.slideTimeoutId);
       this.remainingSlideDuration =
         this.slideDurationMs - (this.pauseTimestamp - this.slideStartTimestamp);
     }
 
-    if (this.rafId) cancelAnimationFrame(this.rafId);
-
     // Capture how far the progress bar was
     this.progressAtPause = this.progress;
 
-    console.log('Slideshow paused');
+    console.log('PAUSE - Pausing slideshow');
+    console.log('PAUSE - Remaining duration:', this.remainingSlideDuration);
+    console.log('PAUSE - Progress at pause:', this.progressAtPause);
+
   }
 
   private resumeSlideshow(): void {
@@ -186,31 +188,42 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.isPaused = false;
 
-    console.log('Resuming slideshow');
+    console.log('RESUME - Resuming slideshow');
+    console.log('RESUME - Remaining duration:', this.remainingSlideDuration);
+    console.log('RESUME - Progress at pause:', this.progressAtPause);
     this.startProgressBar(this.remainingSlideDuration, this.progressAtPause);
     this.scheduleNextSlide(this.remainingSlideDuration);
   }
 
   private scheduleNextSlide(duration?: number): void {
     const delay = duration ?? this.getCurrentSlideDuration();
+    console.log('Scheduling next slide in', delay, 'ms');
     this.slideTimeoutId = setTimeout(() => {
-      this.handleProgressBarReset();
       this.handleSlideTransition();
+      this.handleProgressBarReset();
       this.scheduleNextSlide();
     }, delay);
   }
 
   private handleSlideTransition(): void {
-    if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
+    if (this.slideTimeoutId) {
+      clearTimeout(this.slideTimeoutId);
+      this.slideTimeoutId = null;
+    }
 
     const nextIndex = (this.currentSlideIndex + 1) % this.mySlides.length;
-    this.setSlideVisible(false, 0);
-    this.unshiftSlide({ ...this.mySlides[nextIndex], visible: true });
 
+    // Visually fade out current slide
+    this.setSlideVisible(false, 0);
+
+    // Show next slide immediately for progress/timing sync
+    this.unshiftSlide({ ...this.mySlides[nextIndex], visible: true });
+    this.currentSlideIndex = nextIndex;
+    this.onSlideVisible();
+
+    // Delay pop only for visual fade-out effect (optional)
     setTimeout(() => {
       this.popSlide();
-      this.currentSlideIndex = nextIndex;
-      this.onSlideVisible();
     }, this.fadeOutDuration());
   }
 
