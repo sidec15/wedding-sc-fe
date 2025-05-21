@@ -132,7 +132,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private activateslideShow(): void {
     if (this.isSlideShowActive) return;
-    console.log('Activating slideshow');
     this.isSlideShowActive = true;
   }
 
@@ -141,7 +140,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.isSlideShowActive) return;
 
     this.activateslideShow();
-    console.log('Starting slideshow');
     this.setActiveSlides([{ ...this.mySlides[0], visible: true }]);
     this.currentSlideIndex = 0;
     this.onSlideVisible();
@@ -153,7 +151,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   private stopSlideShow(): void {
     if (!this.isSlideShowActive) return;
 
-    console.log('Stopping slideshow');
     this.isSlideShowActive = false;
     this.expanded = false;
 
@@ -177,10 +174,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     // Capture how far the progress bar was
     this.progressAtPause = this.progress;
 
-    console.log('PAUSE - Pausing slideshow');
-    console.log('PAUSE - Remaining duration:', this.remainingSlideDuration);
-    console.log('PAUSE - Progress at pause:', this.progressAtPause);
-
   }
 
   private resumeSlideshow(): void {
@@ -188,16 +181,12 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.isPaused = false;
 
-    console.log('RESUME - Resuming slideshow');
-    console.log('RESUME - Remaining duration:', this.remainingSlideDuration);
-    console.log('RESUME - Progress at pause:', this.progressAtPause);
-    this.startProgressBar(this.remainingSlideDuration, this.progressAtPause);
+    this.startProgressBar(this.getCurrentSlideDuration(), this.progressAtPause);
     this.scheduleNextSlide(this.remainingSlideDuration);
   }
 
   private scheduleNextSlide(duration?: number): void {
     const delay = duration ?? this.getCurrentSlideDuration();
-    console.log('Scheduling next slide in', delay, 'ms');
     this.slideTimeoutId = setTimeout(() => {
       this.handleSlideTransition();
       this.handleProgressBarReset();
@@ -290,7 +279,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     const el = this.overlayRef.nativeElement;
     const result = el.scrollHeight > el.clientHeight;
     this.shouldShowMore = result;
-    console.log('Checking overlay overflow. Result:', result);
   }
 
   toggleExpandedState(state: boolean): void {
