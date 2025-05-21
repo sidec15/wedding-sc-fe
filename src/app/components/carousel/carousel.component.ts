@@ -51,6 +51,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   overlayRef!: ElementRef<HTMLElement>;
 
   /** State */
+  isMobile = false;
   currentSlideIndex = 0;
   activeSlides: Slide[] = [];
   fadeState: 'visible' | 'hidden' = 'visible';
@@ -80,8 +81,9 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isMobile = this.platformService.isMobile();
     this.mySlides =
-      this.platformService.isMobile() && this.slidesMobile()?.length > 0
+       this.isMobile && this.slidesMobile()?.length > 0
         ? this.slidesMobile()
         : this.slides();
   }

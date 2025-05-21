@@ -38,8 +38,29 @@
   </ng-container>
 
   <!-- This is now outside the ngFor and always rendered -->
-  <div class="progress-bar-container">
+
+  <!-- Desktop-only linear progress bar -->
+  <div *ngIf="!isMobile" class="progress-bar-container">
     <div class="progress-bar" [style.width.%]="progress"></div>
+  </div>
+  <!-- Mobile-only border progress -->
+  <div *ngIf="isMobile" class="border-progress">
+    <div
+      class="side top"
+      [style.width.%]="progress > 50 ? 100 : progress * 2"
+    ></div>
+    <div
+      class="side right"
+      [style.height.%]="progress > 50 ? (progress - 50) * 2 : 0"
+    ></div>
+    <div
+      class="side bottom"
+      [style.width.%]="progress > 50 ? (progress - 50) * 2 : 0"
+    ></div>
+    <div
+      class="side left"
+      [style.height.%]="progress > 50 ? 100 : progress * 2"
+    ></div>
   </div>
 
   <div class="gallery-buttons">
