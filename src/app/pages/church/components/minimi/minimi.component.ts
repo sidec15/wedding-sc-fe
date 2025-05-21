@@ -46,5 +46,38 @@ export class MinimiComponent {
     },
   ];
 
+  slidesMobile: Slide[] = [
+    {
+      imageUrl: '/images/church/minimi/mobile/minimi-01.png',
+      title: 'church.minimi.slides.0.title',
+      description: 'church.minimi.slides.0.description',
+      duration: MinimiComponent.DURATION,
+    },
+    {
+      imageUrl: '/images/church/minimi/mobile/minimi-02.png',
+      title: 'church.minimi.slides.1.title',
+      description: 'church.minimi.slides.1.description',
+      duration: MinimiComponent.DURATION,
+    },
+    {
+      imageUrl: '/images/church/minimi/mobile/minimi-03.png',
+      title: 'church.minimi.slides.2.title',
+      description: 'church.minimi.slides.2.description',
+      duration: MinimiComponent.DURATION,
+    },
+    {
+      imageUrl: '/images/church/minimi/mobile/minimi-04.png',
+      title: 'church.minimi.slides.3.title',
+      description: 'church.minimi.slides.3.description',
+      duration: MinimiComponent.DURATION,
+    },
+    {
+      imageUrl: '/images/church/minimi/mobile/minimi-05.png',
+      title: 'church.minimi.slides.4.title',
+      description: 'church.minimi.slides.4.description',
+      duration: MinimiComponent.DURATION,
+    },
+  ];
+
   constructor() {}
 }
