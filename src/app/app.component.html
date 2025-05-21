@@ -14,55 +14,72 @@
     <li>
       <a routerLink="/our-story" (click)="closeMenu()">{{
         "nav.our_story" | translate
-        }}</a>
+      }}</a>
     </li>
     <li>
       <a routerLink="/church" (click)="closeMenu()">{{
         "nav.church" | translate
-        }}</a>
+      }}</a>
     </li>
     <li>
       <a routerLink="/reception" (click)="closeMenu()">{{
         "nav.reception" | translate
-        }}</a>
+      }}</a>
     </li>
     <li>
       <a routerLink="/confirm" (click)="closeMenu()">{{
         "nav.confirm" | translate
-        }}</a>
+      }}</a>
     </li>
     <li>
       <a routerLink="/contact" (click)="closeMenu()">{{
         "nav.contact" | translate
-        }}</a>
+      }}</a>
     </li>
 
-    <!-- Language Selector -->
-    <li>
-      <div class="custom-language-selector" #languageDropdown (click)="toggleLanguageDropdown()"
-        [class.open]="languageDropdownOpen">
-        <span>{{ currentLanguage === "it" ? "Italiano" : "English" }}</span>
-        <ul *ngIf="languageDropdownOpen" class="language-options" (click)="$event.stopPropagation()">
+    <li class="settings-container">
+      <!-- Language Selector -->
+      <div
+        class="custom-language-selector"
+        #languageDropdown
+        (click)="toggleLanguageDropdown()"
+        [class.open]="languageDropdownOpen"
+      >
+        <i class="fa fa-solid fa-globe"></i>
+        <ul
+          *ngIf="languageDropdownOpen"
+          class="language-options"
+          (click)="$event.stopPropagation()"
+        >
           <li (click)="selectLanguage('it')">Italiano</li>
           <li (click)="selectLanguage('en')">English</li>
         </ul>
       </div>
-    </li>
 
-    <!-- Theme Switcher -->
-    <li>
-      <div class="custom-theme-selector" #themeDropdown (click)="toggleThemeDropdown()"
-        [class.open]="themeDropdownOpen">
+      <!-- Theme Switcher -->
+      <div
+        class="custom-theme-selector"
+        #themeDropdown
+        (click)="toggleThemeDropdown()"
+        [class.open]="themeDropdownOpen"
+      >
         <span>
-          <i [ngClass]="{
+          <i
+            [ngClass]="{
               fa: true,
               'fa-sun': currentTheme === Theme.Light,
               'fa-moon': currentTheme === Theme.Dark,
               'fa-adjust': currentTheme === Theme.System
-            }" aria-hidden="true"></i>
+            }"
+            aria-hidden="true"
+          ></i>
         </span>
 
-        <ul *ngIf="themeDropdownOpen" class="theme-options" (click)="$event.stopPropagation()">
+        <ul
+          *ngIf="themeDropdownOpen"
+          class="theme-options"
+          (click)="$event.stopPropagation()"
+        >
           <li (click)="selectTheme(Theme.Light)">
             <i class="fa fa-sun"></i>
             <span>{{ "nav.theme.light" | translate }}</span>
@@ -79,7 +96,6 @@
       </div>
     </li>
   </ul>
-
 </header>
 
 <main>
