@@ -67,7 +67,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     const savedTheme = this.storageService.get('theme') as Theme | null;
     this.currentTheme = savedTheme ?? Theme.Light;
     this.applyTheme(this.currentTheme);
@@ -77,25 +76,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private resetScroll() {
     if (!this.platformService.isBrowser()) return;
-  
+
     // Prevent browser from restoring scroll position
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-  
+
     // Temporarily disable smooth scroll for instant scroll-to-top
     document.documentElement.style.scrollBehavior = 'auto';
     document.body.style.scrollBehavior = 'auto';
-  
+
     window.scrollTo(0, 0); // Force scroll to top
-  
+
     // Restore smooth scrolling
     setTimeout(() => {
       document.documentElement.style.scrollBehavior = '';
       document.body.style.scrollBehavior = '';
     }, 100);
   }
-  
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
@@ -113,7 +111,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // Emit scroll event with scroll position only if the scroll really changed
       if (Math.abs(scrollY - this.previousScrollYValue) > 0.1) {
-        this.eventService.emitScrollEvent(scrollY, scrollY - this.previousScrollYValue); // Emit the scroll event
+        this.eventService.emitScrollEvent(
+          scrollY,
+          scrollY - this.previousScrollYValue
+        ); // Emit the scroll event
         this.previousScrollYValue = scrollY; // Update the previous scroll Y value
       }
 
@@ -167,11 +168,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
+    if (this.isMenuOpen) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
+    }
   }
 
   closeMenu(): void {
-    this.isMenuOpen = false;
+    const nav = document.getElementById('main-navigation');
+    if (!nav) return;
+
+    nav.classList.remove('open');
+    nav.classList.add('closing');
+
+    setTimeout(() => {
+      nav?.classList.remove('closing');
+      this.isMenuOpen = false;
+    }, 3400); // 2.8s (item delay) + 0.6s (container slide)
   }
 
   openMenu(): void {

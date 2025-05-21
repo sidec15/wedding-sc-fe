@@ -295,7 +295,7 @@ main {
 
   .navbar {
     height: var(--header-height-mobile); // Use mobile header height
-    padding: 0.5rem 1.2rem; // Adjust padding for mobile
+    padding: 0.5rem 1.2rem;
 
     .logo {
       font-size: 1.3rem !important;
@@ -303,29 +303,30 @@ main {
   }
 
   .menu-toggle {
-    display: block !important; // Ensure it's visible in mobile view
+    display: block !important;
     position: absolute;
     top: 0.3rem;
     right: 0.3rem;
-    width: 50px; // Fixed width
-    height: 50px; // Fixed height
-    background: transparent !important; // Transparent background
+    width: 50px;
+    height: 50px;
+    background: transparent !important;
     border: none;
-    color: rgb(var(--accent)); // Use RGB variable for background
+    color: rgb(var(--accent));
     cursor: pointer;
-    z-index: 1001; // Ensure it overlays the content
+    z-index: 1001;
     display: flex;
 
     i {
-      font-size: 1.8rem; // Adjust icon size
+      font-size: 1.8rem;
     }
+  }
+
+  .nav-links li a:hover::after {
+    display: none !important;
   }
 
   .nav-links {
     position: fixed;
-    margin: 0;
-    padding: 0;
-    padding-top: 30%;
     top: 0;
     left: 0;
     height: 100vh;
@@ -334,12 +335,18 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 2.5rem;
+    padding: 30% 2rem 2rem;
     z-index: 1000;
     display: flex;
     opacity: 0;
     pointer-events: none;
     transform: translateY(-100%);
     transition: transform 0.5s ease-in-out, opacity 0.4s ease;
+
+    li {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     &.open {
       opacity: 1;
@@ -352,19 +359,19 @@ main {
         animation: fadeInUp 0.5s ease forwards;
 
         a {
-          font-size: 1.5rem !important; // Adjust font size for mobile
+          font-size: 1.5rem !important;
           font-weight: 500 !important;
           transition: color 0.2s ease;
         }
 
         &.settings-container {
           .fa {
-            font-size: 1.5rem !important; // Adjust icon size for mobile
+            font-size: 1.5rem !important;
           }
         }
       }
 
-      // Stagger animations
+      // Stagger fadeInUp
       li:nth-child(1) {
         animation-delay: 0.4s;
       }
@@ -385,10 +392,57 @@ main {
       }
       li:nth-child(7) {
         animation-delay: 2.8s;
-      } // for language/theme
+      }
+    }
+
+    &.closing {
+      li {
+        animation: fadeOutDown 0.6s ease forwards;
+
+        a {
+          font-size: 1.5rem !important;
+          font-weight: 500 !important;
+        }
+
+        &.settings-container {
+          .fa {
+            font-size: 1.5rem !important;
+          }
+        }
+
+        // Stagger fadeOutDown
+        &:nth-child(1) {
+          animation-delay: 0s;
+        }
+        &:nth-child(2) {
+          animation-delay: 0.4s;
+        }
+        &:nth-child(3) {
+          animation-delay: 0.8s;
+        }
+        &:nth-child(4) {
+          animation-delay: 1.2s;
+        }
+        &:nth-child(5) {
+          animation-delay: 1.6s;
+        }
+        &:nth-child(6) {
+          animation-delay: 2s;
+        }
+        &:nth-child(7) {
+          animation-delay: 2.4s;
+        }
+      }
+
+      // Now slow smooth slide up of entire container
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 1.2s ease-in-out 2.8s, opacity 4s ease 2.8s;
     }
   }
 
+  // ANIMATIONS
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -397,6 +451,20 @@ main {
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOutDown {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-10px); // jump up
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(40px); // fall and fade
     }
   }
 }
