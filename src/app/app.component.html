@@ -8,30 +8,30 @@
 
   <!-- Navigation links -->
   <ul class="nav-links" [class.open]="isMenuOpen" id="main-navigation">
-    <li>
+    <li class="nav-item">
       <a routerLink="/" (click)="closeMenu()">{{ "nav.home" | translate }}</a>
     </li>
-    <li>
+    <li class="nav-item">
       <a routerLink="/our-story" (click)="closeMenu()">{{
         "nav.our_story" | translate
       }}</a>
     </li>
-    <li>
+    <li class="nav-item">
       <a routerLink="/church" (click)="closeMenu()">{{
         "nav.church" | translate
       }}</a>
     </li>
-    <li>
+    <li class="nav-item">
       <a routerLink="/reception" (click)="closeMenu()">{{
         "nav.reception" | translate
       }}</a>
     </li>
-    <li>
+    <li class="nav-item">
       <a routerLink="/confirm" (click)="closeMenu()">{{
         "nav.confirm" | translate
       }}</a>
     </li>
-    <li>
+    <li class="nav-item">
       <a routerLink="/contact" (click)="closeMenu()">{{
         "nav.contact" | translate
       }}</a>
