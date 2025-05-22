@@ -34,6 +34,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   isHeaderHidden = false; // Track whether the header is hidden
   lastScrollTop = 0; // Track the last scroll position
   currentTheme: Theme = Theme.Light;
+  isMobile = false;
 
   languageDropdownOpen = false;
   themeDropdownOpen = false;
@@ -67,6 +68,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isMobile = this.platformService.isMobile();
     const savedTheme = this.storageService.get('theme') as Theme | null;
     this.currentTheme = savedTheme ?? Theme.Light;
     this.applyTheme(this.currentTheme);
