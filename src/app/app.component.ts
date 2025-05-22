@@ -3,20 +3,19 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Inject,
   OnDestroy,
   OnInit,
-  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StorageService } from './services/storage.service';
-import { isPlatformBrowser, NgClass, NgIf, NgStyle, NgSwitch } from '@angular/common';
+import { NgClass, NgIf, NgStyle } from '@angular/common';
 import { Theme } from './models/theme';
 import { PlatformService } from './services/platform.service';
 import Lenis from 'lenis';
-import { EventService } from './services/event.service';
+import { EventService, ScrollEvent } from './services/event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -32,13 +31,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   currentYear = new Date().getFullYear();
   currentLanguage: string;
   isHeaderHidden = false; // Track whether the header is hidden
-  lastScrollTop = 0; // Track the last scroll position
   currentTheme: Theme = Theme.Light;
   isMobile = false;
 
   languageDropdownOpen = false;
   themeDropdownOpen = false;
 
+  private scrollSub!: Subscription;
   private lenis!: Lenis;
   private rafId = 0;
 
@@ -46,6 +45,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private touchEndY = 0;
 
   private previousScrollYValue = 0; // Store the previous scroll Y value
+
+  private readonly minDistanceToHideHeader = 1; // Minimum distance to hide the header in pixels
+  private readonly minDistanceToShowHeader = 10; // Minimum distance to show the header in pixels
+  private readonly minDistanceToCloseMenu = 50; // Minimum distance to close the menu in pixels
+  private readonly lenisDuration = 2.5; // Duration for Lenis smooth scroll
 
   @ViewChild('languageDropdown') languageDropdownRef!: ElementRef;
   @ViewChild('themeDropdown') themeDropdownRef!: ElementRef;
@@ -101,7 +105,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.platformService.isBrowser()) return;
 
     this.lenis = new Lenis({
-      duration: 2.5,
+      duration: this.lenisDuration,
       // smooth: true,
     });
 
@@ -124,11 +128,18 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     this.rafId = requestAnimationFrame(raf);
+
+    this.scrollSub = this.eventService.scrollEvent$.subscribe(
+      (e: ScrollEvent) => {
+        this.onWindowScroll(e); // Call the scroll handler
+      }
+    );
   }
 
   ngOnDestroy(): void {
     if (!this.platformService.isBrowser()) return;
     cancelAnimationFrame(this.rafId);
+    this.scrollSub?.unsubscribe();
     this.lenis.destroy();
   }
 
@@ -137,6 +148,22 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       return 'url("/images/mobile-menu/bg-02.png")';
     }
     return 'url("/images/mobile-menu/bg-01.png")';
+  }
+
+  // @HostListener('window:scroll', [])
+  private onWindowScroll(event: ScrollEvent): void {
+    if (
+      event.scrollDirection() === 'down' &&
+      event.scrollYOffset > this.minDistanceToHideHeader
+    ) {
+      this.isHeaderHidden = true;
+    } else if (
+      event.scrollDirection() === 'up' &&
+      event.scrollYOffset < -this.minDistanceToShowHeader
+    ) {
+      this.isHeaderHidden = false;
+    }
+
   }
 
   toggleLanguageDropdown(): void {
@@ -228,25 +255,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll(): void {
-    const currentScroll =
-      window.pageYOffset || document.documentElement.scrollTop;
-
-    // Hide the header when scrolling down, show it when scrolling up
-    if (currentScroll > this.lastScrollTop && currentScroll > 50) {
-      this.isHeaderHidden = true; // Hide header
-    } else {
-      this.isHeaderHidden = false; // Show header
-    }
-
-    this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Prevent negative scroll values
-  }
-
   private handleSwipeGesture(): void {
     if (this.isMenuOpen) return; // Ignore swipe if menu is open
-    const swipeThreshold = 50; // Minimum swipe distance in pixels
-    if (this.touchStartY - this.touchEndY > swipeThreshold) {
+    if (this.touchStartY - this.touchEndY > this.minDistanceToCloseMenu) {
       // Swipe up: Close the menu
       this.closeMenu();
     }

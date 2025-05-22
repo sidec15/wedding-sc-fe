@@ -65,12 +65,6 @@ export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.isMobile = this.platformService.isMobile();
-    console.log(
-      'INIT - isMobile',
-      this.isMobile,
-      'isPlatformMobile',
-      this.platformService.isMobile()
-    );
     this.slidesMobile = [
       {
         imageUrl: this.imageUrlLeft(),
@@ -94,12 +88,6 @@ export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
         (e: ScrollEvent) => {
           // Update the parallax effect for the title background
-          console.log(
-            'SCROLL - isMobile',
-            this.isMobile,
-            'isPlatformMobile',
-            this.platformService.isMobile()
-          );
           const scrollY = e.scrollY;
           this.animateDesktop(scrollY);
         }
