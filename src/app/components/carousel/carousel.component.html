@@ -11,7 +11,7 @@
     <div
       class="overlay"
       [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
-      [class.expanded]="expanded"
+      [class.expanded]="isOverlayExpanded"
       #overlayRef
     >
       <h3>{{ slide.title | translate }}</h3>
@@ -20,7 +20,7 @@
       <div class="button-container">
         <button
           class="show-btn more-btn"
-          *ngIf="shouldShowMore && !expanded"
+          *ngIf="shouldShowMore && !isOverlayExpanded"
           (click)="toggleExpandedState(true)"
         >
           {{ "carousel.show_more" | translate }}
@@ -28,7 +28,7 @@
 
         <button
           class="show-btn less-btn"
-          *ngIf="shouldShowMore && expanded"
+          *ngIf="shouldShowMore && isOverlayExpanded"
           (click)="toggleExpandedState(false)"
         >
           {{ "carousel.show_less" | translate }}
@@ -38,7 +38,11 @@
   </ng-container>
 
   <!-- Single gallery-buttons section, style with ngClass -->
-  <div class="gallery-buttons" [ngClass]="{ mobile: isMobile, desktop: !isMobile }">
+  <div
+    class="gallery-buttons"
+    [ngClass]="{ mobile: isMobile, desktop: !isMobile }"
+    [class.hidden]="isOverlayExpanded"
+  >
     <button class="prev-btn" (click)="prevSlide()">
       <i class="fas fa-chevron-left"></i>
     </button>

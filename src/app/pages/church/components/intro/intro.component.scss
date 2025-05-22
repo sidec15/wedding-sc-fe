@@ -61,13 +61,17 @@ section {
       }
 
       h2 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         padding: 0 0.7rem;
       }
 
       p {
         padding: 0 1rem;
-        font-size: 1rem;
+        font-size: 1.2rem;
+
+        &.subtitle {
+          font-weight: bold;
+        }
       }
     }
   }
