@@ -65,6 +65,12 @@ export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.isMobile = this.platformService.isMobile();
+    console.log(
+      'INIT - isMobile',
+      this.isMobile,
+      'isPlatformMobile',
+      this.platformService.isMobile()
+    );
     this.slidesMobile = [
       {
         imageUrl: this.imageUrlLeft(),
@@ -89,7 +95,7 @@ export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
         (e: ScrollEvent) => {
           // Update the parallax effect for the title background
           console.log(
-            'isMobile',
+            'SCROLL - isMobile',
             this.isMobile,
             'isPlatformMobile',
             this.platformService.isMobile()

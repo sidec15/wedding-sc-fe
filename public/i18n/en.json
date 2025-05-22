@@ -15,6 +15,10 @@
   "footer": {
     "copyright": "© {{year}} Chiara & Simone"
   },
+  "carousel": {
+    "show_more": "Show more",
+    "show_less": "Show less"
+  },
   "home": {
     "welcome": "Welcome!",
     "description_line1": "Our big day is approaching, and we can't wait",

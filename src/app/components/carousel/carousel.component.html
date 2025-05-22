@@ -23,7 +23,7 @@
           *ngIf="shouldShowMore && !expanded"
           (click)="toggleExpandedState(true)"
         >
-          Show more
+          {{ "carousel.show_more" | translate }}
         </button>
 
         <button
@@ -31,7 +31,7 @@
           *ngIf="shouldShowMore && expanded"
           (click)="toggleExpandedState(false)"
         >
-          Show less
+          {{ "carousel.show_less" | translate }}
         </button>
       </div>
     </div>
