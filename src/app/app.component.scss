@@ -267,7 +267,7 @@ main {
 }
 
 // ====================
-// 📎 FOOTER
+// FOOTER
 // ====================
 .footer {
   position: static; // Default position
@@ -286,8 +286,9 @@ main {
 }
 
 // ====================
-// 📱 MOBILE MENU OVERLAY
+// MOBILE MENU OVERLAY
 // ====================
+
 @media screen and (max-width: 768px) {
   main {
     padding: 0; // Remove padding on mobile
@@ -328,7 +329,7 @@ main {
     height: 100vh;
     width: 100vw;
     margin: 0;
-    background-image: url("/images/mobile-menu/bg-01.png");
+    // background-image: url("/images/mobile-menu/bg-01.png");
     background-color: rgb(var(--bg));
     background-size: cover;
     background-position: center;
@@ -350,6 +351,15 @@ main {
 
       a:hover::after {
         display: none !important;
+      }
+
+      &.settings-container {
+        gap: 2rem;
+
+        .custom-language-selector,
+        .custom-theme-selector {
+          background: rgba(var(--bg), 0.6) !important;
+        }
       }
     }
 
@@ -400,7 +410,7 @@ main {
       }
 
       // // EXCEPTION for settings
-      li.settings-container li{
+      li.settings-container li {
         animation: none !important;
         opacity: 1;
         transform: none;
@@ -452,14 +462,6 @@ main {
       pointer-events: none;
       transition: transform 1.2s ease-in-out 2.8s, opacity 4s ease 2.8s;
     }
-  }
-
-  html[data-theme="light"] .nav-links {
-    background-image: url("/images/mobile-menu/bg-01.png");
-  }
-
-  html[data-theme="dark"] .nav-links {
-    background-image: url("/images/mobile-menu/bg-02.png");
   }
 
   // ANIMATIONS

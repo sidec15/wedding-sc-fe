@@ -12,7 +12,7 @@ import {
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StorageService } from './services/storage.service';
-import { isPlatformBrowser, NgClass, NgIf, NgSwitch } from '@angular/common';
+import { isPlatformBrowser, NgClass, NgIf, NgStyle, NgSwitch } from '@angular/common';
 import { Theme } from './models/theme';
 import { PlatformService } from './services/platform.service';
 import Lenis from 'lenis';
@@ -20,7 +20,7 @@ import { EventService } from './services/event.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, TranslateModule, NgIf, NgClass],
+  imports: [RouterOutlet, RouterLink, TranslateModule, NgIf, NgClass, NgStyle],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
@@ -41,8 +41,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private lenis!: Lenis;
   private rafId = 0;
 
-  private touchStartX = 0;
-  private touchEndX = 0;
+  private touchStartY = 0;
+  private touchEndY = 0;
 
   private previousScrollYValue = 0; // Store the previous scroll Y value
 
@@ -130,6 +130,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.lenis.destroy();
   }
 
+  get navBackground(): string {
+    if (this.currentTheme === Theme.Dark) {
+      return 'url("/images/mobile-menu/bg-02.png")';
+    }
+    return 'url("/images/mobile-menu/bg-01.png")';
+  }
+
   toggleLanguageDropdown(): void {
     this.languageDropdownOpen = !this.languageDropdownOpen;
   }
@@ -194,12 +201,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('touchstart', ['$event'])
   onTouchStart(event: TouchEvent): void {
-    this.touchStartX = event.changedTouches[0].screenX;
+    this.touchStartY = event.changedTouches[0].screenY;
   }
 
   @HostListener('touchend', ['$event'])
   onTouchEnd(event: TouchEvent): void {
-    this.touchEndX = event.changedTouches[0].screenX;
+    this.touchEndY = event.changedTouches[0].screenY;
     this.handleSwipeGesture();
   }
 
@@ -235,9 +242,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleSwipeGesture(): void {
+    if (this.isMenuOpen) return; // Ignore swipe if menu is open
     const swipeThreshold = 50; // Minimum swipe distance in pixels
-    if (this.touchEndX - this.touchStartX > swipeThreshold) {
-      // Swipe right: Close the menu
+    if (this.touchStartY - this.touchEndY > swipeThreshold) {
+      // Swipe up: Close the menu
       this.closeMenu();
     }
   }
