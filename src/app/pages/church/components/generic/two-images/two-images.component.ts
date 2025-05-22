@@ -5,6 +5,7 @@ import {
   input,
   NgZone,
   OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,15 +16,25 @@ import {
   ScrollEvent,
 } from '../../../../../services/event.service';
 import { PlatformService } from '../../../../../services/platform.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import {
+  CarouselComponent,
+  Slide,
+} from '../../../../../components/carousel/carousel.component';
 
 @Component({
   selector: 'app-two-images',
-  imports: [TranslateModule, MovingBackgroundComponent, NgFor],
+  imports: [
+    TranslateModule,
+    MovingBackgroundComponent,
+    CarouselComponent,
+    NgFor,
+    NgIf,
+  ],
   templateUrl: './two-images.component.html',
   styleUrl: './two-images.component.scss',
 })
-export class TwoImagesComponent implements AfterViewInit, OnDestroy {
+export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
   private scrollEventSubscription!: Subscription;
 
   movingBackgroundText = input.required<string>();
@@ -31,6 +42,9 @@ export class TwoImagesComponent implements AfterViewInit, OnDestroy {
   contentDescriptions = input.required<string[]>();
   imageUrlLeft = input.required<string>();
   imageUrlRight = input.required<string>();
+
+  slidesMobile: Slide[] = [];
+  isMobile = false;
 
   @ViewChild('description', { static: false })
   descriptionRef!: ElementRef<HTMLElement>;
@@ -49,6 +63,24 @@ export class TwoImagesComponent implements AfterViewInit, OnDestroy {
     private eventService: EventService
   ) {}
 
+  ngOnInit(): void {
+    this.isMobile = this.platformService.isMobile();
+    this.slidesMobile = [
+      {
+        imageUrl: this.imageUrlLeft(),
+        title: '',
+        description: this.contentDescriptions()[0] ?? '',
+        duration: 15000,
+      },
+      {
+        imageUrl: this.imageUrlRight(),
+        title: '',
+        description: this.contentDescriptions()[1] ?? '',
+        duration: 15000,
+      },
+    ];
+  }
+
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
@@ -56,6 +88,12 @@ export class TwoImagesComponent implements AfterViewInit, OnDestroy {
       this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
         (e: ScrollEvent) => {
           // Update the parallax effect for the title background
+          console.log(
+            'isMobile',
+            this.isMobile,
+            'isPlatformMobile',
+            this.platformService.isMobile()
+          );
           const scrollY = e.scrollY;
           this.animateDesktop(scrollY);
         }

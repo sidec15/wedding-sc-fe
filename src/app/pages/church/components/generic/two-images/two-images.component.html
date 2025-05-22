@@ -1,5 +1,5 @@
 <section class="two-images-section">
-  <div class="desktop">
+  <div class="desktop" *ngIf="!isMobile">
     <div class="image-container left" #imageLeft>
       <div
         class="image"
@@ -33,5 +33,9 @@
       ></div>
     </div>
   </div>
-  
+
+  <div class="mobile" *ngIf="isMobile">
+    <h2>{{ contentTitle() | translate }}</h2>
+    <app-carousel [slides]=slidesMobile></app-carousel>
+  </div>
 </section>

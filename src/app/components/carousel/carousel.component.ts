@@ -10,7 +10,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { EventService, ScrollEvent } from '../../services/event.service';
+import { EventService } from '../../services/event.service';
 import { PlatformService } from '../../services/platform.service';
 import {
   trigger,
@@ -20,11 +20,11 @@ import {
   animate,
 } from '@angular/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgFor, NgIf, NgStyle } from '@angular/common';
+import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-carousel',
-  imports: [TranslateModule, NgFor, NgStyle, NgIf],
+  imports: [TranslateModule, NgFor, NgStyle, NgIf, NgClass],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
   animations: [

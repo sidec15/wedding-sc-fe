@@ -59,7 +59,8 @@
     "angels": {
       "title": "Gli Angeli",
       "moving_background": "ANGELI",
-      "description": "Tra gli elementi più suggestivi della chiesa ci sono due angeli scolpiti da Gian Lorenzo Bernini, originariamente destinati al Ponte Sant'Angelo. Considerati troppo belli per restare all'aperto, furono accolti qui per preservarli. Uno angelo regge la corona di spine, simbolo del dolore di Cristo; l'altro mostra il cartiglio con l'iscrizione 'INRI', posta sulla croce."
+      "description1": "Tra gli elementi più suggestivi della chiesa ci sono due angeli scolpiti da Gian Lorenzo Bernini, originariamente destinati al Ponte Sant'Angelo. Considerati troppo belli per restare all'aperto, furono accolti qui per preservarli.",
+      "description2": "Uno angelo regge la corona di spine, simbolo del dolore di Cristo; l'altro mostra il cartiglio con l'iscrizione 'INRI', posta sulla croce."
     },
     "miracle": {
       "title": "Il Miracolo dell'Apparizione",
