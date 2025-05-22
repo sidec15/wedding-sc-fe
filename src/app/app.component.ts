@@ -37,12 +37,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   languageDropdownOpen = false;
   themeDropdownOpen = false;
 
-  private scrollSub!: Subscription;
   private lenis!: Lenis;
   private rafId = 0;
 
-  private touchStartY = 0;
-  private touchEndY = 0;
+  private scrollSub!: Subscription;
+  private swipeCloseSub!: Subscription;
+
+  private touchStartX = 0;
+  private touchEndX = 0;
   private isClosingMenu = false; // Track if the menu is closing
 
   private previousScrollYValue = 0; // Store the previous scroll Y value
@@ -52,6 +54,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly minDistanceToCloseMenu = 50; // Minimum distance to close the menu in pixels
   private readonly lenisDuration = 2.5; // Duration for Lenis smooth scroll
   private readonly closeMenuTimeout = 3400; // 2.8s (item delay) + 0.6s (container slide)
+  private readonly swipeCloseThreshold = 50; // Minimum distance to trigger swipe close in pixels
 
   @ViewChild('languageDropdown', { static: false })
   languageDropdownRef!: ElementRef;
@@ -108,36 +111,20 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
 
-    this.lenis = new Lenis({
-      duration: this.lenisDuration,
-      // smooth: true,
-    });
-
-    const raf = (time: number) => {
-      this.lenis.raf(time);
-
-      // Get scroll position from Lenis
-      const scrollY = this.lenis.scroll;
-
-      // Emit scroll event with scroll position only if the scroll really changed
-      if (Math.abs(scrollY - this.previousScrollYValue) > 0.1) {
-        this.eventService.emitScrollEvent(
-          scrollY,
-          scrollY - this.previousScrollYValue
-        ); // Emit the scroll event
-        this.previousScrollYValue = scrollY; // Update the previous scroll Y value
-      }
-
-      this.rafId = requestAnimationFrame(raf);
-    };
-
-    this.rafId = requestAnimationFrame(raf);
-
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (e: ScrollEvent) => {
         this.onWindowScroll(e); // Call the scroll handler
       }
     );
+
+    this.swipeCloseSub = this.eventService.swipeCloseEvent$.subscribe(
+      (e) => {
+        if (this.isMenuOpen && e.swipeXOffset <= -this.minDistanceToCloseMenu) {
+          this.closeMenu(); // Close the menu on swipe close
+        }
+      }
+    );
+
   }
 
   ngOnDestroy(): void {
@@ -240,42 +227,56 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // ###################################################
-  // disable for the moment cause is not a nice effect!!!
-  // @HostListener('touchstart', ['$event'])
-  // onTouchStart(event: TouchEvent): void {
-  //   this.touchStartY = event.changedTouches[0].screenY;
-  // }
-
-  // @HostListener('touchend', ['$event'])
-  // onTouchEnd(event: TouchEvent): void {
-  //   this.touchEndY = event.changedTouches[0].screenY;
-  //   this.handleSwipeGesture();
-  // }
+  // EventsEmitter
   // ###################################################
+  // Scroll event handler
+  private initScrollEventHandler(): void {
+    if (!this.platformService.isBrowser()) return;
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event): void {
-    if (
-      this.languageDropdownRef &&
-      !this.languageDropdownRef.nativeElement.contains(event.target)
-    ) {
-      this.languageDropdownOpen = false; // Close the dropdown if clicked outside
-    }
-    if (
-      this.themeDropdownRef &&
-      !this.themeDropdownRef.nativeElement.contains(event.target)
-    ) {
-      this.themeDropdownOpen = false; // Close the dropdown if clicked outside
+    this.lenis = new Lenis({
+      duration: this.lenisDuration,
+      // smooth: true,
+    });
+
+    const raf = (time: number) => {
+      this.lenis.raf(time);
+
+      // Get scroll position from Lenis
+      const scrollY = this.lenis.scroll;
+
+      // Emit scroll event with scroll position only if the scroll really changed
+      if (Math.abs(scrollY - this.previousScrollYValue) > 0.1) {
+        this.eventService.emitScrollEvent(
+          scrollY,
+          scrollY - this.previousScrollYValue
+        ); // Emit the scroll event
+        this.previousScrollYValue = scrollY; // Update the previous scroll Y value
+      }
+
+      this.rafId = requestAnimationFrame(raf);
+    };
+
+    this.rafId = requestAnimationFrame(raf);
+  }
+
+  // Swipe close event handler
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent): void {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  @HostListener('touchend', ['$event'])
+  onTouchEnd(event: TouchEvent): void {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.swipeCloseEventEmit();
+  }
+
+  private swipeCloseEventEmit(): void {
+    // Emit swipe close event swipe from right to left if the swipe distance is greater than the threshold
+    const swipeDistance = this.touchEndX - this.touchStartX;
+    if (swipeDistance < -this.swipeCloseThreshold) {
+      this.eventService.emitSwipeCloseEvent(swipeDistance);
     }
   }
 
-  private handleSwipeGesture(): void {
-    if (!this.isMenuOpen) return; // Ignore swipe if menu is open
-    if (this.isClosingMenu) return; // Ignore swipe if menu is closing
-
-    if (this.touchStartY - this.touchEndY > this.minDistanceToCloseMenu) {
-      // Swipe up: Close the menu
-      this.closeMenu();
-    }
-  }
 }
