@@ -111,6 +111,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
 
+    
+    this.initScrollEventHandler(); // Initialize scroll event handler
+
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (e: ScrollEvent) => {
         this.onWindowScroll(e); // Call the scroll handler
@@ -131,6 +134,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.platformService.isBrowser()) return;
     cancelAnimationFrame(this.rafId);
     this.scrollSub?.unsubscribe();
+    this.swipeCloseSub?.unsubscribe();
     this.lenis.destroy();
   }
 
