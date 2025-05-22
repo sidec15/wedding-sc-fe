@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private touchStartY = 0;
   private touchEndY = 0;
+  private isClosingMenu = false; // Track if the menu is closing
 
   private previousScrollYValue = 0; // Store the previous scroll Y value
 
@@ -50,9 +51,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly minDistanceToShowHeader = 10; // Minimum distance to show the header in pixels
   private readonly minDistanceToCloseMenu = 50; // Minimum distance to close the menu in pixels
   private readonly lenisDuration = 2.5; // Duration for Lenis smooth scroll
+  private readonly closeMenuTimeout = 3400; // 2.8s (item delay) + 0.6s (container slide)
 
-  @ViewChild('languageDropdown') languageDropdownRef!: ElementRef;
-  @ViewChild('themeDropdown') themeDropdownRef!: ElementRef;
+  @ViewChild('languageDropdown', { static: false })
+  languageDropdownRef!: ElementRef;
+  @ViewChild('themeDropdown', { static: false }) themeDropdownRef!: ElementRef;
+  @ViewChild('navLinks', { static: false }) navRef!: ElementRef<HTMLElement>;
 
   constructor(
     private translateService: TranslateService,
@@ -150,8 +154,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     return 'url("/images/mobile-menu/bg-01.png")';
   }
 
-  // @HostListener('window:scroll', [])
   private onWindowScroll(event: ScrollEvent): void {
+    if (this.isMenuOpen || this.isClosingMenu) return; // Ignore scroll event if menu is open or closing
     if (
       event.scrollDirection() === 'down' &&
       event.scrollYOffset > this.minDistanceToHideHeader
@@ -163,7 +167,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {
       this.isHeaderHidden = false;
     }
-
   }
 
   toggleLanguageDropdown(): void {
@@ -212,8 +215,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   closeMenu(): void {
-    const nav = document.getElementById('main-navigation');
-    if (!nav) return;
+    if (!this.isMenuOpen) return; // Ignore if menu is already closed
+    if (!this.navRef?.nativeElement) return; // Ensure navRef is defined
+    if (this.isClosingMenu) return; // Ignore if menu is already closing
+
+    this.isClosingMenu = true; // Set the flag to indicate menu is closing
+
+    const nav = this.navRef.nativeElement;
 
     nav.classList.remove('open');
     nav.classList.add('closing');
@@ -221,23 +229,29 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       nav?.classList.remove('closing');
       this.isMenuOpen = false;
-    }, 3400); // 2.8s (item delay) + 0.6s (container slide)
+      this.isClosingMenu = false; // Reset the flag after closing
+    }, this.closeMenuTimeout);
   }
 
   openMenu(): void {
+    if (this.isMenuOpen) return; // Ignore if menu is already open
+    if (this.isClosingMenu) return; // Ignore if menu is already closing
     this.isMenuOpen = true;
   }
 
-  @HostListener('touchstart', ['$event'])
-  onTouchStart(event: TouchEvent): void {
-    this.touchStartY = event.changedTouches[0].screenY;
-  }
+  // ###################################################
+  // disable for the moment cause is not a nice effect!!!
+  // @HostListener('touchstart', ['$event'])
+  // onTouchStart(event: TouchEvent): void {
+  //   this.touchStartY = event.changedTouches[0].screenY;
+  // }
 
-  @HostListener('touchend', ['$event'])
-  onTouchEnd(event: TouchEvent): void {
-    this.touchEndY = event.changedTouches[0].screenY;
-    this.handleSwipeGesture();
-  }
+  // @HostListener('touchend', ['$event'])
+  // onTouchEnd(event: TouchEvent): void {
+  //   this.touchEndY = event.changedTouches[0].screenY;
+  //   this.handleSwipeGesture();
+  // }
+  // ###################################################
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
@@ -256,7 +270,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleSwipeGesture(): void {
-    if (this.isMenuOpen) return; // Ignore swipe if menu is open
+    if (!this.isMenuOpen) return; // Ignore swipe if menu is open
+    if (this.isClosingMenu) return; // Ignore swipe if menu is closing
+
     if (this.touchStartY - this.touchEndY > this.minDistanceToCloseMenu) {
       // Swipe up: Close the menu
       this.closeMenu();

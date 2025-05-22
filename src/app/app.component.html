@@ -10,8 +10,8 @@
   <ul
     class="nav-links"
     [class.open]="isMenuOpen"
-    id="main-navigation"
     [ngStyle]="isMobile ? { 'background-image': navBackground } : null"
+    #navLinks
   >
     <li class="nav-item">
       <a routerLink="/" (click)="closeMenu()">{{ "nav.home" | translate }}</a>
