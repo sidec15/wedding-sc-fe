@@ -1,12 +1,16 @@
 @use "../../../styles/variables.scss" as *;
 @use "../../../styles/mixins.scss" as *;
 
+:host {
+  display: block; // Ensures the app-carousel element behaves like a block-level element (fills available width)
+  height: 100%; // Allows this component to expand to the full height given by the parent layout
+}
+
 .carousel {
-  position: relative;
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  width: 100%; // Makes the internal .carousel div span the full width of the host component
+  height: 100%; // Ensures the .carousel fills the full height of the app-carousel host
+  overflow: hidden; // Hides any overflowing child content (e.g., sliding images going outside bounds)
+  position: relative; // Enables absolute positioning for internal elements like .slide or .overlay
 
   .slide {
     position: absolute;
@@ -162,8 +166,7 @@
       overflow: hidden;
 
       &.expanded {
-        max-height: 100vh;
-        max-height: 100dvh;
+        max-height: 100%;
         overflow-y: auto;
         padding-bottom: 1rem; // Remove reserved space when expanded
         border-top-left-radius: 0;

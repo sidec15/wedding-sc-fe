@@ -1,0 +1,10 @@
+section.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  app-carousel {
+    flex-grow: 1;
+    min-height: 0;
+  }
+}

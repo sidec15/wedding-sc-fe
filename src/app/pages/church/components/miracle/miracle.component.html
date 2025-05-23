@@ -1,6 +1,10 @@
 <section class="miracle-section" #miracleSection>
-  <div class="miracle-container">
+  
+  <h2 class="miracle-title" *ngIf="isMobile">
+    {{ "church.miracle.title" | translate }}
+  </h2>
 
+  <div class="miracle-container">
     <app-parallax-image
       class="flex-grow"
       src="/images/church/miracle/miracle-02.jpg"
@@ -9,12 +13,24 @@
       [imageHeight]="'750px'"
     ></app-parallax-image>
 
-    <div class="miracle-text">
-      <h2 class="miracle-title">{{ "church.miracle.title" | translate }}</h2>
-      <p>{{ "church.miracle.description1" | translate }}</p>
-      <p>{{ "church.miracle.description2" | translate }}</p>
-      <p>{{ "church.miracle.description3" | translate }}</p>
-      <p class="sign">{{ "church.miracle.sign" | translate }}</p>
+    <div class="miracle-text" [ngClass]="'paragraph-' + currentParagraph">
+      <h2 class="miracle-title" *ngIf="!isMobile">
+        {{ "church.miracle.title" | translate }}
+      </h2>
+
+      <p [class.active]="currentParagraph === 0">
+        {{ "church.miracle.description1" | translate }}
+      </p>
+      <p [class.active]="currentParagraph === 1">
+        {{ "church.miracle.description2" | translate }}
+      </p>
+      <p [class.active]="currentParagraph === 2">
+        {{ "church.miracle.description3" | translate }}
+      </p>
+
+      <p class="sign" *ngIf="currentParagraph === 2">
+        {{ "church.miracle.sign" | translate }}
+      </p>
     </div>
   </div>
 </section>

@@ -66,18 +66,26 @@
   }
 
   .mobile {
-    height: 100dvh;
-    height: 100vh;
+    height: 100dvh; // Use dynamic viewport height
+    display: flex;
+    flex-direction: column;
 
     h2 {
       text-align: center;
       font-size: 2rem;
       margin-bottom: 20px;
+      flex-shrink: 0; // Prevent shrinking
+    }
+
+    app-carousel {
+      flex-grow: 1; // Take up remaining space
+      min-height: 0; // Allow it to shrink
+      display: block; // Ensure it behaves properly
     }
   }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .two-images-section {
     .desktop {
       display: none !important;
