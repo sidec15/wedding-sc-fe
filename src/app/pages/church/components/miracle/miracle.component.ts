@@ -1,11 +1,6 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParallaxImageComponent } from '../../../../components/parallax-image/parallax-image.component';
