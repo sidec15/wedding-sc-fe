@@ -19,7 +19,7 @@
     align-items: stretch; // ensures both columns stretch equally
     gap: 3rem;
 
-    .flex-grow {
+    app-parallax-image {
       flex: 1;
     }
 
@@ -44,30 +44,50 @@
 }
 
 @media screen and (max-width: 768px) {
+  .miracle-title {
+    text-align: center;
+  }
   .miracle-container {
-    display: block; // OK to disable flex
-    position: relative; // IMPORTANT: needed for absolute children
-    align-items: unset; // Just to be sure
+    display: block !important; // override flex layout on mobile
+    position: relative;
+    width: 100%;
   }
 
-  .flex-grow {
-    flex: unset !important;
+  app-parallax-image {
+    display: block;
+    width: 100vw;
     height: 100vh;
+    flex: unset !important;
+  }
+
+  ::ng-deep app-parallax-image .parallax-container {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  ::ng-deep app-parallax-image img {
+    width: 100% !important;
+    height: 110% !important;
+    object-fit: cover;
   }
 
   .miracle-text {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 2;
-    padding: 2rem;
-    padding-right: 2rem !important; // override the desktop padding-right
-    width: 100%;
-    height: 100%;
+
+    width: 70%;
+    height: auto; // or a fixed height if needed
+
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    // justify-content: center;
+    // align-items: center;
+
+    padding: 2rem;
+
     pointer-events: none;
     flex: unset !important;
 
@@ -80,6 +100,10 @@
       width: 80%;
       text-align: center;
       pointer-events: none;
+      background: rgba(var(--text-mask), 0.8);
+      backdrop-filter: var(--backdrop-filter);
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
     }
 
     p.active {
@@ -87,15 +111,5 @@
       transform: translateY(0);
     }
 
-    .sign {
-      margin-top: auto;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      text-align: center;
-    }
-
-    &.paragraph-2 .sign {
-      opacity: 1;
-    }
   }
 }

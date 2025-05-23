@@ -6,11 +6,10 @@
 
   <div class="miracle-container">
     <app-parallax-image
-      class="flex-grow"
       src="/images/church/miracle/miracle-02.jpg"
       [speedFactor]="0.1"
-      [containerHeight]="'600px'"
-      [imageHeight]="'750px'"
+      [containerHeight]="'100vh'"
+      [imageHeight]="'120vh'"
     ></app-parallax-image>
 
     <div class="miracle-text" [ngClass]="'paragraph-' + currentParagraph">
@@ -26,11 +25,9 @@
       </p>
       <p [class.active]="currentParagraph === 2">
         {{ "church.miracle.description3" | translate }}
-      </p>
-
-      <p class="sign" *ngIf="currentParagraph === 2">
         {{ "church.miracle.sign" | translate }}
       </p>
+
     </div>
   </div>
 </section>
