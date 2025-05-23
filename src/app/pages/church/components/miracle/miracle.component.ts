@@ -41,7 +41,7 @@ export class MiracleComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.platformService.isMobile()) return;
 
     this.scrollSub = this.eventService.scrollEvent$.subscribe((e) => {
-      this.onScroll(e);
+      // this.onScroll(e);
     });
   }
 
@@ -49,12 +49,19 @@ export class MiracleComponent implements OnInit, AfterViewInit, OnDestroy {
     this.scrollSub?.unsubscribe();
   }
 
-  private onScroll(scroll: ScrollEvent) {
-    console.log('scroll', scroll);
+  private onScroll(scroll: ScrollEvent): void {
     const rect = this.sectionRef.nativeElement.getBoundingClientRect();
     const windowHeight = window.innerHeight;
+
     const visibleRatio = (windowHeight - rect.top) / rect.height;
     const clampedRatio = Math.max(0, Math.min(1, visibleRatio));
-    this.currentParagraph = Math.floor(clampedRatio * 3); // 3 paragraphs
+
+    if (clampedRatio < 0.75) {
+      this.currentParagraph = 0;
+    } else if (clampedRatio < 0.9) {
+      this.currentParagraph = 1;
+    } else {
+      this.currentParagraph = 2;
+    }
   }
 }

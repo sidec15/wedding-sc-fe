@@ -1,18 +1,21 @@
 <section class="miracle-section" #miracleSection>
-  
   <h2 class="miracle-title" *ngIf="isMobile">
     {{ "church.miracle.title" | translate }}
   </h2>
 
   <div class="miracle-container">
     <app-parallax-image
-      src="/images/church/miracle/miracle-02.jpg"
+      [src]="
+        isMobile
+          ? '/images/church/miracle/miracle-09.jpg'
+          : '/images/church/miracle/miracle-09.jpg'
+      "
       [speedFactor]="0.1"
       [containerHeight]="'100vh'"
       [imageHeight]="'120vh'"
     ></app-parallax-image>
 
-    <div class="miracle-text" [ngClass]="'paragraph-' + currentParagraph">
+    <!-- <div class="miracle-text" [ngClass]="'paragraph-' + currentParagraph">
       <h2 class="miracle-title" *ngIf="!isMobile">
         {{ "church.miracle.title" | translate }}
       </h2>
@@ -27,7 +30,16 @@
         {{ "church.miracle.description3" | translate }}
         {{ "church.miracle.sign" | translate }}
       </p>
+    </div> -->
 
+    <div class="miracle-text">
+      <h2 class="miracle-title" *ngIf="!isMobile">
+        {{ "church.miracle.title" | translate }}
+      </h2>
+      <p>{{ "church.miracle.description1" | translate }}</p>
+      <p>{{ "church.miracle.description2" | translate }}</p>
+      <p>{{ "church.miracle.description3" | translate }}</p>
+      <p class="sign">{{ "church.miracle.sign" | translate }}</p>
     </div>
   </div>
 </section>
