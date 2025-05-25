@@ -15,6 +15,8 @@ import { PlatformService } from './services/platform.service';
 import { EventService, ScrollEvent } from './services/event.service';
 import { Subscription } from 'rxjs';
 import { ScrollManagerService } from './services/scroll-manager.service';
+import { ResizeManager } from './services/resize-manager.service';
+import { ViewportHeightService } from './services/viewport.service';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +44,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private isClosingMenu = false; // Track if the menu is closing
 
   private readonly minDistanceToHideHeader = 1; // Minimum distance to hide the header in pixels
-  private readonly minDistanceToShowHeader = 10; // Minimum distance to show the header in pixels
+  private readonly minDistanceToShowHeader = 5; // Minimum distance to show the header in pixels
   private readonly minDistanceToCloseMenu = 50; // Minimum distance to close the menu in pixels
   private readonly closeMenuTimeout = 3400; // 2.8s (item delay) + 0.6s (container slide)
 
@@ -57,7 +59,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     public router: Router,
     private platformService: PlatformService,
     private eventService: EventService,
-    private scrollManager: ScrollManagerService
+    private scrollManager: ScrollManagerService,
+    private resizeManager: ResizeManager,
+    private viewportHeightService: ViewportHeightService
   ) {
     const savedLang = this.storageService.get('language');
     const browserLang = translateService.getBrowserLang();
@@ -102,7 +106,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
 
-    this.scrollManager.initialize(); // Initialize scroll manager
+    this.scrollManager.init(); // Initialize scroll manager
+    this.resizeManager.init(); // Initialize resize manager
+    this.viewportHeightService.init(); // Initialize viewport height service
     
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (e: ScrollEvent) => {
@@ -123,6 +129,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (!this.platformService.isBrowser()) return;
     this.scrollManager.destroy(); // Destroy scroll manager
+    this.resizeManager.destroy(); // Destroy resize manager
+    this.viewportHeightService.destroy(); // Destroy viewport height service
     this.scrollSub?.unsubscribe();
     this.swipeCloseSub?.unsubscribe();
   }

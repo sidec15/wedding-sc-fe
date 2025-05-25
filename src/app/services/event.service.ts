@@ -15,6 +15,9 @@ export class EventService {
   );
   swipeCloseEvent$ = this.swipeCloseEventSubject.asObservable();
 
+  private resizeEventSubject = new BehaviorSubject<void>(undefined);
+  resizeEvent$ = this.resizeEventSubject.asObservable();
+
   emitScrollEvent(scrollY: number, scrollYOffset: number): void {
     this.scrollEventSubject.next(new ScrollEvent(scrollY, scrollYOffset));
   }
@@ -22,6 +25,11 @@ export class EventService {
   emitSwipeCloseEvent(swipeXOffset: number): void {
     this.swipeCloseEventSubject.next(new SwipeCloseEvent(swipeXOffset));
   }
+
+  emitResizeEvent(): void {
+    this.resizeEventSubject.next();
+  }
+
 }
 
 export class ScrollEvent {

@@ -9,7 +9,7 @@ import { NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-miracle',
-  imports: [TranslateModule, ParallaxImageComponent, NgClass, NgIf],
+  imports: [TranslateModule, ParallaxImageComponent,  NgIf],
   templateUrl: './miracle.component.html',
   styleUrl: './miracle.component.scss',
 })

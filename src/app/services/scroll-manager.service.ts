@@ -23,7 +23,7 @@ export class ScrollManagerService {
     private eventService: EventService
   ) {}
 
-  public initialize() {
+  public init() {
     if (this.platformService.isBrowser()) {
       this.initScrollTracker();
       this.initSwipeListeners();
