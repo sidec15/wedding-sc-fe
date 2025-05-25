@@ -62,13 +62,14 @@
 
 @media (max-width: 768px) {
   .church-history {
+    margin-bottom: 0 !important; // Remove bottom margin on smaller screens
     flex-direction: column;
     box-shadow: none;
 
     .image-container {
       width: 100vw;
       height: 40vh;
-      min-height: 200px;
+      // min-height: 200px;
       position: relative;
 
       .scroll-track {

@@ -20,6 +20,7 @@
 // Usage: @include vh(100); or @include vh(); for full viewport height
 // Usage: @include vh(50); for half viewport height
 @mixin vh($value: 100) {
-  height: #{$value}svh;
+  // height: #{$value}svh;
+  height: #{$value}lvh;
   // height: calc(var(--vh, 1vh) * #{$value});
 }
