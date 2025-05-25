@@ -18,6 +18,9 @@ export class EventService {
   private resizeEventSubject = new BehaviorSubject<void>(undefined);
   resizeEvent$ = this.resizeEventSubject.asObservable();
 
+  private menuEventSubject = new BehaviorSubject<MenuEvent>(new MenuEvent());
+  menuEvent$ = this.menuEventSubject.asObservable();
+
   emitScrollEvent(scrollY: number, scrollYOffset: number): void {
     this.scrollEventSubject.next(new ScrollEvent(scrollY, scrollYOffset));
   }
@@ -30,6 +33,9 @@ export class EventService {
     this.resizeEventSubject.next();
   }
 
+  emitMenuEvent(event: MenuEvent): void {
+    this.menuEventSubject.next(event);
+  }
 }
 
 export class ScrollEvent {
@@ -58,4 +64,8 @@ export class SwipeCloseEvent {
   constructor(swipeXOffset: number) {
     this.swipeXOffset = swipeXOffset;
   }
+}
+
+export class MenuEvent {
+  status: 'openStart' | 'openEnd' | 'closeStart' | 'closeEnd' = 'openStart';
 }

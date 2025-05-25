@@ -12,11 +12,13 @@ import { StorageService } from './services/storage.service';
 import { NgClass, NgIf, NgStyle } from '@angular/common';
 import { Theme } from './models/theme';
 import { PlatformService } from './services/platform.service';
-import { EventService, ScrollEvent } from './services/event.service';
+import { EventService, MenuEvent, ScrollEvent } from './services/event.service';
 import { Subscription } from 'rxjs';
 import { ScrollManagerService } from './services/scroll-manager.service';
 import { ResizeManager } from './services/resize-manager.service';
 import { ViewportHeightService } from './services/viewport.service';
+import { HeaderService } from './services/header.service';
+import { MenuService } from './services/menu.service';
 
 @Component({
   selector: 'app-root',
@@ -28,25 +30,16 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   Theme = Theme; // expose enum to template if needed
 
   title = 'wedding-sc-fe';
-  isMenuOpen = false;
+
   currentYear = new Date().getFullYear();
   currentLanguage: string;
-  isHeaderHidden = false; // Track whether the header is hidden
   currentTheme: Theme = Theme.Light;
   isMobile = false;
 
   languageDropdownOpen = false;
   themeDropdownOpen = false;
 
-  private scrollSub!: Subscription;
-  private swipeCloseSub!: Subscription;
-
-  private isClosingMenu = false; // Track if the menu is closing
-
-  private readonly minDistanceToHideHeader = 1; // Minimum distance to hide the header in pixels
-  private readonly minDistanceToShowHeader = 5; // Minimum distance to show the header in pixels
-  private readonly minDistanceToCloseMenu = 50; // Minimum distance to close the menu in pixels
-  private readonly closeMenuTimeout = 3400; // 2.8s (item delay) + 0.6s (container slide)
+  private menuSub!: Subscription;
 
   @ViewChild('languageDropdown', { static: false })
   languageDropdownRef!: ElementRef;
@@ -60,8 +53,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private platformService: PlatformService,
     private eventService: EventService,
     private scrollManager: ScrollManagerService,
-    private resizeManager: ResizeManager,
-    private viewportHeightService: ViewportHeightService
+    private headerService: HeaderService,
+    private menuService: MenuService
   ) {
     const savedLang = this.storageService.get('language');
     const browserLang = translateService.getBrowserLang();
@@ -80,6 +73,29 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.applyTheme(this.currentTheme);
 
     this.resetScroll(); // Reset scroll position on app load
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.platformService.isBrowser()) return;
+
+    this.scrollManager.init(); // Initialize scroll manager
+    // for the moment don't use the resize manager and viewport height service because modifying the viewport height from javascript
+    // can cause shift probles on mobile devices. Just use lvh
+    // this.resizeManager.init(); // Initialize resize manager
+    // this.viewportHeightService.init(); // Initialize viewport height service
+
+    this.headerService.init(); // Initialize header service
+
+    this.menuSub = this.eventService.menuEvent$.subscribe((event) => {
+      this.onMenuEvent(event); // Handle menu events
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (!this.platformService.isBrowser()) return;
+    this.scrollManager.destroy(); // Destroy scroll manager
+    this.headerService.destroy(); // Destroy header service
+    this.menuSub?.unsubscribe(); // Unsubscribe from menu events
   }
 
   private resetScroll() {
@@ -103,40 +119,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 100);
   }
 
-  ngAfterViewInit(): void {
-    if (!this.platformService.isBrowser()) return;
-
-    this.scrollManager.init(); // Initialize scroll manager
-    // for the moment don't use the resize manager and viewport height service because modifying the viewport height from javascript
-    // can cause shift probles on mobile devices. Just use lvh
-    // this.resizeManager.init(); // Initialize resize manager
-    // this.viewportHeightService.init(); // Initialize viewport height service
-    
-    this.scrollSub = this.eventService.scrollEvent$.subscribe(
-      (e: ScrollEvent) => {
-        this.onWindowScroll(e); // Call the scroll handler
-      }
-    );
-
-    this.swipeCloseSub = this.eventService.swipeCloseEvent$.subscribe(
-      (e) => {
-        if (this.isMenuOpen && e.swipeXOffset <= -this.minDistanceToCloseMenu) {
-          this.closeMenu(); // Close the menu on swipe close
-        }
-      }
-    );
-
-  }
-
-  ngOnDestroy(): void {
-    if (!this.platformService.isBrowser()) return;
-    this.scrollManager.destroy(); // Destroy scroll manager
-    this.resizeManager.destroy(); // Destroy resize manager
-    this.viewportHeightService.destroy(); // Destroy viewport height service
-    this.scrollSub?.unsubscribe();
-    this.swipeCloseSub?.unsubscribe();
-  }
-
   get navBackground(): string {
     if (this.currentTheme === Theme.Dark) {
       return 'url("/images/mobile-menu/bg-02.png")';
@@ -144,19 +126,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     return 'url("/images/mobile-menu/bg-01.png")';
   }
 
-  private onWindowScroll(event: ScrollEvent): void {
-    if (this.isMenuOpen || this.isClosingMenu) return; // Ignore scroll event if menu is open or closing
-    if (
-      event.scrollDirection() === 'down' &&
-      event.scrollYOffset > this.minDistanceToHideHeader
-    ) {
-      this.isHeaderHidden = true;
-    } else if (
-      event.scrollDirection() === 'up' &&
-      event.scrollYOffset < -this.minDistanceToShowHeader
-    ) {
-      this.isHeaderHidden = false;
-    }
+  get isMenuOpen(): boolean {
+    return this.menuService.isMenuOpened(); // Check if the menu is open using MenuService
+  }
+
+  get isHeaderHidden(): boolean {
+    return this.headerService.isHeaderHidden; // Get header visibility state from HeaderService
   }
 
   toggleLanguageDropdown(): void {
@@ -197,36 +172,21 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleMenu(): void {
-    if (this.isMenuOpen) {
-      this.closeMenu();
-    } else {
-      this.openMenu();
-    }
+    if (!this.navRef?.nativeElement) return; // Ensure navRef is defined
+
+    this.menuService.toggleMenu(); // Toggle the menu using MenuService
   }
 
-  closeMenu(): void {
-    if (!this.isMenuOpen) return; // Ignore if menu is already closed
+  private onMenuEvent(event: MenuEvent): void {
     if (!this.navRef?.nativeElement) return; // Ensure navRef is defined
-    if (this.isClosingMenu) return; // Ignore if menu is already closing
-
-    this.isClosingMenu = true; // Set the flag to indicate menu is closing
 
     const nav = this.navRef.nativeElement;
 
-    nav.classList.remove('open');
-    nav.classList.add('closing');
-
-    setTimeout(() => {
+    if (event.status === 'closeStart') {
+      nav.classList.remove('open');
+      nav.classList.add('closing');
+    } else if (event.status === 'closeEnd') {
       nav?.classList.remove('closing');
-      this.isMenuOpen = false;
-      this.isClosingMenu = false; // Reset the flag after closing
-    }, this.closeMenuTimeout);
+    }
   }
-
-  openMenu(): void {
-    if (this.isMenuOpen) return; // Ignore if menu is already open
-    if (this.isClosingMenu) return; // Ignore if menu is already closing
-    this.isMenuOpen = true;
-  }
-
 }
