@@ -107,8 +107,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.platformService.isBrowser()) return;
 
     this.scrollManager.init(); // Initialize scroll manager
-    this.resizeManager.init(); // Initialize resize manager
-    this.viewportHeightService.init(); // Initialize viewport height service
+    // for the moment don't use the resize manager and viewport height service because modifying the viewport height from javascript
+    // can cause shift probles on mobile devices. Just use lvh
+    // this.resizeManager.init(); // Initialize resize manager
+    // this.viewportHeightService.init(); // Initialize viewport height service
     
     this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (e: ScrollEvent) => {
