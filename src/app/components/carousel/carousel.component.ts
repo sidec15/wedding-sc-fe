@@ -57,7 +57,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   fadeState: 'visible' | 'hidden' = 'visible';
   progress = 100;
   shouldShowMore = false;
-  isOverlayExpanded = false;
+  _overlayStatus: 'expanded' | 'collapsed' | 'hidden' = 'collapsed';
 
   /** Internals */
   private slideSub!: Subscription;
@@ -123,6 +123,10 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stopSlideShow();
   }
 
+  get overlayStatus(): 'expanded' | 'collapsed' | 'hidden' {
+    return this._overlayStatus;
+  }
+
   /** Public slide controls */
   prevSlide(): void {
     this.goToSlide(-1);
@@ -154,7 +158,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.isSlideShowActive) return;
 
     this.isSlideShowActive = false;
-    this.isOverlayExpanded = false;
+    this._overlayStatus = 'collapsed';
 
     if (this.rafId) cancelAnimationFrame(this.rafId);
     if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
@@ -271,7 +275,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Overlay logic */
   private onSlideVisible(): void {
-    this.isOverlayExpanded = false;
+    this._overlayStatus = 'collapsed';
     requestAnimationFrame(() => this.checkOverlayOverflow());
   }
 
@@ -284,7 +288,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleExpandedState(state: boolean): void {
-    this.isOverlayExpanded = state;
+    this._overlayStatus = state ? 'expanded' : 'collapsed';
     if (state) {
       this.pauseSlideshow();
     } else {

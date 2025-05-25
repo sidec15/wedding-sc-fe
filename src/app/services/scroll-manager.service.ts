@@ -76,7 +76,7 @@ export class ScrollManagerService {
 
   private onTouchEnd(event: TouchEvent): void {
     this.touchEndX = event.changedTouches[0].screenX;
-    this.swipeCloseEventEmit();
+    // this.swipeCloseEventEmit();
   }
 
   private initSwipeListeners(): void {
