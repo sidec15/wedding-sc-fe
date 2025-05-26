@@ -21,6 +21,7 @@ import {
 } from '@angular/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import e from 'express';
 
 @Component({
   selector: 'app-carousel',
@@ -83,7 +84,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.isMobile = this.platformService.isMobile();
     this.mySlides =
-       this.isMobile && this.slidesMobile()?.length > 0
+      this.isMobile && this.slidesMobile()?.length > 0
         ? this.slidesMobile()
         : this.slides();
   }
@@ -179,7 +180,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Capture how far the progress bar was
     this.progressAtPause = this.progress;
-
   }
 
   private resumeSlideshow(): void {
@@ -287,16 +287,28 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.shouldShowMore = result;
   }
 
-  toggleExpandedState(state: boolean): void {
-    this._overlayStatus = state ? 'expanded' : 'collapsed';
-    if (state) {
-      this.pauseSlideshow();
+  toggleExpandedState(opening: boolean): void {
+    const prevaviousState = this._overlayStatus;
+    if (opening) {
+      if (this._overlayStatus === 'hidden') {
+        this._overlayStatus = 'collapsed';
+      } else if (this._overlayStatus === 'collapsed') {
+        this._overlayStatus = 'expanded';
+      }
     } else {
+      if (this._overlayStatus === 'expanded') {
+        this._overlayStatus = 'collapsed';
+      } else if (this._overlayStatus === 'collapsed') {
+        this._overlayStatus = 'hidden';
+      }
+    }
+
+    if (this._overlayStatus === 'expanded') {
+      this.pauseSlideshow();
+    }
+    if (prevaviousState === 'expanded') {
       this.resumeSlideshow();
     }
-    // if (!state) {
-    //   requestAnimationFrame(() => this.checkOverlayOverflow());
-    // }
   }
 
   /** Slide mutation helpers (with detectChanges) */

@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  OnInit,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParallaxImageComponent } from '../../../../components/parallax-image/parallax-image.component';
@@ -13,12 +14,12 @@ import { NgIf } from '@angular/common';
   templateUrl: './miracle.component.html',
   styleUrl: './miracle.component.scss',
 })
-export class MiracleComponent implements AfterViewInit {
+export class MiracleComponent implements OnInit {
   isMobile: boolean = false;
 
   constructor(private platformService: PlatformService) {}
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.isMobile = this.platformService.isMobile();
   }
 
