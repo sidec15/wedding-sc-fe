@@ -58,7 +58,8 @@ export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('descriptionContainer', { static: false })
   descriptionContainerRef!: ElementRef<HTMLElement>;
 
-  private readonly slideDuration = 20000; // Duration for each slide in milliseconds
+  //debug_sdc
+  private readonly slideDuration = 3600000; // Duration for each slide in milliseconds
 
   constructor(
     private platformService: PlatformService,

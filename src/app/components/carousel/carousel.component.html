@@ -25,6 +25,7 @@
         {{ "carousel.show_less" | translate }}
       </button>
     </div>
+
     <div
       class="overlay"
       [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
@@ -35,7 +36,9 @@
       #overlayRef
     >
       <h3>{{ slide.title | translate }}</h3>
-      <p>{{ slide.description | translate }}</p>
+      <p [class.collapsed]="overlayStatus === 'collapsed'">
+        {{ slide.description | translate }}
+      </p>
     </div>
   </ng-container>
 

@@ -120,7 +120,7 @@
       &.mobile {
         bottom: 26vh;
         left: 0;
-        // width: 100%;
+        width: 100%;
         transform: none;
         display: flex;
         justify-content: space-between;
@@ -154,21 +154,14 @@
     .show-button-container {
       position: absolute;
       bottom: 0;
-      left: 0;
-      width: 100%;
+      left: 50%;
+      transform: translateX(-50%);
       padding: 0.5rem 0;
       display: flex;
       justify-content: center;
       align-items: center;
+      white-space: nowrap;
       z-index: 3;
-
-      // background: rgba(var(--text-mask), 0.7);
-      // backdrop-filter: blur(8px);
-      // Add shadow effect at the bottom
-      &::after {
-        @include shadow-gradient(to top, 100%); // Shadow fades upward
-        bottom: 0;
-      }
 
       .show-btn {
         background: rgba(var(--text-mask), 1);
@@ -199,7 +192,12 @@
       gap: 0.5rem;
 
       max-height: 25vh;
-      overflow: hidden;
+      overflow: hidden; // Hide overflow when collapsed
+
+      &::after {
+        @include shadow-gradient(to top, 100%); // Shadow fades upward
+        bottom: 0;
+      }
 
       &.expanded {
         max-height: 100%;
@@ -226,6 +224,14 @@
 
       p {
         font-size: 1.3rem;
+        // &.collapsed {
+        //   display: -webkit-box;
+        //   -webkit-line-clamp: 4; // adjust to the number of lines you want
+        //   line-clamp: 4; // Standard property for compatibility
+        //   -webkit-box-orient: vertical;
+        //   overflow: hidden;
+        //   text-overflow: ellipsis;
+        // }
       }
     }
 
