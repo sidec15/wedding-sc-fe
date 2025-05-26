@@ -152,14 +152,12 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.onSlideVisible();
 
     this.startProgressBar(this.getCurrentSlideDuration());
-    this.scheduleNextSlide();
   }
 
   private stopSlideShow(): void {
     if (!this.isSlideShowActive) return;
 
     this.isSlideShowActive = false;
-    this._overlayStatus = 'collapsed';
 
     if (this.rafId) cancelAnimationFrame(this.rafId);
     if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
@@ -188,17 +186,16 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isPaused = false;
 
     this.startProgressBar(this.getCurrentSlideDuration(), this.progressAtPause);
-    this.scheduleNextSlide(this.remainingSlideDuration);
   }
 
-  private scheduleNextSlide(duration?: number): void {
-    const delay = duration ?? this.getCurrentSlideDuration();
-    this.slideTimeoutId = setTimeout(() => {
-      this.handleSlideTransition();
-      this.handleProgressBarReset();
-      this.scheduleNextSlide();
-    }, delay);
-  }
+  // private scheduleNextSlide(duration?: number): void {
+  //   const delay = duration ?? this.getCurrentSlideDuration();
+  //   this.slideTimeoutId = setTimeout(() => {
+  //     this.handleSlideTransition();
+  //     this.handleProgressBarReset();
+  //     this.scheduleNextSlide();
+  //   }, delay);
+  // }
 
   private handleSlideTransition(): void {
     if (this.slideTimeoutId) {
@@ -222,6 +219,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     }, this.fadeOutDuration());
   }
 
+  //todo_here: review this method
   private goToSlide(direction: 1 | -1): void {
     this.stopSlideShow();
 
@@ -235,7 +233,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     setTimeout(() => {
       this.startProgressBar(this.getCurrentSlideDuration());
-      this.scheduleNextSlide();
       this.onSlideVisible();
     }, this.fadeOutDuration());
   }
@@ -251,6 +248,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.slideDurationMs = duration;
     this.slideStartTimestamp = performance.now();
     const initialElapsed = ((100 - initialProgress) / 100) * duration;
+    const remainingDuration = duration - initialElapsed;
 
     const animate = () => {
       const now = performance.now();
@@ -263,6 +261,12 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
         this.rafId = requestAnimationFrame(animate);
       }
     };
+
+    const delay = remainingDuration;
+    this.slideTimeoutId = setTimeout(() => {
+      this.handleSlideTransition();
+      this.handleProgressBarReset();
+    }, delay);
 
     this.rafId = requestAnimationFrame(animate);
   }

@@ -11,7 +11,7 @@
     <div class="show-button-container">
       <button
         class="show-btn more-btn"
-        *ngIf="overlayStatus !== 'expanded'"
+        *ngIf="overlayStatus !== 'expanded' && shouldShowMore"
         (click)="toggleExpandedState(true)"
       >
         {{ "carousel.show_more" | translate }}
@@ -36,7 +36,7 @@
       #overlayRef
     >
       <h3>{{ slide.title | translate }}</h3>
-      <p [class.collapsed]="overlayStatus === 'collapsed'">
+      <p>
         {{ slide.description | translate }}
       </p>
     </div>
