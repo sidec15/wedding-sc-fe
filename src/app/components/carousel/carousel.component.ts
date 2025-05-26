@@ -137,6 +137,14 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.goToSlide(1);
   }
 
+  private goToSlide(direction: 1 | -1): void {
+    const total = this.mySlides.length;
+    const nextIndex = (this.currentSlideIndex + direction + total) % total;
+
+    this.handleSlideTransition(nextIndex);
+    this.reserProgressBar();
+  }
+
   private activateslideShow(): void {
     if (this.isSlideShowActive) return;
     this.isSlideShowActive = true;
@@ -188,22 +196,11 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.startProgressBar(this.getCurrentSlideDuration(), this.progressAtPause);
   }
 
-  // private scheduleNextSlide(duration?: number): void {
-  //   const delay = duration ?? this.getCurrentSlideDuration();
-  //   this.slideTimeoutId = setTimeout(() => {
-  //     this.handleSlideTransition();
-  //     this.handleProgressBarReset();
-  //     this.scheduleNextSlide();
-  //   }, delay);
-  // }
-
-  private handleSlideTransition(): void {
+  private handleSlideTransition(nextIndex: number): void {
     if (this.slideTimeoutId) {
       clearTimeout(this.slideTimeoutId);
       this.slideTimeoutId = null;
     }
-
-    const nextIndex = (this.currentSlideIndex + 1) % this.mySlides.length;
 
     // Visually fade out current slide
     this.setSlideVisible(false, 0);
@@ -219,31 +216,12 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     }, this.fadeOutDuration());
   }
 
-  //todo_here: review this method
-  private goToSlide(direction: 1 | -1): void {
-    this.stopSlideShow();
-
-    const total = this.mySlides.length;
-    const newIndex = (this.currentSlideIndex + direction + total) % total;
-
-    this.activateslideShow();
-    this.setSlideVisible(false, 0);
-    this.unshiftSlide({ ...this.mySlides[newIndex], visible: true });
-    this.currentSlideIndex = newIndex;
-
-    setTimeout(() => {
-      this.startProgressBar(this.getCurrentSlideDuration());
-      this.onSlideVisible();
-    }, this.fadeOutDuration());
-  }
-
   private getCurrentSlideDuration(): number {
     return (
       this.mySlides[this.currentSlideIndex].duration ?? this.intervalValue()
     );
   }
 
-  /** Progress bar handling */
   private startProgressBar(duration: number, initialProgress = 100): void {
     this.slideDurationMs = duration;
     this.slideStartTimestamp = performance.now();
@@ -264,14 +242,14 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const delay = remainingDuration;
     this.slideTimeoutId = setTimeout(() => {
-      this.handleSlideTransition();
-      this.handleProgressBarReset();
+      this.handleSlideTransition(1); // Move to next slide
+      this.reserProgressBar();
     }, delay);
 
     this.rafId = requestAnimationFrame(animate);
   }
 
-  private handleProgressBarReset(): void {
+  private reserProgressBar(): void {
     this.progress = 100;
     if (this.rafId) cancelAnimationFrame(this.rafId);
     this.startProgressBar(this.getCurrentSlideDuration());
