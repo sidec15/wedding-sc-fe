@@ -42,7 +42,8 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   fadeOutDuration: InputSignal<number> = input(1000);
   fadeInDuration: InputSignal<number> = input(2000);
   intervalValue: InputSignal<number> = input(5000);
-  texts: InputSignal<string[]> = input.required();
+  slides: InputSignal<Slide[]> = input.required();
+  slidesMobile: InputSignal<Slide[]> = input([] as Slide[]);
 
   /** DOM references */
   @ViewChild('carousel', { static: false })
@@ -308,4 +309,12 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     return nextIndex;
   }
 
+}
+
+/** Slide model */
+export interface Slide {
+  description: string;
+  style?: { [key: string]: string };
+  visible?: boolean;
+  duration?: number;
 }

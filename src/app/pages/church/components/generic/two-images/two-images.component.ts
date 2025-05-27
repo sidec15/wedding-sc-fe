@@ -18,16 +18,16 @@ import {
 import { PlatformService } from '../../../../../services/platform.service';
 import { NgFor, NgIf } from '@angular/common';
 import {
-  TextCarouselComponent,
+  CarouselComponent,
   Slide,
-} from '../../../../../components/carousel/text-carousel.component';
+} from '../../../../../components/carousel/carousel.component';
 
 @Component({
   selector: 'app-two-images',
   imports: [
     TranslateModule,
     MovingBackgroundComponent,
-    TextCarouselComponent,
+    CarouselComponent,
     NgFor,
     NgIf,
   ],
