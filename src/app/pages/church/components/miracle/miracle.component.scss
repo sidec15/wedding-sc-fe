@@ -34,3 +34,15 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .miracle-section {
+    .miracle-container {
+      .miracle-text {
+        transition: transform 0.1s linear, opacity 0.1s linear;
+        transform: translateY(100px) scale(0.8);
+        opacity: 0;
+      }
+    }
+  }
+}

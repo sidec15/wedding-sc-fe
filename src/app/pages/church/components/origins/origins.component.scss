@@ -60,7 +60,7 @@
 
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .church-history {
     margin-bottom: 0 !important; // Remove bottom margin on smaller screens
     flex-direction: column;
