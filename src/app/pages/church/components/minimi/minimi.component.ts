@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CarouselComponent, Slide } from '../../../../components/carousel/carousel.component';
+import { TextCarouselComponent, Slide } from '../../../../components/carousel/text-carousel.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-minimi',
-  imports: [TranslateModule, CarouselComponent],
+  imports: [TranslateModule, TextCarouselComponent],
   templateUrl: './minimi.component.html',
   styleUrl: './minimi.component.scss',
 })

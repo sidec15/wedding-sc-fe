@@ -3,19 +3,19 @@
     {{ "church.miracle.title" | translate }}
   </h2>
 
-  <div class="miracle-container">
+  <div class="miracle-container" *ngIf="isPlatformReady">
     <app-parallax-image
-      [src]="'/images/church/miracle/miracle-02.jpg'"
-      [speedFactor]="0.1"
-      [containerHeight]="'100vh'"
-      [imageHeight]="'120vh'"
+      [src]="imageSrc"
+      [speedFactor]="0.15"
+      [containerHeight]="'80lvh'"
+      [imageHeight]="'100lvh'"
     ></app-parallax-image>
 
     <div class="miracle-text" #miracleText>
       <h2 class="miracle-title" *ngIf="!isMobile">
         {{ "church.miracle.title" | translate }}
       </h2>
-      <p>{{ "church.miracle.description1" | translate }}</p>
+      <p class="active">{{ "church.miracle.description1" | translate }}</p>
       <p>{{ "church.miracle.description2" | translate }}</p>
       <p>{{ "church.miracle.description3" | translate }}</p>
       <p class="sign">{{ "church.miracle.sign" | translate }}</p>

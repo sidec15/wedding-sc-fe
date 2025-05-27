@@ -1,13 +1,13 @@
 <div
       class="parallax-image-wrapper"
-      [style.height]="containerHeight"
+      [style.height]="containerHeight()"
       #wrapper
     >
       <img
         #image
-        [src]="src"
-        [alt]="alt"
+        [src]="src()"
+        [alt]="alt()"
         class="parallax-image"
-        [style.height]="imageHeight"
+        [style.height]="imageHeight()"
       />
     </div>

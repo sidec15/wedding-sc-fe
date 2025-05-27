@@ -2,11 +2,12 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  input,
   Input,
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, throttleTime } from 'rxjs';
 import { EventService, ScrollEvent } from '../../services/event.service';
 import { PlatformService } from '../../services/platform.service';
 
@@ -18,11 +19,11 @@ import { PlatformService } from '../../services/platform.service';
   styleUrl: './parallax-image.component.scss',
 })
 export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
-  @Input() src!: string;
-  @Input() alt = '';
-  @Input() containerHeight = '500px';
-  @Input() imageHeight = '650px';
-  @Input() speedFactor = 0.1;
+  src = input.required<string>();
+  alt = input<string>('');
+  containerHeight = input('500px');
+  imageHeight = input('650px');
+  speedFactor = input(0.1);
 
   @ViewChild('image', { static: true }) imageRef!: ElementRef;
   @ViewChild('wrapper', { static: true }) wrapperRef!: ElementRef;
@@ -36,7 +37,9 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
-    this.scrollSubscription = this.eventService.scrollEvent$.subscribe(
+    this.scrollSubscription = this.eventService.scrollEvent$
+    .pipe(throttleTime(16)) // Throttle to 60 FPS
+    .subscribe(
       (e: ScrollEvent) => {
         this.animate(e);
       }
@@ -55,7 +58,7 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
 
     const direction = scrollEvent.scrollDirection() === 'up' ? -1 : 1;
     const distance =
-      Math.abs(scrollEvent.scrollYOffset) * this.speedFactor * direction;
+      Math.abs(scrollEvent.scrollYOffset) * this.speedFactor() * direction;
 
     this.parallaxOffset += distance;
 

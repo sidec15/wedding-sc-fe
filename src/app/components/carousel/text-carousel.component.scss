@@ -34,7 +34,7 @@
     height: 100%; // Match the height of .slide
     overflow: hidden; // Hide overflowing text
     background: rgba(var(--text-mask), 0.7);
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(var(--backdrop-filter));
     padding: 1.5rem;
     box-shadow: 0 2px 10px var(--box-shadow-heavy);
     display: flex;

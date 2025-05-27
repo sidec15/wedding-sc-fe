@@ -1,0 +1,83 @@
+<div class="carousel" #carousel>
+  <ng-container *ngFor="let slide of activeSlides">
+    <img
+      [src]="slide.imageUrl"
+      alt="Slide Image"
+      class="slide"
+      [ngStyle]="slide.style"
+      [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
+    />
+
+    <div class="show-button-container">
+      <button
+        class="show-btn more-btn"
+        *ngIf="overlayStatus !== 'expanded' && shouldShowMore"
+        (click)="toggleExpandedState(true)"
+      >
+        {{ "carousel.show_more" | translate }}
+      </button>
+
+      <button
+        class="show-btn less-btn"
+        *ngIf="overlayStatus !== 'hidden'"
+        (click)="toggleExpandedState(false)"
+      >
+        {{ "carousel.show_less" | translate }}
+      </button>
+    </div>
+
+    <div
+      class="overlay"
+      [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
+      [ngClass]="{
+        expanded: overlayStatus === 'expanded',
+        hidden: overlayStatus === 'hidden'
+      }"
+      #overlayRef
+    >
+      <h3>{{ slide.title | translate }}</h3>
+      <p>
+        {{ slide.description | translate }}
+      </p>
+    </div>
+  </ng-container>
+
+  <!-- Single gallery-buttons section, style with ngClass -->
+  <div
+    class="gallery-buttons"
+    [ngClass]="{ mobile: isMobile, desktop: !isMobile }"
+    [class.hidden]="overlayStatus === 'expanded'"
+    [class.collapsed]="overlayStatus === 'hidden'"
+  >
+    <button class="prev-btn" (click)="prevSlide()">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="next-btn" (click)="nextSlide()">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- Desktop-only linear progress bar -->
+  <div *ngIf="!isMobile" class="progress-bar-container">
+    <div class="progress-bar" [style.width.%]="progress"></div>
+  </div>
+  <!-- Mobile-only border progress -->
+  <div *ngIf="isMobile" class="border-progress">
+    <div
+      class="side top"
+      [style.width.%]="progress > 50 ? 100 : progress * 2"
+    ></div>
+    <div
+      class="side right"
+      [style.height.%]="progress > 50 ? (progress - 50) * 2 : 0"
+    ></div>
+    <div
+      class="side bottom"
+      [style.width.%]="progress > 50 ? (progress - 50) * 2 : 0"
+    ></div>
+    <div
+      class="side left"
+      [style.height.%]="progress > 50 ? 100 : progress * 2"
+    ></div>
+  </div>
+</div>
