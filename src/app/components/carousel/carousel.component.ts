@@ -66,9 +66,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   private slideTimeoutId!: NodeJS.Timeout | null;
   private isSlideShowActive = false;
   private isPaused = false;
-  private pauseTimestamp = 0;
   private slideStartTimestamp = 0;
-  private slideDurationMs = 0;
   private progressAtPause = 0;
 
   private mySlides: Slide[] = [];
@@ -137,8 +135,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private goToSlide(direction: 1 | -1): void {
-    const total = this.mySlides.length;
-    const nextIndex = (this.currentSlideIndex + direction + total) % total;
+    const nextIndex = this.getNextSlideIndex(direction);
 
     this.handleSlideTransition(nextIndex);
     this.resetProgressBar();
@@ -169,7 +166,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.isSlideShowActive || this.isPaused) return;
 
     this.isPaused = true;
-    this.pauseTimestamp = performance.now();
 
     if (this.rafId) cancelAnimationFrame(this.rafId);
     if (this.slideTimeoutId) {
@@ -215,7 +211,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private startProgressBar(duration: number, initialProgress = 100): void {
-    this.slideDurationMs = duration;
     this.slideStartTimestamp = performance.now();
     const initialElapsed = ((100 - initialProgress) / 100) * duration;
     const remainingDuration = duration - initialElapsed;
@@ -234,7 +229,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const delay = remainingDuration;
     this.slideTimeoutId = setTimeout(() => {
-      this.handleSlideTransition(this.currentSlideIndex + 1); // Move to next slide
+      this.handleSlideTransition(this.getNextSlideIndex(1)); // Move to next slide
       this.resetProgressBar();
     }, delay);
 
@@ -307,6 +302,13 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
       this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
     }
   }
+
+  private getNextSlideIndex(direction: 1 | -1): number {
+    const total = this.mySlides.length;
+    const nextIndex = (this.currentSlideIndex + direction + total) % total;
+    return nextIndex;
+  }
+
 }
 
 /** Slide model */

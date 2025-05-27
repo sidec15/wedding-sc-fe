@@ -37,7 +37,13 @@ export class MinimiComponent {
       title: 'church.minimi.slides.3.title',
       description: 'church.minimi.slides.3.description',
       duration: MinimiComponent.DURATION,
-    }
+    },
+    {
+      imageUrl: '/images/church/minimi/minimi-05.png',
+      title: 'church.minimi.slides.4.title',
+      description: 'church.minimi.slides.4.description',
+      duration: MinimiComponent.DURATION,
+    },
   ];
 
   slidesMobile: Slide[] = [
