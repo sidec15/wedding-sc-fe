@@ -67,7 +67,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   private isSlideShowActive = false;
   private isPaused = false;
   private pauseTimestamp = 0;
-  private remainingSlideDuration = 0;
   private slideStartTimestamp = 0;
   private slideDurationMs = 0;
   private progressAtPause = 0;
@@ -142,19 +141,14 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     const nextIndex = (this.currentSlideIndex + direction + total) % total;
 
     this.handleSlideTransition(nextIndex);
-    this.reserProgressBar();
-  }
-
-  private activateslideShow(): void {
-    if (this.isSlideShowActive) return;
-    this.isSlideShowActive = true;
+    this.resetProgressBar();
   }
 
   /** Slide management */
   private startSlideShow(): void {
     if (this.isSlideShowActive) return;
 
-    this.activateslideShow();
+    this.isSlideShowActive = true;
     this.setActiveSlides([{ ...this.mySlides[0], visible: true }]);
     this.currentSlideIndex = 0;
     this.onSlideVisible();
@@ -180,8 +174,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.rafId) cancelAnimationFrame(this.rafId);
     if (this.slideTimeoutId) {
       clearTimeout(this.slideTimeoutId);
-      this.remainingSlideDuration =
-        this.slideDurationMs - (this.pauseTimestamp - this.slideStartTimestamp);
     }
 
     // Capture how far the progress bar was
@@ -203,10 +195,10 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // Visually fade out current slide
-    this.setSlideVisible(false, 0);
+    this.disableCurrentSlide();
 
     // Show next slide immediately for progress/timing sync
-    this.unshiftSlide({ ...this.mySlides[nextIndex], visible: true });
+    this.enabledSlide({ ...this.mySlides[nextIndex], visible: true });
     this.currentSlideIndex = nextIndex;
     this.onSlideVisible();
 
@@ -242,14 +234,14 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const delay = remainingDuration;
     this.slideTimeoutId = setTimeout(() => {
-      this.handleSlideTransition(1); // Move to next slide
-      this.reserProgressBar();
+      this.handleSlideTransition(this.currentSlideIndex + 1); // Move to next slide
+      this.resetProgressBar();
     }, delay);
 
     this.rafId = requestAnimationFrame(animate);
   }
 
-  private reserProgressBar(): void {
+  private resetProgressBar(): void {
     this.progress = 100;
     if (this.rafId) cancelAnimationFrame(this.rafId);
     this.startProgressBar(this.getCurrentSlideDuration());
@@ -299,19 +291,19 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
 
-  private unshiftSlide(slide: Slide): void {
-    this.activeSlides.unshift(slide);
-    this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
-  }
-
   private popSlide(): void {
     this.activeSlides.pop();
     this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
 
-  private setSlideVisible(visible: boolean, index: number): void {
-    if (this.activeSlides[index]) {
-      this.activeSlides[index].visible = visible;
+  private enabledSlide(slide: Slide): void {
+    this.activeSlides.unshift(slide);
+    this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
+  }
+
+  private disableCurrentSlide(): void {
+    if (this.activeSlides[0]) {
+      this.activeSlides[0].visible = false;
       this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
     }
   }

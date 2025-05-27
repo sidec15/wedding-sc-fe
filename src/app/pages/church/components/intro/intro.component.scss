@@ -39,6 +39,11 @@ section {
     backdrop-filter: var(--backdrop-filter);
     transition: opacity 0.2s ease-out;
     will-change: opacity, transform;
+
+    h2 {
+      font-size: 2rem;
+    }
+
   }
 }
 

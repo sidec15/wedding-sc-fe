@@ -7,16 +7,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100dvh;
-  height: 100vh;
+  @include vh(100); // Full viewport height
   
-
-  .minimi-title {
-    text-align: center;
-    padding: 0 0 1rem 0;
-    font-size: 2.5rem;
-  }
-
+  
   app-carousel {
     flex: 1;
   }
