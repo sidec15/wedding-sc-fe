@@ -3,8 +3,13 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  input,
+  InputSignal,
   OnDestroy,
+  QueryList,
+  TemplateRef,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParallaxImageComponent } from '../../../../components/parallax-image/parallax-image.component';
@@ -12,10 +17,11 @@ import { PlatformService } from '../../../../services/platform.service';
 import { NgClass, NgIf } from '@angular/common';
 import { EventService } from '../../../../services/event.service';
 import { Subscription, throttleTime } from 'rxjs';
+import { GenericCarouselComponent } from '../../../../components/generic-carousel/generic-carousel.component';
 
 @Component({
   selector: 'app-miracle',
-  imports: [TranslateModule, ParallaxImageComponent, NgIf, NgClass],
+  imports: [TranslateModule, ParallaxImageComponent, NgIf, NgClass, GenericCarouselComponent],
   templateUrl: './miracle.component.html',
   styleUrl: './miracle.component.scss',
 })
@@ -23,11 +29,15 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
   isPlatformReady = false;
   imageSrc: string = '';
 
+  slides: InputSignal<TemplateRef<any>[]> = input.required();
+
   private _isMobile = false;
   private scrollSub!: Subscription;
 
   @ViewChild('miracleSection', { static: false }) sectionRef!: ElementRef;
   @ViewChild('miracleText', { static: false }) textRef!: ElementRef;
+  @ViewChildren('miracleSlide', { read: TemplateRef }) slideTemplates!: QueryList<TemplateRef<any>>;
+
 
   constructor(
     private platformService: PlatformService,
