@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild,
   ChangeDetectorRef,
+  TemplateRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EventService } from '../../services/event.service';
@@ -26,8 +27,8 @@ import e from 'express';
 @Component({
   selector: 'app-carousel',
   imports: [TranslateModule, NgFor, NgStyle, NgIf, NgClass],
-  templateUrl: './text-carousel.component.html',
-  styleUrl: './text-carousel.component.scss',
+  templateUrl: './generic-carousel.component.html',
+  styleUrl: './generic-carousel.component.scss',
   animations: [
     trigger('fadeSlide', [
       state('visible', style({ opacity: 1 })),
@@ -37,13 +38,13 @@ import e from 'express';
     ]),
   ],
 })
-export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GenericCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Inputs */
   fadeOutDuration: InputSignal<number> = input(1000);
   fadeInDuration: InputSignal<number> = input(2000);
   intervalValue: InputSignal<number> = input(5000);
-  slides: InputSignal<TextSlide[]> = input.required();
-  slidesMobile: InputSignal<TextSlide[]> = input([] as TextSlide[]);
+  slides: InputSignal<Slide[]> = input.required();
+  slidesMobile: InputSignal<Slide[]> = input([] as Slide[]);
 
   /** DOM references */
   @ViewChild('carousel', { static: false })
@@ -53,7 +54,7 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** State */
   currentSlideIndex = 0;
-  activeSlides: TextSlide[] = [];
+  activeSlides: Slide[] = [];
   fadeState: 'visible' | 'hidden' = 'visible';
   progress = 100;
 
@@ -64,7 +65,7 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   private isSlideShowActive = false;
   private slideStartTimestamp = 0;
 
-  private mySlides: TextSlide[] = [];
+  private mySlides: Slide[] = [];
   private rafId: number | null = null;
 
   constructor(
@@ -204,7 +205,7 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /** Slide mutation helpers (with detectChanges) */
-  private setActiveSlides(slides: TextSlide[]): void {
+  private setActiveSlides(slides: Slide[]): void {
     this.activeSlides = slides;
     this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
@@ -214,7 +215,7 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
 
-  private enabledSlide(slide: TextSlide): void {
+  private enabledSlide(slide: Slide): void {
     this.activeSlides.unshift(slide);
     this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
@@ -234,8 +235,8 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 }
 
 /** Slide model */
-export interface TextSlide {
-  description: string;
+export interface Slide {
+  element: TemplateRef<any>;
   style?: { [key: string]: string };
   visible?: boolean;
   duration?: number;
