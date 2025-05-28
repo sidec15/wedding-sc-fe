@@ -42,8 +42,8 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   fadeOutDuration: InputSignal<number> = input(1000);
   fadeInDuration: InputSignal<number> = input(2000);
   intervalValue: InputSignal<number> = input(5000);
-  slides: InputSignal<Slide[]> = input.required();
-  slidesMobile: InputSignal<Slide[]> = input([] as Slide[]);
+  slides: InputSignal<TextSlide[]> = input.required();
+  slidesMobile: InputSignal<TextSlide[]> = input([] as TextSlide[]);
 
   /** DOM references */
   @ViewChild('carousel', { static: false })
@@ -52,24 +52,19 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   overlayRef!: ElementRef<HTMLElement>;
 
   /** State */
-  isMobile = false;
   currentSlideIndex = 0;
-  activeSlides: Slide[] = [];
+  activeSlides: TextSlide[] = [];
   fadeState: 'visible' | 'hidden' = 'visible';
   progress = 100;
-  shouldShowMore = false;
-  _overlayStatus: 'expanded' | 'collapsed' | 'hidden' = 'collapsed';
 
   /** Internals */
   private slideSub!: Subscription;
-  private scrollEventSubscription!: Subscription;
+  private scrollEventSub!: Subscription;
   private slideTimeoutId!: NodeJS.Timeout | null;
   private isSlideShowActive = false;
-  private isPaused = false;
   private slideStartTimestamp = 0;
-  private progressAtPause = 0;
 
-  private mySlides: Slide[] = [];
+  private mySlides: TextSlide[] = [];
   private rafId: number | null = null;
 
   constructor(
@@ -79,11 +74,7 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isMobile = this.platformService.isMobile();
-    this.mySlides =
-      this.isMobile && this.slidesMobile()?.length > 0
-        ? this.slidesMobile()
-        : this.slides();
+    this.mySlides = this.slides();
   }
 
   ngAfterViewInit(): void {
@@ -97,32 +88,26 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
-      () => {
-        const isVisible = this.platformService.isVisible(
-          this.carouselSectionRef.nativeElement
-        );
-        if (!isVisible) {
-          if (this.isSlideShowActive) {
-            this.stopSlideShow();
-          }
-        } else {
-          if (!this.isSlideShowActive) {
-            this.startSlideShow();
-          }
+    this.scrollEventSub = this.eventService.scrollEvent$.subscribe(() => {
+      const isVisible = this.platformService.isVisible(
+        this.carouselSectionRef.nativeElement
+      );
+      if (!isVisible) {
+        if (this.isSlideShowActive) {
+          this.stopSlideShow();
+        }
+      } else {
+        if (!this.isSlideShowActive) {
+          this.startSlideShow();
         }
       }
-    );
+    });
   }
 
   ngOnDestroy(): void {
     this.slideSub?.unsubscribe();
-    this.scrollEventSubscription?.unsubscribe();
+    this.scrollEventSub?.unsubscribe();
     this.stopSlideShow();
-  }
-
-  get overlayStatus(): 'expanded' | 'collapsed' | 'hidden' {
-    return this._overlayStatus;
   }
 
   /** Public slide controls */
@@ -148,7 +133,6 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isSlideShowActive = true;
     this.setActiveSlides([{ ...this.mySlides[0], visible: true }]);
     this.currentSlideIndex = 0;
-    this.onSlideVisible();
 
     this.startProgressBar(this.getCurrentSlideDuration());
   }
@@ -160,28 +144,6 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.rafId) cancelAnimationFrame(this.rafId);
     if (this.slideTimeoutId) clearTimeout(this.slideTimeoutId);
-  }
-
-  private pauseSlideshow(): void {
-    if (!this.isSlideShowActive || this.isPaused) return;
-
-    this.isPaused = true;
-
-    if (this.rafId) cancelAnimationFrame(this.rafId);
-    if (this.slideTimeoutId) {
-      clearTimeout(this.slideTimeoutId);
-    }
-
-    // Capture how far the progress bar was
-    this.progressAtPause = this.progress;
-  }
-
-  private resumeSlideshow(): void {
-    if (!this.isSlideShowActive || !this.isPaused) return;
-
-    this.isPaused = false;
-
-    this.startProgressBar(this.getCurrentSlideDuration(), this.progressAtPause);
   }
 
   private handleSlideTransition(nextIndex: number): void {
@@ -196,7 +158,6 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     // Show next slide immediately for progress/timing sync
     this.enabledSlide({ ...this.mySlides[nextIndex], visible: true });
     this.currentSlideIndex = nextIndex;
-    this.onSlideVisible();
 
     // Delay pop only for visual fade-out effect (optional)
     setTimeout(() => {
@@ -222,7 +183,7 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.progress = percent;
 
-      if (this.progress > 0 && !this.isPaused) {
+      if (this.progress > 0) {
         this.rafId = requestAnimationFrame(animate);
       }
     };
@@ -242,46 +203,8 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.startProgressBar(this.getCurrentSlideDuration());
   }
 
-  /** Overlay logic */
-  private onSlideVisible(): void {
-    this._overlayStatus = 'collapsed';
-    requestAnimationFrame(() => this.checkOverlayOverflow());
-  }
-
-  private checkOverlayOverflow(): void {
-    if (!this.platformService.isBrowser() || !this.overlayRef) return;
-
-    const el = this.overlayRef.nativeElement;
-    const result = el.scrollHeight > el.clientHeight;
-    this.shouldShowMore = result;
-  }
-
-  toggleExpandedState(opening: boolean): void {
-    const prevaviousState = this._overlayStatus;
-    if (opening) {
-      if (this._overlayStatus === 'hidden') {
-        this._overlayStatus = 'collapsed';
-      } else if (this._overlayStatus === 'collapsed') {
-        this._overlayStatus = 'expanded';
-      }
-    } else {
-      if (this._overlayStatus === 'expanded') {
-        this._overlayStatus = 'collapsed';
-      } else if (this._overlayStatus === 'collapsed') {
-        this._overlayStatus = 'hidden';
-      }
-    }
-
-    if (this._overlayStatus === 'expanded') {
-      this.pauseSlideshow();
-    }
-    if (prevaviousState === 'expanded') {
-      this.resumeSlideshow();
-    }
-  }
-
   /** Slide mutation helpers (with detectChanges) */
-  private setActiveSlides(slides: Slide[]): void {
+  private setActiveSlides(slides: TextSlide[]): void {
     this.activeSlides = slides;
     this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
@@ -291,7 +214,7 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
 
-  private enabledSlide(slide: Slide): void {
+  private enabledSlide(slide: TextSlide): void {
     this.activeSlides.unshift(slide);
     this.cdr.detectChanges(); // Tell Angular it's okay, now reconcile the view
   }
@@ -308,11 +231,10 @@ export class TextCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     const nextIndex = (this.currentSlideIndex + direction + total) % total;
     return nextIndex;
   }
-
 }
 
 /** Slide model */
-export interface Slide {
+export interface TextSlide {
   description: string;
   style?: { [key: string]: string };
   visible?: boolean;
