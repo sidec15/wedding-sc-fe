@@ -5,6 +5,7 @@ import {
   ElementRef,
   input,
   InputSignal,
+  NgZone,
   OnDestroy,
   QueryList,
   TemplateRef,
@@ -16,33 +17,44 @@ import { ParallaxImageComponent } from '../../../../components/parallax-image/pa
 import { PlatformService } from '../../../../services/platform.service';
 import { NgClass, NgIf } from '@angular/common';
 import { EventService } from '../../../../services/event.service';
-import { Subscription, throttleTime } from 'rxjs';
-import { GenericCarouselComponent } from '../../../../components/generic-carousel/generic-carousel.component';
+import { Subscription, take, throttleTime } from 'rxjs';
+import {
+  GenericCarouselComponent,
+  Slide,
+} from '../../../../components/generic-carousel/generic-carousel.component';
 
 @Component({
   selector: 'app-miracle',
-  imports: [TranslateModule, ParallaxImageComponent, NgIf, NgClass, GenericCarouselComponent],
+  imports: [
+    TranslateModule,
+    ParallaxImageComponent,
+    NgIf,
+    GenericCarouselComponent,
+  ],
   templateUrl: './miracle.component.html',
   styleUrl: './miracle.component.scss',
 })
 export class MiracleComponent implements AfterViewInit, OnDestroy {
+  private static readonly DURATION = 5000;
+
   isPlatformReady = false;
   imageSrc: string = '';
-
-  slides: InputSignal<TemplateRef<any>[]> = input.required();
 
   private _isMobile = false;
   private scrollSub!: Subscription;
 
   @ViewChild('miracleSection', { static: false }) sectionRef!: ElementRef;
   @ViewChild('miracleText', { static: false }) textRef!: ElementRef;
-  @ViewChildren('miracleSlide', { read: TemplateRef }) slideTemplates!: QueryList<TemplateRef<any>>;
+  @ViewChildren('miracleSlide', { read: TemplateRef })
+  slideTemplates!: QueryList<TemplateRef<any>>;
 
+  slides: Slide[] = [];
 
   constructor(
     private platformService: PlatformService,
     private eventService: EventService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private zone: NgZone,
   ) {}
 
   ngAfterViewInit(): void {
@@ -53,9 +65,21 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
     // Cache the isMobile flag after the view is initialized to ensure correct platform detection.
     this._isMobile = this.platformService.isMobile();
 
-    this.imageSrc = this._isMobile
-      ? '/images/church/miracle/miracle-09.jpg'
-      : '/images/church/miracle/miracle-02.jpg';
+    if (!this._isMobile) {
+      // If not mobile, use the desktop image.
+      this.imageSrc = '/images/church/miracle/miracle-01.jpg';
+    } else {
+      // If mobile, use the mobile image.
+      this.imageSrc = '/images/church/miracle/miracle-09.jpg';
+      this.zone.onStable.pipe(take(1)).subscribe(() => {
+        // Initialize the slides for mobile view.
+        this.slides = this.slideTemplates.map((template) => ({
+          elementRef: template,
+          duration: MiracleComponent.DURATION,
+        }));
+        this.cdRef.detectChanges();
+      });
+    }
 
     // Prevents ExpressionChangedAfterItHasBeenCheckedError.
     // Angular initially renders the component, then detects that a bound value has changed.

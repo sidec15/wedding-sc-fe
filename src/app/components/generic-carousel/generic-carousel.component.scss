@@ -1,6 +1,16 @@
 @use "../../../styles/variables.scss" as *;
 @use "../../../styles/mixins.scss" as *;
 
+/* debug_sdc */
+.dummy-slide {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+
 :host {
   display: block; // Ensures the app-carousel element behaves like a block-level element (fills available width)
   height: 100%; // Allows this component to expand to the full height given by the parent layout
@@ -24,21 +34,6 @@
     transition: opacity 1s ease-in-out;
   }
 
-  .overlay {
-    min-height: 1px; // garantisce che occupi altezza anche se è vuoto
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%; // Ensure slide takes full height of carousel
-    overflow: scroll; // Hide overflowing text
-    background: rgba(var(--text-mask), 0.7);
-    backdrop-filter: blur(var(--backdrop-filter));
-    padding: 1rem;
-    box-shadow: 0 2px 10px var(--box-shadow-heavy);
-  }
-
   .progress-bar-container {
     position: absolute;
     bottom: 0;
@@ -58,7 +53,6 @@
   }
 
   .gallery-buttons {
-    // Default desktop styles
     position: absolute;
     bottom: 2rem;
     left: 80px;

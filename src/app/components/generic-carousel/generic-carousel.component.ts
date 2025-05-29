@@ -5,10 +5,11 @@ import {
   input,
   InputSignal,
   OnDestroy,
-  OnInit,
   ViewChild,
   ChangeDetectorRef,
   TemplateRef,
+  computed,
+  Signal,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EventService } from '../../services/event.service';
@@ -21,12 +22,11 @@ import {
   animate,
 } from '@angular/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
-import e from 'express';
+import { NgFor, NgTemplateOutlet } from '@angular/common';
 
 @Component({
-  selector: 'app-carousel',
-  imports: [TranslateModule, NgFor, NgStyle, NgIf, NgClass],
+  selector: 'app-generic-carousel',
+  imports: [TranslateModule, NgFor, NgTemplateOutlet],
   templateUrl: './generic-carousel.component.html',
   styleUrl: './generic-carousel.component.scss',
   animations: [
@@ -38,19 +38,21 @@ import e from 'express';
     ]),
   ],
 })
-export class GenericCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
   /** Inputs */
   fadeOutDuration: InputSignal<number> = input(1000);
   fadeInDuration: InputSignal<number> = input(2000);
   intervalValue: InputSignal<number> = input(5000);
   slides: InputSignal<Slide[]> = input.required();
-  slidesMobile: InputSignal<Slide[]> = input([] as Slide[]);
 
   /** DOM references */
   @ViewChild('carousel', { static: false })
   carouselSectionRef!: ElementRef<HTMLElement>;
   @ViewChild('overlayRef', { static: false })
   overlayRef!: ElementRef<HTMLElement>;
+
+  //debug_sdc
+  @ViewChild('dummyTemplate', { static: true }) dummyTemplate!: TemplateRef<any>;
 
   /** State */
   currentSlideIndex = 0;
@@ -65,7 +67,16 @@ export class GenericCarouselComponent implements OnInit, AfterViewInit, OnDestro
   private isSlideShowActive = false;
   private slideStartTimestamp = 0;
 
-  private mySlides: Slide[] = [];
+  private mySlidesSignal: Signal<Slide[]> = computed(() => this.slides());
+  get mySlides(): Slide[] {
+    // debug_sdc
+    // return this.mySlidesSignal();
+    return [{
+    elementRef: this.dummyTemplate,
+    duration: 3600000,
+    visible: true,
+  }];
+  }
   private rafId: number | null = null;
 
   constructor(
@@ -73,10 +84,6 @@ export class GenericCarouselComponent implements OnInit, AfterViewInit, OnDestro
     private eventService: EventService,
     private cdr: ChangeDetectorRef
   ) {}
-
-  ngOnInit(): void {
-    this.mySlides = this.slides();
-  }
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
@@ -129,7 +136,7 @@ export class GenericCarouselComponent implements OnInit, AfterViewInit, OnDestro
 
   /** Slide management */
   private startSlideShow(): void {
-    if (this.isSlideShowActive) return;
+    if (this.isSlideShowActive && this.mySlides?.length > 0) return;
 
     this.isSlideShowActive = true;
     this.setActiveSlides([{ ...this.mySlides[0], visible: true }]);
@@ -236,7 +243,7 @@ export class GenericCarouselComponent implements OnInit, AfterViewInit, OnDestro
 
 /** Slide model */
 export interface Slide {
-  element: TemplateRef<any>;
+  elementRef: TemplateRef<any>;
   style?: { [key: string]: string };
   visible?: boolean;
   duration?: number;

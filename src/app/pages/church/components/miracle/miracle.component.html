@@ -12,21 +12,22 @@
     ></app-parallax-image>
 
     <div class="miracle-text" #miracleText>
-      <h2 class="miracle-title" *ngIf="!isMobile">
-        {{ "church.miracle.title" | translate }}
-      </h2>
-      <!-- <p class="active">{{ "church.miracle.description1" | translate }}</p>
-      <p>{{ "church.miracle.description2" | translate }}</p>
-      <p>{{ "church.miracle.description3" | translate }}</p>
-      <p class="sign">{{ "church.miracle.sign" | translate }}</p> -->
+      <ng-container *ngIf="!isMobile">
+        <h2 class="miracle-title" *ngIf="!isMobile">
+          {{ "church.miracle.title" | translate }}
+        </h2>
+        <p class="active">{{ "church.miracle.description1" | translate }}</p>
+        <p>{{ "church.miracle.description2" | translate }}</p>
+        <p>{{ "church.miracle.description3" | translate }}</p>
+        <p class="sign">{{ "church.miracle.sign" | translate }}</p>
+      </ng-container>
 
       <ng-container *ngIf="isMobile">
         <app-generic-carousel
-          [slides]="slides()"
+          [slides]="slides"
           class="mobile-carousel"
         ></app-generic-carousel>
 
-        <!-- I tuoi template per le slide -->
         <ng-template #miracleSlide>
           <p>{{ "church.miracle.description1" | translate }}</p>
         </ng-template>

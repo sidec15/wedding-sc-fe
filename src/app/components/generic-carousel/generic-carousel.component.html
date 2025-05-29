@@ -1,20 +1,13 @@
 <div class="carousel" #carousel>
+  <!-- debug_sdc -->
   <ng-container *ngFor="let slide of activeSlides">
-    <div
-      class="overlay"
-      [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
-      [ngClass]="{
-        expanded: overlayStatus === 'expanded',
-        hidden: overlayStatus === 'hidden'
-      }"
-      #overlayRef
-    >
-      <h3>{{ slide.title | translate }}</h3>
-      <p>
-        {{ slide.description | translate }}
-      </p>
+    <div class="slide" [@fadeSlide]="slide.visible ? 'visible' : 'hidden'">
+      <ng-container *ngTemplateOutlet="slide.elementRef"></ng-container>
     </div>
   </ng-container>
+  <ng-template #dummyTemplate>
+    <div class="dummy-slide">This is a dummy slide! 🎉</div>
+  </ng-template>
 
   <!-- Single gallery-buttons section, style with ngClass -->
   <div class="gallery-buttons">
@@ -26,8 +19,7 @@
     </button>
   </div>
 
-  <!-- Desktop-only linear progress bar -->
-  <div *ngIf="!isMobile" class="progress-bar-container">
+  <div class="progress-bar-container">
     <div class="progress-bar" [style.width.%]="progress"></div>
   </div>
 </div>
