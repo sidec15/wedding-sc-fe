@@ -1,13 +1,13 @@
 <div class="carousel" #carousel>
-  <!-- debug_sdc -->
   <ng-container *ngFor="let slide of activeSlides">
-    <div class="slide" [@fadeSlide]="slide.visible ? 'visible' : 'hidden'">
+    <div
+      class="slide"
+      [class.visible]="slide.visible"
+      [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
+    >
       <ng-container *ngTemplateOutlet="slide.elementRef"></ng-container>
     </div>
   </ng-container>
-  <ng-template #dummyTemplate>
-    <div class="dummy-slide">This is a dummy slide! 🎉</div>
-  </ng-template>
 
   <!-- Single gallery-buttons section, style with ngClass -->
   <div class="gallery-buttons">

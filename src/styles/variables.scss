@@ -22,6 +22,11 @@
   --backdrop-filter: blur(4px); // Blur effect for backdrop
   --progress-bar-size: 4px; // Size of the progress bar
   --progress-bar-mobile-size: 5px; // Size of the progress bar on mobile
+  --carousel-gallery-buttons-background: rgba(0, 0, 0, 0.3); // Background for carousel gallery buttons
+  --carousel-gallery-buttons-border-color: rgba(174, 174, 174, 0.15); // Border color for carousel gallery buttons
+  --carousel-gallery-buttons-color: #f0f0f0; // Hover background for carousel gallery buttons
+  --carousel-gallery-buttons-hover-color: rgba(0, 0, 0, 0.5); // Hover background for carousel gallery buttons
+
 }
 
 // Dark theme

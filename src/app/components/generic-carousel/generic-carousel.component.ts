@@ -51,9 +51,6 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
   @ViewChild('overlayRef', { static: false })
   overlayRef!: ElementRef<HTMLElement>;
 
-  //debug_sdc
-  @ViewChild('dummyTemplate', { static: true }) dummyTemplate!: TemplateRef<any>;
-
   /** State */
   currentSlideIndex = 0;
   activeSlides: Slide[] = [];
@@ -67,15 +64,8 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
   private isSlideShowActive = false;
   private slideStartTimestamp = 0;
 
-  private mySlidesSignal: Signal<Slide[]> = computed(() => this.slides());
   get mySlides(): Slide[] {
-    // debug_sdc
-    // return this.mySlidesSignal();
-    return [{
-    elementRef: this.dummyTemplate,
-    duration: 3600000,
-    visible: true,
-  }];
+    return this.slides();
   }
   private rafId: number | null = null;
 
@@ -86,7 +76,12 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
-    if (!this.platformService.isBrowser()) return;
+    if (!this.platformService.isPlatformReady()) return;
+
+    if (!this.mySlides?.length) {
+      // console.warn('[Carousel] No slides to show');
+      return;
+    }
 
     requestAnimationFrame(() => {
       if (

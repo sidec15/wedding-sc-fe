@@ -48,11 +48,18 @@
         opacity: 0;
         background: rgba(var(--text-mask), 0.75);
         backdrop-filter: blur(6px);
-        padding: 1rem;
+        padding: 1rem 1rem 1rem 1rem;
         border-radius: 10px;
+
+        app-generic-carousel {
+          display: block;
+          width: 100%;
+          height: auto;
+        }
 
         p {
           font-size: 1.2rem !important;
+          padding: 0 !important;
           &.active {
             display: block; // Show text paragraphs when active
           }

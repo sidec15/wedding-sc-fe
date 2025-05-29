@@ -1,16 +1,6 @@
 @use "../../../styles/variables.scss" as *;
 @use "../../../styles/mixins.scss" as *;
 
-/* debug_sdc */
-.dummy-slide {
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  padding: 2rem;
-  font-size: 1.5rem;
-  text-align: center;
-}
-
-
 :host {
   display: block; // Ensures the app-carousel element behaves like a block-level element (fills available width)
   height: 100%; // Allows this component to expand to the full height given by the parent layout
@@ -18,20 +8,28 @@
 
 .carousel {
   width: 100%; // Makes the internal .carousel div span the full width of the host component
-  height: 100%; // Ensures the .carousel fills the full height of the app-carousel host
+  height: auto; // Ensures the .carousel fills the full height of the app-carousel host
   overflow: hidden; // Hides any overflowing child content (e.g., sliding images going outside bounds)
   position: relative; // Enables absolute positioning for internal elements like .slide or .overlay
+  min-height: 150px; // Sets a minimum height for the carousel to ensure it is usable even with few slides
 
   .slide {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
     width: 100%;
-    height: 100%; // Ensure slide takes full height of carousel
-    object-fit: cover;
-    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
     transition: opacity 1s ease-in-out;
+    padding: 0rem 1rem 2rem 1rem;
+    text-align: center;
+
+    &.visible {
+      opacity: 1;
+      position: relative;
+    }
   }
 
   .progress-bar-container {
@@ -54,35 +52,60 @@
 
   .gallery-buttons {
     position: absolute;
-    bottom: 2rem;
-    left: 80px;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 1rem;
-    z-index: 3;
-    backdrop-filter: blur(var(--backdrop-blur));
-    bottom: 26vh;
+    bottom: calc(var(--progress-bar-size) + 12px);
     left: 0;
     width: 100%;
-    transform: none;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    z-index: 2;
-    padding: 0 0.5rem;
-    gap: 0;
+    align-items: center;
+    padding: 0 1rem;
+    z-index: 3;
+    pointer-events: none;
 
     .prev-btn,
     .next-btn {
-      background: rgba(var(--text-mask), 0.8);
-      border: none;
-      color: rgb(var(--text-mask));
-      font-size: 1.2rem !important;
+      pointer-events: all;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--carousel-gallery-buttons-background);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--carousel-gallery-buttons-border-color);
+      color: var(--carousel-gallery-buttons-color);
+      font-size: 1.6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
-      padding: 0.5rem 1rem !important;
-      border-radius: 5px;
-      margin: 0;
+      transition: background-color 0.3s ease, transform 0.2s ease,
+        box-shadow 0.3s ease;
+
+      // Desktop-only hover effects
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          background-color: var(--carousel-gallery-buttons-hover-color);
+          transform: scale(1.05);
+          box-shadow: 0 4px 8px var(--box-shadow-medium);
+        }
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
     }
   }
-  
+}
+
+// Mobile adjustments
+@media (max-width: 768px) {
+  .carousel {
+    .gallery-buttons {
+      .prev-btn,
+      .next-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1.3rem;
+      }
+    }
+  }
 }

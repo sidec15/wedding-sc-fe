@@ -12,8 +12,9 @@
     ></app-parallax-image>
 
     <div class="miracle-text" #miracleText>
+
       <ng-container *ngIf="!isMobile">
-        <h2 class="miracle-title" *ngIf="!isMobile">
+        <h2 class="miracle-title">
           {{ "church.miracle.title" | translate }}
         </h2>
         <p class="active">{{ "church.miracle.description1" | translate }}</p>
