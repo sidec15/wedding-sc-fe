@@ -2,69 +2,43 @@
 @use "../../../styles/mixins.scss" as *;
 
 :host {
-  display: block; // Ensures the app-carousel element behaves like a block-level element (fills available width)
-  height: 100%; // Allows this component to expand to the full height given by the parent layout
+  display: block;
+  height: auto;
 }
 
 .carousel {
-  width: 100%; // Makes the internal .carousel div span the full width of the host component
-  height: auto; // Ensures the .carousel fills the full height of the app-carousel host
-  overflow: hidden; // Hides any overflowing child content (e.g., sliding images going outside bounds)
-  position: relative; // Enables absolute positioning for internal elements like .slide or .overlay
-  min-height: 150px; // Sets a minimum height for the carousel to ensure it is usable even with few slides
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
 
   .slide {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     opacity: 0;
     transition: opacity 1s ease-in-out;
-    padding: 0rem 1rem 2rem 1rem;
+    padding: 1rem;
     text-align: center;
+    min-height: 150px;
 
     &.visible {
+      display: flex;
       opacity: 1;
-      position: relative;
-    }
-  }
-
-  .progress-bar-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: var(--progress-bar-size);
-    background-color: rgba(255, 255, 255, 0.2);
-    overflow: hidden;
-    z-index: 1;
-
-    .progress-bar {
-      height: 100%;
-      background-color: rgb(var(--accent));
-      width: 100%;
-      transition: width 0s; // no transition, we're animating via frame loop
     }
   }
 
   .gallery-buttons {
-    position: absolute;
-    bottom: calc(var(--progress-bar-size) + 12px);
-    left: 0;
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1rem;
-    z-index: 3;
-    pointer-events: none;
+    padding: 0.5rem 1rem;
+    margin-top: -0.5rem; // Pull closer to slide visually if needed
 
     .prev-btn,
     .next-btn {
-      pointer-events: all;
       width: 48px;
       height: 48px;
       border-radius: 50%;
@@ -80,18 +54,32 @@
       transition: background-color 0.3s ease, transform 0.2s ease,
         box-shadow 0.3s ease;
 
-      // Desktop-only hover effects
+      // Desktop hover effects only
       @media (hover: hover) and (pointer: fine) {
         &:hover {
-          background-color: var(--carousel-gallery-buttons-hover-color);
+          background-color: rgba(255, 255, 255, 0.2);
           transform: scale(1.05);
-          box-shadow: 0 4px 8px var(--box-shadow-medium);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
       }
 
       &:active {
         transform: scale(0.95);
       }
+    }
+  }
+
+  .progress-bar-container {
+    width: 100%;
+    height: var(--progress-bar-size, 6px);
+    background-color: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+
+    .progress-bar {
+      height: 100%;
+      background-color: rgb(var(--accent));
+      width: 100%;
+      transition: width 0s;
     }
   }
 }

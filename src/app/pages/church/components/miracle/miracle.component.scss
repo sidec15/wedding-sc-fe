@@ -46,8 +46,8 @@
         transform: translate(-50%, -50%) translateY(100px) scale(0.8);
         width: 80%;
         opacity: 0;
-        background: rgba(var(--text-mask), 0.75);
-        backdrop-filter: blur(6px);
+        background: rgba(var(--text-mask), 0.8);
+        backdrop-filter: blur(8px);
         padding: 1rem 1rem 1rem 1rem;
         border-radius: 10px;
 
@@ -59,9 +59,9 @@
 
         p {
           font-size: 1.2rem !important;
-          margin: 1rem 0 0 0 !important;
+          margin: 0 !important;
           &.sign {
-            margin-top: 0.5rem !important;
+            margin-top: 1rem !important;
           }
           &.active {
             display: block; // Show text paragraphs when active
