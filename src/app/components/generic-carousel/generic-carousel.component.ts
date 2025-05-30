@@ -10,6 +10,7 @@ import {
   TemplateRef,
   computed,
   Signal,
+  Input,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EventService } from '../../services/event.service';
@@ -43,7 +44,6 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
   fadeOutDuration: InputSignal<number> = input(1000);
   fadeInDuration: InputSignal<number> = input(2000);
   intervalValue: InputSignal<number> = input(5000);
-  slides: InputSignal<Slide[]> = input.required();
 
   /** DOM references */
   @ViewChild('carousel', { static: false })
@@ -58,15 +58,13 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
   progress = 100;
 
   /** Internals */
+  private _slides: Slide[] = [];
   private slideSub!: Subscription;
   private scrollEventSub!: Subscription;
   private slideTimeoutId!: NodeJS.Timeout | null;
   private isSlideShowActive = false;
   private slideStartTimestamp = 0;
 
-  get mySlides(): Slide[] {
-    return this.slides();
-  }
   private rafId: number | null = null;
 
   constructor(
@@ -78,31 +76,22 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isPlatformReady()) return;
 
-    if (!this.mySlides?.length) {
-      // console.warn('[Carousel] No slides to show');
-      return;
-    }
+    // We no longer start the slideshow here because slides might not be ready yet.
+    // The setter of @Input() slides will handle initialization as soon as the data arrives.
 
-    requestAnimationFrame(() => {
-      if (
-        this.platformService.isVisible(this.carouselSectionRef.nativeElement)
-      ) {
-        this.startSlideShow();
-      }
-    });
-
+    // Subscribe to scroll events to control autoplay visibility
     this.scrollEventSub = this.eventService.scrollEvent$.subscribe(() => {
       const isVisible = this.platformService.isVisible(
         this.carouselSectionRef.nativeElement
       );
-      if (!isVisible) {
-        if (this.isSlideShowActive) {
-          this.stopSlideShow();
-        }
-      } else {
-        if (!this.isSlideShowActive) {
-          this.startSlideShow();
-        }
+      if (!isVisible && this.isSlideShowActive) {
+        this.stopSlideShow();
+      } else if (
+        isVisible &&
+        !this.isSlideShowActive &&
+        this.slides.length > 0
+      ) {
+        this.startSlideShow();
       }
     });
   }
@@ -111,6 +100,35 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
     this.slideSub?.unsubscribe();
     this.scrollEventSub?.unsubscribe();
     this.stopSlideShow();
+  }
+
+  /**
+   * Input setter for slides.
+   * As soon as the parent sets a valid non-empty list of slides,
+   * we initialize the activeSlides array and start the slideshow.
+   */
+  @Input()
+  set slides(slides: Slide[]) {
+    this._slides = slides;
+
+    // Ensure slideshow starts only once and only if slides are available
+    if (
+      this.platformService.isPlatformReady() &&
+      slides?.length > 0 &&
+      !this.isSlideShowActive
+    ) {
+      this.activeSlides = slides.map((s, i) => ({
+        ...s,
+        visible: i === 0, // Only the first slide is visible initially
+      }));
+      this.currentSlideIndex = 0;
+      this.cdr.detectChanges(); // Force refresh if binding happens after view init
+      this.startSlideShow();
+    }
+  }
+
+  get slides(): Slide[] {
+    return this._slides;
   }
 
   /** Public slide controls */
@@ -131,10 +149,10 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
 
   /** Slide management */
   private startSlideShow(): void {
-    if (this.isSlideShowActive && this.mySlides?.length > 0) return;
+    if (this.isSlideShowActive && this._slides?.length > 0) return;
 
     this.isSlideShowActive = true;
-    this.setActiveSlides([{ ...this.mySlides[0], visible: true }]);
+    this.setActiveSlides([{ ...this._slides[0], visible: true }]);
     this.currentSlideIndex = 0;
 
     this.startProgressBar(this.getCurrentSlideDuration());
@@ -159,7 +177,7 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
     this.disableCurrentSlide();
 
     // Show next slide immediately for progress/timing sync
-    this.enabledSlide({ ...this.mySlides[nextIndex], visible: true });
+    this.enabledSlide({ ...this._slides[nextIndex], visible: true });
     this.currentSlideIndex = nextIndex;
 
     // Delay pop only for visual fade-out effect (optional)
@@ -170,7 +188,7 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
 
   private getCurrentSlideDuration(): number {
     return (
-      this.mySlides[this.currentSlideIndex].duration ?? this.intervalValue()
+      this._slides[this.currentSlideIndex].duration ?? this.intervalValue()
     );
   }
 
@@ -230,7 +248,7 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
   }
 
   private getNextSlideIndex(direction: 1 | -1): number {
-    const total = this.mySlides.length;
+    const total = this._slides.length;
     const nextIndex = (this.currentSlideIndex + direction + total) % total;
     return nextIndex;
   }

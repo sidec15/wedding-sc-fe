@@ -34,7 +34,7 @@ import {
 })
 export class MiracleComponent implements AfterViewInit, OnDestroy {
   /** Duration (in ms) each slide remains visible */
-  private static readonly DURATION = 15000;
+  private static readonly DURATION = 3600000;
 
   /** Indicates if the platform is ready (browser rendering available) */
   isPlatformReady = false;

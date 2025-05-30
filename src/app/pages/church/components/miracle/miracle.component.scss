@@ -59,7 +59,10 @@
 
         p {
           font-size: 1.2rem !important;
-          padding: 0 !important;
+          margin: 1rem 0 0 0 !important;
+          &.sign {
+            margin-top: 0.5rem !important;
+          }
           &.active {
             display: block; // Show text paragraphs when active
           }
