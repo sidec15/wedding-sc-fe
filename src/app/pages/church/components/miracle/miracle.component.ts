@@ -34,7 +34,9 @@ import {
 })
 export class MiracleComponent implements AfterViewInit, OnDestroy {
   /** Duration (in ms) each slide remains visible */
-  private static readonly DURATION = 3600000;
+  private static readonly DURATION = 25000;
+  private static readonly IMAGE_DESKTOP = '/images/church/miracle/miracle-02.jpg';
+  private static readonly IMAGE_MOBILE = '/images/church/miracle/miracle-09.jpg';
 
   /** Indicates if the platform is ready (browser rendering available) */
   isPlatformReady = false;
@@ -75,10 +77,10 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
 
     if (!this._isMobile) {
       // Desktop: use static image
-      this.imageSrc = '/images/church/miracle/miracle-01.jpg';
+      this.imageSrc = MiracleComponent.IMAGE_DESKTOP;
     } else {
       // Mobile: use mobile-optimized image
-      this.imageSrc = '/images/church/miracle/miracle-09.jpg';
+      this.imageSrc = MiracleComponent.IMAGE_MOBILE;
 
       /**
        * TemplateRefs in @ViewChildren inside *ngIf are only available *after* view stabilization.

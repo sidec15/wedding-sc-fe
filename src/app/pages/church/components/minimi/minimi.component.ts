@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class MinimiComponent {
 
   /** Duration for fade-out animation in milliseconds */
-  private static readonly DURATION = 30000;
+  private static readonly DURATION = 25000;
 
   slides: Slide[] = [
     {

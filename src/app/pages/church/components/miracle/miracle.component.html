@@ -7,8 +7,8 @@
     <app-parallax-image
       [src]="imageSrc"
       [speedFactor]="0.15"
-      [containerHeight]="'80lvh'"
-      [imageHeight]="'100lvh'"
+      [containerHeight]="isMobile ? '80lvh' : '100lvh'"
+      [imageHeight]="isMobile ? '100lvh' : '120lvh'"
     ></app-parallax-image>
 
     <div class="miracle-text" #miracleText>
