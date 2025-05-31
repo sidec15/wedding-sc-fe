@@ -12,11 +12,9 @@ import { StorageService } from './services/storage.service';
 import { NgClass, NgIf, NgStyle } from '@angular/common';
 import { Theme } from './models/theme';
 import { PlatformService } from './services/platform.service';
-import { EventService, MenuEvent, ScrollEvent } from './services/event.service';
+import { EventService, MenuEvent } from './services/event.service';
 import { Subscription } from 'rxjs';
 import { ScrollManagerService } from './services/scroll-manager.service';
-import { ResizeManager } from './services/resize-manager.service';
-import { ViewportHeightService } from './services/viewport.service';
 import { HeaderService } from './services/header.service';
 import { MenuService } from './services/menu.service';
 
