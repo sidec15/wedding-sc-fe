@@ -31,6 +31,8 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
 
   private minScale = 0.2;
   private maxScale = 1.2;
+  private currentScale: number = this.minScale;
+  private readonly scaleStep: number = 0.02;
 
   constructor(
     private platformService: PlatformService,
@@ -41,7 +43,7 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
     if (this.platformService.isMobile()) {
-      this.minScale = 0.4; // Adjust min scale for mobile
+      this.minScale = 0.6; // Adjust min scale for mobile
       this.maxScale = 1.0; // Adjust max scale for mobile
     }
 
@@ -62,13 +64,39 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
     return this.platformService.isMobile();
   }
 
-  private animate(e: ScrollEvent) {
+  private animate(e: ScrollEvent){
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
-    if(this.isMobile){
-      this.minScale = 0.4; // Adjust min scale for mobile
-      this.maxScale = 1.0; // Adjust max scale for mobile
+    this.animateImage(e);
+    this.animateText();
+  }
+
+  private animateImage(e: ScrollEvent) {
+
+    const imageContainerEl = this.imageContainerRef.nativeElement;
+
+    const isVisible = this.platformService.isVisible(imageContainerEl);
+    if (isVisible) {
+      // Decide whether to increase or decrease scale
+      if (e.scrollDirection() === 'down') {
+        // Scroll Down → Scale Up
+        this.currentScale = Math.min(
+          this.currentScale + this.scaleStep,
+          this.maxScale
+        );
+      } else {
+        // Above viewport → Scale Down
+        this.currentScale = Math.max(
+          this.currentScale - this.scaleStep,
+          this.minScale
+        );
+      }
     }
+
+    imageContainerEl.style.transform = `scale(${this.currentScale})`;
+  }
+
+  private animateText() {
 
     // Animate the description
     const descriptionLeftEl = this.descriptionLeftRef.nativeElement;
@@ -95,10 +123,5 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
     descriptionLeftEl.style.opacity = `${descriptionOpacity}`;
     descriptionRightEl.style.opacity = `${descriptionOpacity}`;
 
-    // Animate the angel images based on the same visibility ratio
-    const imageContainerEl = this.imageContainerRef.nativeElement;
-
-    const scaleAmount = minScale + visibleRatio * (maxScale - minScale); // Scale from min to max scale
-    imageContainerEl.style.transform = `scale(${scaleAmount})`;
   }
 }

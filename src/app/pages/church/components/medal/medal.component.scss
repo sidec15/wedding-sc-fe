@@ -47,8 +47,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      // margin: 0 0.5rem 0 0.5rem;
-      transform: scale(0.2); // Start with a smaller size (tiny)
+      transform: scale(0.3); // Start with a smaller size (tiny)
       transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
       will-change: transform;
       margin-top: 1rem;
@@ -72,7 +71,7 @@
       .horizontal-scroll-bg {
         .scroll-wrapper {
           .text-row {
-            font-size: 5rem !important; // Adjust font size for smaller screens
+            font-size: 4rem !important; // Adjust font size for smaller screens
           }
         }
       }
