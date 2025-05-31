@@ -32,7 +32,8 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
   private minScale = 0.2;
   private maxScale = 1.2;
   private currentScale: number = this.minScale;
-  private readonly scaleStep: number = 0.02;
+  private scaleStep: number = 0.03;
+  private shoulAnimateImage: boolean = true;
 
   constructor(
     private platformService: PlatformService,
@@ -43,7 +44,7 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
     if (this.platformService.isMobile()) {
-      this.minScale = 0.6; // Adjust min scale for mobile
+      // this.minScale = 0.6; // Adjust min scale for mobile
       this.maxScale = 1.0; // Adjust max scale for mobile
     }
 
@@ -64,15 +65,26 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
     return this.platformService.isMobile();
   }
 
-  private animate(e: ScrollEvent){
+  private animate(e: ScrollEvent) {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
-    this.animateImage(e);
-    this.animateText();
+    const imagePositionY = this.platformService.positionYInViewport(
+      this.imageContainerRef.nativeElement
+    );
+
+    if (imagePositionY === 'above') {
+      this.shoulAnimateImage = false; // Stop animating if the image is above the viewport
+    }
+    if (imagePositionY === 'below') {
+      this.resetImage(); // Reset image scale if it is below the viewport
+      this.shoulAnimateImage = true; // Resume animating if the image is visible
+    }
+
+    if (this.shoulAnimateImage) this.animateImage(e);
+    if (!this.isMobile) this.animateText();
   }
 
   private animateImage(e: ScrollEvent) {
-
     const imageContainerEl = this.imageContainerRef.nativeElement;
 
     const isVisible = this.platformService.isVisible(imageContainerEl);
@@ -84,20 +96,13 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
           this.currentScale + this.scaleStep,
           this.maxScale
         );
-      } else {
-        // Above viewport → Scale Down
-        this.currentScale = Math.max(
-          this.currentScale - this.scaleStep,
-          this.minScale
-        );
+        console.log("Scaling Up:", this.currentScale);
+        imageContainerEl.style.transform = `scale(${this.currentScale})`;
       }
     }
-
-    imageContainerEl.style.transform = `scale(${this.currentScale})`;
   }
 
   private animateText() {
-
     // Animate the description
     const descriptionLeftEl = this.descriptionLeftRef.nativeElement;
     const descriptionRightEl = this.descriptionRightRef.nativeElement;
@@ -122,6 +127,13 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
 
     descriptionLeftEl.style.opacity = `${descriptionOpacity}`;
     descriptionRightEl.style.opacity = `${descriptionOpacity}`;
+  }
 
+  private resetImage() {
+    if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
+
+    this.currentScale = this.minScale; // Reset scale to minimum
+    const imageContainerEl = this.imageContainerRef.nativeElement;
+    imageContainerEl.style.transform = `scale(${this.currentScale})`; // Apply reset scale
   }
 }

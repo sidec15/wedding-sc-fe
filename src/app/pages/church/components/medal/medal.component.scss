@@ -47,8 +47,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      transform: scale(0.3); // Start with a smaller size (tiny)
-      transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+      // transform: scale(0.3);
+      // transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: transform 1s linear;
       will-change: transform;
       margin-top: 1rem;
       z-index: 1;
@@ -72,6 +73,9 @@
         .scroll-wrapper {
           .text-row {
             font-size: 4rem !important; // Adjust font size for smaller screens
+            &.up {
+              font-size: 3.5rem !important; // Adjust font size for smaller screens
+            }
           }
         }
       }
@@ -83,9 +87,9 @@
 
       .medal-description-left,
       .medal-description-right {
-        width: 100%;
-        padding: 0;
-        opacity: 1; // Ensure visibility on smaller screens
+        width: 100% !important;
+        padding: 0 !important;
+        opacity: 1 !important;
       }
 
       .medal-image {

@@ -54,6 +54,22 @@ export class PlatformService {
     return isVisible;
   }
 
+  positionYInViewport(
+    element: HTMLElement
+  ): 'visible' | 'above' | 'below' {
+    if (!this.isBrowser()) return 'visible'; // Ensure this runs only in the browser
+    const rect = element.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    if (rect.bottom < 0) {
+      return 'above'; // Element is above the viewport
+    } else if (rect.top > windowHeight) {
+      return 'below'; // Element is below the viewport
+    } else {
+      return 'visible'; // Element is within the viewport
+    }
+  }
+
   /**
    * Returns the current platform type (Mobile or Desktop) based on window width.
    */
