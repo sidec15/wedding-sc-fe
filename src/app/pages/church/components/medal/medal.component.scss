@@ -68,6 +68,16 @@
   .medal-section {
     padding: 0 1rem 1rem 1rem;
 
+    ::ng-deep app-horizontal-moving-background {
+      .horizontal-scroll-bg {
+        .scroll-wrapper {
+          .text-row {
+            font-size: 5rem !important; // Adjust font size for smaller screens
+          }
+        }
+      }
+    }
+
     .medal-container {
       flex-direction: column;
       align-items: center;

@@ -58,8 +58,17 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  get isMobile(): boolean {
+    return this.platformService.isMobile();
+  }
+
   private animate(e: ScrollEvent) {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
+
+    if(this.isMobile){
+      this.minScale = 0.4; // Adjust min scale for mobile
+      this.maxScale = 1.0; // Adjust max scale for mobile
+    }
 
     // Animate the description
     const descriptionLeftEl = this.descriptionLeftRef.nativeElement;
@@ -67,7 +76,6 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
     const descriptionLeftRect = descriptionLeftEl.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Progress from 0 (bottom of screen) to 1 (center)
     const visibleRatio =
       1 -
       Math.min(
