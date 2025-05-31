@@ -8,7 +8,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
 import { EventService, ScrollEvent } from '../../../../services/event.service';
-import { Subscription } from 'rxjs';
+import { Subscription, throttleTime } from 'rxjs';
 import { HorizontalMovingBackgroundComponent } from '../../../../components/horizontal-moving-background/horizontal-moving-background.component';
 
 @Component({
@@ -29,6 +29,9 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
   @ViewChild('imageContainer', { static: false })
   imageContainerRef!: ElementRef<HTMLElement>;
 
+  private minScale = 0.2;
+  private maxScale = 1.2;
+
   constructor(
     private platformService: PlatformService,
     private eventService: EventService
@@ -37,11 +40,16 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
-    this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
-      (e: ScrollEvent) => {
+    if (this.platformService.isMobile()) {
+      this.minScale = 0.4; // Adjust min scale for mobile
+      this.maxScale = 1.0; // Adjust max scale for mobile
+    }
+
+    this.scrollEventSubscription = this.eventService.scrollEvent$
+      .pipe(throttleTime(16)) // Throttle to ~60 FPS
+      .subscribe((e: ScrollEvent) => {
         this.animate(e);
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {
@@ -52,9 +60,6 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
 
   private animate(e: ScrollEvent) {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
-
-    const minScale = 0.2;
-    const maxScale = 1.2; // Maximum scale for the angels
 
     // Animate the description
     const descriptionLeftEl = this.descriptionLeftRef.nativeElement;
@@ -74,6 +79,8 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
       );
 
     // Clamp + ease for description
+    const minScale = this.minScale;
+    const maxScale = this.maxScale;
     minScale + visibleRatio * (maxScale - minScale); // Scale from min to max scale
     const descriptionOpacity = visibleRatio;
 

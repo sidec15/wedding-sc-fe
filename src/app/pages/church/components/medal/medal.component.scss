@@ -48,7 +48,7 @@
       justify-content: center;
       align-items: center;
       // margin: 0 0.5rem 0 0.5rem;
-      transform: scale(0.3); // Start with a smaller size (tiny)
+      transform: scale(0.2); // Start with a smaller size (tiny)
       transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
       will-change: transform;
       margin-top: 1rem;
@@ -59,6 +59,28 @@
         height: auto;
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(var(--box-shadow-heavy));
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .medal-section {
+    padding: 0 1rem 1rem 1rem;
+
+    .medal-container {
+      flex-direction: column;
+      align-items: center;
+
+      .medal-description-left,
+      .medal-description-right {
+        width: 100%;
+        padding: 0;
+        opacity: 1; // Ensure visibility on smaller screens
+      }
+
+      .medal-image {
+        margin-top: 1rem;
       }
     }
   }

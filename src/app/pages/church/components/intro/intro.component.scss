@@ -10,7 +10,7 @@ section {
 .church-hero {
   position: relative; // Required for pseudo-elements to position correctly
   width: 100%;
-  @include vh(100); // Full viewport height
+  height: 100lvh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -36,7 +36,7 @@ section {
     text-align: center;
     padding: 1rem;
     background: rgba(var(--text-mask), 0.8);
-    backdrop-filter: var(--backdrop-filter);
+    backdrop-filter: blur(8px);
     transition: opacity 0.2s ease-out;
     will-change: opacity, transform;
 
@@ -55,7 +55,6 @@ section {
 
     .hero-overlay {
       width: 100%;
-      padding: 0.5rem;
       font-size: 1rem;
 
       h1 {
