@@ -1,11 +1,13 @@
 <div class="carousel" #carousel>
   <ng-container *ngFor="let slide of activeSlides">
-    <div
-      class="slide"
-      [class.visible]="slide.visible"
-      [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
-    >
-      <ng-container *ngTemplateOutlet="slide.elementRef"></ng-container>
+    <div class="slide-container">
+      <div
+        class="slide"
+        [class.visible]="slide.visible"
+        [@fadeSlide]="slide.visible ? 'visible' : 'hidden'"
+      >
+        <ng-container *ngTemplateOutlet="slide.elementRef"></ng-container>
+      </div>
     </div>
   </ng-container>
 

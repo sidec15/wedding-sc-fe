@@ -13,20 +13,29 @@
   height: auto;
   overflow: hidden;
 
-  .slide {
+  .slide-container {
     width: 100%;
-    display: none;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
     justify-content: center;
     align-items: center;
-    opacity: 0;
     transition: opacity 1s ease-in-out;
     padding: 1rem;
     text-align: center;
-    min-height: 150px;
 
     &.visible {
-      display: flex;
-      opacity: 1;
+      pointer-events: auto;
+      position: relative;
+    }
+    &.hidden {
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   }
 
