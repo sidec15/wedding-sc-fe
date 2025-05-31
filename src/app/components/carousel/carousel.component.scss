@@ -205,6 +205,11 @@
         padding-bottom: 1rem; // Remove reserved space when expanded
         border-top-left-radius: 0;
         border-top-right-radius: 0;
+        background: rgba(var(--text-mask), 0.85);
+        backdrop-filter: blur(8px);
+        &::after {
+          content: none;
+        }
       }
 
       &.hidden {
