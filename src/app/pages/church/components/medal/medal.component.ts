@@ -20,6 +20,9 @@ import { HorizontalMovingBackgroundComponent } from '../../../../components/hori
 export class MedalComponent implements AfterViewInit, OnDestroy {
   private scrollEventSubscription!: Subscription;
 
+  @ViewChild('medalContainer', { static: false })
+  medalContainerRef!: ElementRef<HTMLElement>;
+
   @ViewChild('descriptionLeft', { static: false })
   descriptionLeftRef!: ElementRef<HTMLElement>;
 
@@ -31,9 +34,6 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
 
   private minScale = 0.2;
   private maxScale = 1.2;
-  private currentScale: number = this.minScale;
-  private scaleStep: number = 0.03;
-  private shoulAnimateImage: boolean = true;
 
   constructor(
     private platformService: PlatformService,
@@ -66,74 +66,39 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
   }
 
   private animate(e: ScrollEvent) {
-    if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
-
-    const imagePositionY = this.platformService.positionYInViewport(
-      this.imageContainerRef.nativeElement
-    );
-
-    if (imagePositionY === 'above') {
-      this.shoulAnimateImage = false; // Stop animating if the image is above the viewport
-    }
-    if (imagePositionY === 'below') {
-      this.resetImage(); // Reset image scale if it is below the viewport
-      this.shoulAnimateImage = true; // Resume animating if the image is visible
-    }
-
-    if (this.shoulAnimateImage) this.animateImage(e);
-    if (!this.isMobile) this.animateText();
-  }
-
-  private animateImage(e: ScrollEvent) {
     const imageContainerEl = this.imageContainerRef.nativeElement;
-
-    const isVisible = this.platformService.isVisible(imageContainerEl);
-    if (isVisible) {
-      // Decide whether to increase or decrease scale
-      if (e.scrollDirection() === 'down') {
-        // Scroll Down → Scale Up
-        this.currentScale = Math.min(
-          this.currentScale + this.scaleStep,
-          this.maxScale
-        );
-        console.log("Scaling Up:", this.currentScale);
-        imageContainerEl.style.transform = `scale(${this.currentScale})`;
-      }
-    }
-  }
-
-  private animateText() {
-    // Animate the description
     const descriptionLeftEl = this.descriptionLeftRef.nativeElement;
     const descriptionRightEl = this.descriptionRightRef.nativeElement;
-    const descriptionLeftRect = descriptionLeftEl.getBoundingClientRect();
+
+    let domRect: DOMRect | null = null;
+    if (this.isMobile) {
+      domRect = imageContainerEl.getBoundingClientRect();
+    } else {
+      domRect = descriptionLeftEl.getBoundingClientRect();
+    }
+
     const windowHeight = window.innerHeight;
 
-    const visibleRatio =
+    let visibleRatio =
       1 -
       Math.min(
-        Math.max(
-          (descriptionLeftRect.top - windowHeight * 0.3) / (windowHeight * 0.8),
-          0
-        ),
+        Math.max((domRect.top - windowHeight * 0.3) / (windowHeight * 0.8), 0),
         1
       );
 
-    // Clamp + ease for description
+    if (!this.isMobile) {
+      const descriptionOpacity = visibleRatio;
+
+      descriptionLeftEl.style.opacity = `${descriptionOpacity}`;
+      descriptionRightEl.style.opacity = `${descriptionOpacity}`;
+    } else {
+      visibleRatio = Math.min(visibleRatio * 1.5, 1); // 1.5 is the speed factor — tweak as needed
+    }
+
     const minScale = this.minScale;
     const maxScale = this.maxScale;
-    minScale + visibleRatio * (maxScale - minScale); // Scale from min to max scale
-    const descriptionOpacity = visibleRatio;
+    const imageScale = minScale + visibleRatio * (maxScale - minScale); // Scale from min to max scale
 
-    descriptionLeftEl.style.opacity = `${descriptionOpacity}`;
-    descriptionRightEl.style.opacity = `${descriptionOpacity}`;
-  }
-
-  private resetImage() {
-    if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
-
-    this.currentScale = this.minScale; // Reset scale to minimum
-    const imageContainerEl = this.imageContainerRef.nativeElement;
-    imageContainerEl.style.transform = `scale(${this.currentScale})`; // Apply reset scale
+    imageContainerEl.style.transform = `scale(${imageScale})`;
   }
 }

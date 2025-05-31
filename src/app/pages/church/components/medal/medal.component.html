@@ -4,7 +4,7 @@
     [downText]="'church.medal.title2'"
     [upOffset]="'-40%'"
     [downOffset]="'80%'"
-    [translateYValue]="isMobile ? '65lvh' : '50%'"
+    [translateYValue]="isMobile ? '55lvh' : '50%'"
     [zIndex]="1"
     [speedFactor]="isMobile ? 0.4 : 0.8"
     [maxOpacity]="isMobile ? 0.5 : 0.4"
@@ -12,7 +12,7 @@
 
   <h2 class="medal-subtitle">{{ "church.medal.subtitle" | translate }}</h2>
 
-  <div class="medal-container">
+  <div class="medal-container" #medalContainer>
     <div class="medal-description-left" #descriptionLeft>
       <p>{{ "church.medal.description1" | translate }}</p>
     </div>
