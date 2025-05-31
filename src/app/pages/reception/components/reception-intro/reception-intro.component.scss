@@ -1,0 +1,71 @@
+@use "../../../../../styles/variables.scss" as *;
+@use "../../../../../styles/mixins.scss" as *;
+@use "../../styles/reception-styles.scss" as reception; // Use the forwarded styles
+
+
+
+.hero {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  transition: background-image 1s ease-in-out;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(186, 186, 186, 0.2),
+      rgba(50, 50, 50, 0.6)
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+
+    .title {
+      font-size: 3rem;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .subtitle {
+      width: 70%;
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      animation: fadeInUp 1s 0.4s ease-out forwards;
+      opacity: 0;
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .overlay {
+    .title {
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+    }
+  }
+}
