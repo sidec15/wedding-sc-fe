@@ -1,45 +1,24 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { StorageService } from './services/storage.service';
-import { NgClass, NgIf, NgStyle } from '@angular/common';
-import { Theme } from './models/theme';
-import { PlatformService } from './services/platform.service';
-import { EventService, MenuEvent } from './services/event.service';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { Router } from 'express';
 import { Subscription } from 'rxjs';
-import { ScrollManagerService } from './services/scroll-manager.service';
-import { HeaderService } from './services/header.service';
-import { MenuService } from './services/menu.service';
-import { HeaderComponent } from './components/header/header.component';
+import { Theme } from '../../models/theme';
+import { EventService, MenuEvent } from '../../services/event.service';
+import { HeaderService } from '../../services/header.service';
+import { MenuService } from '../../services/menu.service';
+import { PlatformService } from '../../services/platform.service';
+import { ScrollManagerService } from '../../services/scroll-manager.service';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
-  selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    TranslateModule,
-    NgIf,
-    NgClass,
-    NgStyle,
-    HeaderComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-header',
+  imports: [],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HeaderComponent {
   Theme = Theme; // expose enum to template if needed
 
-  title = 'wedding-sc-fe';
-
-  currentYear = new Date().getFullYear();
-  currentLanguage: string;
   currentTheme: Theme = Theme.Light;
   isMobile = false;
 
@@ -55,32 +34,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private translateService: TranslateService,
-    private storageService: StorageService,
-    public router: Router,
     private platformService: PlatformService,
     private eventService: EventService,
-    private scrollManager: ScrollManagerService,
     private headerService: HeaderService,
     private menuService: MenuService
-  ) {
-    const savedLang = this.storageService.get('language');
-    const browserLang = translateService.getBrowserLang();
-
-    this.currentLanguage =
-      savedLang ?? (browserLang?.match(/en|it/) ? browserLang : 'it');
-
-    translateService.setDefaultLang('it');
-    translateService.use(this.currentLanguage);
-  }
-
-  ngOnInit(): void {
-    this.isMobile = this.platformService.isMobile();
-    const savedTheme = this.storageService.get('theme') as Theme | null;
-    this.currentTheme = savedTheme ?? Theme.Light;
-    this.applyTheme(this.currentTheme);
-
-    this.resetScroll(); // Reset scroll position on app load
-  }
+  ) {}
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
