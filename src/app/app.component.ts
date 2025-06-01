@@ -39,19 +39,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'wedding-sc-fe';
 
   currentYear = new Date().getFullYear();
-  currentLanguage: string;
-  currentTheme: Theme = Theme.Light;
-  isMobile = false;
-
-  languageDropdownOpen = false;
-  themeDropdownOpen = false;
-
-  private menuSub!: Subscription;
-
-  @ViewChild('languageDropdown', { static: false })
-  languageDropdownRef!: ElementRef;
-  @ViewChild('themeDropdown', { static: false }) themeDropdownRef!: ElementRef;
-  @ViewChild('navLinks', { static: false }) navRef!: ElementRef<HTMLElement>;
 
   constructor(
     private translateService: TranslateService,
@@ -60,7 +47,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private platformService: PlatformService,
     private eventService: EventService,
     private scrollManager: ScrollManagerService,
-    private headerService: HeaderService,
     private menuService: MenuService
   ) {
     const savedLang = this.storageService.get('language');
@@ -91,8 +77,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.resizeManager.init(); // Initialize resize manager
     // this.viewportHeightService.init(); // Initialize viewport height service
 
-    this.headerService.init(); // Initialize header service
-
     this.menuSub = this.eventService.menuEvent$.subscribe((event) => {
       this.onMenuEvent(event); // Handle menu events
     });
@@ -101,7 +85,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (!this.platformService.isBrowser()) return;
     this.scrollManager.destroy(); // Destroy scroll manager
-    this.headerService.destroy(); // Destroy header service
     this.menuSub?.unsubscribe(); // Unsubscribe from menu events
   }
 
@@ -135,10 +118,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get isMenuOpen(): boolean {
     return this.menuService.isMenuOpened(); // Check if the menu is open using MenuService
-  }
-
-  get isHeaderHidden(): boolean {
-    return this.headerService.isHeaderHidden; // Get header visibility state from HeaderService
   }
 
   toggleLanguageDropdown(): void {

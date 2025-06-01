@@ -9,6 +9,7 @@ import { MenuService } from '../../services/menu.service';
 import { PlatformService } from '../../services/platform.service';
 import { ScrollManagerService } from '../../services/scroll-manager.service';
 import { StorageService } from '../../services/storage.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -19,9 +20,9 @@ import { StorageService } from '../../services/storage.service';
 export class HeaderComponent {
   Theme = Theme; // expose enum to template if needed
 
-  currentTheme: Theme = Theme.Light;
   isMobile = false;
 
+  currentLanguage: string;
   languageDropdownOpen = false;
   themeDropdownOpen = false;
 
@@ -33,21 +34,23 @@ export class HeaderComponent {
   @ViewChild('navLinks', { static: false }) navRef!: ElementRef<HTMLElement>;
 
   constructor(
-    private translateService: TranslateService,
     private platformService: PlatformService,
     private eventService: EventService,
     private headerService: HeaderService,
-    private menuService: MenuService
-  ) {}
+    private menuService: MenuService,
+    private themeService: ThemeService,
+    private translateService: TranslateService,
+    private storageService: StorageService
+  ) {
+    const savedLang = this.storageService.get('language');
+    const browserLang = translateService.getBrowserLang();
+
+    this.currentLanguage =
+      savedLang ?? (browserLang?.match(/en|it/) ? browserLang : 'it');
+  }
 
   ngAfterViewInit(): void {
-    if (!this.platformService.isBrowser()) return;
-
-    this.scrollManager.init(); // Initialize scroll manager
-    // for the moment don't use the resize manager and viewport height service because modifying the viewport height from javascript
-    // can cause shift probles on mobile devices. Just use lvh
-    // this.resizeManager.init(); // Initialize resize manager
-    // this.viewportHeightService.init(); // Initialize viewport height service
+    if (!this.platformService.isPlatformReady()) return;
 
     this.headerService.init(); // Initialize header service
 
@@ -57,35 +60,12 @@ export class HeaderComponent {
   }
 
   ngOnDestroy(): void {
-    if (!this.platformService.isBrowser()) return;
-    this.scrollManager.destroy(); // Destroy scroll manager
-    this.headerService.destroy(); // Destroy header service
     this.menuSub?.unsubscribe(); // Unsubscribe from menu events
-  }
-
-  private resetScroll() {
-    if (!this.platformService.isBrowser()) return;
-
-    // Prevent browser from restoring scroll position
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-
-    // Temporarily disable smooth scroll for instant scroll-to-top
-    document.documentElement.style.scrollBehavior = 'auto';
-    document.body.style.scrollBehavior = 'auto';
-
-    window.scrollTo(0, 0); // Force scroll to top
-
-    // Restore smooth scrolling
-    setTimeout(() => {
-      document.documentElement.style.scrollBehavior = '';
-      document.body.style.scrollBehavior = '';
-    }, 100);
+    this.headerService.destroy(); // Clean up header service
   }
 
   get navBackground(): string {
-    if (this.currentTheme === Theme.Dark) {
+    if (this.themeService.getCurrentTheme() === Theme.Dark) {
       return 'url("/images/mobile-menu/bg-02.png")';
     }
     return 'url("/images/mobile-menu/bg-01.png")';
@@ -99,6 +79,10 @@ export class HeaderComponent {
     return this.headerService.isHeaderHidden; // Get header visibility state from HeaderService
   }
 
+  get currentTheme(): Theme {
+    return this.themeService.getCurrentTheme(); // Get current theme from ThemeService
+  }
+
   toggleLanguageDropdown(): void {
     this.languageDropdownOpen = !this.languageDropdownOpen;
   }
@@ -107,7 +91,7 @@ export class HeaderComponent {
     this.currentLanguage = lang;
     this.languageDropdownOpen = false; // Close the dropdown
     this.translateService.use(lang);
-    localStorage.setItem('language', lang);
+    this.storageService.set('language', lang);
   }
 
   toggleThemeDropdown(): void {
@@ -115,7 +99,7 @@ export class HeaderComponent {
   }
 
   selectTheme(theme: Theme): void {
-    this.currentTheme = theme;
+    this.themeService.setCurrentTheme(theme); // Update theme in ThemeService
     this.themeDropdownOpen = false;
     this.storageService.set('theme', theme);
     this.applyTheme(theme);
