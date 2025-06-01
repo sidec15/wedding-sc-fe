@@ -18,8 +18,8 @@ import { ParallaxImageComponent } from '../../../../components/parallax-image/pa
   templateUrl: './intro.component.html',
   styleUrls: ['./intro.component.scss'],
 })
-export class IntroComponent implements AfterViewInit, OnInit, OnDestroy {
-  private scrollEventSubscription!: Subscription;
+export class IntroComponent implements AfterViewInit, OnDestroy {
+  private scrollSub!: Subscription;
   private heroHeight = 300; // fallback value
 
   @ViewChild('heroOverlay', { static: false })
@@ -33,30 +33,25 @@ export class IntroComponent implements AfterViewInit, OnInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
-    if (!this.platformService.isBrowser()) return;
+    if (!this.platformService.isPlatformReady()) return;
     const heroSection = this.heroSectionRef?.nativeElement;
     if (heroSection) {
       this.heroHeight = heroSection.offsetHeight;
     }
-  }
-
-  ngOnInit(): void {
-    if (!this.platformService.isBrowser()) return;
 
     // Subscribe to scroll events
-    this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
+    this.scrollSub = this.eventService.scrollEvent$.subscribe(
       (scrollEvent) => {
         if (this.heroOverlayRef) {
           this.animateHero(scrollEvent.scrollY);
         }
       }
     );
-
   }
 
   ngOnDestroy(): void {
     if (this.platformService.isBrowser()) {
-      this.scrollEventSubscription?.unsubscribe();
+      this.scrollSub?.unsubscribe();
     }
   }
 

@@ -1,6 +1,18 @@
-<div class="hero" [ngStyle]="{ 'background-image': imageUrl }">
+<div class="hero" #heroSection>
+  <app-parallax-image
+    src='/images/reception/intro/intro-01.png'
+    [speedFactor]="0.5"
+    [containerHeight]="'100lvh'"
+    [imageHeight]="'200lvh'"
+  ></app-parallax-image>
   <div class="overlay">
-    <h1 class="title">Celebrate with us</h1>
-    <p class="subtitle">Dopo la cerimonia, vi aspettiamo per festeggiare insieme il nostro giorno speciale al Park Hotel Villa Ferrata, una location elegante e immersa nella natura, a due passi da Frascati</p>
+    <div class="hero-content" #heroContent>
+      <div class="title">
+        {{ 'reception.intro.title' | translate }}
+      </div>
+      <div class="subtitle">
+        {{ 'reception.intro.subtitle' | translate }}
+      </div>
+    </div>
   </div>
 </div>

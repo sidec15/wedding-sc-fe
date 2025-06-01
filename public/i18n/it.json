@@ -113,5 +113,11 @@
         }
       }
     }
+  },
+  "reception": {
+    "intro": {
+      "title": "Festeggiamo insieme",
+      "subtitle": "Dopo la cerimonia, vi aspettiamo per continuare la serata insieme, tra buona cucina e atmosfera rilassata"
+    }
   }
 }

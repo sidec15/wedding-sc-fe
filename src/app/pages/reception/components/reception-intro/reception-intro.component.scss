@@ -2,15 +2,12 @@
 @use "../../../../../styles/mixins.scss" as *;
 @use "../../styles/reception-styles.scss" as reception; // Use the forwarded styles
 
-
-
 .hero {
-  height: 100vh;
+  height: 100lvh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
-  transition: background-image 1s ease-in-out;
 
   .overlay {
     position: absolute;
@@ -28,20 +25,35 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: white;
     padding: 0 20px;
 
-    .title {
-      font-size: 3rem;
-      animation: fadeInUp 1s ease-out forwards;
-    }
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      transition: opacity 0.2s ease-out;
+      will-change: opacity, transform;
+      width: 100%;
+      color: white;
+      z-index: 3;
+      align-items: center;
 
-    .subtitle {
-      width: 70%;
-      font-size: 1.5rem;
-      margin-top: 1rem;
-      animation: fadeInUp 1s 0.4s ease-out forwards;
-      opacity: 0;
+      .title {
+        font-size: 3rem;
+        animation: fadeInUp 1s ease-out forwards;
+      }
+
+      .subtitle {
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        animation: fadeInUp 1s 0.4s ease-out forwards;
+        opacity: 0;
+      }
     }
   }
 }
@@ -60,12 +72,14 @@
 // Responsive
 @media (max-width: 768px) {
   .overlay {
-    .title {
-      font-size: 2rem;
-    }
+    .hero-content {
+      .title {
+        font-size: 2rem;
+      }
 
-    .subtitle {
-      font-size: 1.2rem;
+      .subtitle {
+        font-size: 1.2rem;
+      }
     }
   }
 }
