@@ -10,6 +10,7 @@ import { MenuService } from './menu.service';
 export class HeaderService {
   private _isHeaderHidden = false; // Track whether the header is hidden
   private _isEnabled = true; // Track whether the header animation is enabled
+  private _fillBackground = false; // Track whether the header background is filled
 
   private readonly minDistanceToHideHeader = 1; // Minimum distance to hide the header in pixels
   private readonly minDistanceToShowHeader = 5; // Minimum distance to show the header in pixels

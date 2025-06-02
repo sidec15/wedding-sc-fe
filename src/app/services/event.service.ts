@@ -21,6 +21,11 @@ export class EventService {
   private menuEventSubject = new BehaviorSubject<MenuEvent>(new MenuEvent());
   menuEvent$ = this.menuEventSubject.asObservable();
 
+  private headerBackgroundSubject = new BehaviorSubject<HeaderBackgroundEvent>(
+    new HeaderBackgroundEvent(false)
+  );
+  headerBackgroundSubject$ = this.headerBackgroundSubject.asObservable();
+
   emitScrollEvent(scrollY: number, scrollYOffset: number): void {
     this.scrollEventSubject.next(new ScrollEvent(scrollY, scrollYOffset));
   }
@@ -35,6 +40,12 @@ export class EventService {
 
   emitMenuEvent(event: MenuEvent): void {
     this.menuEventSubject.next(event);
+  }
+
+  emitHeaderBackgroundEvent(fillBackground: boolean): void {
+    this.headerBackgroundSubject.next(
+      new HeaderBackgroundEvent(fillBackground)
+    );
   }
 }
 
@@ -68,4 +79,12 @@ export class SwipeCloseEvent {
 
 export class MenuEvent {
   status: 'openStart' | 'openEnd' | 'closeStart' | 'closeEnd' = 'openStart';
+}
+
+export class HeaderBackgroundEvent {
+  fillBackground: boolean;
+
+  constructor(fillBackground: boolean) {
+    this.fillBackground = fillBackground;
+  }
 }
