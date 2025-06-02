@@ -26,8 +26,8 @@
   }
 
   .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
+    font-size: 2rem;
+    font-weight: 1000;
     color: rgb(var(--accent));
     text-decoration: none;
   }
@@ -46,8 +46,8 @@
       a {
         color: rgb(var(--accent));
         text-decoration: none;
-        font-weight: 500;
-        font-size: 1rem;
+        font-weight: 1000;
+        font-size: 1.5rem;
         position: relative;
         cursor: pointer;
 
@@ -73,40 +73,26 @@
 
         .custom-language-selector {
           position: relative;
-          // background-color: rgb(var(--bg));
-          // border: 1px solid rgb(var(--light-gray));
           color: rgb(var(--accent));
           padding: 0.4rem 0.8rem;
-          // border-radius: 8px;
-          font-size: 0.9rem;
           cursor: pointer;
           user-select: none;
           display: flex;
           align-items: center;
-          transition: box-shadow 0.2s ease, border-color 0.2s ease;
-
-          &.open,
-          &:hover,
-          &:has(.language-options:hover) {
-            border-color: rgb(
-              var(--accent)
-            ); // Use RGB variable for accent color
-            box-shadow: 0 0 6px var(--box-shadow-medium); // Use box-shadow variable
-          }
 
           .language-options {
             position: absolute;
             top: 110%;
-            left: 50%; // 🔁 Start from the center
-            transform: translateX(-50%); // 🔁 Center horizontally
+            left: 50%;
+            transform: translateX(-50%);
             color: rgb(var(--text));
-            // background: rgb(var(--bg));
-            // border: 1px solid rgb(var(--light-gray));
-            // box-shadow: 0 4px 10px var(--box-shadow-heavy);
             border-radius: 8px;
             list-style: none;
             margin: 0;
             padding: 0;
+            background: rgb(var(--bg));
+            border: 1px solid rgb(var(--light-gray));
+            box-shadow: 0 4px 10px var(--box-shadow-heavy);
             z-index: 1000;
 
             li {
@@ -136,16 +122,10 @@
 
         .custom-theme-selector {
           position: relative;
-          background-color: rgb(var(--bg));
-          border: 1px solid rgb(var(--light-gray));
           color: rgb(var(--text));
           padding: 0.4rem 0.8rem;
-          border-radius: 8px;
-          font-size: 0.9rem;
           cursor: pointer;
           user-select: none;
-          color: rgb(var(--text));
-          transition: box-shadow 0.2s ease, border-color 0.2s ease;
           display: flex;
           align-items: center;
           gap: 0.4rem;
@@ -153,15 +133,6 @@
           i {
             font-size: 1rem;
             color: rgb(var(--accent));
-          }
-
-          &.open,
-          &:hover,
-          &:has(.theme-options:hover) {
-            border-color: rgb(
-              var(--accent)
-            ); // Use RGB variable for accent color
-            box-shadow: 0 0 6px var(--box-shadow-medium); // Use box-shadow variable
           }
 
           .theme-options {
@@ -188,7 +159,7 @@
               font-size: 0.95rem;
 
               i {
-                width: 1.5rem; // ✅ fixed width for alignment
+                width: 1.5rem;
                 text-align: center;
                 font-size: 1.1rem;
                 color: rgb(var(--accent));
