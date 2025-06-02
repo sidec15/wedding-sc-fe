@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { EventService, ScrollEvent } from './event.service';
 import { PlatformService } from './platform.service';
-import { Subscription } from 'rxjs';
+import { Subscription, throttleTime } from 'rxjs';
 import { MenuService } from './menu.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeaderService {
-
   private _isHeaderHidden = false; // Track whether the header is hidden
   private _isEnabled = true; // Track whether the header animation is enabled
 
@@ -26,11 +25,11 @@ export class HeaderService {
   init(): void {
     if (!this.platformService.isBrowser()) return;
     // Subscribe to scroll events to handle header visibility
-    this.scrollSub = this.eventService.scrollEvent$.subscribe(
-      (event: ScrollEvent) => {
+    this.scrollSub = this.eventService.scrollEvent$
+      .pipe(throttleTime(16)) // Throttle scroll events to 60 FPS
+      .subscribe((event: ScrollEvent) => {
         this.handleScrollEvent(event);
-      }
-    );
+      });
   }
 
   destroy(): void {

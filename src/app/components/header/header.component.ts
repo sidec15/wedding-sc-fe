@@ -6,14 +6,14 @@ import { EventService, MenuEvent } from '../../services/event.service';
 import { HeaderService } from '../../services/header.service';
 import { MenuService } from '../../services/menu.service';
 import { PlatformService } from '../../services/platform.service';
-import { StorageService } from '../../services/storage.service';
 import { ThemeService } from '../../services/theme.service';
 import { LanguageService } from '../../services/language.service';
 import { NgClass, NgIf, NgStyle } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [TranslateModule, NgClass, NgStyle, NgIf],
+  imports: [TranslateModule, RouterModule, NgClass, NgStyle, NgIf],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -36,7 +36,6 @@ export class HeaderComponent {
     private headerService: HeaderService,
     private menuService: MenuService,
     private themeService: ThemeService,
-    private storageService: StorageService,
     private languageService: LanguageService
   ) {}
 
@@ -111,7 +110,7 @@ export class HeaderComponent {
       nav.classList.remove('open');
       nav.classList.add('closing');
     } else if (event.status === 'closeEnd') {
-      nav?.classList.remove('closing');
+      nav.classList.remove('closing');
     }
   }
 }
