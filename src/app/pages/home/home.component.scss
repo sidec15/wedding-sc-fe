@@ -13,7 +13,28 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh; // Full viewport height
+  height: 100lvh; // Full viewport height
+
+  .countdown {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    font-family: "Courier New", monospace;
+
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .number {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+      .label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+      }
+    }
+  }
 }
 
 .wedding-announcement {
