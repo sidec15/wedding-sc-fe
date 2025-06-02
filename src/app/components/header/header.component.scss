@@ -73,11 +73,11 @@
 
         .custom-language-selector {
           position: relative;
-          background-color: rgb(var(--bg));
-          border: 1px solid rgb(var(--light-gray));
+          // background-color: rgb(var(--bg));
+          // border: 1px solid rgb(var(--light-gray));
           color: rgb(var(--accent));
           padding: 0.4rem 0.8rem;
-          border-radius: 8px;
+          // border-radius: 8px;
           font-size: 0.9rem;
           cursor: pointer;
           user-select: none;
@@ -100,9 +100,9 @@
             left: 50%; // 🔁 Start from the center
             transform: translateX(-50%); // 🔁 Center horizontally
             color: rgb(var(--text));
-            background: rgb(var(--bg));
-            border: 1px solid rgb(var(--light-gray));
-            box-shadow: 0 4px 10px var(--box-shadow-heavy);
+            // background: rgb(var(--bg));
+            // border: 1px solid rgb(var(--light-gray));
+            // box-shadow: 0 4px 10px var(--box-shadow-heavy);
             border-radius: 8px;
             list-style: none;
             margin: 0;
