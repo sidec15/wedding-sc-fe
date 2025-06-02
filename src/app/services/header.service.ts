@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { EventService, ScrollEvent } from './event.service';
+import {
+  EventService,
+  HeaderBackgroundEvent,
+  ScrollEvent,
+} from './event.service';
 import { PlatformService } from './platform.service';
 import { Subscription, throttleTime } from 'rxjs';
 import { MenuService } from './menu.service';
@@ -10,12 +14,13 @@ import { MenuService } from './menu.service';
 export class HeaderService {
   private _isHeaderHidden = false; // Track whether the header is hidden
   private _isEnabled = true; // Track whether the header animation is enabled
-  private _fillBackground = false; // Track whether the header background is filled
+  private _isHeaderFilled = false; // Track whether the header background is filled
 
   private readonly minDistanceToHideHeader = 1; // Minimum distance to hide the header in pixels
   private readonly minDistanceToShowHeader = 5; // Minimum distance to show the header in pixels
 
   private scrollSub!: Subscription;
+  private headerBgSub!: Subscription;
 
   constructor(
     private platformService: PlatformService,
@@ -31,14 +36,25 @@ export class HeaderService {
       .subscribe((event: ScrollEvent) => {
         this.handleScrollEvent(event);
       });
+
+    this.headerBgSub = this.eventService.headerBackgroundSubject$.subscribe(
+      (e: HeaderBackgroundEvent) => {
+        this._isHeaderFilled = e.fillBackground; // Update header background state
+      }
+    );
   }
 
   destroy(): void {
     this.scrollSub?.unsubscribe();
+    this.headerBgSub?.unsubscribe();
   }
 
   get isHeaderHidden(): boolean {
     return this._isHeaderHidden;
+  }
+
+  get isHeaderFilled(): boolean {
+    return this._isHeaderFilled;
   }
 
   enable(): void {

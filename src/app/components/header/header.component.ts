@@ -24,11 +24,14 @@ export class HeaderComponent {
   themeDropdownOpen = false;
 
   private menuSub!: Subscription;
+  private headerBgSub!: Subscription;
 
   @ViewChild('languageDropdown', { static: false })
   languageDropdownRef!: ElementRef;
   @ViewChild('themeDropdown', { static: false }) themeDropdownRef!: ElementRef;
   @ViewChild('navLinks', { static: false }) navRef!: ElementRef<HTMLElement>;
+
+  isHeaderFilled = false; // Track if the header background is filled
 
   constructor(
     private platformService: PlatformService,
@@ -47,10 +50,17 @@ export class HeaderComponent {
     this.menuSub = this.eventService.menuEvent$.subscribe((event) => {
       this.onMenuEvent(event); // Handle menu events
     });
+
+    this.headerBgSub = this.eventService.headerBackgroundSubject$.subscribe(
+      (e) => {
+        this.isHeaderFilled = e.fillBackground; // Update header background state
+      }
+    );
   }
 
   ngOnDestroy(): void {
     this.menuSub?.unsubscribe(); // Unsubscribe from menu events
+    this.headerBgSub?.unsubscribe(); // Unsubscribe from header background events
     this.headerService.destroy(); // Clean up header service
   }
 
