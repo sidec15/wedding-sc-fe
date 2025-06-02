@@ -19,13 +19,14 @@ import { ParallaxImageComponent } from '../../../../components/parallax-image/pa
   styleUrls: ['./intro.component.scss'],
 })
 export class IntroComponent implements AfterViewInit, OnDestroy {
-  private scrollSub!: Subscription;
   private heroHeight = 300; // fallback value
 
   @ViewChild('heroOverlay', { static: false })
   heroOverlayRef!: ElementRef<HTMLElement>;
   @ViewChild('heroSection', { static: false })
   heroSectionRef!: ElementRef<HTMLElement>;
+
+  private scrollSub!: Subscription;
 
   constructor(
     private eventService: EventService,
@@ -34,25 +35,25 @@ export class IntroComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (!this.platformService.isPlatformReady()) return;
+
+    this.eventService.emitHeaderBackgroundEvent(true); // Ensure header background is filled
+
     const heroSection = this.heroSectionRef?.nativeElement;
     if (heroSection) {
       this.heroHeight = heroSection.offsetHeight;
     }
 
     // Subscribe to scroll events
-    this.scrollSub = this.eventService.scrollEvent$.subscribe(
-      (scrollEvent) => {
-        if (this.heroOverlayRef) {
-          this.animateHero(scrollEvent.scrollY);
-        }
+    this.scrollSub = this.eventService.scrollEvent$.subscribe((scrollEvent) => {
+      if (this.heroOverlayRef) {
+        this.animateHero(scrollEvent.scrollY);
       }
-    );
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.platformService.isBrowser()) {
-      this.scrollSub?.unsubscribe();
-    }
+    this.eventService.emitHeaderBackgroundEvent(false); // Reset header background state
+    this.scrollSub?.unsubscribe();
   }
 
   private animateHero(scrollY: number) {
@@ -65,5 +66,4 @@ export class IntroComponent implements AfterViewInit, OnDestroy {
     el.style.opacity = `${opacity}`;
     el.style.transform = `translate(-50%, -50%) translateY(${translateY}px)`;
   }
-
 }
