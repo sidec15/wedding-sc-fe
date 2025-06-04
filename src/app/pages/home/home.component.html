@@ -1,6 +1,6 @@
 <!-- Desktop Countdown (in hero image) -->
-<section class="hero-image" *ngIf="!isMobile">
-  <div class="countdown">
+<section class="hero-image">
+  <div class="countdown" *ngIf="!isMobile">
     <ng-container *ngTemplateOutlet="countdownTemplate"></ng-container>
   </div>
 </section>

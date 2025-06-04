@@ -1,29 +1,26 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
-  private scrollEventSubject = new BehaviorSubject<ScrollEvent>(
-    new ScrollEvent(0, 0)
-  );
+  // the difference between Subject and BehaviorSubject is that
+  // BehaviorSubject requires an initial value and always emits the current value
+
+  private scrollEventSubject = new Subject<ScrollEvent>();
   scrollEvent$ = this.scrollEventSubject.asObservable();
 
-  private swipeCloseEventSubject = new BehaviorSubject<SwipeCloseEvent>(
-    new SwipeCloseEvent(0)
-  );
+  private swipeCloseEventSubject = new Subject<SwipeCloseEvent>();
   swipeCloseEvent$ = this.swipeCloseEventSubject.asObservable();
 
   private resizeEventSubject = new BehaviorSubject<void>(undefined);
   resizeEvent$ = this.resizeEventSubject.asObservable();
 
-  private menuEventSubject = new BehaviorSubject<MenuEvent>(new MenuEvent());
+  private menuEventSubject = new Subject<MenuEvent>();
   menuEvent$ = this.menuEventSubject.asObservable();
 
-  private headerBackgroundSubject = new BehaviorSubject<HeaderBackgroundEvent>(
-    new HeaderBackgroundEvent(false)
-  );
+  private headerBackgroundSubject = new Subject<HeaderBackgroundEvent>();
   headerBackgroundSubject$ = this.headerBackgroundSubject.asObservable();
 
   emitScrollEvent(scrollY: number, scrollYOffset: number): void {

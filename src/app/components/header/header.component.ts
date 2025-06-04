@@ -31,7 +31,7 @@ export class HeaderComponent {
   @ViewChild('themeDropdown', { static: false }) themeDropdownRef!: ElementRef;
   @ViewChild('navLinks', { static: false }) navRef!: ElementRef<HTMLElement>;
 
-  isHeaderFilled = false; // Track if the header background is filled
+  isHeaderFilled = true; // Track if the header background is filled
 
   constructor(
     private platformService: PlatformService,
@@ -53,6 +53,7 @@ export class HeaderComponent {
 
     this.headerBgSub = this.eventService.headerBackgroundSubject$.subscribe(
       (e) => {
+        console.log('Header background event:', e);
         this.isHeaderFilled = e.fillBackground; // Update header background state
       }
     );

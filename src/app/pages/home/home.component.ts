@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.eventService.emitHeaderBackgroundFillEvent(true); // Emit event to fill header background
+    // this.eventService.emitHeaderBackgroundFillEvent(true); // Emit event to fill header background
     if (this.platformService.isMobile()) {
       this.headerService.disable(); // Disable header animation on home page
     }
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.timerSub?.unsubscribe();
-    this.eventService.emitHeaderBackgroundFillEvent(false); // Emit event to reset header background
+    // this.eventService.emitHeaderBackgroundFillEvent(false); // Emit event to reset header background
     if (this.platformService.isMobile()) this.headerService.enable(); // Re-enable header animation when leaving home page
   }
 
