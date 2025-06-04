@@ -33,7 +33,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public router: Router,
     private platformService: PlatformService,
-    private eventService: EventService,
     private scrollManager: ScrollManagerService,
     private languageService: LanguageService
   ) {}

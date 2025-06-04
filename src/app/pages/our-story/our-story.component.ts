@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ParallaxCardModel } from './models/parallax-card';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { VisibilityService } from '../../services/visibility.service';
 import { StoryCardsProviderService } from './services/story-cards-provider.service';
 import { ParallaxCardComponent } from './components/parallax-card/parallax-card.component';
 import { OurStoryVisibilityService } from './services/our-story-visibility.service';
 import { GalleryComponent } from './components/gallery/gallery.component';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-parallax-showcase',
@@ -27,7 +27,7 @@ export class OurStoryComponent {
   cards: ParallaxCardModel[] = [];
 
   constructor(
-    private visibilityService: VisibilityService,
+    private eventService: EventService,
     private ourStoryVisibilityService: OurStoryVisibilityService,
     private storycardsProvider: StoryCardsProviderService
   ) {
@@ -37,7 +37,7 @@ export class OurStoryComponent {
   openGallery(index: number): void {
     const currentCard = this.storycardsProvider.getCard(index);
     if (currentCard?.type === 'card') {
-      this.visibilityService.emitRingScrollEnabled(false);
+      this.eventService.emitRingScrollEnabled(false);
       this.ourStoryVisibilityService.emitGalleryStatus({
         isOpen: true,
         currentIndex: index - 1,
@@ -46,7 +46,7 @@ export class OurStoryComponent {
   }
 
   closeGallery(): void {
-    this.visibilityService.emitRingScrollEnabled(true);
+    this.eventService.emitRingScrollEnabled(true);
     this.ourStoryVisibilityService.emitGalleryStatus({
       isOpen: false,
       currentIndex: 0,

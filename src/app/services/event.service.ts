@@ -11,6 +11,9 @@ export class EventService {
   private scrollEventSubject = new Subject<ScrollEvent>();
   scrollEvent$ = this.scrollEventSubject.asObservable();
 
+  private ringScrollEnabledSubject = new Subject<boolean>();
+  ringScrollEnabled$ = this.ringScrollEnabledSubject.asObservable();
+
   private swipeCloseEventSubject = new Subject<SwipeCloseEvent>();
   swipeCloseEvent$ = this.swipeCloseEventSubject.asObservable();
 
@@ -25,6 +28,10 @@ export class EventService {
 
   emitScrollEvent(scrollY: number, scrollYOffset: number): void {
     this.scrollEventSubject.next(new ScrollEvent(scrollY, scrollYOffset));
+  }
+
+  emitRingScrollEnabled(enabled: boolean): void {
+    this.ringScrollEnabledSubject.next(enabled);
   }
 
   emitSwipeCloseEvent(swipeXOffset: number): void {
