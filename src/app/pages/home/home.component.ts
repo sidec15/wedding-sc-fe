@@ -5,10 +5,11 @@ import { PlatformService } from '../../services/platform.service';
 import { EventService } from '../../services/event.service';
 import { Subscription, timer } from 'rxjs';
 import { DateTime } from 'luxon';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslateModule],
+  imports: [TranslateModule, NgIf, NgTemplateOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -48,6 +49,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.timerSub?.unsubscribe();
     this.eventService.emitHeaderBackgroundEvent(false); // Emit event to reset header background
     if (this.platformService.isMobile()) this.headerService.enable(); // Re-enable header animation when leaving home page
+  }
+
+  get isMobile(): boolean {
+    return this.platformService.isMobile();
   }
 
   private updateCountdown(): void {

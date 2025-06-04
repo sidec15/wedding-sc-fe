@@ -1,24 +1,11 @@
-<section class="hero-image">
+<!-- Desktop Countdown (in hero image) -->
+<section class="hero-image" *ngIf="!isMobile">
   <div class="countdown">
-    <div class="time-block">
-      <span class="number">{{ countdown.days }}</span>
-      <span class="label">{{ "home.days" | translate }}</span>
-    </div>
-    <div class="time-block">
-      <span class="number">{{ countdown.hours }}</span>
-      <span class="label">{{ "home.hours" | translate }}</span>
-    </div>
-    <div class="time-block">
-      <span class="number">{{ countdown.minutes }}</span>
-      <span class="label">{{ "home.minutes" | translate }}</span>
-    </div>
-    <div class="time-block">
-      <span class="number">{{ countdown.seconds }}</span>
-      <span class="label">{{ "home.seconds" | translate }}</span>
-    </div>
+    <ng-container *ngTemplateOutlet="countdownTemplate"></ng-container>
   </div>
 </section>
 
+<!-- Wedding content -->
 <section class="wedding-announcement">
   <div class="top-shape"></div>
 
@@ -28,7 +15,32 @@
     <p>{{ "home.description_line2" | translate }}</p>
     <p class="names">{{ "home.names" | translate }}</p>
     <p class="wedding-date">{{ "home.date" | translate }}</p>
+
+    <!-- Mobile Countdown -->
+    <div class="countdown" *ngIf="isMobile">
+      <ng-container *ngTemplateOutlet="countdownTemplate"></ng-container>
+    </div>
   </div>
 
   <div class="bottom-shape"></div>
 </section>
+
+<!-- Shared template -->
+<ng-template #countdownTemplate>
+  <div class="time-block">
+    <span class="number">{{ countdown.days }}</span>
+    <span class="label">{{ "home.days" | translate }}</span>
+  </div>
+  <div class="time-block">
+    <span class="number">{{ countdown.hours }}</span>
+    <span class="label">{{ "home.hours" | translate }}</span>
+  </div>
+  <div class="time-block">
+    <span class="number">{{ countdown.minutes }}</span>
+    <span class="label">{{ "home.minutes" | translate }}</span>
+  </div>
+  <div class="time-block">
+    <span class="number">{{ countdown.seconds }}</span>
+    <span class="label">{{ "home.seconds" | translate }}</span>
+  </div>
+</ng-template>
