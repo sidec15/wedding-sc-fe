@@ -5,11 +5,13 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  contain: layout paint;
 }
 
 .parallax-image {
   width: 100%;
   object-fit: cover;
   will-change: transform;
-  transition: transform 0.1s linear;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.05s linear;
 }

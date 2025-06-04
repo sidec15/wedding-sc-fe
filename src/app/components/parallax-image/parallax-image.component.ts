@@ -51,7 +51,7 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
   }
 
   animate(scrollEvent: ScrollEvent): void {
-    if (!this.platformService.isBrowser()) return;
+    if (!this.platformService.isPlatformReady()) return;
     const wrapper = this.wrapperRef.nativeElement as HTMLElement;
 
     if(!this.platformService.isVisible(wrapper)) return;
@@ -63,6 +63,6 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
     this.parallaxOffset += distance;
 
     const img = this.imageRef.nativeElement as HTMLElement;
-    img.style.transform = `translateY(${this.parallaxOffset}px)`;
+    img.style.transform = `translate3d(0, ${this.parallaxOffset}px, 0)`;
   }
 }
