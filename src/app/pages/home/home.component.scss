@@ -17,35 +17,55 @@
   display: flex; // ➤ Make it a flex container
   justify-content: center; // ➤ Center horizontally
   align-items: flex-start; // align to top instead of center
+}
 
-  .countdown {
-    margin-top: 70lvh; // pushes it down from top
-    transform: translateY(-50%); // centers the element around 70vh line
+.countdown {
+  margin-top: 70lvh; // pushes it down from top
+  transform: translateY(-50%); // centers the element around 70vh line
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  border-radius: 1.5rem;
+  background-color: rgba(
+    var(--bg),
+    0.8
+  ); // solid or slightly transparent background
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  color: rgb(var(--text));
+
+  .time-block {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .number {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+  }
+
+  // On small screens: remove background, spacing, and shadow
+  @media (max-width: 768px) {
+    background-color: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 0;
+    margin-top: 1.5rem;
     gap: 1rem;
-    justify-content: center;
-    padding: 1rem 1.5rem;
-    border-radius: 1.5rem;
-    background-color: rgba(
-      var(--bg),
-      0.8
-    ); // solid or slightly transparent background
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    color: rgb(var(--text));
 
     .time-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
       .number {
-        font-size: 2rem;
-        font-weight: bold;
+        font-size: 1.25rem;
       }
 
       .label {
-        font-size: 0.8rem;
-        text-transform: uppercase;
+        font-size: 0.6rem;
       }
     }
   }
@@ -145,35 +165,6 @@
 
     .bottom-shape {
       clip-path: polygon(0 100%, 0 30%, 50% 100%, 100% 30%, 100% 100%);
-    }
-
-    .countdown {
-      margin: 2rem auto 0 auto;
-      display: flex;
-      justify-content: center;
-      gap: 0.75rem;
-      padding: 1rem 1.5rem;
-      border-radius: 1rem;
-      background-color: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      width: fit-content;
-
-      .time-block {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .number {
-          font-size: 1.5rem;
-          font-weight: 600;
-        }
-
-        .label {
-          font-size: 0.7rem;
-          text-transform: uppercase;
-        }
-      }
     }
   }
 
