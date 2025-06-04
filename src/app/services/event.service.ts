@@ -42,7 +42,7 @@ export class EventService {
     this.menuEventSubject.next(event);
   }
 
-  emitHeaderBackgroundEvent(fillBackground: boolean): void {
+  emitHeaderBackgroundFillEvent(fillBackground: boolean): void {
     this.headerBackgroundSubject.next(
       new HeaderBackgroundEvent(fillBackground)
     );

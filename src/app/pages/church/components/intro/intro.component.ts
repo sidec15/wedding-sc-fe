@@ -28,6 +28,8 @@ export class IntroComponent implements AfterViewInit, OnDestroy {
 
   private scrollSub!: Subscription;
 
+  private isHeaderBgFilled = true;
+
   constructor(
     private eventService: EventService,
     private platformService: PlatformService
@@ -36,7 +38,7 @@ export class IntroComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isPlatformReady()) return;
 
-    this.eventService.emitHeaderBackgroundEvent(true); // Ensure header background is filled
+    this.eventService.emitHeaderBackgroundFillEvent(true); // Ensure header background is filled
 
     const heroSection = this.heroSectionRef?.nativeElement;
     if (heroSection) {
@@ -48,11 +50,12 @@ export class IntroComponent implements AfterViewInit, OnDestroy {
       if (this.heroOverlayRef) {
         this.animateHero(scrollEvent.scrollY);
       }
+      this.updateHeaderBackgroundFill();
     });
   }
 
   ngOnDestroy(): void {
-    this.eventService.emitHeaderBackgroundEvent(false); // Reset header background state
+    this.eventService.emitHeaderBackgroundFillEvent(false); // Reset header background state
     this.scrollSub?.unsubscribe();
   }
 
@@ -65,5 +68,17 @@ export class IntroComponent implements AfterViewInit, OnDestroy {
     const el = this.heroOverlayRef.nativeElement;
     el.style.opacity = `${opacity}`;
     el.style.transform = `translate(-50%, -50%) translateY(${translateY}px)`;
+  }
+
+  private updateHeaderBackgroundFill(): void {
+    if (this.platformService.isVisible(this.heroSectionRef?.nativeElement)) {
+      if (this.isHeaderBgFilled) return; // No need to emit if already filled
+      this.eventService.emitHeaderBackgroundFillEvent(true);
+      this.isHeaderBgFilled = true;
+    } else {
+      if (!this.isHeaderBgFilled) return; // No need to emit if already not filled
+      this.eventService.emitHeaderBackgroundFillEvent(false);
+      this.isHeaderBgFilled = false;
+    }
   }
 }
