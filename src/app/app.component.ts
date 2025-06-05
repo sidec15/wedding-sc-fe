@@ -3,11 +3,9 @@ import { Router, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Theme } from './models/theme';
 import { PlatformService } from './services/platform.service';
-import { EventService } from './services/event.service';
 import { ScrollManagerService } from './services/scroll-manager.service';
 import { HeaderComponent } from './components/header/header.component';
 import { LanguageService } from './services/language.service';
-import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
 
 @Component({
   selector: 'app-root',
