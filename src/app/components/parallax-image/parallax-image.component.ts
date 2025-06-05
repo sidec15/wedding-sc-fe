@@ -42,7 +42,7 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
       .pipe(throttleTime(16)) // Throttle to 60 FPS
       .subscribe((e: ScrollEvent) => {
         this.checkVisibility(e);
-        this.animate(e);
+        this.animate();
       });
   }
 
@@ -50,24 +50,34 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
     this.scrollSubscription?.unsubscribe();
   }
 
-  animate(scrollEvent: ScrollEvent): void {
-    if (!this.platformService.isPlatformReady()) return;
-    if(this.positionYInViewPort !== 'visible') return;
+animate(): void {
+  if (!this.platformService.isPlatformReady()) return;
+  if (this.positionYInViewPort !== 'visible') return;
 
-    const direction = scrollEvent.scrollDirection() === 'up' ? -1 : 1;
-    const distance =
-      Math.abs(scrollEvent.scrollYOffset) * this.speedFactor() * direction;
+  const wrapper = this.wrapperRef.nativeElement as HTMLElement;
+  const img = this.imageRef.nativeElement as HTMLElement;
 
-    this.parallaxOffset += distance;
+  const rect = wrapper.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
 
-    const img = this.imageRef.nativeElement as HTMLElement;
-    img.style.transform = `translateY(${this.parallaxOffset}px)`;
-  }
+  // Parallax base: how far from center of viewport
+  const distanceFromCenter = rect.top + rect.height / 2 - windowHeight / 2;
+
+  // This value should be smaller than 1 (e.g. 0.2) to slow down image movement
+  const translateY = distanceFromCenter * this.speedFactor();
+
+  img.style.transform = `translateY(${translateY}px)`;
+}
+
 
   checkVisibility(e: ScrollEvent) {
     const wrapper = this.wrapperRef.nativeElement as HTMLElement;
-    this.positionYInViewPort = this.platformService.positionYInViewport(wrapper);
-    if(this.positionYInViewPort === 'below' || this.positionYInViewPort === 'above') {
+    this.positionYInViewPort =
+      this.platformService.positionYInViewport(wrapper);
+    if (
+      this.positionYInViewPort === 'below' ||
+      this.positionYInViewPort === 'above'
+    ) {
       // Reset parallax offset when the element is out of view
       this.parallaxOffset = 0;
       const img = this.imageRef.nativeElement as HTMLElement;
