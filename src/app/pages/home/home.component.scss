@@ -15,16 +15,15 @@
   background-repeat: no-repeat;
   height: 100lvh; // Full viewport height
   display: flex; // ➤ Make it a flex container
-  justify-content: center; // ➤ Center horizontally
   align-items: flex-start; // align to top instead of center
 }
 
 .countdown {
-  margin-top: 85lvh; // pushes it down from top
-  transform: translateY(-50%); // centers the element around 70vh line
-  display: flex;
+  position: absolute;
+  top: 50%;
+  right: 5vw;
+  transform: translateY(-50%);
   gap: 1rem;
-  justify-content: center;
   padding: 1rem 1.5rem;
   border-radius: 1.5rem;
   background-color: rgba(
@@ -33,6 +32,9 @@
   ); // solid or slightly transparent background
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   color: rgb(var(--text));
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 
   .time-block {
     display: flex;
@@ -40,12 +42,12 @@
     align-items: center;
 
     .number {
-      font-size: 2rem;
+      font-size: 3rem;
       font-weight: bold;
     }
 
     .label {
-      font-size: 0.8rem;
+      font-size: 1rem;
       text-transform: uppercase;
     }
   }
