@@ -1,17 +1,18 @@
 import { NgForOf } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { interval, Subscription } from 'rxjs';
 import { HeaderBgFillObserverDirective } from '../../../../directives/header-bg-fill-observer.directive';
+import { PlatformService } from '../../../../services/platform.service';
 
 @Component({
   selector: 'app-reception-location',
-  imports: [TranslateModule, NgForOf, HeaderBgFillObserverDirective],
+  imports: [TranslateModule, NgForOf],
   templateUrl: './reception-location.component.html',
   styleUrl: './reception-location.component.scss',
 })
-export class ReceptionLocationComponent implements OnInit, OnDestroy {
-  private static readonly imageTimeoutMs = 7000;
+export class ReceptionLocationComponent implements AfterViewInit, OnDestroy {
+  private static readonly imageTimeoutMs = 6000;
 
   images = [
     'images/reception/location/location-04.jpg',
@@ -22,9 +23,11 @@ export class ReceptionLocationComponent implements OnInit, OnDestroy {
 
   private imageRotationSub!: Subscription;
 
-  constructor() {}
+  constructor(private platformService: PlatformService) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    if (!this.platformService.isPlatformReady()) return;
+
     this.imageRotationSub = interval(
       ReceptionLocationComponent.imageTimeoutMs
     ).subscribe(() => {
