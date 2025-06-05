@@ -30,6 +30,7 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
 
   private parallaxOffset = 0;
   private scrollSubscription!: Subscription;
+  private positionYInViewPort!: string;
 
   constructor(
     private eventService: EventService,
@@ -38,12 +39,11 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.scrollSubscription = this.eventService.scrollEvent$
-    .pipe(throttleTime(16)) // Throttle to 60 FPS
-    .subscribe(
-      (e: ScrollEvent) => {
+      .pipe(throttleTime(16)) // Throttle to 60 FPS
+      .subscribe((e: ScrollEvent) => {
+        this.checkVisibility(e);
         this.animate(e);
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {
@@ -52,9 +52,7 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
 
   animate(scrollEvent: ScrollEvent): void {
     if (!this.platformService.isPlatformReady()) return;
-    const wrapper = this.wrapperRef.nativeElement as HTMLElement;
-
-    if(!this.platformService.isVisible(wrapper)) return;
+    if(this.positionYInViewPort !== 'visible') return;
 
     const direction = scrollEvent.scrollDirection() === 'up' ? -1 : 1;
     const distance =
@@ -63,6 +61,17 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
     this.parallaxOffset += distance;
 
     const img = this.imageRef.nativeElement as HTMLElement;
-    img.style.transform = `translate3d(0, ${this.parallaxOffset}px, 0)`;
+    img.style.transform = `translateY(${this.parallaxOffset}px)`;
+  }
+
+  checkVisibility(e: ScrollEvent) {
+    const wrapper = this.wrapperRef.nativeElement as HTMLElement;
+    this.positionYInViewPort = this.platformService.positionYInViewport(wrapper);
+    if(this.positionYInViewPort === 'below' || this.positionYInViewPort === 'above') {
+      // Reset parallax offset when the element is out of view
+      this.parallaxOffset = 0;
+      const img = this.imageRef.nativeElement as HTMLElement;
+      img.style.transform = `translateY(0px)`;
+    }
   }
 }
