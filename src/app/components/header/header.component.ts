@@ -10,6 +10,7 @@ import { ThemeService } from '../../services/theme.service';
 import { LanguageService } from '../../services/language.service';
 import { NgClass, NgIf, NgStyle } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { constants } from '../../constants';
 
 @Component({
   selector: 'app-header',
@@ -31,7 +32,7 @@ export class HeaderComponent {
   @ViewChild('themeDropdown', { static: false }) themeDropdownRef!: ElementRef;
   @ViewChild('navLinks', { static: false }) navRef!: ElementRef<HTMLElement>;
 
-  isHeaderFilled = true; // Track if the header background is filled
+  isHeaderFilled = constants.IS_HEADER_FILLED; // Track if the header background is filled
 
   constructor(
     private platformService: PlatformService,
@@ -53,7 +54,6 @@ export class HeaderComponent {
 
     this.headerBgSub = this.eventService.headerBackgroundSubject$.subscribe(
       (e) => {
-        console.log('Header background event:', e);
         this.isHeaderFilled = e.fillBackground; // Update header background state
       }
     );

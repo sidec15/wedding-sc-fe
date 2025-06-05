@@ -122,6 +122,12 @@
     "intro": {
       "title": "Let's celebrate together",
       "subtitle": "After the ceremony, we look forward to spending the evening with you, enjoying good food and a relaxed atmosphere"
+    },
+    "location": {
+      "title": "The Location",
+      "description01": "The reception will take place at Park Hotel Villa Ferrata, an elegant villa surrounded by a centuries-old park, with large outdoor spaces featuring trees, pathways, fountains, and a spacious pool.",
+      "description02": "Throughout the evening, we'll move between carefully curated spaces, from the garden to the indoor halls, to enjoy every moment in a relaxed and welcoming atmosphere.",
+      "description03": "Dishes from the Italian tradition will accompany the evening in a simple and pleasant setting."
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { constants } from '../constants';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,16 @@ export class EventService {
   emitHeaderBackgroundFillEvent(fillBackground: boolean): void {
     this.headerBackgroundSubject.next(
       new HeaderBackgroundEvent(fillBackground)
+    );
+  }
+
+  /**
+   * Emit an event to reset the header background fill state.
+   * This is useful when the header background should be reset to its initial state.
+   */
+  emitHeaderBackgroundFillResetEvent(): void {
+    this.headerBackgroundSubject.next(
+      new HeaderBackgroundEvent(constants.IS_HEADER_FILLED)
     );
   }
 }

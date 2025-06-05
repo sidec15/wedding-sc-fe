@@ -122,6 +122,12 @@
     "intro": {
       "title": "Festeggiamo insieme",
       "subtitle": "Dopo la cerimonia, vi aspettiamo per continuare la serata insieme, tra buona cucina e atmosfera rilassata"
+    },
+    "location": {
+      "title": "La location",
+      "description01": "Il ricevimento si terrà al Park Hotel Villa Ferrata, una villa elegante immersa in un parco secolare, con ampi spazi all'aperto tra alberi, vialetti, fontane e una grande piscina.",
+      "description02": "Durante la serata, ci muoveremo tra ambienti curati ed eleganti, dal giardino alle sale interne, per vivere ogni momento in un'atmosfera rilassata e accogliente.",
+      "description03": "Piatti della tradizione italiana accompagneranno la serata in un clima semplice e piacevole."
     }
   }
 }

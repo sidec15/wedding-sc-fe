@@ -1,6 +1,11 @@
-<div class="hero" #heroSection>
+<section
+  class="hero"
+  #heroSection
+  appHeaderBgFillObserver
+  [fillOnVisible]="false"
+>
   <app-parallax-image
-    src='/images/reception/intro/intro-01.png'
+    src="/images/reception/intro/intro-01.png"
     [speedFactor]="0.2"
     [containerHeight]="'100lvh'"
     [imageHeight]="'200lvh'"
@@ -8,11 +13,11 @@
   <div class="overlay">
     <div class="hero-content" #heroContent>
       <div class="title">
-        {{ 'reception.intro.title' | translate }}
+        {{ "reception.intro.title" | translate }}
       </div>
       <div class="subtitle">
-        {{ 'reception.intro.subtitle' | translate }}
+        {{ "reception.intro.subtitle" | translate }}
       </div>
     </div>
   </div>
-</div>
+</section>

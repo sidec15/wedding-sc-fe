@@ -1,1 +1,19 @@
-<p>reception-location works!</p>
+<section class="location-section">
+  <div class="slideshow-wrapper">
+    <img
+      *ngFor="let image of images; let i = index"
+      [src]="image"
+      [class.active]="i === currentImageIndex"
+      class="slide"
+    />
+  </div>
+
+  <div class="text-overlay">
+    <div class="text-box">
+      <h2>{{ 'reception.location.title' | translate }}</h2>
+      <p>{{ 'reception.location.description01' | translate }}</p>
+      <p>{{ 'reception.location.description02' | translate }}</p>
+      <p>{{ 'reception.location.description03' | translate }}</p>
+    </div>
+  </div>
+</section>

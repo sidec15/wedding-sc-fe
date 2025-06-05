@@ -7,14 +7,15 @@ import {
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParallaxImageComponent } from '../../../../components/parallax-image/parallax-image.component';
-import { Subscription } from 'rxjs';
+import { Subscription, throttleTime } from 'rxjs';
 import { PlatformService } from '../../../../services/platform.service';
 import { EventService, ScrollEvent } from '../../../../services/event.service';
-import { HeaderService } from '../../../../services/header.service';
+import { HeaderBgFillObserverDirective } from '../../../../directives/header-bg-fill-observer.directive';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-reception-intro',
-  imports: [TranslateModule, ParallaxImageComponent],
+  imports: [TranslateModule, ParallaxImageComponent, HeaderBgFillObserverDirective],
   templateUrl: './reception-intro.component.html',
   styleUrl: './reception-intro.component.scss',
 })
@@ -27,11 +28,10 @@ export class ReceptionIntroComponent implements AfterViewInit, OnDestroy {
   heroContentRef!: ElementRef<HTMLElement>;
 
   private heroHeight = 300; // fallback value
-  private isHeaderBgFilled = true;
 
   constructor(
     private platformService: PlatformService,
-    private eventService: EventService,
+    private eventService: EventService
   ) {}
 
   ngAfterViewInit(): void {
@@ -44,12 +44,13 @@ export class ReceptionIntroComponent implements AfterViewInit, OnDestroy {
     this.eventService.emitHeaderBackgroundFillEvent(false); // Ensure header background is filled
 
     // Subscribe to scroll events
-    this.scrollSub = this.eventService.scrollEvent$.subscribe((scrollEvent) => {
-      if (this.heroContentRef) {
-        this.animateHero(scrollEvent.scrollY);
-      }
-      this.updateHeaderBackgroundFill();
-    });
+    this.scrollSub = this.eventService.scrollEvent$
+      .pipe(throttleTime(16))
+      .subscribe((scrollEvent) => {
+        if (this.heroContentRef) {
+          this.animateHero(scrollEvent.scrollY);
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -69,18 +70,6 @@ export class ReceptionIntroComponent implements AfterViewInit, OnDestroy {
     const el = this.heroContentRef.nativeElement;
     el.style.opacity = `${opacity}`;
     el.style.transform = `translate(-50%, -50%) translateY(${translateY}px)`;
-  }
-
-  private updateHeaderBackgroundFill(): void {
-    if (this.platformService.isVisible(this.heroSectionRef?.nativeElement)) {
-      if (!this.isHeaderBgFilled) return; // No need to emit if already not filled
-      this.isHeaderBgFilled = false;
-      this.eventService.emitHeaderBackgroundFillEvent(this.isHeaderBgFilled);
-    } else {
-      if (this.isHeaderBgFilled) return; // No need to emit if already filled
-      this.isHeaderBgFilled = true;
-      this.eventService.emitHeaderBackgroundFillEvent(this.isHeaderBgFilled);
-    }
   }
 
 }
