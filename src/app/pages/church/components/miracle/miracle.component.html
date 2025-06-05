@@ -6,12 +6,12 @@
   <div class="miracle-container" *ngIf="isPlatformReady">
     <app-parallax-image
       [src]="imageSrc"
-      [containerHeight]="'80lvh'"
-      [imageHeight]="'100lvh'"
+      [speedFactor]="0.2"
+      [containerHeight]="isMobile ? '80lvh' : '100lvh'"
+      [imageHeight]="isMobile ? '100lvh' : '120lvh'"
     ></app-parallax-image>
 
     <div class="miracle-text" #miracleText>
-
       <ng-container *ngIf="!isMobile">
         <h2 class="miracle-title">
           {{ "church.miracle.title" | translate }}

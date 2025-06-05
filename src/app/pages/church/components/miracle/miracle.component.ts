@@ -35,7 +35,7 @@ import {
 export class MiracleComponent implements AfterViewInit, OnDestroy {
   /** Duration (in ms) each slide remains visible */
   private static readonly DURATION = 25000;
-  private static readonly IMAGE_DESKTOP = '/images/church/miracle/miracle-02.jpg';
+  private static readonly IMAGE_DESKTOP = '/images/church/miracle/miracle-11.jpg';
   private static readonly IMAGE_MOBILE = '/images/church/miracle/miracle-09.jpg';
 
   /** Indicates if the platform is ready (browser rendering available) */
