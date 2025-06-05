@@ -4,6 +4,7 @@ import { ReceptionLocationComponent } from './components/reception-location/rece
 import { ReceptionMenuComponent } from './components/reception-menu/reception-menu.component';
 import { ReceptionMapComponent } from './components/reception-map/reception-map.component';
 import { ReceptionNotesComponent } from './components/reception-notes/reception-notes.component';
+import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 
 @Component({
   selector: 'app-reception',
@@ -13,6 +14,7 @@ import { ReceptionNotesComponent } from './components/reception-notes/reception-
     ReceptionMenuComponent,
     ReceptionMapComponent,
     ReceptionNotesComponent,
+    RingScrollComponent
   ],
   templateUrl: './reception.component.html',
   styleUrl: './reception.component.scss',
