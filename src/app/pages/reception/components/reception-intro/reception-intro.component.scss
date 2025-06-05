@@ -37,17 +37,20 @@
       transition: opacity 0.2s ease-out;
       will-change: opacity, transform;
       width: 100%;
-      color: white;
+      // color: white;
       z-index: 3;
       align-items: center;
 
       .title {
         font-size: 3rem;
+        font-weight: 700;
+        color: rgb(var(--accent));
         animation: fadeInUp 1s ease-out forwards;
       }
 
       .subtitle {
         width: 50%;
+        color: white;
         margin-left: auto;
         margin-right: auto;
         font-size: 1.5rem;
@@ -75,11 +78,14 @@
   .overlay {
     .hero-content {
       .title {
+        color: white !important;
         font-size: 2rem;
+        font-weight: 600;
       }
 
       .subtitle {
         font-size: 1.2rem;
+        width: 80% !important;
       }
     }
   }
