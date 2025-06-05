@@ -54,11 +54,15 @@
 
   // On small screens: remove background, spacing, and shadow
   @media (max-width: 768px) {
+    position: static; // ➤ allow flow below wedding date
+    transform: none;
     background-color: transparent;
     backdrop-filter: none;
     box-shadow: none;
     padding: 0;
-    margin-top: 1.5rem;
+    margin: 1rem auto 0 auto; // ➤ add spacing & center
+    flex-direction: row;
+    justify-content: center; // ➤ center on row
     gap: 1rem;
 
     .time-block {
