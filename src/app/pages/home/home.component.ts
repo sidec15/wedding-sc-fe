@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderService } from '../../services/header.service';
 import { PlatformService } from '../../services/platform.service';
@@ -6,10 +12,16 @@ import { EventService } from '../../services/event.service';
 import { Subscription, timer } from 'rxjs';
 import { DateTime } from 'luxon';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { HeaderBgFillObserverDirective } from '../../directives/header-bg-fill-observer.directive';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslateModule, NgIf, NgTemplateOutlet],
+  imports: [
+    TranslateModule,
+    NgIf,
+    NgTemplateOutlet,
+    HeaderBgFillObserverDirective,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -21,6 +33,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     seconds: '00',
   };
 
+  isMobile = false;
+
   private timerSub!: Subscription;
   private targetDate = DateTime.fromObject(
     { year: 2025, month: 10, day: 10, hour: 15 },
@@ -30,7 +44,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private platformService: PlatformService,
     private headerService: HeaderService,
-    private eventService: EventService
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -39,8 +53,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    // this.eventService.emitHeaderBackgroundFillEvent(true); // Emit event to fill header background
-    if (this.platformService.isMobile()) {
+    if (!this.platformService.isPlatformReady()) return;
+    this.isMobile = this.platformService.isMobile();
+    this.cdr.detectChanges(); // force DOM to re-evaluate *ngIf
+    if (this.isMobile) {
       this.headerService.disable(); // Disable header animation on home page
     }
   }
@@ -48,11 +64,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.timerSub?.unsubscribe();
     // this.eventService.emitHeaderBackgroundFillEvent(false); // Emit event to reset header background
-    if (this.platformService.isMobile()) this.headerService.enable(); // Re-enable header animation when leaving home page
-  }
-
-  get isMobile(): boolean {
-    return this.platformService.isMobile();
+    if (this.isMobile) this.headerService.enable(); // Re-enable header animation when leaving home page
   }
 
   private updateCountdown(): void {

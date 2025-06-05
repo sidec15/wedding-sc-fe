@@ -159,22 +159,28 @@
   }
 
   .hero-image {
-    height: 40lvh; // Adjust height for mobile
+    height: 50lvh; // Adjust height for mobile
+    background-position: 35% center; // shifts image
+    margin-top: var(--header-height-mobile); // Use mobile header height
   }
 
   .wedding-announcement {
-    // padding: 5rem 0; // Adjust padding for mobile if needed
-
+    padding: 0 1rem 0.5rem 1rem !important; // Remove padding for mobile
     .top-shape {
-      clip-path: polygon(0 0, 0 70%, 50% 0, 100% 70%, 100% 0);
+      display: none;
+      // clip-path: polygon(0 0, 0 70%, 50% 0, 100% 70%, 100% 0);
     }
 
     .bottom-shape {
-      clip-path: polygon(0 100%, 0 30%, 50% 100%, 100% 30%, 100% 100%);
+      display: none;
+      // clip-path: polygon(0 100%, 0 30%, 50% 100%, 100% 30%, 100% 100%);
     }
-  }
 
-  .content {
-    padding: 0; // Remove inner padding for mobile
+    .content {
+      padding: 0; // Remove inner padding for mobile
+      .mobile-description {
+        line-height: 1.5rem; // Adjust line height for readability
+      }
+    }
   }
 }

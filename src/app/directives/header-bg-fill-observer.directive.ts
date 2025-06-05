@@ -30,6 +30,10 @@ export class HeaderBgFillObserverDirective implements AfterViewInit, OnDestroy {
    * - false → fill header when element is NOT visible (default)
    */
   @Input() fillOnVisible: boolean = false;
+  /**
+   * Optional input to enable or disable the directive.
+   */
+  @Input() isEnabled: boolean = true;
 
   /** Tracks current header fill state to avoid emitting duplicate events */
   private isHeaderBgFilled = constants.IS_HEADER_FILLED;
@@ -48,7 +52,7 @@ export class HeaderBgFillObserverDirective implements AfterViewInit, OnDestroy {
    * Subscribes to visibility changes of the host element.
    */
   ngAfterViewInit(): void {
-    if(!this.platformService.isPlatformReady()) return;
+    if(!this.isEnabled || !this.platformService.isPlatformReady()) return;
 
     const element = this.hostRef.nativeElement;
 
@@ -78,6 +82,6 @@ export class HeaderBgFillObserverDirective implements AfterViewInit, OnDestroy {
    */
   ngOnDestroy(): void {
     this.observer?.disconnect();
-    this.eventService.emitHeaderBackgroundFillEvent(true); // Reset header to default filled state
+    this.eventService.emitHeaderBackgroundFillResetEvent();
   }
 }
