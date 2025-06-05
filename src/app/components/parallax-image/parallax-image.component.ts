@@ -48,23 +48,29 @@ export class ParallaxImageComponent implements AfterViewInit, OnDestroy {
     this.scrollSubscription?.unsubscribe();
   }
 
-  animate(): void {
-    if (!this.platformService.isPlatformReady()) return;
-    const wrapper = this.wrapperRef.nativeElement as HTMLElement;
+  
+animate(): void {
+  if (!this.platformService.isPlatformReady()) return;
 
-    if(!this.platformService.isVisible(wrapper)) return;
+  const wrapper = this.wrapperRef.nativeElement as HTMLElement;
+  if (!this.platformService.isVisible(wrapper)) return;
 
-    const img = this.imageRef.nativeElement as HTMLElement;
+  const img = this.imageRef.nativeElement as HTMLElement;
+  const rect = wrapper.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
 
-    const rect = wrapper.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
+  // Midpoint of wrapper relative to viewport
+  const wrapperMidY = rect.top + rect.height / 2;
 
-    // Parallax base: how far from center of viewport
-    const distanceFromCenter = rect.top + rect.height / 2 - windowHeight / 2;
+  // Distance from viewport center
+  const distanceFromCenter = wrapperMidY - windowHeight / 2;
 
-    // This value should be smaller than 1 (e.g. 0.2) to slow down image movement
-    const translateY = distanceFromCenter * this.speedFactor();
+  // Multiplied by speed factor for parallax effect
+  const translateY = distanceFromCenter * this.speedFactor();
 
-    img.style.transform = `translateY(${translateY}px)`;
-  }
+  img.style.transform = `translateY(${translateY}px)`;
+}
+
+
+
 }
