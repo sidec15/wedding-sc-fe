@@ -59,17 +59,15 @@ animate(): void {
   const rect = wrapper.getBoundingClientRect();
   const windowHeight = window.innerHeight;
 
-  // Midpoint of wrapper relative to viewport
   const wrapperMidY = rect.top + rect.height / 2;
-
-  // Distance from viewport center
   const distanceFromCenter = wrapperMidY - windowHeight / 2;
 
-  // Multiplied by speed factor for parallax effect
-  const translateY = distanceFromCenter * this.speedFactor();
+  // Inverted direction
+  const translateY = -distanceFromCenter * this.speedFactor();
 
   img.style.transform = `translateY(${translateY}px)`;
 }
+
 
 
 
