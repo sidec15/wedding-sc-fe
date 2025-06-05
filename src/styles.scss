@@ -1,6 +1,6 @@
-@use './styles/variables.scss' as *;
+@use "./styles/variables.scss" as *;
 
-$font-family-base: 'Comfortaa', 'Segoe UI', sans-serif;
+$font-family-base: "Comfortaa", "Segoe UI", sans-serif;
 
 /* Global box-sizing reset */
 *,
@@ -9,10 +9,16 @@ $font-family-base: 'Comfortaa', 'Segoe UI', sans-serif;
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   font-family: $font-family-base;
   margin: 0;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); // For WebKit-based browsers
+  -webkit-tap-highlight-color: rgba(
+    255,
+    255,
+    255,
+    0
+  ); // For WebKit-based browsers
   -ms-touch-action: manipulation; // For older versions of Internet Explorer
   touch-action: manipulation; // For modern browsers
   scroll-behavior: smooth;
@@ -21,4 +27,51 @@ body, html {
 
 .navbar .nav-links li a {
   cursor: pointer;
+}
+
+#initial-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(0);
+  transition: transform 1.5s ease-in-out, opacity 2.5s ease-in-out;
+
+  img {
+    max-height: 70vh;
+    object-fit: contain;
+  }
+
+  .bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(
+      to right,
+      rgb(var(--accent)) 50%,
+      transparent 50%
+    );
+    background-size: 200% 100%;
+    animation: progressBar 5s linear forwards;
+  }
+
+  &.hidden {
+    transform: translateY(-100%);
+    opacity: 1;
+  }
+}
+
+@keyframes progressBar {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 }

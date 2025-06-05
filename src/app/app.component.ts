@@ -14,7 +14,6 @@ import { SplashScreenComponent } from './components/splash-screen/splash-screen.
   imports: [
     RouterOutlet,
     TranslateModule,
-    SplashScreenComponent,
     HeaderComponent,
   ],
   templateUrl: './app.component.html',
