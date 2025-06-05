@@ -6,9 +6,8 @@
   <div class="miracle-container" *ngIf="isPlatformReady">
     <app-parallax-image
       [src]="imageSrc"
-      [speedFactor]="0.08"
-      [containerHeight]="isMobile ? '80lvh' : '100lvh'"
-      [imageHeight]="isMobile ? '100lvh' : '120lvh'"
+      [containerHeight]="'80lvh'"
+      [imageHeight]="'100lvh'"
     ></app-parallax-image>
 
     <div class="miracle-text" #miracleText>
