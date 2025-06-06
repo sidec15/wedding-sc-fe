@@ -3,23 +3,26 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, appConfig)
-  .then(() => {
-    const splash = document.getElementById('initial-splash');
-
-    // Prevent scroll during splash
-    document.body.classList.add('splash-active');
-
-    if (splash) {
-      // Add hidden class after 5 seconds
-      setTimeout(() => {
-        splash.classList.add('hidden');
-
-        // Then remove from DOM after animation completes (0.8s)
-        setTimeout(() => {
-          splash.remove();
-        }, 1500); // match transition duration in CSS
-        document.body.classList.remove('splash-active');
-      }, 5000); // splash duration
-    }
-  })
+  .then(() => handleSplash())
   .catch((err) => console.error(err));
+
+function handleSplash(): void {
+  const slideUpDurationMs = 3000; // duration of the slide-up transition
+  const totalVisibleDurationMs = 8000; // total time splash is visible
+
+  const splash = document.getElementById('initial-splash');
+  document.body.classList.add('splash-active');
+
+  if (!splash) return;
+
+  // Wait for content to be visible
+  setTimeout(() => {
+    splash.classList.add('hidden');
+    document.body.classList.remove('splash-active');
+
+    // Wait for slide-up transition
+    setTimeout(() => {
+      splash.remove();
+    }, slideUpDurationMs); // match transition duration
+  }, totalVisibleDurationMs);
+}
