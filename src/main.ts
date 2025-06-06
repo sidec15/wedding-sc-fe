@@ -6,6 +6,9 @@ bootstrapApplication(AppComponent, appConfig)
   .then(() => {
     const splash = document.getElementById('initial-splash');
 
+    // Prevent scroll during splash
+    document.body.classList.add('splash-active');
+
     if (splash) {
       // Add hidden class after 5 seconds
       setTimeout(() => {
@@ -15,6 +18,7 @@ bootstrapApplication(AppComponent, appConfig)
         setTimeout(() => {
           splash.remove();
         }, 1500); // match transition duration in CSS
+        document.body.classList.remove('splash-active');
       }, 5000); // splash duration
     }
   })

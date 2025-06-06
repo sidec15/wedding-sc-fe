@@ -23,6 +23,10 @@ html {
   touch-action: manipulation; // For modern browsers
   scroll-behavior: smooth;
   box-sizing: border-box;
+
+  .splash-active {
+    overflow: hidden;
+  }
 }
 
 .navbar .nav-links li a {
