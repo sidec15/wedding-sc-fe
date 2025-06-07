@@ -1,5 +1,4 @@
-@use './variables.scss' as *;
-
+@use "./variables.scss" as *;
 
 body.splash-active {
   overflow: hidden;
@@ -9,7 +8,7 @@ body.splash-active {
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: url('/images/splash/splash-01.png') no-repeat center center;
+  background-color: white; // Optional fallback background
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,6 +16,13 @@ body.splash-active {
   transform: translateY(0);
   transition: transform 3s ease-in-out, opacity 3.5s ease-in-out;
   overflow: hidden;
+
+  .splash-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 100lvh;
+  }
 
   .bar {
     position: absolute;
@@ -30,38 +36,25 @@ body.splash-active {
       transparent 50%
     );
     background-size: 200% 100%;
-    animation: progressBar 8s linear forwards;
+    animation: progressBar 6s linear forwards;
     z-index: 1;
   }
-
-  // .wedding-images {
-  //   display: flex;
-  //   gap: 1.5rem;
-  //   margin-top: 4rem;
-  //   z-index: 1;
-
-  //   img {
-  //     width: 120px;
-  //     opacity: 0;
-  //     animation: fadeIn 2s forwards;
-  //   }
-
-  //   .wedding-1 {
-  //     animation-delay: 7s;
-  //   }
-
-  //   .wedding-2 {
-  //     animation-delay: 9s;
-  //   }
-
-  //   .wedding-3 {
-  //     animation-delay: 11s;
-  //   }
-  // }
 
   &.hidden {
     transform: translateY(-100%);
     opacity: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #initial-splash {
+    .splash-img {
+      content: url("/images/splash/splash-03.png"); // Replaces the src on small screens
+    }
+
+    .bar {
+      height: 2px;
+    }
   }
 }
 

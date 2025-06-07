@@ -47,7 +47,7 @@ section {
   }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .church-hero {
     .hero-image {
       background-position: center top;
