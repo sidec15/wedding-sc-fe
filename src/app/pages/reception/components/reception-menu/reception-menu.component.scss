@@ -120,6 +120,20 @@
       grid-template-columns: 1fr;
     }
 
+    .menu-item {
+      &:hover {
+        transform: none;
+      }
+
+      .image-container {
+        img {
+          &:hover {
+            transform: none;
+          }
+        }
+      }
+    }
+
     .dietary-note {
       margin-top: 2rem;
       padding: 1rem;
