@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { ReceptionIntroComponent } from './components/reception-intro/reception-intro.component';
 import { ReceptionLocationComponent } from './components/reception-location/reception-location.component';
 import { ReceptionMenuComponent } from './components/reception-menu/reception-menu.component';
-import { ReceptionMapComponent } from './components/reception-map/reception-map.component';
-import { ReceptionNotesComponent } from './components/reception-notes/reception-notes.component';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 
 @Component({
@@ -12,8 +10,6 @@ import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.co
     ReceptionIntroComponent,
     ReceptionLocationComponent,
     ReceptionMenuComponent,
-    ReceptionMapComponent,
-    ReceptionNotesComponent,
     RingScrollComponent
   ],
   templateUrl: './reception.component.html',
