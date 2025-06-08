@@ -91,6 +91,21 @@
       }
     }
   }
+
+  .dietary-note {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    background: rgba(var(--accent), 0.05);
+    border-radius: 1rem;
+    text-align: center;
+
+    p {
+      font-size: 1.1rem;
+      color: rgb(var(--text));
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -103,6 +118,11 @@
 
     .menu-grid {
       grid-template-columns: 1fr;
+    }
+
+    .dietary-note {
+      margin-top: 2rem;
+      padding: 1rem;
     }
   }
 }
