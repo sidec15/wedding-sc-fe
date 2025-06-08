@@ -16,13 +16,13 @@ function handleSplash(): void {
   if (!splash) return;
 
   // Wait for content to be visible
-  // setTimeout(() => {
-  //   splash.classList.add('hidden');
-  //   document.body.classList.remove('splash-active');
+  setTimeout(() => {
+    splash.classList.add('hidden');
+    document.body.classList.remove('splash-active');
 
-  //   // Wait for slide-up transition
-  //   setTimeout(() => {
-  //     splash.remove();
-  //   }, slideUpDurationMs); // match transition duration
-  // }, totalVisibleDurationMs);
+    // Wait for slide-up transition
+    setTimeout(() => {
+      splash.remove();
+    }, slideUpDurationMs); // match transition duration
+  }, totalVisibleDurationMs);
 }
