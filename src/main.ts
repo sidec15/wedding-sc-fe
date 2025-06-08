@@ -8,7 +8,7 @@ bootstrapApplication(AppComponent, appConfig)
 
 function handleSplash(): void {
   const slideUpDurationMs = 3000; // duration of the slide-up transition
-  const totalVisibleDurationMs = 6000; // total time splash is visible
+  const totalVisibleDurationMs = 8000; // total time splash is visible
 
   const splash = document.getElementById('initial-splash');
   document.body.classList.add('splash-active');

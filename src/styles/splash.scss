@@ -17,6 +17,20 @@ body.splash-active {
   transition: transform 3s ease-in-out, opacity 4.5s ease-in-out;
   overflow: hidden;
 
+  .names {
+    font-family: 'Great Vibes', cursive;
+    font-size: 8rem;
+    font-weight: 400;
+    color: rgb(var(--accent));
+    text-align: center;
+    margin: 0;
+    opacity: 0;
+    animation: fadeIn 2s ease-in-out forwards;
+    animation-delay: 1s;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+  }
+
   .bar {
     position: absolute;
     top: 0;
@@ -29,7 +43,7 @@ body.splash-active {
       transparent 50%
     );
     background-size: 200% 100%;
-    animation: progressBar 6s linear forwards;
+    animation: progressBar 8s linear forwards;
     z-index: 1;
   }
 
