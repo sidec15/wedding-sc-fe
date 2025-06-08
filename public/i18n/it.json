@@ -61,7 +61,7 @@
     },
     "origin": {
       "title": "Origini e Storia",
-      "p1": "Il nome “delle Fratte” deriva dal fatto che, un tempo, questa zona era piena di orti e sterpaglie.",
+      "p1": "Il nome \"delle Fratte\" deriva dal fatto che, un tempo, questa zona era piena di orti e sterpaglie.",
       "p2": "La chiesa esisteva già in epoca medievale, ma è nel Seicento che viene ricostruita su progetto del grande architetto Borromini, che disegnò anche la bellissima cupola e il campanile."
     },
     "angels": {
@@ -128,6 +128,27 @@
       "description01": "Il ricevimento si terrà al Park Hotel Villa Ferrata, una villa elegante immersa in un parco secolare, con ampi spazi all'aperto tra alberi, vialetti, fontane e una grande piscina.",
       "description02": "Durante la serata, ci muoveremo tra ambienti curati ed eleganti, dal giardino alle sale interne, per vivere ogni momento in un'atmosfera rilassata e accogliente.",
       "description03": "Piatti della tradizione italiana accompagneranno la serata in un clima semplice e piacevole."
+    },
+    "menu": {
+      "title": "Il Menu",
+      "welcome": {
+        "title": "Aperitivo di Benvenuto",
+        "description": "Un aperitivo all'aperto per iniziare insieme questa giornata speciale."
+      },
+      "buffet": {
+        "buffet": {
+          "title": "Gran Buffet di Antipasti",
+          "description": "Un ricco buffet all'aperto, a bordo piscina, con specialità di mare e di terra. Tra le proposte: insalata tiepida di polpo e patate, salumi selezionati, burrate fresche, formaggi con composte e una selezione di sfizioserie fritte come zeppole di alghe, mozzarelline panate e tempura di gamberetti."
+        }
+      },
+      "dinner": {
+        "title": "La Cena di Nozze",
+        "description": "Una cena a base di carne, servita al tavolo in un'atmosfera raffinata. Il menù prevede due primi piatti ricchi di sapore, un secondo di carne selezionata e un contorno di stagione."
+      },
+      "dessert": {
+        "title": "Dolce Conclusione",
+        "description01": "Per terminare in dolcezza, vi aspettano la nostra torta nuziale, un ricco buffet di dolci e una selezione di frutta fresca di stagione"
+      }
     }
   }
 }
