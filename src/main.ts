@@ -3,8 +3,8 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, appConfig)
-  .then(() => handleSplash())
-  .catch((err) => console.error(err));
+  // .then(() => handleSplash())
+    .catch((err) => console.error(err));
 
 function handleSplash(): void {
   const slideUpDurationMs = 3000; // duration of the slide-up transition
