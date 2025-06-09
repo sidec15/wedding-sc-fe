@@ -51,6 +51,25 @@ body.splash-active {
     transform: translateY(-100%);
     opacity: 0;
   }
+
+  @media (max-width: 768px) {
+    background-image: url("/images/splash/splash-02.png");
+    background-size: cover;
+    background-position: center;
+
+    .names {
+      font-size: 4rem;
+      padding: 0 1rem;
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .bar {
+      height: 3px;
+    }
+  }
 }
 
 @keyframes progressBar {
