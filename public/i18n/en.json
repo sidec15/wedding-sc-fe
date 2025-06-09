@@ -192,6 +192,27 @@
           "02": "Music: ambient background music"
         }
       }
+    },
+    "directions": {
+      "church": {
+        "title": "How to reach the church",
+        "intro": "The ceremony will take place at Sant'Andrea delle Fratte, located in the heart of Rome, just a few steps from the Spanish Steps.",
+        "parking": {
+          "title": "Parking Information",
+          "note": "Please note that on Friday, October 10th, at 3:00 PM, the area around the church is within the ZTL (Limited Traffic Zone). We kindly recommend that you park your vehicle outside the ZTL and reach the church on foot.",
+          "options": {
+            "saba": {
+              "title": "Roma Parking Saba (Piazza di Spagna)",
+              "description": "A scenic walk through the historic center. Estimated walking time: 15 minutes."
+            },
+            "ludovisi": {
+              "title": "Parking Ludovisi",
+              "description": "Slightly closer, but please note that the return route includes an uphill walk. Estimated walking time: 10 minutes."
+            }
+          },
+          "recommendation": "We recommend allowing extra time to enjoy the walk and avoid any stress."
+        }
+      }
     }
   }
 }

@@ -34,7 +34,7 @@ h2 {
   margin-bottom: 3rem;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 1s ease, transform 1s ease;
 
   &.visible {
     opacity: 1;
@@ -119,6 +119,7 @@ p {
     display: block;
     margin-bottom: 1.5rem;
     text-align: center;
+    transition: opacity 1.5s ease, transform 1.5s ease;
   }
 
   .time {
@@ -151,13 +152,5 @@ p {
       font-size: 0.9rem;
       margin: 0.2rem 0;
     }
-  }
-}
-
-// Add responsive animations
-@media (prefers-reduced-motion: reduce) {
-  .timeline-item {
-    animation: none;
-    opacity: 1;
   }
 }

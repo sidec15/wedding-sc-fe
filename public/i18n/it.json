@@ -192,6 +192,27 @@
           "02": "Musica: ambient in diffusione."
         }
       }
+    },
+    "directions": {
+      "church": {
+        "title": "Come raggiungere la chiesa",
+        "intro": "La cerimonia si terrà presso la chiesa di Sant'Andrea delle Fratte, nel cuore di Roma, a pochi passi da Piazza di Spagna.",
+        "parking": {
+          "title": "Informazioni sul parcheggio",
+          "note": "Si prega di notare che venerdì 10 ottobre, alle ore 15:00, l'area intorno alla chiesa rientra nella ZTL (Zona a Traffico Limitato). Consigliamo vivamente di parcheggiare il veicolo fuori dalla ZTL e raggiungere la chiesa a piedi.",
+          "options": {
+            "saba": {
+              "title": "Roma Parking Saba (Piazza di Spagna)",
+              "description": "Una piacevole passeggiata attraverso il centro storico. Tempo di percorrenza stimato: 15 minuti."
+            },
+            "ludovisi": {
+              "title": "Parking Ludovisi",
+              "description": "Leggermente più vicino, ma si tenga presente che il percorso di ritorno include una salita. Tempo di percorrenza stimato: 10 minuti."
+            }
+          },
+          "recommendation": "Consigliamo di prevedere un po' di tempo in più per godersi la passeggiata ed evitare stress."
+        }
+      }
     }
   }
 }
