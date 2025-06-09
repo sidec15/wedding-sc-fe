@@ -155,6 +155,43 @@
     "intro": {
       "title": "Benvenuti, carissimi invitati",
       "description": "Siamo felici di potervi accompagnare nel nostro giorno speciale. In questa sezione troverete tutte le informazioni utili per vivere al meglio la giornata: come raggiungere la chiesa e la location del ricevimento, scaricare il Save the Date e inviarci eventuali richieste o messaggi. Abbiamo raccolto tutto ciò che può esservi utile, per farvi vivere la giornata in modo sereno e senza pensieri."
+    },
+    "day_info": {
+      "title": "Programma della Giornata",
+      "ceremony": {
+        "title": "Cerimonia",
+        "description": "La cerimonia inizierà presso la chiesa di Sant'Andrea delle Fratte, nel cuore di Roma."
+      },
+      "photo_session": {
+        "title": "Foto di Rito",
+        "description": "Dopo la cerimonia, ci sposteremo in alcune zone del centro per scattare le foto di rito.",
+        "note": "Nel frattempo, potrete avviarvi con calma verso la location del ricevimento."
+      },
+      "welcome_cocktail": {
+        "title": "Aperitivo di Benvenuto",
+        "description": "Presso Park Hotel Villa Ferrata",
+        "details": {
+          "01": "Buffet di antipasti all'aperto",
+          "02": "Musica live: Duo - Musicista cantante e violino con service audio",
+          "03": "Live ambient music every style italiana ed internazionale"
+        }
+      },
+      "dinner": {
+        "title": "Cena",
+        "description": "Sala interna - Cena servita al tavolo",
+        "details": {
+          "01": "Musica: ambient music every style (ita/internazionale)",
+          "02": "Lounge, chill out, swing"
+        }
+      },
+      "party": {
+        "title": "Festa",
+        "description": "Bordo piscina",
+        "details": {
+          "01": "Taglio della torta e buffet di dolci",
+          "02": "Musica: ambient in diffusione."
+        }
+      }
     }
   }
 }

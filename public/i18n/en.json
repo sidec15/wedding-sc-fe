@@ -32,7 +32,7 @@
   "our_story": {
     "intro": {
       "title": "How did we end up here?",
-      "description": "It all started with a bunch of vintage photos (and yes, some of them probably should’ve stayed in the drawer…). You’ll see us as kids, with questionable faces, awkward poses, and outfits that might be trendy today… on Mars. Then came the years when we met and started writing our story together. The rest? It’s all here: hugs, holidays, silly moments, and memories that brought us to where we are now. This is our story: a mix of sweet, funny, and unforgettable moments. Scroll through and enjoy with us!"
+      "description": "It all started with a bunch of vintage photos (and yes, some of them probably should've stayed in the drawer…). You'll see us as kids, with questionable faces, awkward poses, and outfits that might be trendy today… on Mars. Then came the years when we met and started writing our story together. The rest? It's all here: hugs, holidays, silly moments, and memories that brought us to where we are now. This is our story: a mix of sweet, funny, and unforgettable moments. Scroll through and enjoy with us!"
     },
     "start": {
       "title": "Where It All Began",
@@ -60,7 +60,7 @@
     },
     "origin": {
       "title": "Origins and History",
-      "p1": "The name “delle Fratte” comes from the fact that, once upon a time, this area was full of gardens and brambles.",
+      "p1": "The name \"delle Fratte\" comes from the fact that, once upon a time, this area was full of gardens and brambles.",
       "p2": "The church already existed in medieval times, but it was in the 17th century that it was rebuilt by the great architect Borromini, who also designed the beautiful dome and bell tower."
     },
     "angels": {
@@ -127,34 +127,71 @@
       "description01": "The reception will take place at Park Hotel Villa Ferrata, an elegant villa surrounded by a centuries-old park, with large outdoor spaces featuring trees, pathways, fountains, and a spacious pool.",
       "description02": "Throughout the evening, we'll move between carefully curated spaces, from the garden to the indoor halls, to enjoy every moment in a relaxed and welcoming atmosphere.",
       "description03": "Dishes from the Italian tradition will accompany the evening in a simple and pleasant setting."
-    }
-  },
-  "menu": {
-    "title": "The Menu",
-    "welcome": {
-      "title": "Welcome Aperitif",
-      "description": "An outdoor aperitif to start this special day together."
     },
-    "buffet": {
+    "menu": {
+      "title": "The Menu",
+      "welcome": {
+        "title": "Welcome Aperitif",
+        "description": "An outdoor aperitif to start this special day together."
+      },
       "buffet": {
-        "title": "Grand Appetizer Buffet",
-        "description": "A rich buffet served outdoors by the pool, featuring both seafood and meat specialties. Highlights include: warm octopus and potato salad, a selection of cured meats, fresh burrata, cheeses with fruit preserves, and a variety of fried delicacies like seaweed fritters, breaded mozzarella bites, and shrimp tempura."
-      }
-    },
-    "dinner": {
-      "title": "The Wedding Dinner",
-      "description": "A meat-based dinner served at the table in an elegant atmosphere. The menu includes two flavorful first courses, a carefully selected meat main course, and a seasonal side dish."
-    },
-    "dessert": {
-      "title": "Sweet Conclusion",
-      "description01": "To end on a sweet note, enjoy our wedding cake, a rich dessert buffet, and a selection of fresh seasonal fruit."
-    },
-    "dietary_note": "If you have any specific dietary needs (intolerances, allergies, celiac disease), please let us know in the \"Guests\" section by sending us a message."
+        "buffet": {
+          "title": "Grand Appetizer Buffet",
+          "description": "A rich buffet served outdoors by the pool, featuring both seafood and meat specialties. Highlights include: warm octopus and potato salad, a selection of cured meats, fresh burrata, cheeses with fruit preserves, and a variety of fried delicacies like seaweed fritters, breaded mozzarella bites, and shrimp tempura."
+        }
+      },
+      "dinner": {
+        "title": "The Wedding Dinner",
+        "description": "A meat-based dinner served at the table in an elegant atmosphere. The menu includes two flavorful first courses, a carefully selected meat main course, and a seasonal side dish."
+      },
+      "dessert": {
+        "title": "Sweet Conclusion",
+        "description01": "To end on a sweet note, enjoy our wedding cake, a rich dessert buffet, and a selection of fresh seasonal fruit."
+      },
+      "dietary_note": "If you have any specific dietary needs (intolerances, allergies, celiac disease), please let us know in the \"Guests\" section by sending us a message."
+    }
   },
   "guests": {
     "intro": {
       "title": "Welcome, dear guests",
       "description": "We are delighted to have you with us on our special day. In this section, you'll find all the essential information to make the most of the celebration: how to reach the church and the reception venue, download the Save the Date, and send us any requests or messages. We've gathered everything you might need to help you enjoy the day with peace of mind and ease."
+    },
+    "day_info": {
+      "title": "Program of the Day",
+      "ceremony": {
+        "title": "Ceremony",
+        "description": "The ceremony will begin at Sant'Andrea delle Fratte, in the heart of Rome."
+      },
+      "photo_session": {
+        "title": "Photo Session",
+        "description": "After the ceremony, we'll move to some areas of the center to take photos.",
+        "note": "Meanwhile, you can make your way to the reception venue at your leisure."
+      },
+      "welcome_cocktail": {
+        "title": "Welcome Cocktail",
+        "description": "At Park Hotel Villa Ferrata",
+        "details": {
+          "01": "Outdoor appetizer buffet",
+          "02": "Live music: Duo - Singer and violin with audio service",
+          "03": "Live ambient music every style (Italian and international)"
+        }
+      },
+      "dinner": {
+        "title": "Dinner",
+        "description": "Indoor hall - Table service dinner",
+        "details": {
+          "01": "Music: ambient music every style (Italian and international)",
+          "02": "Lounge, chill out, swing"
+        }
+      },
+      "party": {
+        "title": "Party",
+        "description": "Poolside",
+        "details": {
+          "01": "Wedding cake cutting and dessert buffet",
+          "02": "Music: ambient background music"
+        }
+      }
     }
   }
 }
