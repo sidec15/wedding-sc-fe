@@ -4,8 +4,7 @@
     "our_story": "Our Story",
     "church": "Church",
     "reception": "Reception",
-    "confirm": "Confirm your attendance",
-    "contact": "Contact Us",
+    "guests": "Guests",
     "theme": {
       "light": "Light",
       "dark": "Dark",
@@ -151,5 +150,11 @@
       "description01": "To end on a sweet note, enjoy our wedding cake, a rich dessert buffet, and a selection of fresh seasonal fruit."
     },
     "dietary_note": "If you have any specific dietary needs (intolerances, allergies, celiac disease), please let us know in the \"Guests\" section by sending us a message."
+  },
+  "guests": {
+    "intro": {
+      "title": "Welcome, dear guests",
+      "description": "We are delighted to have you with us on our special day. In this section, you'll find all the essential information to make the most of the celebration: how to reach the church and the reception venue, download the Save the Date, and send us any requests or messages. We've gathered everything you might need to help you enjoy the day with peace of mind and ease."
+    }
   }
 }

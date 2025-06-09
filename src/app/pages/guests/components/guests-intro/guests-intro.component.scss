@@ -1,0 +1,62 @@
+@use "../../../../../styles/variables.scss" as *;
+@use "../../../../../styles/mixins.scss" as *;
+@use "../../styles/guests-styles.scss" as guests; // Use the forwarded styles
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.guests-intro {
+  min-height: 100lvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+h2 {
+  color: rgb(var(--accent));
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  position: relative;
+}
+
+p {
+  color: rgb(var(--text));
+  line-height: 1.6;
+  font-size: 1.1rem;
+  max-width: 800px;
+  animation: fadeInUp 0.8s ease-out 0.3s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// Add responsive animations
+@media (prefers-reduced-motion: reduce) {
+  .guests-intro h2,
+  .guests-intro p {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

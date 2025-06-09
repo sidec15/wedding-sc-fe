@@ -4,8 +4,7 @@
     "our_story": "La nostra storia",
     "church": "Chiesa",
     "reception": "Ricevimento",
-    "confirm": "Conferma",
-    "contact": "Contattaci",
+    "guests": "Invitati",
     "theme": {
       "light": "Chiaro",
       "dark": "Scuro",
@@ -150,6 +149,12 @@
         "description01": "Per terminare in dolcezza, vi aspettano la nostra torta nuziale, un ricco buffet di dolci e una selezione di frutta fresca di stagione"
       },
       "dietary_note": "Per qualsiasi esigenza alimentare particolare (intolleranze, allergie, celiachia), potete segnalarcelo nella sezione \"Invitati\" inviandoci un messaggio."
+    }
+  },
+  "guests": {
+    "intro": {
+      "title": "Benvenuti, carissimi invitati",
+      "description": "Siamo felici di potervi accompagnare nel nostro giorno speciale. In questa sezione troverete tutte le informazioni utili per vivere al meglio la giornata: come raggiungere la chiesa e la location del ricevimento, scaricare il Save the Date e inviarci eventuali richieste o messaggi. Abbiamo raccolto tutto ciò che può esservi utile, per farvi vivere la giornata in modo sereno e senza pensieri."
     }
   }
 }
