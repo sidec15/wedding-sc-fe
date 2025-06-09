@@ -29,7 +29,6 @@ export class ReceptionLocationComponent implements AfterViewInit, OnDestroy {
 
   private imageRotationSub!: Subscription;
   private scrollSub!: Subscription;
-  private observer!: IntersectionObserver;
 
   @ViewChild('p1', { static: true }) p1!: ElementRef;
   @ViewChild('p2', { static: true }) p2!: ElementRef;
