@@ -203,14 +203,40 @@
           "options": {
             "saba": {
               "title": "Roma Parking Saba (Piazza di Spagna)",
-              "description": "A scenic walk through the historic center. Estimated walking time: 15 minutes."
+              "description": {
+                "01": "A pleasant walk through the historic center. Estimated walking time: 15 minutes.",
+                "02": "From the parking area, take the underpass that leads directly to the Spagna metro station (Line A). From there, cross Piazza di Spagna keeping to the left, passing the statue of the Madonna in the center of the square. Continue for a few more minutes to reach the church of Sant'Andrea delle Fratte."
+              }
             },
             "ludovisi": {
               "title": "Parking Ludovisi",
-              "description": "Slightly closer, but please note that the return route includes an uphill walk. Estimated walking time: 10 minutes."
+              "description": {
+                "01": "A slightly closer option, with an estimated walking time of about 10 minutes.",
+                "02": "From the parking area, take Via Francesco Crispi to the left, then follow Via Capo delle Case, which leads directly to the church of Sant’Andrea delle Fratte.",
+                "03": "Please note that the return route is uphill, especially in the final stretch, so we recommend taking your time."
+              }
             }
           },
           "recommendation": "We recommend allowing extra time to enjoy the walk and avoid any stress."
+        }
+      },
+      "reception": {
+        "title": "How to reach the reception venue",
+        "intro": "The reception will take place at Park Hotel Villa Ferrata, an elegant villa surrounded by a centuries-old park, located in a quiet area just outside Rome.",
+        "venue": {
+          "title": "Venue information",
+          "note": "The venue is easily accessible by car and offers ample parking space for all guests.",
+          "details": {
+            "transport": {
+              "title": "By Car",
+              "description": "The drive from the church to the venue takes about 45–60 minutes, passing through the center of Rome and continuing southeast. We recommend following the route that goes through Via Cavour and Via Merulana, then onto the Tangenziale Est, and finally the Grande Raccordo Anulare, exiting at Tuscolana/Grottaferrata."
+            },
+            "address": {
+              "title": "Address",
+              "description": "Via Tuscolana, 287, 00046 Grottaferrata (RM)"
+            }
+          },
+          "recommendation": "We recommend planning your trip in advance, especially during peak hours, to ensure a smooth arrival."
         }
       }
     }

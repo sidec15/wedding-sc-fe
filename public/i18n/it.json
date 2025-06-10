@@ -203,14 +203,40 @@
           "options": {
             "saba": {
               "title": "Roma Parking Saba (Piazza di Spagna)",
-              "description": "Una piacevole passeggiata attraverso il centro storico. Tempo di percorrenza stimato: 15 minuti."
+              "description": {
+                "01": "Una piacevole passeggiata attraverso il centro storico. Tempo di percorrenza stimato: 15 minuti.",
+                "02": "Dal parcheggio si accede al sottopassaggio che conduce direttamente alla stazione metro A Spagna. Da lì, si attraversa Piazza di Spagna tenendo la sinistra, superando la statua della Madonna al centro della piazza. Proseguendo ancora per pochi minuti, si raggiunge la chiesa di Sant'Andrea delle Fratte."
+              }
             },
             "ludovisi": {
               "title": "Parking Ludovisi",
-              "description": "Leggermente più vicino, ma si tenga presente che il percorso di ritorno include una salita. Tempo di percorrenza stimato: 10 minuti."
+              "description": {
+                "01": "Parcheggio leggermente più vicino alla chiesa, con un tempo di percorrenza stimato di circa 10 minuti.",
+                "02": "Dal parcheggio si prende Via Francesco Crispi sulla sinistra e si prosegue fino a imboccare Via Capo delle Case, che conduce direttamente alla chiesa di Sant'Andrea delle Fratte.",
+                "03": "Si segnala che il percorso di ritorno è in salita, in particolare nel tratto finale, quindi si raccomanda di procedere con calma."
+              }
             }
           },
           "recommendation": "Consigliamo di prevedere un po' di tempo in più per godersi la passeggiata ed evitare stress."
+        }
+      },
+      "reception": {
+        "title": "Come raggiungere la location del ricevimento",
+        "intro": "Il ricevimento si terrà presso il Park Hotel Villa Ferrata, una villa elegante immersa in un parco secolare, situata in una zona tranquilla appena fuori Roma.",
+        "venue": {
+          "title": "Informazioni sulla location",
+          "note": "La location è facilmente raggiungibile in auto e offre ampio spazio di parcheggio per tutti gli invitati.",
+          "details": {
+            "transport": {
+              "title": "In Auto",
+              "description": "Il tragitto in auto dalla chiesa alla location dura circa 45-60 minuti, attraversando il centro di Roma e proseguendo verso sud-est. Si consiglia di seguire l'itinerario che attraversa Via Cavour e Via Merulana per poi immettersi sulla Tangenziale Est e successivamente sul Grande Raccordo Anulare, in direzione Tuscolana/Grottaferrata."
+            },
+            "address": {
+              "title": "Indirizzo",
+              "description": "Via Tuscolana, 287, 00046 Grottaferrata (RM)"
+            }
+          },
+          "recommendation": "Consigliamo di pianificare il viaggio in anticipo, specialmente nelle ore di punta, per garantire un arrivo senza problemi."
         }
       }
     }

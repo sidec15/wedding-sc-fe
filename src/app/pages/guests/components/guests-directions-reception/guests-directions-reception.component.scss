@@ -1,0 +1,157 @@
+@use "../../../../../styles/variables.scss" as *;
+@use "../../../../../styles/mixins.scss" as *;
+@use "../../styles/guests-styles.scss" as guests;
+
+.directions-reception {
+  min-height: 100lvh;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--bg), 0.95),
+    rgba(var(--bg), 0.98)
+  );
+}
+
+h2 {
+  color: rgb(var(--accent));
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.text-content {
+  .intro {
+    color: rgb(var(--text));
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.venue-info {
+  background: rgba(var(--light-gray), 0.5);
+  padding: 0.5rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(var(--mask), 0.1);
+
+  h3 {
+    color: rgb(var(--accent));
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .note {
+    color: rgb(var(--text));
+    font-style: italic;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: rgba(var(--accent), 0.1);
+    border-radius: 8px;
+  }
+}
+
+.venue-details {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.venue-detail {
+  h4 {
+    color: rgb(var(--accent));
+    font-size: 1.1rem;
+    margin: 1rem 0;
+  }
+
+  p {
+    color: rgb(var(--text));
+    line-height: 1.5;
+  }
+}
+
+.recommendation {
+  color: rgb(var(--text));
+  font-weight: 500;
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(var(--accent), 0.2);
+}
+
+.map-container {
+  position: sticky;
+  top: 1rem;
+  height: fit-content;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(var(--mask), 0.1);
+
+  iframe {
+    display: block;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .directions-reception {
+    padding: 1.5rem 0.75rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .text-content {
+    .intro {
+      font-size: 1rem;
+    }
+  }
+
+  .venue-info {
+    padding: 1rem;
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    .note {
+      padding: 0.6rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  .venue-detail {
+    h4 {
+      font-size: 1.1rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
+
+  .recommendation {
+    font-size: 0.95rem;
+  }
+
+  .map-container {
+    position: relative;
+    top: 0;
+  }
+}
