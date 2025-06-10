@@ -1,0 +1,124 @@
+@use "../../../../../styles/variables.scss" as *;
+@use "../../../../../styles/mixins.scss" as *;
+@use "../../styles/guests-styles.scss" as guests;
+
+.guests-save-the-date-section {
+  min-height: 100lvh;
+  width: 100%;
+  padding: 4rem 2rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--bg), 0.95),
+    rgba(var(--bg), 0.98)
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.save-the-date-card {
+  background: rgba(var(--light-gray), 0.5);
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(var(--mask), 0.10);
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.save-the-date-img {
+  max-width: 320px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(var(--mask), 0.12);
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  background: #fff;
+}
+.save-the-date-img:hover {
+  box-shadow: 0 6px 18px rgba(var(--accent), 0.18);
+}
+
+.download-btn {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background: rgb(var(--accent));
+  color: rgb(var(--text-mask));
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+.download-btn:hover {
+  background: #27416b;
+}
+
+.gallery-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(var(--mask), 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.gallery-content {
+  position: relative;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(var(--mask), 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: rgb(var(--accent));
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close-btn:hover {
+  color: #27416b;
+}
+.gallery-img {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  .guests-save-the-date-section {
+    padding: 2rem 1rem;
+  }
+  .save-the-date-card {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+  .save-the-date-img {
+    max-width: 98vw;
+  }
+}

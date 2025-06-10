@@ -8,10 +8,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { StoryCardsProviderService } from '../../services/story-cards-provider.service';
 import { ParallaxCardModel } from '../../models/parallax-card';
-import { OurStoryVisibilityService } from '../../services/our-story-visibility.service';
 import { PlatformService } from '../../../../services/platform.service';
 import { NgIf } from '@angular/common';
 import { DateTimeService } from '../../../../services/date-time.service';
+import { EventService } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-gallery',
@@ -31,7 +31,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   constructor(
     private platformService: PlatformService,
-    private ourStoryVisibilityService: OurStoryVisibilityService,
+    private eventService: EventService,
     private storyCardsProviderService: StoryCardsProviderService,
     private checngeDetector: ChangeDetectorRef,
     dateTimeService: DateTimeService
@@ -43,7 +43,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!this.platformService.isBrowser()) return;
-    this.subscription = this.ourStoryVisibilityService.galleryStatus$.subscribe(
+    this.subscription = this.eventService.galleryStatus$.subscribe(
       (status) => {
         if (status.isOpen) {
           this.openGallery(status.currentIndex);

@@ -27,6 +27,16 @@ export class EventService {
   private headerBackgroundSubject = new Subject<HeaderBackgroundEvent>();
   headerBackgroundSubject$ = this.headerBackgroundSubject.asObservable();
 
+  private galleryStatusSubject = new BehaviorSubject<GalleryStatus>({
+    isOpen: false,
+    currentIndex: 0,
+  });
+  galleryStatus$ = this.galleryStatusSubject.asObservable();
+
+  emitGalleryStatus(status: GalleryStatus): void {
+    this.galleryStatusSubject.next(status);
+  }
+
   emitScrollEvent(scrollY: number, scrollYOffset: number): void {
     this.scrollEventSubject.next(new ScrollEvent(scrollY, scrollYOffset));
   }
@@ -102,4 +112,9 @@ export class HeaderBackgroundEvent {
   constructor(fillBackground: boolean) {
     this.fillBackground = fillBackground;
   }
+}
+
+export interface GalleryStatus {
+  isOpen: boolean;
+  currentIndex: number;
 }

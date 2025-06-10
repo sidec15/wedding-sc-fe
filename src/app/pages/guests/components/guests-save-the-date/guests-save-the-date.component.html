@@ -1,1 +1,18 @@
-<p>guests-save-the-date works!</p>
+<div class="guests-save-the-date-section">
+  <div class="save-the-date-card">
+    <h2 class="save-the-date-title">Save the Date!</h2>
+    <p class="save-the-date-intro">
+      Siamo felici di annunciare il nostro matrimonio e speriamo che tu possa essere con noi in questo giorno speciale. <br/>
+      Segna la data e scarica la partecipazione!
+    </p>
+    <img
+      [src]="imageUrl"
+      alt="Save the Date"
+      class="save-the-date-img"
+      (click)="openGallery()"
+    />
+    <button (click)="downloadImage()" class="download-btn">Download</button>
+  </div>
+</div>
+
+<app-gallery></app-gallery>
