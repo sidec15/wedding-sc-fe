@@ -1,38 +1,27 @@
 import { Component } from '@angular/core';
-import { GalleryComponent } from '../../../our-story/components/gallery/gallery.component';
 import { EventService } from '../../../../services/event.service';
+import { ImageFocusComponent } from '../../../../components/image-focus/image-focus.component';
 
 @Component({
   selector: 'app-guests-save-the-date',
-  imports: [GalleryComponent],
+  imports: [ImageFocusComponent],
   templateUrl: './guests-save-the-date.component.html',
   styleUrl: './guests-save-the-date.component.scss',
 })
 export class GuestsSaveTheDateComponent {
   isGalleryOpen = false;
-  readonly imageUrl = '/images/guests/save-the-date.jpg';
+  imageUrl = '/images/guests/save-the-date/save-the-date-01.jpg';
 
   constructor(private eventService: EventService) {}
 
-  private card = {
-    type: 'card',
-    image: '/images/guests/save-the-date.jpg',
-  };
-
   openGallery(): void {
+    this.isGalleryOpen = true;
     this.eventService.emitRingScrollEnabled(false);
-    this.eventService.emitGalleryStatus({
-      isOpen: true,
-      currentIndex: 0,
-    });
   }
 
   closeGallery(): void {
+    this.isGalleryOpen = false;
     this.eventService.emitRingScrollEnabled(true);
-    this.eventService.emitGalleryStatus({
-      isOpen: false,
-      currentIndex: 0,
-    });
   }
 
   downloadImage() {

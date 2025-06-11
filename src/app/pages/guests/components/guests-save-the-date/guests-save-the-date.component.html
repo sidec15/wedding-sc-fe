@@ -1,4 +1,4 @@
-<div class="guests-save-the-date-section">
+<section class="guests-save-the-date-section">
   <div class="save-the-date-card">
     <h2 class="save-the-date-title">Save the Date!</h2>
     <p class="save-the-date-intro">
@@ -13,6 +13,9 @@
     />
     <button (click)="downloadImage()" class="download-btn">Download</button>
   </div>
-</div>
-
-<app-gallery></app-gallery>
+  <app-image-focus
+    [imageUrl]="imageUrl"
+    [isVisible]="isGalleryOpen"
+    (close)="closeGallery()"
+  ></app-image-focus>
+</section>

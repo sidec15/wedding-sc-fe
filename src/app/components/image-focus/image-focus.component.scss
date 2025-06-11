@@ -1,0 +1,52 @@
+.image-focus-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100lvh;
+  background-color: rgba(var(--mask), 0.8);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: var(--backdrop-filter);
+
+  .image-container {
+    position: relative;
+    max-width: 90lvw;
+    max-height: 90vh;
+
+    img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      box-shadow: var(--box-shadow-heavy);
+    }
+
+    .close-button {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: var(--carousel-gallery-buttons-background);
+      border: 1px solid var(--carousel-gallery-buttons-border-color);
+      color: var(--carousel-gallery-buttons-color);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      i {
+        font-size: 20px;
+      }
+
+      &:hover {
+        background: var(--carousel-gallery-buttons-hover-color);
+      }
+    }
+  }
+}
