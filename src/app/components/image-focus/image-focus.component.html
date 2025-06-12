@@ -1,6 +1,6 @@
-<div class="image-focus-overlay" *ngIf="isVisible" (click)="close()">
+<div class="image-focus-overlay" *ngIf="isVisible()" (click)="onClose()">
   <div class="image-container" (click)="$event.stopPropagation()">
-    <button class="close-button" (click)="close()">
+    <button class="close-button" (click)="onClose()">
       <i class="fas fa-times"></i>
     </button>
     <img [src]="imageUrl()" alt="Focused image" />

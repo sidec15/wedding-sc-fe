@@ -239,6 +239,12 @@
           "recommendation": "We recommend planning your trip in advance, especially during peak hours, to ensure a smooth arrival."
         }
       }
+    },
+    "save_the_date": {
+      "title": "Save the Date",
+      "description": "We are delighted to announce our wedding and hope you can join us on this special day. Mark the date and download the participation!",
+      "download": "Download",
+      "add_to_calendar": "Add to Calendar"
     }
   }
 }

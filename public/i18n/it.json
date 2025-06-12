@@ -239,6 +239,12 @@
           "recommendation": "Consigliamo di pianificare il viaggio in anticipo, specialmente nelle ore di punta, per garantire un arrivo senza problemi."
         }
       }
+    },
+    "save_the_date": {
+      "title": "Save the Date",
+      "description": "Siamo felici di annunciare il nostro matrimonio e speriamo che tu possa essere con noi in questo giorno speciale. Segna la data e scarica la partecipazione!",
+      "download": "Scarica",
+      "add_to_calendar": "Aggiungi al calendario"
     }
   }
 }

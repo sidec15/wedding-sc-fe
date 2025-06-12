@@ -10,8 +10,9 @@ import { Component, input, Input, Output, EventEmitter } from '@angular/core';
 export class ImageFocusComponent {
   imageUrl = input.required<string>();
   isVisible = input(false);
+  @Output() close = new EventEmitter<void>();
 
-  close() {
-    this.isVisible(false);
+  onClose() {
+    this.close.emit();
   }
 }

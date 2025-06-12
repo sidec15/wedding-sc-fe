@@ -1,21 +1,41 @@
 <section class="guests-save-the-date-section">
+  <h2 class="save-the-date-title">{{ 'guests.save_the_date.title' | translate }}</h2>
   <div class="save-the-date-card">
-    <h2 class="save-the-date-title">Save the Date!</h2>
     <p class="save-the-date-intro">
-      Siamo felici di annunciare il nostro matrimonio e speriamo che tu possa essere con noi in questo giorno speciale. <br/>
-      Segna la data e scarica la partecipazione!
+      {{ 'guests.save_the_date.description' | translate }}
     </p>
-    <img
-      [src]="imageUrl"
-      alt="Save the Date"
-      class="save-the-date-img"
-      (click)="openGallery()"
-    />
-    <button (click)="downloadImage()" class="download-btn">Download</button>
+    <div class="save-the-date-content-container">
+      <div class="save-the-date-content">
+        <img [src]="imageUrl" alt="Save the Date" class="save-the-date-img file" (click)="openGallery()" />
+        <button (click)="downloadImage()" class="btn">Download</button>
+      </div>
+      <div class="save-the-date-content">
+        <img src="/images/guests/save-the-date/save-the-date-03.png" alt="Save the Date 03" class="save-the-date-img calendar" />
+        <button (click)="openCalendarModal()" class="btn">Add to Calendar</button>
+      </div>
+    </div>
   </div>
-  <app-image-focus
-    [imageUrl]="imageUrl"
-    [isVisible]="isGalleryOpen"
-    (close)="closeGallery()"
-  ></app-image-focus>
+  <app-image-focus [imageUrl]="imageUrl" [isVisible]="isGalleryOpen" (close)="closeGallery()"></app-image-focus>
+
+  <!-- Calendar Modal -->
+  <div class="calendar-modal" *ngIf="isCalendarModalOpen" (click)="closeCalendarModal($event)">
+    <div class="calendar-modal-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeCalendarModal($event)">×</button>
+      <h2>Add to Calendar</h2>
+      <div class="calendar-options">
+        <a [href]="googleUrl" target="_blank" class="calendar-option">
+          <img src="/images/calendar/google.png" alt="Google Calendar" />
+          <span>Google Calendar</span>
+        </a>
+        <a [href]="microsoftUrl" target="_blank" class="calendar-option">
+          <img src="/images/calendar/microsoft.png" alt="Microsoft Calendar" />
+          <span>Microsoft Calendar</span>
+        </a>
+        <a [href]="appleUrl" download="event.ics" class="calendar-option">
+          <img src="/images/calendar/apple.png" alt="Apple Calendar" />
+          <span>Apple Calendar</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
