@@ -1,26 +1,52 @@
 <section class="guests-save-the-date-section" ngSkipHydration>
-  <h2 class="save-the-date-title">{{ 'guests.save_the_date.title' | translate }}</h2>
+  <h2 class="save-the-date-title">
+    {{ "guests.save_the_date.title" | translate }}
+  </h2>
   <div class="save-the-date-card">
     <p class="save-the-date-intro">
-      {{ 'guests.save_the_date.description' | translate }}
+      {{ "guests.save_the_date.description" | translate }}
     </p>
     <div class="save-the-date-content-container">
       <div class="save-the-date-content">
-        <img [src]="imageUrl" alt="Save the Date" class="save-the-date-img file" (click)="openGallery()" />
-        <button (click)="downloadImage()" class="btn">{{ 'guests.save_the_date.download' | translate }}</button>
+        <img
+          [src]="imageUrl"
+          alt="Save the Date"
+          class="save-the-date-img file"
+          (click)="openGallery()"
+        />
+        <button (click)="downloadImage()" class="btn">
+          {{ "guests.save_the_date.download" | translate }}
+        </button>
       </div>
       <div class="save-the-date-content">
-        <img src="/images/guests/save-the-date/save-the-date-04.png" alt="Save the Date 03"
-          class="save-the-date-img calendar" />
-        <add-to-calendar-button class="add-to-calendar" name="Matrimonio Chiara & Simone" description="Cerimonia di matrimonio"
-          startDate="2025-10-10" startTime="15:00" endTime="17:00" timeZone="Europe/Rome"
-          location="Chiesa Sant'Andrea delle Fratte, Roma"
-          options="'Apple','Google','iCal','Microsoft365','Outlook.com','Yahoo'" lightMode="bodyScheme" buttonStyle="custom"
-          customCss="https://add-to-calendar-button.com/atcb.css" listStyle="modal" language="it"></add-to-calendar-button>
+        <img
+          src="/images/guests/save-the-date/save-the-date-04.png"
+          alt="Save the Date 03"
+          class="save-the-date-img calendar"
+        />
+        <add-to-calendar-button
+          class="add-to-calendar"
+          [attr.name]="'guests.save_the_date.calendar.title' | translate"
+          [attr.description]="'guests.save_the_date.calendar.description' | translate"
+          [attr.label]="'guests.save_the_date.add_to_calendar' | translate"
+          language="{{ currentLang }}"
+          startDate="2025-10-10"
+          startTime="15:00"
+          endTime="23:00"
+          timeZone="Europe/Rome"
+          location="Basilica Sant'Andrea delle Fratte, Via di Sant'Andrea delle Fratte, 1, 00187 Roma RM, Italy"
+          options="'Apple','Google','iCal','Microsoft365','Outlook.com','Yahoo'"
+          lightMode="bodyScheme"
+          buttonStyle="custom"
+          customCss="/styles/atcb-custom.css"
+          listStyle="modal"
+        ></add-to-calendar-button>
       </div>
     </div>
   </div>
-  <app-image-focus [imageUrl]="imageUrl" [isVisible]="isGalleryOpen" (close)="closeGallery()"></app-image-focus>
-
-
+  <app-image-focus
+    [imageUrl]="imageUrl"
+    [isVisible]="isGalleryOpen"
+    (close)="closeGallery()"
+  ></app-image-focus>
 </section>

@@ -242,9 +242,13 @@
     },
     "save_the_date": {
       "title": "Save the Date",
-      "description": "We are delighted to announce our wedding and hope you can join us on this special day. Mark the date and download the participation!",
+      "description": "We are delighted to announce our wedding and hope you can join us on this special day. Mark the date and download the Save The Date and add it to your calendar!",
       "download": "Download",
-      "add_to_calendar": "Add to Calendar"
+      "add_to_calendar": "Add to Calendar",
+      "calendar": {
+        "title": "Wedding Chiara & Simone",
+        "description": "Reception at Park Hotel Villa Ferrata, address: [url]https://maps.app.goo.gl/6T9AmHyTkmbjFvpQ8|Via Tuscolana, 287, 00046 Grottaferrata RM[/url]"
+      }
     }
   }
 }
