@@ -1,13 +1,14 @@
-<app-parallax-card
-  *ngFor="let card of cards; let i = index"
-  [title]="card.title"
-  [description]="card.description"
-  [image]="card.image || ''"
-  [type]="card.type || 'card'"
-  [date]="card.date"
-  [textPosition]="card.textPosition || 'left'"
-  (click)="openGallery(i)"
-></app-parallax-card>
+@for (card of cards; track card; let i = $index) {
+  <app-parallax-card
+    [title]="card.title"
+    [description]="card.description"
+    [image]="card.image || ''"
+    [type]="card.type || 'card'"
+    [date]="card.date"
+    [textPosition]="card.textPosition || 'left'"
+    (click)="openGallery(i)"
+  ></app-parallax-card>
+}
 <app-ring-scroll></app-ring-scroll>
 
 <app-gallery></app-gallery>

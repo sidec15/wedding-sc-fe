@@ -3,12 +3,14 @@
   appHeaderBgFillObserver
   [fillOnVisible]="false"
   [isEnabled]="!isMobile"
->
+  >
   <!-- Desktop Countdown (in hero image) -->
   <div class="hero-image">
-    <div class="countdown" *ngIf="!isMobile">
-      <ng-container *ngTemplateOutlet="countdownTemplate"></ng-container>
-    </div>
+    @if (!isMobile) {
+      <div class="countdown">
+        <ng-container *ngTemplateOutlet="countdownTemplate"></ng-container>
+      </div>
+    }
   </div>
 
   <!-- Wedding content -->
@@ -18,21 +20,29 @@
     <div class="content">
       <h1>{{ "home.welcome" | translate }}</h1>
       <!-- Desktop: two lines -->
-      <p *ngIf="!isMobile">{{ "home.description_line1" | translate }}</p>
-      <p *ngIf="!isMobile">{{ "home.description_line2" | translate }}</p>
+      @if (!isMobile) {
+        <p>{{ "home.description_line1" | translate }}</p>
+      }
+      @if (!isMobile) {
+        <p>{{ "home.description_line2" | translate }}</p>
+      }
 
       <!-- Mobile: one paragraph -->
-      <p class="mobile-description" *ngIf="isMobile">
-        {{ "home.description_line1" | translate }}
-        {{ "home.description_line2" | translate }}
-      </p>
+      @if (isMobile) {
+        <p class="mobile-description">
+          {{ "home.description_line1" | translate }}
+          {{ "home.description_line2" | translate }}
+        </p>
+      }
       <p class="names">{{ "home.names" | translate }}</p>
       <p class="wedding-date">{{ "home.date" | translate }}</p>
 
       <!-- Mobile Countdown -->
-      <div class="countdown" *ngIf="isMobile">
-        <ng-container *ngTemplateOutlet="countdownTemplate"></ng-container>
-      </div>
+      @if (isMobile) {
+        <div class="countdown">
+          <ng-container *ngTemplateOutlet="countdownTemplate"></ng-container>
+        </div>
+      }
     </div>
 
     <div class="bottom-shape"></div>

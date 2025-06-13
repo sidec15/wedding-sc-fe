@@ -13,7 +13,6 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { ParallaxImageComponent } from '../../../../components/parallax-image/parallax-image.component';
 import { PlatformService } from '../../../../services/platform.service';
-import { NgIf } from '@angular/common';
 import { EventService } from '../../../../services/event.service';
 import { Subscription, take, throttleTime } from 'rxjs';
 import {
@@ -26,7 +25,6 @@ import {
   imports: [
     TranslateModule,
     ParallaxImageComponent,
-    NgIf,
     GenericCarouselComponent,
   ],
   templateUrl: './miracle.component.html',

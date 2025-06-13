@@ -2,7 +2,7 @@
   class="navbar"
   [class.hidden]="isHeaderHidden"
   [class.filled]="isHeaderFilled"
->
+  >
   <a class="logo" routerLink="/">Simone & Chiara</a>
 
   <!-- Hamburger icon (visible only on small screens) -->
@@ -16,7 +16,7 @@
     [class.open]="isMenuOpen"
     [ngStyle]="isMobile ? { 'background-image': navBackground } : null"
     #navLinks
-  >
+    >
     <li class="nav-item">
       <a routerLink="/" (click)="toggleMenu()">{{ "nav.home" | translate }}</a>
     </li>
@@ -48,16 +48,17 @@
         #languageDropdown
         (click)="toggleLanguageDropdown()"
         [class.open]="languageDropdownOpen"
-      >
-        <i class="fa fa-solid fa-globe"></i>
-        <ul
-          *ngIf="languageDropdownOpen"
-          class="language-options"
-          (click)="$event.stopPropagation()"
         >
-          <li (click)="selectLanguage('it')">Italiano</li>
-          <li (click)="selectLanguage('en')">English</li>
-        </ul>
+        <i class="fa fa-solid fa-globe"></i>
+        @if (languageDropdownOpen) {
+          <ul
+            class="language-options"
+            (click)="$event.stopPropagation()"
+            >
+            <li (click)="selectLanguage('it')">Italiano</li>
+            <li (click)="selectLanguage('en')">English</li>
+          </ul>
+        }
       </div>
 
       <!-- Theme Switcher -->
@@ -66,7 +67,7 @@
         #themeDropdown
         (click)="toggleThemeDropdown()"
         [class.open]="themeDropdownOpen"
-      >
+        >
         <span>
           <i
             [ngClass]="{
@@ -79,24 +80,25 @@
           ></i>
         </span>
 
-        <ul
-          *ngIf="themeDropdownOpen"
-          class="theme-options"
-          (click)="$event.stopPropagation()"
-        >
-          <li (click)="selectTheme(Theme.Light)">
-            <i class="fa fa-sun"></i>
-            <span>{{ "nav.theme.light" | translate }}</span>
-          </li>
-          <li (click)="selectTheme(Theme.Dark)">
-            <i class="fa fa-moon"></i>
-            <span>{{ "nav.theme.dark" | translate }}</span>
-          </li>
-          <li (click)="selectTheme(Theme.System)">
-            <i class="fa fa-adjust"></i>
-            <span>{{ "nav.theme.system" | translate }}</span>
-          </li>
-        </ul>
+        @if (themeDropdownOpen) {
+          <ul
+            class="theme-options"
+            (click)="$event.stopPropagation()"
+            >
+            <li (click)="selectTheme(Theme.Light)">
+              <i class="fa fa-sun"></i>
+              <span>{{ "nav.theme.light" | translate }}</span>
+            </li>
+            <li (click)="selectTheme(Theme.Dark)">
+              <i class="fa fa-moon"></i>
+              <span>{{ "nav.theme.dark" | translate }}</span>
+            </li>
+            <li (click)="selectTheme(Theme.System)">
+              <i class="fa fa-adjust"></i>
+              <span>{{ "nav.theme.system" | translate }}</span>
+            </li>
+          </ul>
+        }
       </div>
     </li>
   </ul>

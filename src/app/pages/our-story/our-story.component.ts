@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ParallaxCardModel } from './models/parallax-card';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -12,12 +12,11 @@ import { EventService } from '../../services/event.service';
   selector: 'app-parallax-showcase',
   standalone: true,
   imports: [
-    CommonModule,
     ParallaxCardComponent,
     RingScrollComponent,
     TranslateModule,
     GalleryComponent
-  ],
+],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
   providers: [StoryCardsProviderService]

@@ -11,7 +11,7 @@ import { Subscription, throttleTime } from 'rxjs';
 import { PlatformService } from '../../../../services/platform.service';
 import { EventService, ScrollEvent } from '../../../../services/event.service';
 import { HeaderBgFillObserverDirective } from '../../../../directives/header-bg-fill-observer.directive';
-import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-reception-intro',

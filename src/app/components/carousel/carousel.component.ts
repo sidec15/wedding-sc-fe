@@ -20,12 +20,12 @@ import {
   animate,
 } from '@angular/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import e from 'express';
 
 @Component({
   selector: 'app-carousel',
-  imports: [TranslateModule, NgFor, NgStyle, NgIf, NgClass],
+  imports: [TranslateModule, NgStyle, NgClass],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
   animations: [

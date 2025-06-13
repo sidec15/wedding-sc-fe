@@ -3,19 +3,21 @@
   <div class="image-container">
     <div class="scroll-track" #scrollTrack>
       <!-- First set of images -->
-      <img
-        *ngFor="let img of churchHistoryImages"
-        class="image"
-        [src]="img.src"
-        [alt]="img.alt"
-      />
+      @for (img of churchHistoryImages; track img) {
+        <img
+          class="image"
+          [src]="img.src"
+          [alt]="img.alt"
+          />
+      }
       <!-- Duplicate for seamless loop -->
-      <img
-        *ngFor="let img of churchHistoryImages"
-        class="image"
-        [src]="img.src"
-        [alt]="img.alt"
-      />
+      @for (img of churchHistoryImages; track img) {
+        <img
+          class="image"
+          [src]="img.src"
+          [alt]="img.alt"
+          />
+      }
     </div>
   </div>
   <div class="text-content">

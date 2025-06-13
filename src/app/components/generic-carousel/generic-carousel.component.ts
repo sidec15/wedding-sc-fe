@@ -23,11 +23,11 @@ import {
   animate,
 } from '@angular/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgFor, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-generic-carousel',
-  imports: [TranslateModule, NgFor, NgTemplateOutlet],
+  imports: [TranslateModule, NgTemplateOutlet],
   templateUrl: './generic-carousel.component.html',
   styleUrl: './generic-carousel.component.scss',
   animations: [

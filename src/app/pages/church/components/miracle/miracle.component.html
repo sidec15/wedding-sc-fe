@@ -1,48 +1,50 @@
 <section class="miracle-section" #miracleSection>
-  <h2 class="miracle-title" *ngIf="isMobile">
-    {{ "church.miracle.title" | translate }}
-  </h2>
+  @if (isMobile) {
+    <h2 class="miracle-title">
+      {{ "church.miracle.title" | translate }}
+    </h2>
+  }
 
-  <div class="miracle-container" *ngIf="isPlatformReady">
-    <app-parallax-image
-      [src]="imageSrc"
-      [speedFactor]="0.2"
-      [containerHeight]="isMobile ? '80lvh' : '100lvh'"
-      [imageHeight]="isMobile ? '100lvh' : '120lvh'"
-    ></app-parallax-image>
+  @if (isPlatformReady) {
+    <div class="miracle-container">
+      <app-parallax-image
+        [src]="imageSrc"
+        [speedFactor]="0.2"
+        [containerHeight]="isMobile ? '80lvh' : '100lvh'"
+        [imageHeight]="isMobile ? '100lvh' : '120lvh'"
+      ></app-parallax-image>
 
-    <div class="miracle-text" #miracleText>
-      <ng-container *ngIf="!isMobile">
-        <h2 class="miracle-title">
-          {{ "church.miracle.title" | translate }}
-        </h2>
-        <p class="active">{{ "church.miracle.description1" | translate }}</p>
-        <p>{{ "church.miracle.description2" | translate }}</p>
-        <p>{{ "church.miracle.description3" | translate }}</p>
-        <p class="sign">{{ "church.miracle.sign" | translate }}</p>
-      </ng-container>
-
-      <ng-container *ngIf="isMobile">
-        <app-generic-carousel
-          [slides]="slides"
-          class="mobile-carousel"
-        ></app-generic-carousel>
-
-        <ng-template #miracleSlide>
-          <p>{{ "church.miracle.description1" | translate }}</p>
-        </ng-template>
-
-        <ng-template #miracleSlide>
+      <div class="miracle-text" #miracleText>
+        @if (!isMobile) {
+          <h2 class="miracle-title">
+            {{ "church.miracle.title" | translate }}
+          </h2>
+          <p class="active">{{ "church.miracle.description1" | translate }}</p>
           <p>{{ "church.miracle.description2" | translate }}</p>
-        </ng-template>
+          <p>{{ "church.miracle.description3" | translate }}</p>
+          <p class="sign">{{ "church.miracle.sign" | translate }}</p>
+        } @else {
+          <app-generic-carousel
+            [slides]="slides"
+            class="mobile-carousel"
+          ></app-generic-carousel>
 
-        <ng-template #miracleSlide>
-          <div>
-            <p>{{ "church.miracle.description3" | translate }}</p>
-            <p class="sign">{{ "church.miracle.sign" | translate }}</p>
-          </div>
-        </ng-template>
-      </ng-container>
+          <ng-template #miracleSlide>
+            <p>{{ "church.miracle.description1" | translate }}</p>
+          </ng-template>
+
+          <ng-template #miracleSlide>
+            <p>{{ "church.miracle.description2" | translate }}</p>
+          </ng-template>
+
+          <ng-template #miracleSlide>
+            <div>
+              <p>{{ "church.miracle.description3" | translate }}</p>
+              <p class="sign">{{ "church.miracle.sign" | translate }}</p>
+            </div>
+          </ng-template>
+        }
+      </div>
     </div>
-  </div>
+  }
 </section>

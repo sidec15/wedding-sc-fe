@@ -16,7 +16,7 @@ import {
   ScrollEvent,
 } from '../../../../../services/event.service';
 import { PlatformService } from '../../../../../services/platform.service';
-import { NgFor, NgIf } from '@angular/common';
+
 import {
   CarouselComponent,
   Slide,
@@ -27,10 +27,8 @@ import {
   imports: [
     TranslateModule,
     MovingBackgroundComponent,
-    CarouselComponent,
-    NgFor,
-    NgIf,
-  ],
+    CarouselComponent
+],
   templateUrl: './two-images.component.html',
   styleUrl: './two-images.component.scss',
 })

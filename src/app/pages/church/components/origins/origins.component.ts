@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -7,7 +7,7 @@ import { EventService } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-origins',
-  imports: [TranslateModule, NgFor],
+  imports: [TranslateModule],
   templateUrl: './origins.component.html',
   styleUrl: './origins.component.scss',
 })

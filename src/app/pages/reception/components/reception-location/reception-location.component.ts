@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+
 import {
   AfterViewInit,
   Component,
@@ -13,7 +13,7 @@ import { EventService, ScrollEvent } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-reception-location',
-  imports: [TranslateModule, NgForOf],
+  imports: [TranslateModule],
   templateUrl: './reception-location.component.html',
   styleUrl: './reception-location.component.scss',
 })

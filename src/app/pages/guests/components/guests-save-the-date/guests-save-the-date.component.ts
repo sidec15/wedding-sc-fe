@@ -2,12 +2,12 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventService } from '../../../../services/event.service';
 import { ImageFocusComponent } from '../../../../components/image-focus/image-focus.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+
 import 'add-to-calendar-button';
 
 @Component({
   selector: 'app-guests-save-the-date',
-  imports: [TranslateModule, ImageFocusComponent, CommonModule],
+  imports: [TranslateModule, ImageFocusComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './guests-save-the-date.component.html',
   styleUrl: './guests-save-the-date.component.scss',

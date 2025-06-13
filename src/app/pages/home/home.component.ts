@@ -11,17 +11,16 @@ import { PlatformService } from '../../services/platform.service';
 import { EventService } from '../../services/event.service';
 import { Subscription, timer } from 'rxjs';
 import { DateTime } from 'luxon';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { HeaderBgFillObserverDirective } from '../../directives/header-bg-fill-observer.directive';
 
 @Component({
   selector: 'app-home',
   imports: [
     TranslateModule,
-    NgIf,
     NgTemplateOutlet,
-    HeaderBgFillObserverDirective,
-  ],
+    HeaderBgFillObserverDirective
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

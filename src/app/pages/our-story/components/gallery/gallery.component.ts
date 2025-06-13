@@ -9,13 +9,13 @@ import { Subscription } from 'rxjs';
 import { StoryCardsProviderService } from '../../services/story-cards-provider.service';
 import { ParallaxCardModel } from '../../models/parallax-card';
 import { PlatformService } from '../../../../services/platform.service';
-import { NgIf } from '@angular/common';
+
 import { DateTimeService } from '../../../../services/date-time.service';
 import { EventService } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-gallery',
-  imports: [TranslateModule, NgIf],
+  imports: [TranslateModule],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss',
 })

@@ -8,13 +8,13 @@ import { MenuService } from '../../services/menu.service';
 import { PlatformService } from '../../services/platform.service';
 import { ThemeService } from '../../services/theme.service';
 import { LanguageService } from '../../services/language.service';
-import { NgClass, NgIf, NgStyle } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { constants } from '../../constants';
 
 @Component({
   selector: 'app-header',
-  imports: [TranslateModule, RouterModule, NgClass, NgStyle, NgIf],
+  imports: [TranslateModule, RouterModule, NgClass, NgStyle],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

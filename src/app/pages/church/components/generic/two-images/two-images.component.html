@@ -14,15 +14,17 @@
         [parallaxSpeedFactor]="0.05"
         [opacitySpeedFactor]="0.005"
         [maxScrollForFullOpacity]="300"
-      >
+        >
       </app-moving-background>
 
       <div class="description" #description>
         <h2>{{ contentTitle() | translate }}</h2>
 
-        <p *ngFor="let description of contentDescriptions()">
-          {{ description | translate }}
-        </p>
+        @for (description of contentDescriptions(); track description) {
+          <p>
+            {{ description | translate }}
+          </p>
+        }
       </div>
     </div>
 
@@ -34,8 +36,10 @@
     </div>
   </div>
 
-  <div class="mobile" *ngIf="isMobile">
-    <h2>{{ contentTitle() | translate }}</h2>
-    <app-carousel [slides]=slidesMobile></app-carousel>
-  </div>
+  @if (isMobile) {
+    <div class="mobile">
+      <h2>{{ contentTitle() | translate }}</h2>
+      <app-carousel [slides]=slidesMobile></app-carousel>
+    </div>
+  }
 </section>
