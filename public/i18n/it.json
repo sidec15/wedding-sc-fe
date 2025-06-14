@@ -153,7 +153,7 @@
   },
   "guests": {
     "intro": {
-      "title": "Benvenuti, carissimi invitati",
+      "title": "Benvenuti",
       "description": "Siamo felici di potervi accompagnare nel nostro giorno speciale. In questa sezione troverete tutte le informazioni utili per vivere al meglio la giornata: come raggiungere la chiesa e la location del ricevimento, scaricare il Save the Date e inviarci eventuali richieste o messaggi. Abbiamo raccolto tutto ciò che può esservi utile, per farvi vivere la giornata in modo sereno e senza pensieri."
     },
     "day_info": {
@@ -251,7 +251,8 @@
       }
     },
     "contact_form": {
-      "title": "Hai domande, curiosità o semplicemente vuoi lasciarci un messaggio?",
+      "title": "Contattaci",
+      "subtitle": "Hai domande, curiosità o semplicemente vuoi lasciarci un messaggio?",
       "description": "Compila il form qui sotto: ogni messaggio sarà per noi importante, che si tratti di auguri, richieste o comunicazioni pratiche. Puoi scriverci anche per comunicarci eventuali necessità legate al menù, come intolleranze, allergie, celiachia o preferenze alimentari.",
       "name": "Nome",
       "surname": "Cognome",
@@ -259,10 +260,15 @@
       "email": "Email",
       "message": "Messaggio",
       "submit": "Invia",
-      "success": "Messaggio inviato con successo!",
-      "error": "Si è verificato un errore. Per favore, prova di nuovo.",
+      "success_message": "Messaggio inviato con successo!",
+      "error_message": "Si è verificato un errore. Per favore, prova di nuovo.",
       "privacy_consent": "Acconsento al trattamento dei dati personali ai sensi del D.Lgs. 196/2003 e del Regolamento UE 2016/679 (GDPR).",
-      "privacy_policy": "Privacy Policy"
+      "privacy_policy": "Privacy Policy",
+      "email_required": "Email è obbligatoria",
+      "email_invalid": "Email non valida",
+      "message_required": "Messaggio è obbligatorio",
+      "message_too_long": "Messaggio deve essere minore di 1000 caratteri",
+      "privacy_required": "Consenso alla privacy è obbligatorio"
     }
   }
 }

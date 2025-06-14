@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-guests-contact-form',
@@ -13,14 +14,22 @@ export class GuestsContactFormComponent {
   contactForm: FormGroup;
   submitted = false;
   maxMessageLength = 1000;
+  maxNameLength = 50;
+  maxSurnameLength = 50;
   successMessageTimeoutMs = 3000;
   showSuccess = false;
 
-  constructor(private fb: FormBuilder) {
+  // Phone regex that allows international format
+  private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+
+  constructor(
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer
+  ) {
     this.contactForm = this.fb.group({
-      name: [''],
-      surname: [''],
-      phone: [''],
+      name: ['', [Validators.maxLength(this.maxNameLength)]],
+      surname: ['', [Validators.maxLength(this.maxSurnameLength)]],
+      phone: ['', [Validators.pattern(this.phoneRegex)]],
       email: ['', [Validators.required, Validators.email]],
       message: ['', [Validators.required, Validators.maxLength(this.maxMessageLength)]],
       privacyConsent: [false, Validators.requiredTrue],
@@ -29,18 +38,38 @@ export class GuestsContactFormComponent {
     });
   }
 
+  private sanitizeInput(value: string): string {
+    return value
+      .replace(/[<>]/g, '') // Remove < and > to prevent HTML injection
+      .replace(/javascript:/gi, '') // Remove javascript: protocol
+      .replace(/on\w+=/gi, '') // Remove on* event handlers
+      .trim();
+  }
+
   onSubmit() {
+    this.submitted = true;
+
     if (this.contactForm.get('website')?.value) {
       // If honeypot is filled, silently reject
       return;
     }
 
     if (this.contactForm.valid) {
-      this.submitted = true;
-      // TODO: Implement form submission
+      const formData = { ...this.contactForm.value };
+
+      // Sanitize all text inputs
+      Object.keys(formData).forEach(key => {
+        if (typeof formData[key] === 'string') {
+          formData[key] = this.sanitizeInput(formData[key]);
+        }
+      });
+
+      console.log(formData);
       this.showSuccess = true;
       setTimeout(() => {
         this.showSuccess = false;
+        this.submitted = false;
+        this.contactForm.reset();
       }, this.successMessageTimeoutMs);
     }
   }

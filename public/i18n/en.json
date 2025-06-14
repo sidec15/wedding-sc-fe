@@ -153,7 +153,7 @@
   },
   "guests": {
     "intro": {
-      "title": "Welcome, dear guests",
+      "title": "Welcome",
       "description": "We are delighted to have you with us on our special day. In this section, you'll find all the essential information to make the most of the celebration: how to reach the church and the reception venue, download the Save the Date, and send us any requests or messages. We've gathered everything you might need to help you enjoy the day with peace of mind and ease."
     },
     "day_info": {
@@ -251,18 +251,24 @@
       }
     },
     "contact_form": {
-      "title": "Do you have questions, curiosities, or simply want to leave us a message?",
-      "description": "Fill out the form below: every message matters to us, whether it’s a greeting, a request, or a practical note. You can also use this form to let us know about any dietary needs, such as intolerances, allergies, celiac disease, or food preferences.",
+      "title": "Contact Us",
+      "subtitle": "Do you have questions, curiosities, or simply want to leave us a message?",
+      "description": "Fill out the form below: every message matters to us, whether it's a greeting, a request, or a practical note. You can also use this form to let us know about any dietary needs, such as intolerances, allergies, celiac disease, or food preferences.",
       "name": "Name",
       "surname": "Surname",
       "phone": "Phone",
       "email": "Email",
       "message": "Message",
       "submit": "Submit",
-      "success": "Message sent successfully!",
-      "error": "An error occurred. Please try again.",
+      "success_message": "Message sent successfully!",
+      "error_message": "An error occurred. Please try again.",
       "privacy_consent": "I consent to the processing of my personal data in accordance with the D.Lgs. 196/2003 and the EU Regulation 2016/679 (GDPR).",
-      "privacy_policy": "Privacy Policy"
+      "privacy_policy": "Privacy Policy",
+      "email_required": "Email is required",
+      "email_invalid": "Invalid email address",
+      "message_required": "Message is required",
+      "message_too_long": "Message must be less than 1000 characters",
+      "privacy_required": "Privacy consent is required"
     }
   }
 }
