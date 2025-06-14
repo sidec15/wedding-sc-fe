@@ -13,6 +13,8 @@ export class GuestsContactFormComponent {
   contactForm: FormGroup;
   submitted = false;
   maxMessageLength = 1000;
+  successMessageTimeoutMs = 3000;
+  showSuccess = false;
 
   constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({
@@ -36,7 +38,10 @@ export class GuestsContactFormComponent {
     if (this.contactForm.valid) {
       this.submitted = true;
       // TODO: Implement form submission
-      console.log(this.contactForm.value);
+      this.showSuccess = true;
+      setTimeout(() => {
+        this.showSuccess = false;
+      }, this.successMessageTimeoutMs);
     }
   }
 }

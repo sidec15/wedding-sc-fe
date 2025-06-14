@@ -1,4 +1,7 @@
 <section class="contact-form">
+  <div class="success-message" *ngIf="showSuccess">
+    {{ "guests.contact_form.success_message" | translate }}
+  </div>
   <h2>{{ "guests.contact_form.title" | translate }}</h2>
   <p>{{ "guests.contact_form.description" | translate }}</p>
 
