@@ -249,6 +249,20 @@
         "title": "Matrimonio Chiara & Simone",
         "description": "Ricevimento a Park Hotel Villa Ferrata, indirizzo: [url]https://maps.app.goo.gl/6T9AmHyTkmbjFvpQ8|Via Tuscolana, 287, 00046 Grottaferrata RM[/url]"
       }
+    },
+    "contact_form": {
+      "title": "Hai domande, curiosità o semplicemente vuoi lasciarci un messaggio?",
+      "description": "Compila il form qui sotto: ogni messaggio sarà per noi importante, che si tratti di auguri, richieste o comunicazioni pratiche. Puoi scriverci anche per comunicarci eventuali necessità legate al menù, come intolleranze, allergie, celiachia o preferenze alimentari.",
+      "name": "Nome",
+      "surname": "Cognome",
+      "phone": "Telefono",
+      "email": "Email",
+      "message": "Messaggio",
+      "submit": "Invia",
+      "success": "Messaggio inviato con successo!",
+      "error": "Si è verificato un errore. Per favore, prova di nuovo.",
+      "privacy_consent": "Acconsento al trattamento dei dati personali ai sensi del D.Lgs. 196/2003 e del Regolamento UE 2016/679 (GDPR).",
+      "privacy_policy": "Privacy Policy"
     }
   }
 }
