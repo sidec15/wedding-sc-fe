@@ -270,5 +270,13 @@
       "message_too_long": "Messaggio deve essere minore di 1000 caratteri",
       "privacy_required": "Consenso alla privacy è obbligatorio"
     }
+  },
+  "privacy_policy": {
+    "title": "Informativa sul trattamento dei dati personali",
+    "p1": "Ai sensi dell’articolo 13 del Regolamento (UE) 2016/679 (GDPR), ti informiamo che i dati personali raccolti tramite questo modulo (nome, cognome, telefono, email e messaggio) saranno utilizzati esclusivamente per rispondere alla tua richiesta di contatto.",
+    "p2": "Il conferimento dei dati è facoltativo, ad eccezione dell’indirizzo email, che è necessario per poterti rispondere.",
+    "p3": "I dati non saranno in alcun modo comunicati a terzi né utilizzati per finalità diverse da quelle indicate. La base giuridica del trattamento è il consenso liberamente espresso dall’utente tramite la selezione dell’apposita casella prima dell’invio del messaggio.",
+    "p4": "I dati saranno conservati per il tempo strettamente necessario a evadere la richiesta e comunque non oltre 6 mesi dalla ricezione del messaggio.",
+    "p5": "In qualsiasi momento hai il diritto di accedere ai tuoi dati personali, chiederne la rettifica, la cancellazione, la limitazione del trattamento o opporti allo stesso, nonché di revocare il consenso prestato. Per esercitare tali diritti puoi scrivere a <a href=\"mailto:Simone.decristofaro85@gmail.com\">Simone.decristofaro85@gmail.com</a>."
   }
 }
