@@ -1,7 +1,9 @@
 <section class="contact-form">
-  <div class="success-message" *ngIf="showSuccess">
-    {{ "guests.contact_form.success_message" | translate }}
-  </div>
+  @if (showSuccess) {
+    <div class="success-message">
+      {{ "guests.contact_form.success_message" | translate }}
+    </div>
+  }
   <h2>{{ "guests.contact_form.title" | translate }}</h2>
   <h3>{{ "guests.contact_form.subtitle" | translate }}</h3>
   <p>{{ "guests.contact_form.description" | translate }}</p>
@@ -19,36 +21,46 @@
     <div class="form-group">
       <label for="name">{{ "guests.contact_form.name" | translate }}</label>
       <input type="text" id="name" formControlName="name" maxlength="50" />
-      <div class="error" *ngIf="contactForm.get('name')?.errors?.['maxlength'] && submitted">
-        {{ "guests.contact_form.name_too_long" | translate }}
-      </div>
+      @if (contactForm.get('name')?.errors?.['maxlength'] && submitted) {
+        <div class="error">
+          {{ "guests.contact_form.name_too_long" | translate }}
+        </div>
+      }
     </div>
 
     <div class="form-group">
       <label for="surname">{{ "guests.contact_form.surname" | translate }}</label>
       <input type="text" id="surname" formControlName="surname" maxlength="50" />
-      <div class="error" *ngIf="contactForm.get('surname')?.errors?.['maxlength'] && submitted">
-        {{ "guests.contact_form.surname_too_long" | translate }}
-      </div>
+      @if (contactForm.get('surname')?.errors?.['maxlength'] && submitted) {
+        <div class="error">
+          {{ "guests.contact_form.surname_too_long" | translate }}
+        </div>
+      }
     </div>
 
     <div class="form-group">
       <label for="phone">{{ "guests.contact_form.phone" | translate }}</label>
       <input type="tel" id="phone" formControlName="phone" placeholder="+39 123 456 7890" />
-      <div class="error" *ngIf="contactForm.get('phone')?.errors?.['pattern'] && submitted">
-        {{ "guests.contact_form.phone_invalid" | translate }}
-      </div>
+      @if (contactForm.get('phone')?.errors?.['pattern'] && submitted) {
+        <div class="error">
+          {{ "guests.contact_form.phone_invalid" | translate }}
+        </div>
+      }
     </div>
 
     <div class="form-group">
       <label for="email">{{ "guests.contact_form.email" | translate }} *</label>
       <input type="email" id="email" formControlName="email" required />
-      <div class="error" *ngIf="contactForm.get('email')?.errors?.['required'] && submitted">
-        {{ "guests.contact_form.email_required" | translate }}
-      </div>
-      <div class="error" *ngIf="contactForm.get('email')?.errors?.['email'] && submitted">
-        {{ "guests.contact_form.email_invalid" | translate }}
-      </div>
+      @if (contactForm.get('email')?.errors?.['required'] && submitted) {
+        <div class="error">
+          {{ "guests.contact_form.email_required" | translate }}
+        </div>
+      }
+      @if (contactForm.get('email')?.errors?.['email'] && submitted) {
+        <div class="error">
+          {{ "guests.contact_form.email_invalid" | translate }}
+        </div>
+      }
     </div>
 
     <div class="form-group">
@@ -57,12 +69,16 @@
       <div class="char-count">
         {{ contactForm.get("message")?.value?.length || 0 }}/{{ maxMessageLength }}
       </div>
-      <div class="error" *ngIf="contactForm.get('message')?.errors?.['required'] && submitted">
-        {{ "guests.contact_form.message_required" | translate }}
-      </div>
-      <div class="error" *ngIf="contactForm.get('message')?.errors?.['maxlength'] && submitted">
-        {{ "guests.contact_form.message_too_long" | translate }}
-      </div>
+      @if (contactForm.get('message')?.errors?.['required'] && submitted) {
+        <div class="error">
+          {{ "guests.contact_form.message_required" | translate }}
+        </div>
+      }
+      @if (contactForm.get('message')?.errors?.['maxlength'] && submitted) {
+        <div class="error">
+          {{ "guests.contact_form.message_too_long" | translate }}
+        </div>
+      }
     </div>
 
     <div class="form-group checkbox">
@@ -71,9 +87,11 @@
         {{ "guests.contact_form.privacy_consent" | translate }}
         <a href="/privacy-policy" target="_blank">{{ "guests.contact_form.privacy_policy" | translate }}</a>
       </label>
-      <div class="error" *ngIf="contactForm.get('privacyConsent')?.errors?.['required'] && submitted">
-        {{ "guests.contact_form.privacy_required" | translate }}
-      </div>
+      @if (contactForm.get('privacyConsent')?.errors?.['required'] && submitted) {
+        <div class="error">
+          {{ "guests.contact_form.privacy_required" | translate }}
+        </div>
+      }
     </div>
 
     <button type="submit" [disabled]="contactForm.invalid">

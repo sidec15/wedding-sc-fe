@@ -57,14 +57,22 @@ export class HeaderService {
     return this._isHeaderFilled;
   }
 
-  enable(): void {
+  enableAnimation(): void {
     this._isEnabled = true; // Enable header animation
     this._isHeaderHidden = false; // Ensure header is visible when enabled
   }
 
-  disable(): void {
+  disableAnimation(): void {
     this._isEnabled = false; // Disable header animation
     this._isHeaderHidden = false; // Ensure header is visible when disabled
+  }
+
+  enableHeader(): void {
+    this._isHeaderHidden = false; // Ensure header is visible when enabled
+  }
+
+  disableHeader(): void {
+    this._isHeaderHidden = true; // Ensure header is hidden when disabled
   }
 
   handleScrollEvent(event: ScrollEvent): void {

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-guests-contact-form',
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule, NgIf],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './guests-contact-form.component.html',
   styleUrls: ['./guests-contact-form.component.scss']
 })
