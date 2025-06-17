@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { TranslateService } from '@ngx-translate/core';
+import { constants } from '../constants';
 
 @Injectable({
   providedIn: 'root',
@@ -18,10 +19,15 @@ export class LanguageService {
     const browserLang = this.translateService.getBrowserLang();
 
     this.currentLanguage =
-      savedLang ?? (browserLang?.match(/en|it/) ? browserLang : 'it');
+      savedLang ?? (browserLang?.match(/en|it/) ? browserLang : constants.LANGUAGE);
 
-    this.translateService.setDefaultLang('it');
-    this.translateService.use(this.currentLanguage);
+    this.translateService.setDefaultLang(constants.LANGUAGE);
+    //debug_sdc
+    this.translateService.use(this.currentLanguage).subscribe({
+      next: () => console.log('Translation loaded'),
+      error: (err) => console.error('Translation load error (SSR)', err)
+    });
+
   }
 
   setLanguage(lang: string): void {

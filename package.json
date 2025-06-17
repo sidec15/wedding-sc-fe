@@ -3,11 +3,14 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0",
     "build": "ng build",
+    "build:development": "ng build --configuration development",
+    "build:production": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:wedding-sc-fe": "node dist/wedding-sc-fe/server/server.mjs"
+    "serve:ssr:wedding-sc-fe": "node dist/wedding-sc-fe/server/server.mjs",
+    "prerender": "ng run wedding-sc-fe:prerender"
   },
   "private": true,
   "dependencies": {
