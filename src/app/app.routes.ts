@@ -8,11 +8,10 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Default route
-  // debug_sdc
-  // { path: 'our-story', component: OurStoryComponent }, // Our Story route
-  // { path: 'church', component: ChurchComponent }, // Church route
-  // { path: 'reception', component: ReceptionComponent }, // Reception route
-  // { path: 'guests', component: GuestsComponent }, // Guests route
-  // { path: 'privacy-policy', component: PrivacyPolicyComponent }, // Privacy Policy route
+  { path: 'our-story', component: OurStoryComponent }, // Our Story route
+  { path: 'church', component: ChurchComponent }, // Church route
+  { path: 'reception', component: ReceptionComponent }, // Reception route
+  { path: 'guests', component: GuestsComponent }, // Guests route
+  { path: 'privacy-policy', component: PrivacyPolicyComponent }, // Privacy Policy route
   { path: '**', redirectTo: '' } // Wildcard route to redirect to home
 ];
