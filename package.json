@@ -15,7 +15,9 @@
     "prerender": "ng run wedding-sc-fe:prerender",
     "atcb-css": "sass src/styles/atcb-custom.scss public/styles/atcb-custom.css",
     "atcb-css:watch": "sass --watch src/styles/atcb-custom.scss:public/styles/atcb-custom.css",
-    "start:prod": "http-server dist/wedding-sc-fe/browser -p 8080"
+    "start:prod": "http-server dist/wedding-sc-fe/browser -p 8080",
+    "execute:prod": "npm run clean && npm run build && npm run start:prod",
+    "clean": "rm -rf dist"
   },
   "private": true,
   "dependencies": {
