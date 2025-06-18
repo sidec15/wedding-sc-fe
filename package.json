@@ -3,14 +3,18 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
+    "serve": "ng serve",
+    "start": "concurrently \"ng serve --host 0.0.0.0\" \"npm run atcb-css:watch\"",
     "build": "ng build",
+    "postbuild": "npm run atcb-css",
     "build:development": "ng build --configuration development",
     "build:production": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:wedding-sc-fe": "node dist/wedding-sc-fe/server/server.mjs",
-    "prerender": "ng run wedding-sc-fe:prerender"
+    "prerender": "ng run wedding-sc-fe:prerender",
+    "atcb-css": "sass src/styles/atcb-custom.scss public/styles/atcb-custom.css",
+    "atcb-css:watch": "sass --watch src/styles/atcb-custom.scss:public/styles/atcb-custom.css"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +47,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/luxon": "^3.6.2",
     "@types/node": "^18.18.0",
+    "concurrently": "^9.1.2",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

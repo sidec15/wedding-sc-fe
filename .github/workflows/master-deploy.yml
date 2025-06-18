@@ -1,4 +1,4 @@
-name: Deploy Angular to AWS
+name: Deploy Angular to AWS On Master Push
 
 on:
 
