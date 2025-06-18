@@ -14,7 +14,8 @@
     "serve:ssr:wedding-sc-fe": "node dist/wedding-sc-fe/server/server.mjs",
     "prerender": "ng run wedding-sc-fe:prerender",
     "atcb-css": "sass src/styles/atcb-custom.scss public/styles/atcb-custom.css",
-    "atcb-css:watch": "sass --watch src/styles/atcb-custom.scss:public/styles/atcb-custom.css"
+    "atcb-css:watch": "sass --watch src/styles/atcb-custom.scss:public/styles/atcb-custom.css",
+    "start:prod": "http-server dist/wedding-sc-fe/browser -p 8080"
   },
   "private": true,
   "dependencies": {
