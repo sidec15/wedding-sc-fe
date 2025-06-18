@@ -317,9 +317,6 @@
       li:nth-child(6) {
         animation-delay: 3s;
       }
-      li:nth-child(7) {
-        animation-delay: 3.4s;
-      }
 
       // // EXCEPTION for settings
       li.settings-container li {
@@ -363,16 +360,13 @@
         &:nth-child(6) {
           animation-delay: 2s;
         }
-        &:nth-child(7) {
-          animation-delay: 2.4s;
-        }
       }
 
       // Now slow smooth slide up of entire container
       transform: translateY(-100%);
       opacity: 0;
       pointer-events: none;
-      transition: transform 1.2s ease-in-out 2.8s, opacity 4s ease 2.8s;
+      transition: transform 1.2s ease-in-out 2.4s, opacity 1.2s ease 2.4s;
     }
   }
 
