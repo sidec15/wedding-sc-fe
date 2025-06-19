@@ -125,6 +125,13 @@ export class HeaderComponent {
     this.menuService.toggleMenu(); // Toggle the menu using MenuService
   }
 
+  private setBodyScrollLock(lock: boolean) {
+    if (this.isMobile) {
+      document.body.style.overflow = lock ? 'hidden' : '';
+      document.body.style.touchAction = lock ? 'none' : '';
+    }
+  }
+
   private onMenuEvent(event: MenuEvent): void {
     if (!this.navRef?.nativeElement) return; // Ensure navRef is defined
 
@@ -135,6 +142,9 @@ export class HeaderComponent {
       nav.classList.add('closing');
     } else if (event.status === 'closeEnd') {
       nav.classList.remove('closing');
+      this.setBodyScrollLock(false);
+    } else if (event.status === 'openStart') {
+      this.setBodyScrollLock(true);
     }
   }
 
