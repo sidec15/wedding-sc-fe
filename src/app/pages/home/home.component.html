@@ -42,7 +42,7 @@
         </div>
         <ng-container *ngTemplateOutlet="funnyImageTemplate"></ng-container>
         <div class="lets-start">
-          <button class="btn">
+          <button class="btn" (click)="toggleMenu()">
             {{ "home.lets_start" | translate }}
           </button>
         </div>

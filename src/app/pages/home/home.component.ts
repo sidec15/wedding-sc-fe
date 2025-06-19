@@ -13,6 +13,7 @@ import { Subscription, timer } from 'rxjs';
 import { DateTime } from 'luxon';
 import { NgTemplateOutlet } from '@angular/common';
 import { HeaderBgFillObserverDirective } from '../../directives/header-bg-fill-observer.directive';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-home',
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private platformService: PlatformService,
     private headerService: HeaderService,
+    private menuService: MenuService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -64,6 +66,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.timerSub?.unsubscribe();
     // this.eventService.emitHeaderBackgroundFillEvent(false); // Emit event to reset header background
     if (this.isMobile) this.headerService.enableAnimation(); // Re-enable header animation when leaving home page
+  }
+
+  toggleMenu(): void {
+    this.menuService.toggleMenu();
   }
 
   private updateCountdown(): void {

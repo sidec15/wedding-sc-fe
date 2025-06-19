@@ -34,6 +34,8 @@ export class HeaderComponent {
 
   isHeaderFilled = constants.IS_HEADER_FILLED; // Track if the header background is filled
 
+  private documentClickListener?: (event: MouseEvent) => void;
+
   constructor(
     private platformService: PlatformService,
     private eventService: EventService,
@@ -63,6 +65,7 @@ export class HeaderComponent {
     this.menuSub?.unsubscribe(); // Unsubscribe from menu events
     this.headerBgSub?.unsubscribe(); // Unsubscribe from header background events
     this.headerService.destroy(); // Clean up header service
+    this.removeDocumentClickListener();
   }
 
   get isMobile(): boolean {
@@ -90,6 +93,11 @@ export class HeaderComponent {
 
   toggleLanguageDropdown(): void {
     this.languageDropdownOpen = !this.languageDropdownOpen;
+    if (this.languageDropdownOpen) {
+      this.addDocumentClickListener('language');
+    } else {
+      this.removeDocumentClickListener();
+    }
   }
 
   selectLanguage(lang: string): void {
@@ -99,6 +107,11 @@ export class HeaderComponent {
 
   toggleThemeDropdown(): void {
     this.themeDropdownOpen = !this.themeDropdownOpen;
+    if (this.themeDropdownOpen) {
+      this.addDocumentClickListener('theme');
+    } else {
+      this.removeDocumentClickListener();
+    }
   }
 
   selectTheme(theme: Theme): void {
@@ -122,6 +135,26 @@ export class HeaderComponent {
       nav.classList.add('closing');
     } else if (event.status === 'closeEnd') {
       nav.classList.remove('closing');
+    }
+  }
+
+  private addDocumentClickListener(type: 'language' | 'theme') {
+    this.removeDocumentClickListener();
+    this.documentClickListener = (event: MouseEvent) => {
+      const dropdownRef = type === 'language' ? this.languageDropdownRef : this.themeDropdownRef;
+      if (dropdownRef && !dropdownRef.nativeElement.contains(event.target)) {
+        if (type === 'language') this.languageDropdownOpen = false;
+        if (type === 'theme') this.themeDropdownOpen = false;
+        this.removeDocumentClickListener();
+      }
+    };
+    document.addEventListener('click', this.documentClickListener, true);
+  }
+
+  private removeDocumentClickListener() {
+    if (this.documentClickListener) {
+      document.removeEventListener('click', this.documentClickListener, true);
+      this.documentClickListener = undefined;
     }
   }
 }
