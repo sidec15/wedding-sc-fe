@@ -15,7 +15,7 @@ body.splash-active {
   align-items: center;
   justify-content: center;
   transform: translateY(0);
-  transition: transform 3s ease-in-out, opacity 4.5s ease-in-out;
+  transition: transform 2s ease-in-out, opacity 3s ease-in-out;
   overflow: hidden;
 
   .names {
@@ -26,8 +26,8 @@ body.splash-active {
     text-align: center;
     margin: 0;
     opacity: 0;
-    animation: fadeIn 2s ease-in-out forwards;
-    animation-delay: 1s;
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: 0.5s;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     letter-spacing: 2px;
   }
@@ -44,7 +44,7 @@ body.splash-active {
       transparent 50%
     );
     background-size: 200% 100%;
-    animation: progressBar 8s linear forwards;
+    animation: progressBar 3s linear forwards;
     z-index: 1;
   }
 

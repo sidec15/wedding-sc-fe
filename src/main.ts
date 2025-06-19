@@ -19,7 +19,7 @@ bootstrapApplication(AppComponent, appConfig)
     }
 
     const slideUpDurationMs = 3000;
-    const totalVisibleDurationMs = 8000;
+    const totalVisibleDurationMs = 3000;
 
     const splash = document.getElementById('initial-splash');
     document.body.classList.add('splash-active');
