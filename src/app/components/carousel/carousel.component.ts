@@ -244,7 +244,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Overlay logic */
   private onSlideVisible(): void {
-    this._overlayStatus = 'collapsed';
+    // this._overlayStatus = 'collapsed';
     requestAnimationFrame(() => this.checkOverlayOverflow());
   }
 
