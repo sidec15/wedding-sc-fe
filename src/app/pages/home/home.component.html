@@ -23,24 +23,28 @@
       @if (!isMobile) {
         <p>{{ "home.description_line1" | translate }}</p>
       }
-      @if (!isMobile) {
-        <p>{{ "home.description_line2" | translate }}</p>
-      }
 
       <!-- Mobile: one paragraph -->
       @if (isMobile) {
         <p class="mobile-description">
           {{ "home.description_line1" | translate }}
-          {{ "home.description_line2" | translate }}
         </p>
       }
-      <p class="names">{{ "home.names" | translate }}</p>
       <p class="wedding-date">{{ "home.date" | translate }}</p>
+      @if (!isMobile) {
+        <ng-container *ngTemplateOutlet="funnyImageTemplate"></ng-container>
+      }
 
       <!-- Mobile Countdown -->
       @if (isMobile) {
         <div class="countdown">
           <ng-container *ngTemplateOutlet="countdownTemplate"></ng-container>
+        </div>
+        <ng-container *ngTemplateOutlet="funnyImageTemplate"></ng-container>
+        <div class="lets-start">
+          <button class="btn">
+            {{ "home.lets_start" | translate }}
+          </button>
         </div>
       }
     </div>
@@ -67,4 +71,11 @@
       <span class="label">{{ "home.seconds" | translate }}</span>
     </div>
   </ng-template>
+
+  <ng-template #funnyImageTemplate>
+    <div class="funny-image">
+      <img src="images/comics/comics-01.png" alt="Funny Image" />
+    </div>
+  </ng-template>
+
 </section>

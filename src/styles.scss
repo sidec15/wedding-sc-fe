@@ -52,3 +52,34 @@ html {
   scroll-behavior: smooth;
   box-sizing: border-box;
 }
+
+.btn {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background: rgb(var(--accent));
+  color: rgb(var(--text-mask));
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+
+  &:hover {
+    background: rgb(var(--hover));
+  }
+
+  &:disabled {
+    background-color: rgb(var(--light-gray));
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    &:hover {
+      background: rgb(var(--accent)); /* Disable hover effect on mobile */
+    }
+    &:active {
+      background: rgb(var(--hover)); /* Use hover color for active on mobile */
+    }
+  }
+}
+

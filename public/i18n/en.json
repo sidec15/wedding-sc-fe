@@ -20,14 +20,15 @@
   },
   "home": {
     "welcome": "Welcome!",
-    "description_line1": "Our big day is approaching, and we can't wait",
-    "description_line2": "to share it with you.",
+    "description_line1": "Our big day is approaching",
+    "description_line2": "and we can't wait to share it with you.",
     "names": "Chiara & Simone",
     "date": "October 10, 2025",
     "days": "Days",
     "hours": "Hours",
     "minutes": "Minutes",
-    "seconds": "Seconds"
+    "seconds": "Seconds",
+    "lets_start": "Let's start!"
   },
   "our_story": {
     "intro": {
