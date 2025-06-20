@@ -121,6 +121,10 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stopSlideShow();
   }
 
+  get totalSlides(): number {
+    return this.mySlides.length;
+  }
+
   get overlayStatus(): 'expanded' | 'collapsed' | 'hidden' {
     return this._overlayStatus;
   }

@@ -51,6 +51,9 @@
       <button class="prev-btn" (click)="prevSlide()">
         <i class="fas fa-chevron-left"></i>
       </button>
+      <div class="slide-counter">
+        {{ currentSlideIndex + 1 }} / {{ totalSlides }}
+      </div>
       <button class="next-btn" (click)="nextSlide()">
         <i class="fas fa-chevron-right"></i>
       </button>
