@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
   <head>
+    <script>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('skipSplash') === 'true') {
+          const style = document.createElement('style');
+          style.innerHTML = '#initial-splash { display: none !important; }';
+          document.head.appendChild(style);
+          document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.remove('splash-active');
+          });
+        }
+      })();
+    </script>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap"
       rel="stylesheet"
@@ -14,8 +28,12 @@
     <title>Chiara&Simone</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/images/favicon/favicon-02.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256" type="image/x-icon">
-
+    <link
+      rel="icon"
+      href="/images/favicon/favicon-02.ico"
+      sizes="16x16 32x32 48x48 64x64 128x128 256x256"
+      type="image/x-icon"
+    />
   </head>
   <body>
     <div id="initial-splash">

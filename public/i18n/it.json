@@ -150,7 +150,7 @@
         "title": "Dolce Conclusione",
         "description01": "Per terminare in dolcezza, vi aspettano la nostra torta nuziale, un ricco buffet di dolci e una selezione di frutta fresca di stagione"
       },
-      "dietary_note": "Per qualsiasi esigenza alimentare particolare (intolleranze, allergie, celiachia), potete segnalarcelo nella sezione \"Invitati\" inviandoci un messaggio."
+      "dietary_note": "Per qualsiasi esigenza alimentare particolare (intolleranze, allergie, celiachia), potete segnalarcelo nella sezione <a href='/contact-us?skipSplash=true'>Contattaci</a> inviandoci un messaggio."
     }
   },
   "guests": {

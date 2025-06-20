@@ -85,7 +85,7 @@
       <input type="checkbox" id="privacy" formControlName="privacyConsent" />
       <label for="privacy" class="privacy-consent-label">
         {{ "contact_us.contact_form.privacy_consent" | translate }}
-        <a href="/privacy-policy" target="_blank">{{ "contact_us.contact_form.privacy_policy" | translate }}</a>
+        <a href="/privacy-policy?skipSplash=true" target="_blank">{{ "contact_us.contact_form.privacy_policy" | translate }}</a>
       </label>
       @if (contactForm.get('privacyConsent')?.errors?.['required'] && submitted) {
         <div class="error">

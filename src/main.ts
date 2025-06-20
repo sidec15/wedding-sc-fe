@@ -6,33 +6,33 @@ bootstrapApplication(AppComponent, appConfig)
   .then(() => handleSplash())
   .catch((err) => console.error(err));
 
-  function handleSplash(): void {
-    const excludedRoutes = ['/privacy-policy'];
-    const currentPath = window.location.pathname;
+function handleSplash(): void {
+  const queryParams = new URLSearchParams(window.location.search);
+  const splash = document.getElementById('initial-splash');
 
-    // Skip splash for certain routes
-    if (excludedRoutes.includes(currentPath)) {
-      const splash = document.getElementById('initial-splash');
-      if (splash) splash.remove();
-      document.body.classList.remove('splash-active');
-      return;
-    }
+  const shouldSkipSplash = queryParams.get('skipSplash') === 'true';
 
-    const slideUpDurationMs = 3000;
-    const totalVisibleDurationMs = 3000;
+  if (shouldSkipSplash) {
+    if (splash) splash.remove();
+    document.body.classList.remove('splash-active');
 
-    const splash = document.getElementById('initial-splash');
-    document.body.classList.add('splash-active');
-
-    if (!splash) return;
-
-    setTimeout(() => {
-      splash.classList.add('hidden');
-      document.body.classList.remove('splash-active');
-
-      setTimeout(() => {
-        splash.remove();
-      }, slideUpDurationMs);
-    }, totalVisibleDurationMs);
+    // Clean the URL after skipping splash
+    history.replaceState(null, '', window.location.pathname);
+    return;
   }
 
+  const slideUpDurationMs = 3000;
+  const totalVisibleDurationMs = 3000;
+
+  document.body.classList.add('splash-active');
+  if (!splash) return;
+
+  setTimeout(() => {
+    splash.classList.add('hidden');
+    document.body.classList.remove('splash-active');
+
+    setTimeout(() => {
+      splash.remove();
+    }, slideUpDurationMs);
+  }, totalVisibleDurationMs);
+}

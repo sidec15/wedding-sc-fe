@@ -150,7 +150,7 @@
         "title": "Sweet Conclusion",
         "description01": "To end on a sweet note, enjoy our wedding cake, a rich dessert buffet, and a selection of fresh seasonal fruit."
       },
-      "dietary_note": "If you have any specific dietary needs (intolerances, allergies, celiac disease), please let us know in the \"Guests\" section by sending us a message."
+      "dietary_note": "If you have any specific dietary needs (intolerances, allergies, celiac disease), please let us know in the <a href='/contact-us?skipSplash=true'>Contact Us</a> section by sending us a message."
     }
   },
   "guests": {
