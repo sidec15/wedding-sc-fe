@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { PlatformService } from '../../../../services/platform.service';
 
 @Component({
   selector: 'app-contact-form',
   imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.scss']
+  styleUrls: ['./contact-form.component.scss'],
 })
-export class ContactFormComponent {
+export class ContactFormComponent implements AfterViewInit {
   contactForm: FormGroup;
   submitted = false;
   maxMessageLength = 1000;
@@ -18,24 +24,33 @@ export class ContactFormComponent {
   maxSurnameLength = 50;
   successMessageTimeoutMs = 3000;
   showSuccess = false;
+  isMobile = false;
 
   // Phone regex that allows international format
   private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
 
   constructor(
     private fb: FormBuilder,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private platformService: PlatformService
   ) {
     this.contactForm = this.fb.group({
       name: ['', [Validators.maxLength(this.maxNameLength)]],
       surname: ['', [Validators.maxLength(this.maxSurnameLength)]],
       phone: ['', [Validators.pattern(this.phoneRegex)]],
       email: ['', [Validators.required, Validators.email]],
-      message: ['', [Validators.required, Validators.maxLength(this.maxMessageLength)]],
+      message: [
+        '',
+        [Validators.required, Validators.maxLength(this.maxMessageLength)],
+      ],
       privacyConsent: [false, Validators.requiredTrue],
       // Honeypot field
-      website: ['']
+      website: [''],
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.isMobile = this.platformService.isMobile();
   }
 
   private sanitizeInput(value: string): string {
@@ -58,7 +73,7 @@ export class ContactFormComponent {
       const formData = { ...this.contactForm.value };
 
       // Sanitize all text inputs
-      Object.keys(formData).forEach(key => {
+      Object.keys(formData).forEach((key) => {
         if (typeof formData[key] === 'string') {
           formData[key] = this.sanitizeInput(formData[key]);
         }
