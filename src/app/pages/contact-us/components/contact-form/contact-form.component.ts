@@ -5,12 +5,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-guests-contact-form',
+  selector: 'app-contact-form',
   imports: [CommonModule, ReactiveFormsModule, TranslateModule],
-  templateUrl: './guests-contact-form.component.html',
-  styleUrls: ['./guests-contact-form.component.scss']
+  templateUrl: './contact-form.component.html',
+  styleUrls: ['./contact-form.component.scss']
 })
-export class GuestsContactFormComponent {
+export class ContactFormComponent {
   contactForm: FormGroup;
   submitted = false;
   maxMessageLength = 1000;

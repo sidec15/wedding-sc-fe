@@ -5,6 +5,7 @@
     "church": "Church",
     "reception": "Reception",
     "guests": "Guests",
+    "contact_us": "Contact Us",
     "theme": {
       "light": "Light",
       "dark": "Dark",
@@ -250,7 +251,9 @@
         "title": "Wedding Chiara & Simone",
         "description": "Reception at Park Hotel Villa Ferrata, address: [url]https://maps.app.goo.gl/6T9AmHyTkmbjFvpQ8|Via Tuscolana, 287, 00046 Grottaferrata RM[/url]"
       }
-    },
+    }
+  },
+  "contact_us": {
     "contact_form": {
       "title": "Contact Us",
       "subtitle": "Do you have questions, curiosities, or simply want to leave us a message?",

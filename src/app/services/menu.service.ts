@@ -9,7 +9,7 @@ import { PlatformService } from './platform.service';
 export class MenuService {
   private _isMenuOpened = false;
   private _isMenuClosing = false; // Track if the menu is closing
-  private readonly closeMenuTimeout = 3200; // 2s (item delay) + 1.2s (container slide)
+  private readonly closeMenuTimeout = 3600; // 2.4s (item delay) + 1.2s (container slide)
 
   constructor(
     private eventService: EventService,

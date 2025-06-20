@@ -5,6 +5,7 @@ import { ChurchComponent } from './pages/church/church.component';
 import { ReceptionComponent } from './pages/reception/reception.component';
 import { GuestsComponent } from './pages/guests/guests.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Default route
@@ -12,6 +13,7 @@ export const routes: Routes = [
   { path: 'church', component: ChurchComponent }, // Church route
   { path: 'reception', component: ReceptionComponent }, // Reception route
   { path: 'guests', component: GuestsComponent }, // Guests route
+  { path: 'contact-us', component: ContactUsComponent }, // Contact Us route
   { path: 'privacy-policy', component: PrivacyPolicyComponent }, // Privacy Policy route
   { path: '**', redirectTo: '' } // Wildcard route to redirect to home
 ];
