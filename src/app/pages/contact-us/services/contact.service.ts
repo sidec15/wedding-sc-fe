@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 export interface ContactFormDTO {
@@ -20,6 +21,17 @@ export class ContactService {
   constructor(private http: HttpClient) {}
 
   sendContactForm(data: ContactFormDTO): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+
+    return this.http.post(this.apiUrl, data, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Contact form submission failed', error);
+          return throwError(() => error);
+        })
+      );
   }
 }
