@@ -27,6 +27,7 @@ export class ContactFormComponent implements AfterViewInit {
   showSuccess = false;
   showError = false;
   isMobile = false;
+  isLoading = false;
 
   // Phone regex that allows international format
   private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
@@ -75,6 +76,7 @@ export class ContactFormComponent implements AfterViewInit {
 
     // If the form is valid, send the data to the server.
     if (this.contactForm.valid) {
+      this.isLoading = true;
       const formData = { ...this.contactForm.value };
 
       Object.keys(formData).forEach((key) => {
@@ -93,6 +95,7 @@ export class ContactFormComponent implements AfterViewInit {
 
       this.contactService.sendContactForm(dto).subscribe({
         next: () => {
+          this.isLoading = false;
           this.showSuccess = true;
           setTimeout(() => {
             this.showSuccess = false;
@@ -101,6 +104,7 @@ export class ContactFormComponent implements AfterViewInit {
           }, this.responseMessageTimeoutMs);
         },
         error: (err) => {
+          this.isLoading = false;
           console.error('Contact form submission failed', err);
           // show error message to user
           this.showError = true;

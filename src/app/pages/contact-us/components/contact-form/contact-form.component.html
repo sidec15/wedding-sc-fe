@@ -32,6 +32,14 @@
       [formGroup]="contactForm"
       (ngSubmit)="onSubmit()"
     >
+      <!-- Loading mask -->
+      @if (isLoading) {
+      <div class="loading-mask">
+        <div class="loading-spinner"></div>
+        <p>{{ "contact_us.contact_form.sending_message" | translate }}</p>
+      </div>
+      }
+
       <!-- Honeypot field -->
       <div class="hidden">
         <input type="text" formControlName="website" autocomplete="off" />

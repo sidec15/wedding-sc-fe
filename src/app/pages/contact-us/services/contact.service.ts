@@ -15,7 +15,7 @@ export interface ContactFormDTO {
 })
 export class ContactService {
   private apiUrl =
-    'https://kkcb4d0m88.execute-api.eu-west-1.amazonaws.com/prod/api/contact';
+    'https://matrimonio.chiaraesimone.it/api/contact';
 
   constructor(private http: HttpClient) {}
 

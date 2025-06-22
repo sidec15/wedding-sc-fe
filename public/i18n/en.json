@@ -214,7 +214,7 @@
               "title": "Parking Ludovisi",
               "description": {
                 "01": "A slightly closer option, with an estimated walking time of about 10 minutes.",
-                "02": "From the parking area, take Via Francesco Crispi to the left, then follow Via Capo delle Case, which leads directly to the church of Sant’Andrea delle Fratte.",
+                "02": "From the parking area, take Via Francesco Crispi to the left, then follow Via Capo delle Case, which leads directly to the church of Sant'Andrea delle Fratte.",
                 "03": "Please note that the return route is uphill, especially in the final stretch, so we recommend taking your time."
               }
             }
@@ -265,7 +265,8 @@
       "message": "Message",
       "submit": "Submit",
       "success_message": "Message sent successfully!",
-      "error_message": "An error occurred. Please try again.",
+      "error_message": "An error occurred. Please try later.",
+      "sending_message": "Sending message...",
       "privacy_consent": "I consent to the processing of my personal data in accordance with the D.Lgs. 196/2003 and the EU Regulation 2016/679 (GDPR).",
       "privacy_policy": "Privacy Policy",
       "name_required": "Name is required",
