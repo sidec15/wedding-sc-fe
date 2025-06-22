@@ -9,6 +9,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PlatformService } from '../../../../services/platform.service';
+import { ContactService } from '../../services/contact.service';
 
 @Component({
   selector: 'app-contact-form',
@@ -22,8 +23,9 @@ export class ContactFormComponent implements AfterViewInit {
   maxMessageLength = 1000;
   maxNameLength = 50;
   maxSurnameLength = 50;
-  successMessageTimeoutMs = 3000;
+  responseMessageTimeoutMs = 3000;
   showSuccess = false;
+  showError = false;
   isMobile = false;
 
   // Phone regex that allows international format
@@ -32,13 +34,14 @@ export class ContactFormComponent implements AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
-    private platformService: PlatformService
+    private platformService: PlatformService,
+    private contactService: ContactService
   ) {
     this.contactForm = this.fb.group({
-      name: ['', [Validators.maxLength(this.maxNameLength)]],
-      surname: ['', [Validators.maxLength(this.maxSurnameLength)]],
+      name: ['', [Validators.required, Validators.maxLength(this.maxNameLength)]],
+      surname: ['', [Validators.required, Validators.maxLength(this.maxSurnameLength)]],
       phone: ['', [Validators.pattern(this.phoneRegex)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.email]],
       message: [
         '',
         [Validators.required, Validators.maxLength(this.maxMessageLength)],
@@ -64,28 +67,50 @@ export class ContactFormComponent implements AfterViewInit {
   onSubmit() {
     this.submitted = true;
 
+    // Honeypot field check to prevent spam.
+    // If the honeypot field is filled, return.
     if (this.contactForm.get('website')?.value) {
-      // If honeypot is filled, silently reject
       return;
     }
 
+    // If the form is valid, send the data to the server.
     if (this.contactForm.valid) {
       const formData = { ...this.contactForm.value };
 
-      // Sanitize all text inputs
       Object.keys(formData).forEach((key) => {
         if (typeof formData[key] === 'string') {
           formData[key] = this.sanitizeInput(formData[key]);
         }
       });
 
-      console.log(formData);
-      this.showSuccess = true;
-      setTimeout(() => {
-        this.showSuccess = false;
-        this.submitted = false;
-        this.contactForm.reset();
-      }, this.successMessageTimeoutMs);
+      const dto = {
+        name: formData.name,
+        surname: formData.surname,
+        phone: formData.phone,
+        email: formData.email,
+        message: formData.message,
+      };
+
+      this.contactService.sendContactForm(dto).subscribe({
+        next: () => {
+          this.showSuccess = true;
+          setTimeout(() => {
+            this.showSuccess = false;
+            this.submitted = false;
+            this.contactForm.reset();
+          }, this.responseMessageTimeoutMs);
+        },
+        error: (err) => {
+          console.error('Contact form submission failed', err);
+          // show error message to user
+          this.showError = true;
+          setTimeout(() => {
+            this.showError = false;
+          }, this.responseMessageTimeoutMs);
+        },
+      });
     }
   }
+
+
 }
