@@ -23,7 +23,10 @@ export class ContactService {
   sendContactForm(data: ContactFormDTO): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      'Access-Control-Allow-Origin': environment.accessControl.origin,
+      'Access-Control-Allow-Headers': environment.accessControl.headers,
+      'Access-Control-Allow-Methods': environment.accessControl.methods
     });
 
     return this.http.post(this.apiUrl, data, { headers })
