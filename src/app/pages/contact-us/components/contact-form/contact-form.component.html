@@ -130,14 +130,14 @@
 
       <div class="form-group">
         <re-captcha
+          formControlName="captcha"
           [siteKey]="captchaKey"
-          (success)="onCaptchaSuccess($event)"
-          (error)="onCaptchaError()"
         ></re-captcha>
-        @if (!captchaToken && submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.captcha_required" | translate }}
-        </div>
+
+        @if (contactForm.get('captcha')?.errors?.['required'] && submitted) {
+          <div class="error">
+            {{ "contact_us.contact_form.captcha_required" | translate }}
+          </div>
         }
       </div>
 

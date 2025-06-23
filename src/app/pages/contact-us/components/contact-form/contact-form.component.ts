@@ -35,7 +35,6 @@ export class ContactFormComponent implements AfterViewInit {
   showError = false;
   isMobile = false;
   captchaKey = environment.captcha.siteKey;
-  captchaToken: string | null = null;
 
   // Phone regex that allows international format
   private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
@@ -64,6 +63,8 @@ export class ContactFormComponent implements AfterViewInit {
       privacyConsent: [false, Validators.requiredTrue],
       // Honeypot field
       website: [''],
+      // Captcha field
+      captcha: ['', Validators.required],
     });
   }
 
@@ -88,12 +89,6 @@ export class ContactFormComponent implements AfterViewInit {
       return;
     }
 
-    console.log('captchaToken', this.captchaToken);
-    if (!this.captchaToken) {
-      this.showError = true;
-      return;
-    }
-
     // If the form is valid, send the data to the server.
     if (this.contactForm.valid) {
       this.eventService.emitLoadingMask(true);
@@ -111,7 +106,7 @@ export class ContactFormComponent implements AfterViewInit {
         phone: formData.phone,
         email: formData.email,
         message: formData.message,
-        captcha: this.captchaToken,
+        captcha: formData.captcha,
       };
 
       this.contactService.sendContactForm(dto).subscribe({
@@ -137,12 +132,4 @@ export class ContactFormComponent implements AfterViewInit {
     }
   }
 
-  onCaptchaSuccess(event: Event): void {
-    const token = (event as CustomEvent).detail;
-    this.captchaToken = token;
-  }
-
-  onCaptchaError() {
-    this.captchaToken = null;
-  }
 }
