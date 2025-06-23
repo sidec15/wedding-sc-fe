@@ -133,6 +133,12 @@
           formControlName="captcha"
           [siteKey]="captchaKey"
         ></re-captcha>
+
+        @if (contactForm.get('captcha')?.errors?.['required'] && submitted) {
+          <div class="error">
+            {{ "contact_us.contact_form.captcha_required" | translate }}
+          </div>
+        }
       </div>
 
       <div class="form-group checkbox">

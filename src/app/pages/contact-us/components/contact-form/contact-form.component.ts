@@ -89,6 +89,14 @@ export class ContactFormComponent implements AfterViewInit {
       return;
     }
 
+    // Enforce CAPTCHA
+    if (!this.contactForm.get('captcha')?.value) {
+      console.log('captcha not valid');
+      console.log(this.contactForm.get('captcha')?.value);
+      this.showError = true;
+      return;
+    }
+
     // If the form is valid, send the data to the server.
     if (this.contactForm.valid) {
       this.eventService.emitLoadingMask(true);
