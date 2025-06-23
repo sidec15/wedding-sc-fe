@@ -33,6 +33,9 @@ export class EventService {
   });
   galleryStatus$ = this.galleryStatusSubject.asObservable();
 
+  private loadingMaskSubject = new BehaviorSubject<boolean>(false);
+  loadingMask$ = this.loadingMaskSubject.asObservable();
+
   emitGalleryStatus(status: GalleryStatus): void {
     this.galleryStatusSubject.next(status);
   }
@@ -71,6 +74,10 @@ export class EventService {
     this.headerBackgroundSubject.next(
       new HeaderBackgroundEvent(constants.IS_HEADER_FILLED)
     );
+  }
+
+  emitLoadingMask(visible: boolean): void {
+    this.loadingMaskSubject.next(visible);
   }
 }
 

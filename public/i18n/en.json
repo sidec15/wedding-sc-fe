@@ -19,6 +19,9 @@
     "show_more": "Show more",
     "show_less": "Show less"
   },
+  "global_loading_mask": {
+    "loading": "Loading..."
+  },
   "home": {
     "welcome": "Welcome!",
     "description_line1": "Our big day is approaching",

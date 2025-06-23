@@ -19,6 +19,9 @@
     "show_more": "Mostra di più",
     "show_less": "Mostra meno"
   },
+  "global_loading_mask": {
+    "loading": "Caricamento..."
+  },
   "home": {
     "welcome": "Benvenuti!",
     "description_line1": "Il nostro grande giorno si avvicina",

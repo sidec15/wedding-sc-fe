@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PlatformService } from '../../../../services/platform.service';
 import { ContactService } from '../../services/contact.service';
+import { EventService } from '../../../../services/event.service';
 
 @Component({
   selector: 'app-contact-form',
@@ -27,7 +28,6 @@ export class ContactFormComponent implements AfterViewInit {
   showSuccess = false;
   showError = false;
   isMobile = false;
-  isLoading = false;
 
   // Phone regex that allows international format
   private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
@@ -36,7 +36,8 @@ export class ContactFormComponent implements AfterViewInit {
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
     private platformService: PlatformService,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private eventService: EventService
   ) {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(this.maxNameLength)]],
@@ -76,7 +77,7 @@ export class ContactFormComponent implements AfterViewInit {
 
     // If the form is valid, send the data to the server.
     if (this.contactForm.valid) {
-      this.isLoading = true;
+      this.eventService.emitLoadingMask(true);
       const formData = { ...this.contactForm.value };
 
       Object.keys(formData).forEach((key) => {
@@ -95,16 +96,16 @@ export class ContactFormComponent implements AfterViewInit {
 
       this.contactService.sendContactForm(dto).subscribe({
         next: () => {
-          this.isLoading = false;
+          this.contactForm.reset();
+          this.eventService.emitLoadingMask(false);
           this.showSuccess = true;
+          this.submitted = false;
           setTimeout(() => {
             this.showSuccess = false;
-            this.submitted = false;
-            this.contactForm.reset();
           }, this.responseMessageTimeoutMs);
         },
         error: (err) => {
-          this.isLoading = false;
+          this.eventService.emitLoadingMask(false);
           console.error('Contact form submission failed', err);
           // show error message to user
           this.showError = true;

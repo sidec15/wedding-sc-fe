@@ -6,6 +6,7 @@ import { PlatformService } from './services/platform.service';
 import { ScrollManagerService } from './services/scroll-manager.service';
 import { HeaderComponent } from './components/header/header.component';
 import { LanguageService } from './services/language.service';
+import { GlobalLoadingMaskComponent } from './components/global-loading-mask/global-loading-mask.component';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { LanguageService } from './services/language.service';
     RouterOutlet,
     TranslateModule,
     HeaderComponent,
+    GlobalLoadingMaskComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

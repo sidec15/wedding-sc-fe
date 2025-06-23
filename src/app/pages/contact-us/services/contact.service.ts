@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, delay } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 export interface ContactFormDTO {
@@ -24,11 +24,16 @@ export class ContactService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Access-Control-Allow-Origin': environment.accessControl.origin,
-      'Access-Control-Allow-Headers': environment.accessControl.headers,
-      'Access-Control-Allow-Methods': environment.accessControl.methods
     });
 
+    // // mock loading and success response
+    // return of(true).pipe(
+    //   delay(4000),
+    //   catchError(error => {
+    //     console.error('Contact form submission failed', error);
+    //     return throwError(() => error);
+    //   })
+    // );
     return this.http.post(this.apiUrl, data, { headers })
       .pipe(
         catchError(error => {
