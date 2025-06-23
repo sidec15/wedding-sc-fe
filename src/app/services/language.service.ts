@@ -1,10 +1,9 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { constants } from '../constants';
-import { EventService } from './event.service';
 import { PlatformService } from './platform.service';
+import { detectInitialLanguage } from '../utils/language.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -19,11 +18,9 @@ export class LanguageService {
   private currentLanguage!: string;
 
   init(): void {
-    const savedLang = this.storageService.get('language');
-    const browserLang = this.translateService.getBrowserLang();
 
     // Enhanced language detection with SSR support
-    this.currentLanguage = this.detectLanguage(savedLang, browserLang);
+    this.currentLanguage = detectInitialLanguage();
 
     this.translateService.setDefaultLang(constants.LANGUAGE);
 
@@ -34,21 +31,8 @@ export class LanguageService {
     });
   }
 
-  private detectLanguage(savedLang: string | null, browserLang: string | undefined): string {
-    // Priority: saved language > browser language > default
-    if (savedLang && this.isSupportedLanguage(savedLang)) {
-      return savedLang;
-    }
-
-    if (browserLang && this.isSupportedLanguage(browserLang)) {
-      return browserLang;
-    }
-
-    return constants.LANGUAGE;
-  }
-
   private isSupportedLanguage(lang: string): boolean {
-    return ['en', 'it'].includes(lang);
+    return constants.SUPPORTED_LANGUAGES.includes(lang);
   }
 
   setLanguage(lang: string): void {
