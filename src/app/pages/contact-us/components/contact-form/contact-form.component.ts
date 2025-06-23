@@ -7,12 +7,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { PlatformService } from '../../../../services/platform.service';
 import { ContactService } from '../../services/contact.service';
 import { EventService } from '../../../../services/event.service';
-import { NgxCaptchaModule } from 'ngx-captcha';
 import { environment } from '../../../../../environments/environment';
+import { RecaptchaModule } from 'ng-recaptcha-2';
 
 @Component({
   selector: 'app-contact-form',
@@ -20,7 +19,7 @@ import { environment } from '../../../../../environments/environment';
     CommonModule,
     ReactiveFormsModule,
     TranslateModule,
-    NgxCaptchaModule,
+    RecaptchaModule,
   ],
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss'],
@@ -43,7 +42,6 @@ export class ContactFormComponent implements AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private sanitizer: DomSanitizer,
     private platformService: PlatformService,
     private contactService: ContactService,
     private eventService: EventService
@@ -107,7 +105,7 @@ export class ContactFormComponent implements AfterViewInit {
         phone: formData.phone,
         email: formData.email,
         message: formData.message,
-        captcha: formData.captcha,
+        captcha: this.captchaToken,
       };
 
       this.contactService.sendContactForm(dto).subscribe({
