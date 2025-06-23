@@ -6,13 +6,15 @@ export function detectInitialLanguage(): string {
 
   const supportedLanguages = constants.SUPPORTED_LANGUAGES;
 
+  let lang = constants.LANGUAGE;
+
   if (savedLang && supportedLanguages.includes(savedLang)) {
-    return savedLang;
+    lang = savedLang;
+  } else if (browserLang && supportedLanguages.includes(browserLang)) {
+    lang = browserLang;
   }
 
-  if (browserLang && supportedLanguages.includes(browserLang)) {
-    return browserLang;
-  }
+  console.log('Language detected:', lang);
 
-  return constants.LANGUAGE;
+  return lang;
 }

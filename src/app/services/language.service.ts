@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { constants } from '../constants';
 import { PlatformService } from './platform.service';
 import { detectInitialLanguage } from '../utils/language.utils';
+import { EventService } from './event.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,8 @@ export class LanguageService {
   constructor(
     private storageService: StorageService,
     private translateService: TranslateService,
-    private platformService: PlatformService
+    private platformService: PlatformService,
+    private eventService: EventService
   ) {}
 
   private currentLanguage!: string;
@@ -49,6 +51,7 @@ export class LanguageService {
     }
 
     this.translateService.use(lang);
+    this.eventService.emitLanguageChanged(lang);
   }
 
   getLanguage(): string {

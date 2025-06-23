@@ -9,6 +9,9 @@ export class EventService {
   // the difference between Subject and BehaviorSubject is that
   // BehaviorSubject requires an initial value and always emits the current value
 
+  private languageChangedSubject = new Subject<string>();
+  languageChanged$ = this.languageChangedSubject.asObservable();
+
   private scrollEventSubject = new Subject<ScrollEvent>();
   scrollEvent$ = this.scrollEventSubject.asObservable();
 
@@ -35,6 +38,10 @@ export class EventService {
 
   private loadingMaskSubject = new BehaviorSubject<boolean>(false);
   loadingMask$ = this.loadingMaskSubject.asObservable();
+
+  emitLanguageChanged(language: string): void {
+    this.languageChangedSubject.next(language);
+  }
 
   emitGalleryStatus(status: GalleryStatus): void {
     this.galleryStatusSubject.next(status);
