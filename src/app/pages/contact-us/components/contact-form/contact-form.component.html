@@ -37,21 +37,6 @@
       </div>
 
       <div class="form-group">
-        <re-captcha
-          formControlName="captcha"
-          [siteKey]="captchaKey"
-          (resolved)="onCaptchaResolved($event)"
-          (error)="onCaptchaError()"
-        ></re-captcha>
-
-        @if (contactForm.get('captcha')?.errors?.['required'] && submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.captcha_required" | translate }}
-        </div>
-        }
-      </div>
-
-      <div class="form-group">
         <label for="name"
           >{{ "contact_us.contact_form.name" | translate }} *</label
         >
@@ -145,10 +130,12 @@
 
       <div class="form-group">
         <re-captcha
+          formControlName="captcha"
           [siteKey]="captchaKey"
           (resolved)="onCaptchaResolved($event)"
           (error)="onCaptchaError()"
         ></re-captcha>
+
         @if (contactForm.get('captcha')?.errors?.['required'] && submitted) {
         <div class="error">
           {{ "contact_us.contact_form.captcha_required" | translate }}
