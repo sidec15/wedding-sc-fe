@@ -7,6 +7,6 @@ export const environment = {
     methods: 'OPTIONS,POST'
   },
   captcha: {
-    siteKey: '6Lf0000000000000000000000000000000000000'
+    siteKey: '6LeGlWkrAAAAADh2u8GPtjSZd7AMF4EqGR6fk_-F'
   },
 };

@@ -35,7 +35,7 @@ export class ContactFormComponent implements AfterViewInit {
   showError = false;
   isMobile = false;
   captchaKey = environment.captcha.siteKey;
-  captchaToken = '';
+  captchaToken: string | null = null;
 
   // Phone regex that allows international format
   private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
@@ -88,6 +88,11 @@ export class ContactFormComponent implements AfterViewInit {
       return;
     }
 
+    if (!this.captchaToken) {
+      this.showError = true;
+      return;
+    }
+
     // If the form is valid, send the data to the server.
     if (this.contactForm.valid) {
       this.eventService.emitLoadingMask(true);
@@ -131,11 +136,12 @@ export class ContactFormComponent implements AfterViewInit {
     }
   }
 
-  onCaptchaSuccess(token: string) {
+  onCaptchaSuccess(event: Event): void {
+    const token = (event as CustomEvent).detail;
     this.captchaToken = token;
   }
 
   onCaptchaError() {
-    this.captchaToken = '';
+    this.captchaToken = null;
   }
 }
