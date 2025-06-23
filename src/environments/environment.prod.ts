@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://matrimonio.chiaraesimone.it/api'
+  apiUrl: 'https://api.matrimonio.chiaraesimone.it'
 };
