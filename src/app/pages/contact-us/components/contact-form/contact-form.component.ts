@@ -146,4 +146,9 @@ export class ContactFormComponent implements AfterViewInit {
     this.contactForm.get('captcha')?.setValue(token);
   }
 
+  onCaptchaError() {
+    console.log('captcha error');
+    this.contactForm.get('captcha')?.setValue(null);
+  }
+
 }
