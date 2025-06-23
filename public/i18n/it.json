@@ -281,7 +281,8 @@
       "email_invalid": "Email non valida",
       "message_required": "Messaggio è obbligatorio",
       "message_too_long": "Messaggio deve essere minore di 1000 caratteri",
-      "privacy_required": "Consenso alla privacy è obbligatorio"
+      "privacy_required": "Consenso alla privacy è obbligatorio",
+      "captcha_required": "Captcha è obbligatorio"
     }
   },
   "privacy_policy": {

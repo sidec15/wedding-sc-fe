@@ -3,8 +3,7 @@
   <div class="success-message">
     {{ "contact_us.contact_form.success_message" | translate }}
   </div>
-  }
-  @if (showError) {
+  } @if (showError) {
   <div class="error-message">
     {{ "contact_us.contact_form.error_message" | translate }}
   </div>
@@ -32,16 +31,15 @@
       [formGroup]="contactForm"
       (ngSubmit)="onSubmit()"
     >
-
       <!-- Honeypot field -->
       <div class="hidden">
         <input type="text" formControlName="website" autocomplete="off" />
       </div>
 
       <div class="form-group">
-        <label for="name">{{
-          "contact_us.contact_form.name" | translate
-        }} *</label>
+        <label for="name"
+          >{{ "contact_us.contact_form.name" | translate }} *</label
+        >
         <input type="text" id="name" formControlName="name" maxlength="50" />
         @if (contactForm.get('name')?.errors?.['required'] && submitted) {
         <div class="error">
@@ -55,9 +53,9 @@
       </div>
 
       <div class="form-group">
-        <label for="surname">{{
-          "contact_us.contact_form.surname" | translate
-        }} *</label>
+        <label for="surname"
+          >{{ "contact_us.contact_form.surname" | translate }} *</label
+        >
         <input
           type="text"
           id="surname"
@@ -93,9 +91,9 @@
       </div>
 
       <div class="form-group">
-        <label for="email"
-          >{{ "contact_us.contact_form.email" | translate }}</label
-        >
+        <label for="email">{{
+          "contact_us.contact_form.email" | translate
+        }}</label>
         <input type="email" id="email" formControlName="email" required />
         @if (contactForm.get('email')?.errors?.['email'] && submitted) {
         <div class="error">
@@ -126,6 +124,19 @@
         } @if (contactForm.get('message')?.errors?.['maxlength'] && submitted) {
         <div class="error">
           {{ "contact_us.contact_form.message_too_long" | translate }}
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <re-captcha
+          [siteKey]="captchaKey"
+          (success)="onCaptchaSuccess($event)"
+          (error)="onCaptchaError()"
+        ></re-captcha>
+        @if (!captchaToken && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.captcha_required" | translate }}
         </div>
         }
       </div>

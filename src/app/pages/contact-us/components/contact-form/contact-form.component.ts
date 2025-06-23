@@ -11,10 +11,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PlatformService } from '../../../../services/platform.service';
 import { ContactService } from '../../services/contact.service';
 import { EventService } from '../../../../services/event.service';
+import { NgxCaptchaModule } from 'ngx-captcha';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-contact-form',
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    NgxCaptchaModule,
+  ],
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss'],
 })
@@ -28,6 +35,8 @@ export class ContactFormComponent implements AfterViewInit {
   showSuccess = false;
   showError = false;
   isMobile = false;
+  captchaKey = environment.captcha.siteKey;
+  captchaToken = '';
 
   // Phone regex that allows international format
   private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
@@ -40,8 +49,14 @@ export class ContactFormComponent implements AfterViewInit {
     private eventService: EventService
   ) {
     this.contactForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(this.maxNameLength)]],
-      surname: ['', [Validators.required, Validators.maxLength(this.maxSurnameLength)]],
+      name: [
+        '',
+        [Validators.required, Validators.maxLength(this.maxNameLength)],
+      ],
+      surname: [
+        '',
+        [Validators.required, Validators.maxLength(this.maxSurnameLength)],
+      ],
       phone: ['', [Validators.pattern(this.phoneRegex)]],
       email: ['', [Validators.email]],
       message: [
@@ -92,6 +107,7 @@ export class ContactFormComponent implements AfterViewInit {
         phone: formData.phone,
         email: formData.email,
         message: formData.message,
+        captcha: formData.captcha,
       };
 
       this.contactService.sendContactForm(dto).subscribe({
@@ -117,5 +133,11 @@ export class ContactFormComponent implements AfterViewInit {
     }
   }
 
+  onCaptchaSuccess(token: string) {
+    this.captchaToken = token;
+  }
 
+  onCaptchaError() {
+    this.captchaToken = '';
+  }
 }
