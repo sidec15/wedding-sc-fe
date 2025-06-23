@@ -41,6 +41,7 @@
           formControlName="captcha"
           [siteKey]="captchaKey"
           (resolved)="onCaptchaResolved($event)"
+          (error)="onCaptchaError()"
         ></re-captcha>
 
         @if (contactForm.get('captcha')?.errors?.['required'] && submitted) {
@@ -145,10 +146,10 @@
       <div class="form-group">
         <re-captcha
           [siteKey]="captchaKey"
-          (success)="onCaptchaSuccess($event)"
+          (resolved)="onCaptchaResolved($event)"
           (error)="onCaptchaError()"
         ></re-captcha>
-        @if (!captchaToken && submitted) {
+        @if (contactForm.get('captcha')?.errors?.['required'] && submitted) {
         <div class="error">
           {{ "contact_us.contact_form.captcha_required" | translate }}
         </div>
