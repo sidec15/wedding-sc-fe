@@ -138,6 +138,12 @@ export class ContactFormComponent implements AfterViewInit {
         },
       });
     }
+
+  }
+
+  onCaptchaResolved(token: string | null): void {
+    console.log('captcha resolved', token);
+    this.contactForm.get('captcha')?.setValue(token);
   }
 
 }
