@@ -114,7 +114,7 @@ export class ContactFormComponent implements AfterViewInit {
         phone: formData.phone,
         email: formData.email,
         message: formData.message,
-        captcha: formData.captcha,
+        recaptchaToken: formData.captcha,
       };
 
       this.contactService.sendContactForm(dto).subscribe({
