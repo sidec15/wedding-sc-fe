@@ -88,6 +88,7 @@ export class ContactFormComponent implements AfterViewInit {
       return;
     }
 
+    console.log('captchaToken', this.captchaToken);
     if (!this.captchaToken) {
       this.showError = true;
       return;
