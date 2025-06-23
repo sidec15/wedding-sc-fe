@@ -7,6 +7,7 @@ import { ScrollManagerService } from './services/scroll-manager.service';
 import { HeaderComponent } from './components/header/header.component';
 import { LanguageService } from './services/language.service';
 import { GlobalLoadingMaskComponent } from './components/global-loading-mask/global-loading-mask.component';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -30,40 +31,39 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     public router: Router,
     private platformService: PlatformService,
     private scrollManager: ScrollManagerService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit(): void {
-    this.languageService.init(); // Initialize language service
-    this.resetScroll(); // Reset scroll position on app load
+    this.themeService.initTheme();
+    this.languageService.init();
+    this.resetScroll();
   }
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;
 
-    this.scrollManager.init(); // Initialize scroll manager
+    this.scrollManager.init();
   }
 
   ngOnDestroy(): void {
     if (!this.platformService.isBrowser()) return;
-    this.scrollManager.destroy(); // Destroy scroll manager
+    this.scrollManager.destroy();
   }
 
   private resetScroll() {
     if (!this.platformService.isBrowser()) return;
 
-    // Prevent browser from restoring scroll position
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
 
-    // Temporarily disable smooth scroll for instant scroll-to-top
     document.documentElement.style.scrollBehavior = 'auto';
     document.body.style.scrollBehavior = 'auto';
 
-    window.scrollTo(0, 0); // Force scroll to top
+    window.scrollTo(0, 0);
 
-    // Restore smooth scrolling
     setTimeout(() => {
       document.documentElement.style.scrollBehavior = '';
       document.body.style.scrollBehavior = '';

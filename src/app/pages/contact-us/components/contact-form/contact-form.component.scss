@@ -80,6 +80,13 @@
             outline: none;
             border-color: rgb(var(--accent));
           }
+
+          &:-webkit-autofill {
+            box-shadow: 0 0 0 1000px rgb(var(--bg)) inset !important;
+            -webkit-text-fill-color: rgb(var(--text)) !important;
+            transition: background-color 5000s ease-in-out 0s;
+            caret-color: rgb(var(--text));
+          }
         }
       }
 

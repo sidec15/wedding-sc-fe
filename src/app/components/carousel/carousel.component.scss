@@ -33,7 +33,7 @@
     right: 5%;
     height: 100%; // Match the height of .slide
     overflow: hidden; // Hide overflowing text
-    background: rgba(var(--text-mask), 0.7);
+    background: rgba(var(--bg), 0.7);
     backdrop-filter: blur(var(--backdrop-filter));
     padding: 1.5rem;
     box-shadow: 0 2px 10px var(--box-shadow-heavy);
@@ -88,18 +88,18 @@
     backdrop-filter: blur(var(--backdrop-blur));
     .slide-counter {
       font-size: 1.2rem;
-      color: rgb(var(--text-mask));
+      color: rgb(var(--text));
       font-weight: bold;
-      background: rgba(var(--text-mask), 0.6);
+      background: rgba(var(--bg), 0.6);
       padding: 0.5rem 1rem;
       border-radius: 5px;
       margin: 0;
     }
     .prev-btn,
     .next-btn {
-      background: rgba(var(--text-mask), 0.6);
+      background: rgba(var(--bg), 0.6);
       border: none;
-      color: rgb(var(--text-mask));
+      color: rgb(var(--text));
       font-size: 1.2rem;
       cursor: pointer;
       padding: 0.5rem 1rem;
@@ -136,7 +136,7 @@
         .next-btn {
           backdrop-filter: blur(4px);
           border: none;
-          color: rgb(var(--text-mask));
+          color: rgb(var(--text));
           font-size: 1.2rem !important;
           cursor: pointer;
           padding: 0.5rem 1rem !important;
@@ -171,7 +171,8 @@
       z-index: 1003 !important;
 
       .show-btn {
-        background: rgba(var(--text-mask), 1);
+        background: rgba(var(--bg), 0.6);
+        backdrop-filter: blur(4px);
         border: none;
         border-radius: 4px;
         padding: 0.3rem 0.8rem;
@@ -190,7 +191,7 @@
       left: 0;
       padding: 1rem;
       padding-bottom: 3rem; // Reserve space for the Show More button
-      background: rgba(var(--text-mask), 0.85);
+      background: rgba(var(--bg), 0.85);
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
       transition: max-height 0.3s ease;
@@ -212,7 +213,7 @@
         padding-bottom: 1rem; // Remove reserved space when expanded
         border-top-left-radius: 0;
         border-top-right-radius: 0;
-        background: rgba(var(--text-mask), 0.85);
+        background: rgba(var(--bg), 0.85);
         backdrop-filter: blur(8px);
         &::after {
           content: none;

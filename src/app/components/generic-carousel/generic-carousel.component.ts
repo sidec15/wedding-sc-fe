@@ -131,6 +131,10 @@ export class GenericCarouselComponent implements AfterViewInit, OnDestroy {
     return this._slides;
   }
 
+  get totalSlides(): number {
+    return this._slides.length;
+  }
+
   /** Public slide controls */
   prevSlide(): void {
     this.goToSlide(-1);

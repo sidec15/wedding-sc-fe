@@ -76,6 +76,17 @@
         transform: scale(0.95);
       }
     }
+
+    .slide-counter {
+      font-size: 1.2rem;
+      color: rgb(var(--text));
+      font-weight: bold;
+      background: rgba(var(--bg), 0.6);
+      backdrop-filter: blur(4px);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      margin: 0;
+    }
   }
 
   .progress-bar-container {

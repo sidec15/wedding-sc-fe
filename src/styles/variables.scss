@@ -4,6 +4,7 @@
   --bg: 255, 255, 255; // Background color (RGB)
   --text: 51, 51, 51; // Text color (RGB)
   --text-mask: 255, 255, 255; // Text mask color
+  --text-mask-dark: 51, 51, 51; // Text color (RGB)
   --mask: 0, 0, 0; // Text mask color
   --accent: 207, 154, 114; // Accent color (RGB)
   --hover: 184, 127, 94; // Hover color (RGB)
@@ -32,18 +33,18 @@
 
 // Dark theme
 [data-theme="dark"] {
-  --bg: 18, 18, 18; // Darker background for better contrast
-  --text: 230, 230, 230; // Slightly lighter text for readability
-  --accent: 227, 168, 109; // Keep the accent color consistent
-  --hover: 209, 138, 79; // Keep hover color consistent
-  --light-gray: 50, 50, 50; // Adjust light gray for better contrast in dark mode
-  --gradient-start: 40, 50, 60; // Slightly darker gradient start for dark mode
-  --gradient-end: 60, 50, 70; // Slightly darker gradient end for dark mode
-  --inner-shadow: 0, 0, 0; // Keep inner shadow black for dark mode
+  --bg: 32, 34, 37; // Elegant dark gray background
+  --text: 225, 225, 230; // Soft off-white for readability
+  --accent: 227, 168, 109; // Accent color (unchanged)
+  --hover: 209, 138, 79; // Hover color (unchanged)
+  --light-gray: 54, 57, 63; // Lighter gray for borders and backgrounds
+  --gradient-start: 44, 47, 51; // Deep blue-gray for gradient start
+  --gradient-end: 58, 62, 68; // Slightly lighter blue-gray for gradient end
+  --inner-shadow: 0, 0, 0; // Black for inner shadow
   --mask-transparent: transparent; // No change needed
-  --box-shadow-heavy: rgba(0, 0, 0, 0.6); // Heavier shadow for dark mode
-  --box-shadow-medium: rgba(0, 0, 0, 0.4); // Medium shadow for dark mode
-  --box-shadow-light: rgba(0, 0, 0, 0.2); // Lighter shadow for subtle effects
+  --box-shadow-heavy: rgba(0, 0, 0, 0.7); // Slightly heavier shadow
+  --box-shadow-medium: rgba(0, 0, 0, 0.45); // Medium shadow
+  --box-shadow-light: rgba(0, 0, 0, 0.22); // Lighter shadow for subtle effects
   --vertical-moving-background-font-size: 5rem; // Font size for vertical moving background
   --horizontal-moving-background-font-size: 3rem; // Font size for horizontal moving background
 }

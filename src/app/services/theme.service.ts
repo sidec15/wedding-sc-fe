@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Theme } from '../models/theme';
 import { PlatformService } from './platform.service';
 import { StorageService } from './storage.service';
+import { constants } from '../constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-  private currentTheme: Theme = Theme.Light;
+
+  private currentTheme: Theme = constants.DEFAULT_THEME;
 
   constructor(
     private platformService: PlatformService,
@@ -37,5 +39,18 @@ export class ThemeService {
     }
 
     document.documentElement.setAttribute('data-theme', themeToApply);
+  }
+
+  /**
+   * Initialize theme from localStorage or use system as default.
+   */
+  initTheme(): void {
+    if (!this.platformService.isPlatformReady()) return;
+    const stored = this.storageService.get('theme') as Theme | null;
+    if (stored && Object.values(Theme).includes(stored)) {
+      this.setCurrentTheme(stored);
+    } else {
+      this.setCurrentTheme(constants.DEFAULT_THEME);
+    }
   }
 }

@@ -35,7 +35,7 @@ section {
     z-index: 2;
     text-align: center;
     padding: 1rem;
-    background: rgba(var(--text-mask), 0.85);
+    background: rgba(var(--bg), 0.85);
     backdrop-filter: blur(4px);
     transition: opacity 0.2s ease-out;
     will-change: opacity, transform;
