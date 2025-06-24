@@ -27,30 +27,38 @@ section {
   padding: 2rem;
   position: relative;
   overflow: hidden;
+
+  h2 {
+    color: rgb(var(--accent));
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+    position: relative;
+  }
+
+  p {
+    color: rgb(var(--text));
+    line-height: 1.6;
+    font-size: 1.5rem;
+    max-width: 800px;
+    animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
 }
 
-h2 {
-  color: rgb(var(--accent));
-  margin-bottom: 1.5rem;
-  font-size: 2.5rem;
-  animation: fadeInUp 0.8s ease-out forwards;
-  opacity: 0;
-  transform: translateY(20px);
-  position: relative;
-}
-
-p {
-  color: rgb(var(--text));
-  line-height: 1.6;
-  font-size: 1.5rem;
-  max-width: 800px;
-  animation: fadeInUp 0.8s ease-out 0.3s forwards;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
+@media (max-width: 768px) {
+  .guests-intro {
+    p {
+      font-size: 1.2rem;
+    }
   }
 }
 
