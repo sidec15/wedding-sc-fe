@@ -16,11 +16,16 @@
     </script>
 
     <script>
-      // Get the theme from the localStorage or system preference as early as possible
-      // This is used to set the data-theme attribute on the html element
-      // This is needed to load the splash screen with the correct background image
-      const theme = themeUtils.getTheme();
-      themeUtils.applyTheme(theme);
+      // Set theme attribute as early as possible
+      try {
+        var theme = localStorage.getItem('theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
     </script>
 
     <link

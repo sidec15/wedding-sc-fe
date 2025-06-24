@@ -70,6 +70,7 @@ body.splash-active {
     .bar {
       height: 3px;
     }
+
   }
 
   // Dark theme override (nested)
@@ -79,9 +80,9 @@ body.splash-active {
     background-position: center;
 
     @media (max-width: 768px) {
-      background: url("/images/splash/splash-04.png") no-repeat center center;
-      background-size: cover;
-      background-position: center;
+      background: url("/images/splash/splash-04.png") no-repeat center center !important;
+      background-size: cover !important;
+      background-position: center !important;
     }
   }
 }
