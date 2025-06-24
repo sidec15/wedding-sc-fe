@@ -17,21 +17,6 @@ export class StoryCardsProviderService {
       image: '/images/our-story/our-story-19890101.jpg',
     },
     {
-      type: 'card',
-      title: 'our_story.first_trip.title',
-      date: { year: 2008, month: 8, day: 2 },
-      description: 'our_story.first_trip.description',
-      image: '/images/our-story/our-story-20080802.jpg',
-    },
-    {
-      type: 'card',
-      title: 'our_story.proposal.title',
-      date: { year: 2023, month: 12, day: 10 },
-      description: 'our_story.proposal.description',
-      image: '/images/our-story/our-story-20151023.jpg',
-      textPosition: 'right',
-    },
-    {
       type: 'outro',
       title: 'our_story.outro.title',
       description: 'our_story.outro.description',

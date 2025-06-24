@@ -71,6 +71,19 @@ body.splash-active {
       height: 3px;
     }
   }
+
+  // Dark theme override (nested)
+  [data-theme="dark"] & {
+    background: url("/images/splash/splash-03.png") no-repeat center center;
+    background-size: cover;
+    background-position: center;
+
+    @media (max-width: 768px) {
+      background: url("/images/splash/splash-04.png") no-repeat center center;
+      background-size: cover;
+      background-position: center;
+    }
+  }
 }
 
 @keyframes progressBar {

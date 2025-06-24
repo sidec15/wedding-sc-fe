@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Theme } from '../models/theme';
 import { PlatformService } from './platform.service';
-import { StorageService } from './storage.service';
 import { constants } from '../constants';
+import * as themeUtils from '../utils/theme.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,6 @@ export class ThemeService {
 
   constructor(
     private platformService: PlatformService,
-    private storageService: StorageService
   ) {}
 
   getCurrentTheme(): Theme {
@@ -22,7 +21,7 @@ export class ThemeService {
 
   setCurrentTheme(theme: Theme): void {
     this.currentTheme = theme;
-    this.storageService.set('theme', theme);
+    themeUtils.setThemeInLocalStorage(theme);
     this.applyTheme(theme);
   }
 
@@ -30,15 +29,7 @@ export class ThemeService {
     // avoid SSR crash
     if (!this.platformService.isPlatformReady()) return;
 
-    let themeToApply = theme;
-    if (theme === Theme.System) {
-      const prefersDarkScheme = window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      ).matches;
-      themeToApply = prefersDarkScheme ? Theme.Dark : Theme.Light;
-    }
-
-    document.documentElement.setAttribute('data-theme', themeToApply);
+    themeUtils.applyTheme(theme);
   }
 
   /**
@@ -46,11 +37,7 @@ export class ThemeService {
    */
   initTheme(): void {
     if (!this.platformService.isPlatformReady()) return;
-    const stored = this.storageService.get('theme') as Theme | null;
-    if (stored && Object.values(Theme).includes(stored)) {
-      this.setCurrentTheme(stored);
-    } else {
-      this.setCurrentTheme(constants.DEFAULT_THEME);
-    }
+    const theme = themeUtils.getTheme();
+    this.setCurrentTheme(theme);
   }
 }
