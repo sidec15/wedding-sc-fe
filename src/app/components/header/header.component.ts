@@ -36,6 +36,12 @@ export class HeaderComponent {
 
   private documentClickListener?: (event: MouseEvent) => void;
 
+  // --- Swipe up to close menu logic ---
+  private touchStartY: number | null = null;
+  private touchEndY: number | null = null;
+  private swipeListenerAdded = false;
+  private swipeUpThreshold = 60;
+
   constructor(
     private platformService: PlatformService,
     private eventService: EventService,
@@ -59,6 +65,11 @@ export class HeaderComponent {
         this.isHeaderFilled = e.fillBackground; // Update header background state
       }
     );
+
+    // Attach swipe listener if menu is open on mobile
+    if (this.isMobile && this.isMenuOpen) {
+      this.addSwipeListener();
+    }
   }
 
   ngOnDestroy(): void {
@@ -66,6 +77,7 @@ export class HeaderComponent {
     this.headerBgSub?.unsubscribe(); // Unsubscribe from header background events
     this.headerService.destroy(); // Clean up header service
     this.removeDocumentClickListener();
+    this.removeSwipeListener();
   }
 
   get isMobile(): boolean {
@@ -140,11 +152,13 @@ export class HeaderComponent {
     if (event.status === 'closeStart') {
       nav.classList.remove('open');
       nav.classList.add('closing');
+      this.removeSwipeListener();
     } else if (event.status === 'closeEnd') {
       nav.classList.remove('closing');
       this.setBodyScrollLock(false);
     } else if (event.status === 'openStart') {
       this.setBodyScrollLock(true);
+      this.addSwipeListener();
     }
   }
 
@@ -166,5 +180,40 @@ export class HeaderComponent {
       document.removeEventListener('click', this.documentClickListener, true);
       this.documentClickListener = undefined;
     }
+  }
+
+  // --- Swipe up to close menu logic ---
+  private onTouchStart = (e: TouchEvent) => {
+    if (e.touches.length === 1) {
+      this.touchStartY = e.touches[0].clientY;
+    }
+  };
+
+  private onTouchEnd = (e: TouchEvent) => {
+    if (this.touchStartY !== null && e.changedTouches.length === 1) {
+      this.touchEndY = e.changedTouches[0].clientY;
+      const deltaY = this.touchStartY - this.touchEndY;
+      if (deltaY > this.swipeUpThreshold) { // swipe up threshold
+        this.menuService.toggleMenu();
+      }
+    }
+    this.touchStartY = null;
+    this.touchEndY = null;
+  };
+
+  private addSwipeListener() {
+    if (this.swipeListenerAdded || !this.navRef?.nativeElement) return;
+    const nav = this.navRef.nativeElement;
+    nav.addEventListener('touchstart', this.onTouchStart, { passive: true });
+    nav.addEventListener('touchend', this.onTouchEnd, { passive: true });
+    this.swipeListenerAdded = true;
+  }
+
+  private removeSwipeListener() {
+    if (!this.swipeListenerAdded || !this.navRef?.nativeElement) return;
+    const nav = this.navRef.nativeElement;
+    nav.removeEventListener('touchstart', this.onTouchStart);
+    nav.removeEventListener('touchend', this.onTouchEnd);
+    this.swipeListenerAdded = false;
   }
 }
