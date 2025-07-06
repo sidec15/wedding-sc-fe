@@ -21,13 +21,16 @@ import { DateTimeService } from '../../../../services/date-time.service';
 export class ParallaxCardComponent implements AfterViewInit {
 
   readonly dateTimeService: DateTimeService;
-  
+
   @Input() title = '';
   @Input() description = '';
   @Input() image = '';
   @Input() date?: { year: number; month?: number; day?: number };
   @Input() type: 'card' | 'intro' | 'outro' = 'card';
   @Input() textPosition: 'left' | 'right' = 'left';
+  @Input() comic?: string;
+  @Input() comicPositionX?: 'left' | 'right';
+  @Input() comicPositionY?: 'top' | 'bottom';
 
   @ViewChild('card', { static: false }) cardEl?: ElementRef<HTMLElement>;
   @ViewChild('content', { static: false }) contentEl?: ElementRef<HTMLElement>;

@@ -1,5 +1,5 @@
 @use "../../../../../styles/variables.scss" as *;
-@use '../../styles/our-story-styles.scss' as ourstory;
+@use "../../styles/our-story-styles.scss" as ourstory;
 
 :host {
   display: block;
@@ -65,19 +65,45 @@
           color: rgb(var(--text));
         }
 
+        // Left or right positioning
+        &.left {
+          left: 5%;
+          right: auto;
+        }
+
+        &.right {
+          right: 5%;
+          left: auto;
+          text-align: right;
+        }
       }
-    }
 
-    // Left or right positioning
-    &.left .text-overlay {
-      left: 5%;
-      right: auto;
-    }
+      .comic {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1000;
 
-    &.right .text-overlay {
-      right: 5%;
-      left: auto;
-      text-align: right;
+        &.left {
+          left: 0;
+        }
+
+        &.right {
+          right: 0;
+        }
+
+        &.top {
+          top: 0;
+        }
+
+        &.bottom {
+          bottom: 0;
+        }
+      }
     }
   }
 
@@ -185,15 +211,13 @@
 
     &.intro,
     &.outro {
-  
       .text-only-content {
-  
         h3 {
           font-size: 1.5rem;
           color: rgb(var(--accent));
           margin-bottom: 1.5rem;
         }
-  
+
         .description {
           font-size: 0.9rem;
         }
