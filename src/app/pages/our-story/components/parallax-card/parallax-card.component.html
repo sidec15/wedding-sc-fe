@@ -3,7 +3,7 @@
   <!-- 🖼️ Main photo card -->
   @case ('card') {
   <div class="image-overlay">
-    <img [src]="image" [alt]="title" />
+    <img [src]="image" class="image" [alt]="title" />
     <div class="text-overlay" #content>
       <h3>{{ title | translate }}</h3>
       @if (date) {
@@ -12,12 +12,9 @@
       <p class="description">{{ description | translate }}</p>
     </div>
     @if (comic) {
-    <img
-      [src]="comic"
-      class="comic"
-      [ngClass]="[comicPositionX, comicPositionY]"
-      [alt]="title"
-    />
+    <div class="comic-wrapper" [ngClass]="[comicPositionX, comicPositionY]">
+      <img [src]="comic" class="comic" [alt]="title" />
+    </div>
     }
   </div>
   }

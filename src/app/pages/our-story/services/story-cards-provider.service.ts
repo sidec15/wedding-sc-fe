@@ -17,7 +17,7 @@ export class StoryCardsProviderService {
       image: '/images/our-story/our-story_19860401.jpg',
       comic: '/images/comics/comics-04.png',
       comicPositionX: 'right',
-      comicPositionY: 'bottom',
+      comicPositionY: 'top',
     },
     {
       type: 'card',

@@ -6,6 +6,9 @@
     [type]="card.type || 'card'"
     [date]="card.date"
     [textPosition]="card.textPosition || 'left'"
+    [comic]="card.comic || ''"
+    [comicPositionX]="card.comicPositionX || 'right'"
+    [comicPositionY]="card.comicPositionY || 'top'"
     (click)="openGallery(i)"
   ></app-parallax-card>
 }
