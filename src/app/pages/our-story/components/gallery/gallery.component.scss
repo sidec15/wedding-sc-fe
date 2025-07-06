@@ -6,6 +6,12 @@
   width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
+
+  // Comic positioning variables
+  --comic-offset-desktop-y: 10px;
+  --comic-offset-desktop-x: 10px;
+  --comic-offset-mobile-y: 5px;
+  --comic-offset-mobile-x: 5px;
 }
 
 .gallery-modal {
@@ -25,6 +31,7 @@
     position: relative;
     text-align: center;
     color: rgb(var(--text-mask));
+    min-height: 100vh; // Ensure full height for comic positioning
 
     .close-btn {
       position: fixed; // Make the button fixed relative to the viewport
@@ -68,6 +75,60 @@
       font-size: 1.2rem;
     }
 
+        .comic-wrapper {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      &.left {
+        left: var(--comic-offset-desktop-x);
+        transform: translateY(-50%);
+
+        .comic {
+          object-position: left center;
+        }
+      }
+
+      &.right {
+        right: var(--comic-offset-desktop-x);
+        left: auto;
+        transform: translateY(-50%);
+
+        .comic {
+          object-position: right center;
+        }
+      }
+
+      &.top {
+        top: var(--comic-offset-desktop-y);
+        transform: translateX(-50%);
+
+        .comic {
+          object-position: center top;
+        }
+      }
+
+      &.bottom {
+        bottom: var(--comic-offset-desktop-y);
+        top: auto;
+        transform: translateX(-50%);
+
+        .comic {
+          object-position: center bottom;
+        }
+      }
+
+      .comic {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+      }
+    }
+
     .gallery-image-wrapper {
       display: flex;
       flex-direction: column; // Stack the image and buttons vertically
@@ -79,13 +140,13 @@
         justify-content: center;
         align-items: center;
         position: relative;
-  
+
         img {
           max-width: 90%;
           max-height: 80vh;
           display: block; // Ensure the image does not overflow
         }
-  
+
       }
 
       .prev-btn,
@@ -114,6 +175,28 @@
 }
 
 @media screen and (max-width: 768px) {
+  .gallery-modal {
+    .gallery-content {
+      .comic-wrapper {
+        position: static; // Follow normal document flow
+        width: 300px;
+        height: 300px;
+        margin: 2rem auto 0; // Center below description
+        transform: none;
+
+        // Reset all positioning classes for mobile
+        &.left, &.right, &.top, &.bottom {
+          position: static;
+          left: auto;
+          right: auto;
+          top: auto;
+          bottom: auto;
+          transform: none;
+        }
+      }
+    }
+  }
+
   .gallery-image-wrapper {
     .prev-btn,
     .next-btn {

@@ -12,10 +12,11 @@ import { PlatformService } from '../../../../services/platform.service';
 
 import { DateTimeService } from '../../../../services/date-time.service';
 import { EventService } from '../../../../services/event.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-gallery',
-  imports: [TranslateModule],
+  imports: [TranslateModule, NgClass],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss',
 })

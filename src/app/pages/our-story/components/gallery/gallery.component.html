@@ -37,6 +37,11 @@
         <p class="gallery-description">
           {{ currentCard.description || '' | translate }}
         </p>
+        @if (currentCard.comic) {
+          <div class="comic-wrapper" [ngClass]="[currentCard.comicPositionX, currentCard.comicPositionY]">
+            <img [src]="currentCard.comic" class="comic" [alt]="currentCard.title || 'Comic'" />
+          </div>
+        }
       </div>
     </div>
   }
