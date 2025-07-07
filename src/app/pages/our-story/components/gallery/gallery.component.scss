@@ -6,9 +6,6 @@
   width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
-
-  // Comic positioning variables
-  --comic-offset-desktop-x: 10px;
 }
 
 .gallery-modal {
@@ -25,9 +22,14 @@
   overflow-y: auto;
 
   .gallery-content {
-    text-align: center;
     color: rgb(var(--text-mask));
-    min-height: 100vh; // Ensure full height for comic positioning
+    min-height: 100lvh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    position: relative;
 
     .close-btn {
       position: absolute;
@@ -66,45 +68,25 @@
       z-index: 1001; // Ensure it appears above everything
     }
 
-    h3 {
-      margin-bottom: 0.5rem;
-      color: rgb(var(--accent));
-      // font-size: 2rem;
-    }
+    .gallery-text-wrapper {
+      flex: 1;
+      max-width: 300px;
 
-    .date {
-      font-style: italic;
-      font-size: 0.95rem;
-      color: rgb(var(--accent)); // Use hover color for subtle contrast
-      margin-bottom: 1rem;
-    }
-
-    .gallery-description {
-      font-size: 1.2rem;
-    }
-
-    .comic-wrapper {
-      position: fixed; // Position relative to viewport
-      width: 350px;
-      height: 350px;
-      z-index: 1000; // Above other modal content
-      // center the comic vertically only
-      top: 50%;
-      transform: translateY(-50%);
-
-      &.left {
-        left: var(--comic-offset-desktop-x);
+      h3 {
+        margin-bottom: 0.5rem;
+        color: rgb(var(--accent));
+        // font-size: 2rem;
       }
 
-      &.right {
-        right: var(--comic-offset-desktop-x);
+      .date {
+        font-style: italic;
+        font-size: 0.95rem;
+        color: rgb(var(--accent)); // Use hover color for subtle contrast
+        margin-bottom: 1rem;
       }
 
-      .comic {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        object-position: center;
+      .gallery-description {
+        font-size: 1.2rem;
       }
     }
 
@@ -113,7 +95,8 @@
       flex-direction: column;
       align-items: center;
       position: relative;
-      padding-top: 80px; // Add space for the close button
+      flex: 2;
+      max-width: 600px;
 
       .gallery-image {
         display: flex;
@@ -127,44 +110,58 @@
           max-height: 80vh;
           display: block;
         }
+      }
 
-        .gallery-buttons {
-          position: absolute;
-          top: 50%;
-          left: 0;
-          right: 0;
-          transform: translateY(-50%);
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0 20px;
-          pointer-events: none; // Allow clicks to pass through to image
-        }
+          .gallery-buttons {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      z-index: 1001;
 
-        .prev-btn,
-        .next-btn {
-          background: rgba(var(--mask), 0.9);
-          border: 2px solid rgb(var(--text-mask));
-          border-radius: 50%;
-          color: rgb(var(--text-mask));
-          font-size: 1.5rem;
-          cursor: pointer;
-          z-index: 1001;
-          width: 60px;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.3s ease;
-          pointer-events: auto; // Re-enable clicks for buttons
+      .prev-btn,
+      .next-btn {
+        background: rgba(var(--mask), 0.9);
+        border: 2px solid rgb(var(--text-mask));
+        border-radius: 50%;
+        color: rgb(var(--text-mask));
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 1001;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
 
-          &:hover {
-            background: rgba(var(--mask), 1);
-            transform: scale(1.1);
-          }
+        &:hover {
+          background: rgba(var(--mask), 1);
+          transform: scale(1.1);
         }
       }
     }
+    }
+
+    .comic-wrapper {
+      flex: 1;
+      max-width: 300px;
+      width: 350px;
+      height: 350px;
+      z-index: 1000;
+
+      .comic {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+      }
+    }
+
   }
 }
 
@@ -215,7 +212,7 @@
           }
         }
 
-                .gallery-image {
+        .gallery-image {
           position: relative;
 
           .gallery-buttons {
