@@ -1,5 +1,5 @@
 @use "../../../../../styles/variables.scss" as *;
-@use '../../styles/our-story-styles.scss' as ourstory;
+@use "../../styles/our-story-styles.scss" as ourstory;
 
 :host {
   display: block;
@@ -75,18 +75,15 @@
       font-size: 1.2rem;
     }
 
-        .comic-wrapper {
-      position: absolute;
+    .comic-wrapper {
+      position: fixed; // Position relative to viewport
       width: 350px;
       height: 350px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      z-index: 1001; // Above other modal content
+      // No top, bottom, or transform here!
 
       &.left {
         left: var(--comic-offset-desktop-x);
-        transform: translateY(-50%);
-
         .comic {
           object-position: left center;
         }
@@ -94,9 +91,6 @@
 
       &.right {
         right: var(--comic-offset-desktop-x);
-        left: auto;
-        transform: translateY(-50%);
-
         .comic {
           object-position: right center;
         }
@@ -104,8 +98,6 @@
 
       &.top {
         top: var(--comic-offset-desktop-y);
-        transform: translateX(-50%);
-
         .comic {
           object-position: center top;
         }
@@ -113,9 +105,6 @@
 
       &.bottom {
         bottom: var(--comic-offset-desktop-y);
-        top: auto;
-        transform: translateX(-50%);
-
         .comic {
           object-position: center bottom;
         }
@@ -146,7 +135,6 @@
           max-height: 80vh;
           display: block; // Ensure the image does not overflow
         }
-
       }
 
       .prev-btn,
@@ -170,7 +158,6 @@
         align-self: flex-end; // Align the button to the right
       }
     }
-
   }
 }
 
@@ -185,13 +172,15 @@
         transform: none;
 
         // Reset all positioning classes for mobile
-        &.left, &.right, &.top, &.bottom {
+        &.left,
+        &.right,
+        &.top,
+        &.bottom {
           position: static;
           left: auto;
           right: auto;
           top: auto;
           bottom: auto;
-          transform: none;
         }
       }
     }
