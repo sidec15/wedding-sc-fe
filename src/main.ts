@@ -10,7 +10,9 @@ function handleSplash(): void {
   const queryParams = new URLSearchParams(window.location.search);
   const splash = document.getElementById('initial-splash');
 
-  const shouldSkipSplash = queryParams.get('skipSplash') === 'true';
+  let shouldSkipSplash = queryParams.get('skipSplash') === 'true';
+  // debug_sdc
+  shouldSkipSplash = true;
 
   if (shouldSkipSplash) {
     if (splash) splash.remove();

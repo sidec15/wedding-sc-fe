@@ -8,10 +8,7 @@
   overflow-y: hidden;
 
   // Comic positioning variables
-  --comic-offset-desktop-y: 10px;
   --comic-offset-desktop-x: 10px;
-  --comic-offset-mobile-y: 5px;
-  --comic-offset-mobile-x: 5px;
 }
 
 .gallery-modal {
@@ -28,21 +25,32 @@
   overflow-y: auto;
 
   .gallery-content {
-    position: relative;
     text-align: center;
     color: rgb(var(--text-mask));
     min-height: 100vh; // Ensure full height for comic positioning
 
     .close-btn {
-      position: fixed; // Make the button fixed relative to the viewport
-      top: 10px; // Adjust the position to always stay visible
-      right: 10px; // Adjust the position to always stay visible
-      background: none;
-      border: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(var(--mask), 0.8);
+      border: 2px solid rgb(var(--text-mask));
+      border-radius: 50%;
       color: rgb(var(--text-mask));
-      font-size: 2.5rem;
+      font-size: 1.5rem;
       cursor: pointer;
-      z-index: 1001; // Ensure it appears above everything
+      z-index: 1001;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(var(--mask), 1);
+        transform: scale(1.1);
+      }
     }
 
     .prev-btn,
@@ -79,35 +87,17 @@
       position: fixed; // Position relative to viewport
       width: 350px;
       height: 350px;
-      z-index: 1001; // Above other modal content
-      // No top, bottom, or transform here!
+      z-index: 1000; // Above other modal content
+      // center the comic vertically only
+      top: 50%;
+      transform: translateY(-50%);
 
       &.left {
         left: var(--comic-offset-desktop-x);
-        .comic {
-          object-position: left center;
-        }
       }
 
       &.right {
         right: var(--comic-offset-desktop-x);
-        .comic {
-          object-position: right center;
-        }
-      }
-
-      &.top {
-        top: var(--comic-offset-desktop-y);
-        .comic {
-          object-position: center top;
-        }
-      }
-
-      &.bottom {
-        bottom: var(--comic-offset-desktop-y);
-        .comic {
-          object-position: center bottom;
-        }
       }
 
       .comic {
@@ -120,42 +110,59 @@
 
     .gallery-image-wrapper {
       display: flex;
-      flex-direction: column; // Stack the image and buttons vertically
-      align-items: center; // Center the buttons horizontally
+      flex-direction: column;
+      align-items: center;
       position: relative;
+      padding-top: 80px; // Add space for the close button
 
       .gallery-image {
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
+        width: 100%;
 
         img {
           max-width: 90%;
           max-height: 80vh;
-          display: block; // Ensure the image does not overflow
+          display: block;
         }
-      }
 
-      .prev-btn,
-      .next-btn {
-        background: rgba(var(--mask), 0.95);
-        border: none;
-        color: rgb(var(--text-mask));
-        font-size: 2rem; // Adjust size for mobile
-        cursor: pointer;
-        z-index: 1001; // Ensure the buttons appear above other elements
-        padding: 0.5rem 1rem;
-        border-radius: 5px; // Optional: Add rounded corners
-        margin: 0.5rem; // Add spacing between the buttons
-      }
+        .gallery-buttons {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          transform: translateY(-50%);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 20px;
+          pointer-events: none; // Allow clicks to pass through to image
+        }
 
-      .prev-btn {
-        align-self: flex-start; // Align the button to the left
-      }
+        .prev-btn,
+        .next-btn {
+          background: rgba(var(--mask), 0.9);
+          border: 2px solid rgb(var(--text-mask));
+          border-radius: 50%;
+          color: rgb(var(--text-mask));
+          font-size: 1.5rem;
+          cursor: pointer;
+          z-index: 1001;
+          width: 60px;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          pointer-events: auto; // Re-enable clicks for buttons
 
-      .next-btn {
-        align-self: flex-end; // Align the button to the right
+          &:hover {
+            background: rgba(var(--mask), 1);
+            transform: scale(1.1);
+          }
+        }
       }
     }
   }
@@ -164,33 +171,96 @@
 @media screen and (max-width: 768px) {
   .gallery-modal {
     .gallery-content {
-      .comic-wrapper {
-        position: static; // Follow normal document flow
-        width: 300px;
-        height: 300px;
-        margin: 2rem auto 0; // Center below description
-        transform: none;
+      .gallery-image-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
 
-        // Reset all positioning classes for mobile
-        &.left,
-        &.right,
-        &.top,
-        &.bottom {
+        .gallery-image {
+          order: 1;
+        }
+
+        h3 {
+          order: 2;
+        }
+
+        .date {
+          order: 3;
+        }
+
+        .gallery-description {
+          order: 4;
+        }
+
+        .comic-wrapper {
+          order: 5;
           position: static;
-          left: auto;
-          right: auto;
-          top: auto;
-          bottom: auto;
+          width: 300px;
+          height: 300px;
+          margin: 0;
+          transform: none;
+          top: auto; // Remove the top positioning from desktop
+
+          // Reset all positioning classes for mobile
+          &.left,
+          &.right,
+          &.top,
+          &.bottom {
+            position: static;
+            left: auto;
+            right: auto;
+            top: auto;
+            bottom: auto;
+          }
+        }
+
+                .gallery-image {
+          position: relative;
+
+          .gallery-buttons {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            pointer-events: none;
+          }
+
+          .prev-btn,
+          .next-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+            background: rgba(var(--mask), 0.9);
+            border: 2px solid rgb(var(--text-mask));
+            border-radius: 50%;
+            color: rgb(var(--text-mask));
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+
+            &:hover {
+              background: rgba(var(--mask), 1);
+              transform: scale(1.1);
+            }
+          }
+        }
+
+        .prev-btn,
+        .next-btn {
+          font-size: 1.5rem; // Smaller size for mobile
+          padding: 0.5rem; // Adjust padding for smaller screens
         }
       }
-    }
-  }
-
-  .gallery-image-wrapper {
-    .prev-btn,
-    .next-btn {
-      font-size: 1.5rem; // Smaller size for mobile
-      padding: 0.5rem; // Adjust padding for smaller screens
     }
   }
 }
