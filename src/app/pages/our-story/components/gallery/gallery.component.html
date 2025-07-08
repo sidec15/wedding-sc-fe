@@ -25,15 +25,21 @@
       </div>
     </div>
     <div class="gallery-buttons">
-      @if (currentCardIndex > 0) {
-      <button class="prev-btn" (click)="prevCard()">
+      <button
+        class="prev-btn"
+        (click)="prevCard()"
+        [disabled]="currentCardIndex === 0"
+      >
         <i class="fas fa-chevron-left"></i>
       </button>
-      } @if (currentCardIndex < cards.length - 1) {
-      <button class="next-btn" (click)="nextCard()">
+      <span class="counter">{{ currentCardIndex + 1 }}/{{ cards.length }}</span>
+      <button
+        class="next-btn"
+        (click)="nextCard()"
+        [disabled]="currentCardIndex === cards.length - 1"
+      >
         <i class="fas fa-chevron-right"></i>
       </button>
-      }
     </div>
     @if (currentCard.comic) {
     <div
