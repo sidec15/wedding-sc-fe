@@ -8,131 +8,217 @@
   overflow-y: hidden;
 
   // Comic positioning variables
-  --comic-offset-desktop-y: 10px;
-  --comic-offset-desktop-x: 0px;
-  --comic-offset-mobile-y: 5px;
-  --comic-offset-mobile-x: 5px;
+  --comic-offset-desktop-y: 20px;
+  --comic-offset-desktop-x: 20px;
+  --comic-offset-mobile-y: 10px;
+  --comic-offset-mobile-x: 10px;
 }
 
 .parallax-card {
   width: 100%;
   position: relative;
-  // background-color: rgb(var(--bg));
   color: rgb(var(--text));
 
   &.card {
     align-items: center;
     justify-content: space-between;
-    width: 80%;
+    width: 85%;
     margin: 0 auto;
+    padding: 2rem 0;
 
     .image-overlay {
       position: relative;
       display: flex;
       flex-direction: row;
-      width: 100%; // Ensure full width of parent
-      // overflow: hidden;
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15),
+                  0 10px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2),
+                    0 15px 30px rgba(0, 0, 0, 0.15);
+      }
 
       .image {
         width: 100%;
         height: auto;
+        max-width: 900px;
+        max-height: 650px;
         object-fit: cover;
         cursor: pointer;
-        box-shadow: 10px 10px 15px var(--box-shadow-heavy); // Bottom-right shadow
+        transition: transform 0.6s ease;
+
+        &:hover {
+          transform: scale(1.02);
+        }
       }
 
       .text-overlay {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background-color: rgba(var(--bg), 0.95);
-        padding: 1.5rem;
-        max-width: 500px;
-        transition: opacity 0.6s ease, transform 0.6s ease;
-        opacity: 1;
-        transform: translateY(60px);
-        box-shadow: 0 4px 10px var(--box-shadow-heavy);
+        background: linear-gradient(135deg,
+          rgba(var(--bg), 0.95) 0%,
+          rgba(var(--bg), 0.92) 100%);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        max-width: 450px;
+        border-radius: 15px;
+        border: 1px solid rgba(var(--text), 0.1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2),
+                    0 5px 15px rgba(0, 0, 0, 0.1);
         color: rgb(var(--text));
 
+        // Animation states
+        opacity: 0;
+        transform: translateY(-50%) translateX(50px);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+        &.visible {
+          opacity: 1;
+          transform: translateY(-50%) translateX(0);
+        }
+
         h3 {
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.8rem;
           color: rgb(var(--accent));
-          // font-size: 2rem;
+          font-size: 1.8rem;
+          font-weight: 600;
+          line-height: 1.3;
+          transform: translateY(20px);
+          opacity: 0;
+          transition: all 0.6s ease 0.2s;
+
+          .visible & {
+            transform: translateY(0);
+            opacity: 1;
+          }
         }
 
         .date {
           font-style: italic;
-          font-size: 0.95rem;
-          color: rgb(var(--accent)); // Use hover color for subtle contrast
-          margin-bottom: 1rem;
+          font-size: 1rem;
+          color: rgb(var(--accent));
+          margin-bottom: 1.2rem;
+          opacity: 0.8;
+          transform: translateY(15px);
+          opacity: 0;
+          transition: all 0.6s ease 0.4s;
+
+          .visible & {
+            transform: translateY(0);
+            opacity: 0.8;
+          }
         }
 
         .description {
-          // font-size: 1rem;
+          font-size: 1.1rem;
           color: rgb(var(--text));
+          line-height: 1.6;
+          transform: translateY(20px);
+          opacity: 0;
+          transition: all 0.6s ease 0.6s;
+
+          .visible & {
+            transform: translateY(0);
+            opacity: 1;
+          }
         }
-
-
-
       }
 
       .comic-wrapper {
         position: absolute;
-        width: 350px; // Smaller wrapper to match comic size
-        height: 350px; // Smaller wrapper to match comic size
-        z-index: 1;
+        width: 300px;
+        height: 300px;
+        z-index: 10;
+        opacity: 0;
+        transform: scale(0.8) rotate(-5deg);
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.8s;
 
-                &.left {
+        &.visible {
+          opacity: 1;
+          transform: scale(1) rotate(0deg);
+        }
+
+        &.left {
           left: var(--comic-offset-desktop-x);
+          transform-origin: left center;
 
-          .comic {
-            object-position: left center; // Stick to left edge
+          &.visible {
+            transform: scale(1) rotate(2deg);
           }
         }
 
         &.right {
           right: var(--comic-offset-desktop-x);
+          transform-origin: right center;
 
-          .comic {
-            object-position: right center; // Stick to right edge
+          &.visible {
+            transform: scale(1) rotate(-2deg);
           }
         }
 
         &.top {
           top: var(--comic-offset-desktop-y);
+          transform-origin: center top;
 
-          .comic {
-            object-position: center top; // Stick to top edge
+          &.visible {
+            transform: scale(1) rotate(1deg);
           }
         }
 
         &.bottom {
           bottom: var(--comic-offset-desktop-y);
+          transform-origin: center bottom;
 
-          .comic {
-            object-position: center bottom; // Stick to bottom edge
+          &.visible {
+            transform: scale(1) rotate(-1deg);
           }
         }
 
         .comic {
           width: 100%;
           height: 100%;
-          object-fit: contain; // Preserve aspect ratio
-          object-position: center; // Default center position
+          object-fit: contain;
+          object-position: center;
+          border-radius: 15px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3),
+                      0 5px 15px rgba(0, 0, 0, 0.2);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+          &:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4),
+                        0 8px 20px rgba(0, 0, 0, 0.3);
+          }
         }
       }
     }
 
-    // Left or right positioning
+    // Text positioning
     &.left .text-overlay {
       left: 5%;
       right: auto;
+      transform: translateY(-50%) translateX(-50px);
+
+      &.visible {
+        transform: translateY(-50%) translateX(0);
+      }
     }
 
     &.right .text-overlay {
       right: 5%;
       left: auto;
       text-align: right;
+      transform: translateY(-50%) translateX(50px);
+
+      &.visible {
+        transform: translateY(-50%) translateX(0);
+      }
     }
   }
 
@@ -142,27 +228,49 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    padding: 2rem;
 
     .text-only-content {
-      max-width: 800px;
+      max-width: 900px;
       text-align: center;
       opacity: 0;
-      transition: opacity 3s ease-out;
+      transform: translateY(30px);
+      transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
       &.visible {
         opacity: 1;
+        transform: translateY(0);
       }
 
       h3 {
-        font-size: 2.5rem;
+        font-size: 3rem;
         color: rgb(var(--accent));
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.8s ease 0.2s;
+
+        .visible & {
+          transform: translateY(0);
+          opacity: 1;
+        }
       }
 
       .description {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         color: rgb(var(--text));
-        line-height: 1.6;
+        line-height: 1.7;
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.8s ease 0.5s;
+
+        .visible & {
+          transform: translateY(0);
+          opacity: 1;
+        }
       }
     }
   }
@@ -172,76 +280,108 @@
   .parallax-card {
     &.card {
       width: 95%;
+      padding: 1rem 0;
 
       .image-overlay {
-        position: relative;
         flex-direction: column;
+        border-radius: 15px;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
 
         .image {
           width: 100%;
           height: auto;
-          // border-radius: 8px 8px 0 0;
           position: relative;
           z-index: 1;
+          border-radius: 15px 15px 0 0;
 
-          // Apply a soft gradient fade at the bottom edge
-          mask-image: linear-gradient(
-            to bottom,
-            rgb(var(--mask-black)) 80%,
-            var(--mask-transparent) 100%
-          );
-          -webkit-mask-image: linear-gradient(
-            to bottom,
-            rgb(var(--mask-black)) 80%,
-            var(--mask-transparent) 100%
-          );
+          &:hover {
+            transform: scale(1.01);
+          }
         }
 
         .text-overlay {
           position: static;
-          transform: translateY(-10px); // Start closer to the image
-          opacity: 0; // Semi-transparent by default
-          padding: 1rem;
-          box-shadow: none;
-          margin-top: 0;
-          border-radius: 0 0 8px 8px;
+          transform: translateY(0);
+          opacity: 0;
+          padding: 1.5rem;
+          margin-top: -10px;
+          border-radius: 0 0 15px 15px;
           z-index: 2;
-          transition: opacity 0.4s ease, transform 0.4s ease; // Faster and smoother animation
+          max-width: none;
+          backdrop-filter: none;
+          background: rgba(var(--bg), 0.98);
+          transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
           &.visible {
-            opacity: 0.5; // Fully visible when in focus
-            transform: translateY(0); // Align perfectly with the image
+            opacity: 1;
+            transform: translateY(0);
           }
 
           h3 {
-            font-size: 1.5rem;
-            color: rgb(var(--accent));
-          }
+            font-size: 1.6rem;
+            margin-bottom: 0.6rem;
 
-          .description {
-            font-size: 1rem;
-            color: rgb(var(--text));
+            .visible & {
+              transform: translateY(0);
+              opacity: 1;
+            }
           }
 
           .date {
             font-size: 0.9rem;
-            color: rgb(var(--hover)); // Use hover color for subtle contrast
+            margin-bottom: 1rem;
+
+            .visible & {
+              transform: translateY(0);
+              opacity: 0.8;
+            }
+          }
+
+          .description {
+            font-size: 1rem;
+
+            .visible & {
+              transform: translateY(0);
+              opacity: 1;
+            }
           }
         }
 
         .comic-wrapper {
-          position: static; // Follow normal document flow
-          width: 300px; // Proportional to desktop size
-          height: 300px; // Proportional to desktop size
-          margin: 0 auto 0; // Center
+          position: static;
+          width: 250px;
+          height: 250px;
+          margin: 1rem auto 0;
+          transform: scale(0.9);
+          transition: all 0.6s ease 0.4s;
 
-          // Reset all positioning classes for mobile
+          &.visible {
+            transform: scale(1);
+          }
+
+          // Reset positioning classes for mobile
           &.left, &.right, &.top, &.bottom {
             position: static;
             left: auto;
             right: auto;
             top: auto;
             bottom: auto;
+            transform: scale(0.9);
+
+            &.visible {
+              transform: scale(1);
+            }
+          }
+
+          .comic {
+            border-radius: 12px;
+
+            &:hover {
+              transform: scale(1.02) !important;
+            }
           }
         }
       }
@@ -251,22 +391,28 @@
         text-align: center;
         left: auto;
         right: auto;
+        transform: translateY(0);
+
+        &.visible {
+          transform: translateY(0);
+        }
       }
     }
 
     &.intro,
     &.outro {
+      padding: 1.5rem;
 
       .text-only-content {
+        max-width: 100%;
 
         h3 {
-          font-size: 1.5rem;
-          color: rgb(var(--accent));
+          font-size: 2.2rem;
           margin-bottom: 1.5rem;
         }
 
         .description {
-          font-size: 0.9rem;
+          font-size: 1.1rem;
         }
       }
     }

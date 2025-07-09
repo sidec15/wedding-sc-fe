@@ -3,7 +3,12 @@
   <!-- 🖼️ Main photo card -->
   @case ('card') {
   <div class="image-overlay">
-    <img [src]="image" class="image" [alt]="title" />
+    <img
+      [src]="image"
+      class="image"
+      [alt]="title"
+      (click)="openGallery()"
+    />
     <div class="text-overlay" #content>
       <h3>{{ title | translate }}</h3>
       @if (date) {
