@@ -41,18 +41,15 @@
         <i class="fas fa-chevron-right"></i>
       </button>
     </div>
-    @if (currentCard.comic) {
-    <div
-      class="comic-wrapper"
-      [ngClass]="[currentCard.comicPositionX, currentCard.comicPositionY]"
-    >
+    <div class="comic-wrapper">
+      @if (currentCard.comic) {
       <img
         [src]="currentCard.comic"
         class="comic"
         [alt]="currentCard.title || 'Comic'"
       />
+      }
     </div>
-    }
   </div>
 </div>
 }
