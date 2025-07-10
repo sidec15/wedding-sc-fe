@@ -1,7 +1,207 @@
-@use '../../../styles/variables' as *;
+@use "../../../styles/variables.scss" as *;
 
-:host {
-  display: block;
+.story-gallery {
   width: 100%;
-  overflow-x: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  touch-action: pan-y pinch-zoom;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.gallery-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  touch-action: pan-y pinch-zoom;
+}
+
+.card-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  touch-action: pan-y pinch-zoom;
+  max-width: 1200px; // Desktop max width
+  margin: 0 auto;
+  padding: 2rem;
+
+  // Allow full width for intro/outro cards
+  &.intro-card,
+  &.outro-card {
+    max-width: none;
+    padding: 0;
+  }
+}
+
+.navigation-controls {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  z-index: 100;
+  background: rgba(var(--mask), 0.8);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(var(--text-mask), 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(var(--mask), 0.9);
+    transform: translateX(-50%) scale(1.02);
+  }
+}
+
+.nav-btn {
+  background: none;
+  border: 2px solid rgb(var(--text-mask));
+  border-radius: 50%;
+  color: rgb(var(--text-mask));
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background: rgba(var(--mask), 0.5);
+  outline: none;
+  user-select: none;
+
+  &:hover:not(.disabled) {
+    background: rgba(var(--mask), 0.8);
+    transform: scale(1.1);
+    border-color: rgb(var(--accent));
+  }
+
+  &:focus:not(.disabled) {
+    background: rgba(var(--mask), 0.8);
+    border-color: rgb(var(--accent));
+    box-shadow: 0 0 0 3px rgba(var(--accent), 0.3);
+  }
+
+  &:active:not(.disabled) {
+    transform: scale(0.95);
+  }
+
+  &.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.card-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgb(var(--text-mask));
+  font-size: 1.2rem;
+  font-weight: 500;
+  user-select: none;
+
+  .current {
+    color: rgb(var(--accent));
+    font-weight: 700;
+  }
+
+  .separator {
+    opacity: 0.7;
+  }
+
+  .total {
+    opacity: 0.8;
+  }
+}
+
+// Swipe hint animation
+@keyframes swipeHint {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+.swipe-hint {
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  color: rgba(var(--text-mask), 0.6);
+  font-size: 2rem;
+  animation: swipeHint 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 50;
+}
+
+// Desktop specific styles
+@media screen and (min-width: 769px) {
+  .card-wrapper {
+    max-width: 1000px; // Smaller max width for desktop
+    padding: 3rem;
+
+    &.intro-card,
+    &.outro-card {
+      max-width: none;
+      padding: 0;
+    }
+  }
+}
+
+// Mobile responsive styles
+@media screen and (max-width: 768px) {
+  .card-wrapper {
+    max-width: 100%;
+    padding: 1rem;
+
+    &.intro-card,
+    &.outro-card {
+      max-width: none;
+      padding: 0;
+    }
+  }
+
+  .navigation-controls {
+    bottom: 1rem;
+    gap: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .card-indicator {
+    font-size: 1rem;
+  }
+
+  .swipe-hint {
+    right: 1rem;
+    font-size: 1.5rem;
+  }
+}
+
+// Keyboard navigation support
+:host {
+  outline: none;
 }

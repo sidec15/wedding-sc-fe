@@ -1,18 +1,55 @@
-@for (card of cards; track card; let i = $index) {
-  <app-parallax-card
-    [title]="card.title"
-    [description]="card.description"
-    [image]="card.image || ''"
-    [type]="card.type || 'card'"
-    [date]="card.date"
-    [textPosition]="card.textPosition || 'left'"
-    [comic]="card.comic || ''"
-    [comicPositionX]="card.comicPositionX || 'right'"
-    [comicPositionY]="card.comicPositionY || 'top'"
-    (click)="openGallery(i)"
-  ></app-parallax-card>
-}
-<app-ring-scroll></app-ring-scroll>
+<div class="story-gallery" tabindex="0">
+  <div class="gallery-container" #galleryContainer>
+    @if (cards.length > 0) {
+    <div class="card-wrapper"
+         [@slideAnimation]="currentIndex"
+         [ngClass]="{
+           'intro-card': cards[currentIndex].type === 'intro',
+           'outro-card': cards[currentIndex].type === 'outro'
+         }">
+      <app-parallax-card
+        [title]="cards[currentIndex].title"
+        [description]="cards[currentIndex].description"
+        [image]="cards[currentIndex].image || ''"
+        [type]="cards[currentIndex].type || 'card'"
+        [date]="cards[currentIndex].date"
+        [textPosition]="cards[currentIndex].textPosition || 'left'"
+        [comic]="cards[currentIndex].comic || ''"
+        [comicPositionX]="cards[currentIndex].comicPositionX || 'right'"
+        [comicPositionY]="cards[currentIndex].comicPositionY || 'top'"
+      ></app-parallax-card>
+    </div>
 
-<app-gallery></app-gallery>
+    <!-- Swipe hint for mobile -->
+    <div class="swipe-hint" *ngIf="cards.length > 1">
+      <i class="fas fa-hand-point-left"></i>
+    </div>
 
+    <div class="navigation-controls">
+      <button
+        class="nav-btn prev-btn"
+        (click)="previousCard()"
+        [disabled]="currentIndex === 0"
+        [class.disabled]="currentIndex === 0"
+        aria-label="Previous card">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <div class="card-indicator">
+        <span class="current">{{ currentIndex + 1 }}</span>
+        <span class="separator">/</span>
+        <span class="total">{{ cards.length }}</span>
+      </div>
+
+      <button
+        class="nav-btn next-btn"
+        (click)="nextCard()"
+        [disabled]="currentIndex === cards.length - 1"
+        [class.disabled]="currentIndex === cards.length - 1"
+        aria-label="Next card">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    }
+  </div>
+</div>
