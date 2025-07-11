@@ -7,17 +7,48 @@
            'intro-card': cards[currentIndex].type === 'intro',
            'outro-card': cards[currentIndex].type === 'outro'
          }">
-      <app-parallax-card
-        [title]="cards[currentIndex].title"
-        [description]="cards[currentIndex].description"
-        [image]="cards[currentIndex].image || ''"
-        [type]="cards[currentIndex].type || 'card'"
-        [date]="cards[currentIndex].date"
-        [textPosition]="cards[currentIndex].textPosition || 'left'"
-        [comic]="cards[currentIndex].comic || ''"
-        [comicPositionX]="cards[currentIndex].comicPositionX || 'right'"
-        [comicPositionY]="cards[currentIndex].comicPositionY || 'top'"
-      ></app-parallax-card>
+
+      <!-- Intro/Outro cards - full screen text -->
+      @if (cards[currentIndex].type === 'intro' || cards[currentIndex].type === 'outro') {
+        <div class="text-only-card">
+          <div class="text-content">
+            <h2>{{ cards[currentIndex].title | translate }}</h2>
+            <p>{{ cards[currentIndex].description | translate }}</p>
+          </div>
+        </div>
+      }
+
+      <!-- Regular cards - three column layout -->
+      @if (cards[currentIndex].type === 'card') {
+        <div class="three-column-layout">
+          <!-- Left: Text -->
+          <div class="text-column">
+            <div class="text-content">
+              <h2>{{ cards[currentIndex].title | translate }}</h2>
+              @if (cards[currentIndex].date) {
+                <p class="date">{{ dateTimeService.formatDate(cards[currentIndex].date) }}</p>
+              }
+              <p class="description">{{ cards[currentIndex].description | translate }}</p>
+            </div>
+          </div>
+
+          <!-- Center: Image -->
+          <div class="image-column">
+            <div class="image-container">
+              <img [src]="cards[currentIndex].image" [alt]="cards[currentIndex].title" />
+            </div>
+          </div>
+
+          <!-- Right: Comics -->
+          <div class="comic-column">
+            @if (cards[currentIndex].comic) {
+              <div class="comic-container">
+                <img [src]="cards[currentIndex].comic" [alt]="cards[currentIndex].title + ' comic'" />
+              </div>
+            }
+          </div>
+        </div>
+      }
     </div>
 
     <!-- Swipe hint for mobile -->

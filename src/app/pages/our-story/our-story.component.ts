@@ -6,16 +6,15 @@ import { ParallaxCardModel } from './models/parallax-card';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { StoryCardsProviderService } from './services/story-cards-provider.service';
-import { ParallaxCardComponent } from './components/parallax-card/parallax-card.component';
 import { EventService } from '../../services/event.service';
+import { DateTimeService } from '../../services/date-time.service';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
   selector: 'app-parallax-showcase',
   standalone: true,
   imports: [
-    ParallaxCardComponent,
     TranslateModule,
-    NgIf,
     NgClass
   ],
   templateUrl: './our-story.component.html',
@@ -45,12 +44,15 @@ export class OurStoryComponent implements OnInit, OnDestroy {
 
   constructor(
     private eventService: EventService,
-    private storycardsProvider: StoryCardsProviderService
+    private storycardsProvider: StoryCardsProviderService,
+    public dateTimeService: DateTimeService,
+    private headerService: HeaderService
   ) {
     this.cards = this.storycardsProvider.getCards();
   }
 
   ngOnInit(): void {
+    this.headerService.setMinDistanceToShowHeader(1);
     // Focus the component for keyboard navigation
     if (typeof window !== 'undefined') {
       const element = document.querySelector('.story-gallery');
@@ -61,7 +63,7 @@ export class OurStoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Cleanup if needed
+    this.headerService.resetMinDistanceToShowHeader();
   }
 
   @HostListener('keydown', ['$event'])
@@ -123,22 +125,4 @@ export class OurStoryComponent implements OnInit, OnDestroy {
     }
   }
 
-  openGallery(index: number): void {
-    const currentCard = this.storycardsProvider.getCard(index);
-    if (currentCard?.type === 'card') {
-      this.eventService.emitRingScrollEnabled(false);
-      this.eventService.emitGalleryStatus({
-        isOpen: true,
-        currentIndex: index - 1,
-      });
-    }
-  }
-
-  closeGallery(): void {
-    this.eventService.emitRingScrollEnabled(true);
-    this.eventService.emitGalleryStatus({
-      isOpen: false,
-      currentIndex: 0,
-    });
-  }
 }

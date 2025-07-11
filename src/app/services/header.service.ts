@@ -12,12 +12,17 @@ import { MenuService } from './menu.service';
   providedIn: 'root',
 })
 export class HeaderService {
+  private static MIN_DISTANCE_TO_HIDE_HEADER = 1;
+  private static MIN_DISTANCE_TO_SHOW_HEADER = 5;
+
   private _isHeaderHidden = false; // Track whether the header is hidden
   private _isEnabled = true; // Track whether the header animation is enabled
   private _isHeaderFilled = false; // Track whether the header background is filled
 
-  private readonly minDistanceToHideHeader = 1; // Minimum distance to hide the header in pixels
-  private readonly minDistanceToShowHeader = 5; // Minimum distance to show the header in pixels
+  private minDistanceToHideHeader =
+    HeaderService.MIN_DISTANCE_TO_HIDE_HEADER; // Minimum distance to hide the header in pixels
+  private minDistanceToShowHeader =
+    HeaderService.MIN_DISTANCE_TO_SHOW_HEADER; // Minimum distance to show the header in pixels
 
   private scrollSub!: Subscription;
   private headerBgSub!: Subscription;
@@ -73,6 +78,24 @@ export class HeaderService {
 
   disableHeader(): void {
     this._isHeaderHidden = true; // Ensure header is hidden when disabled
+  }
+
+  setMinDistanceToHideHeader(distance: number): void {
+    this.minDistanceToHideHeader = distance;
+  }
+
+  setMinDistanceToShowHeader(distance: number): void {
+    this.minDistanceToShowHeader = distance;
+  }
+
+  resetMinDistanceToHideHeader(): void {
+    this.minDistanceToHideHeader =
+      HeaderService.MIN_DISTANCE_TO_HIDE_HEADER;
+  }
+
+  resetMinDistanceToShowHeader(): void {
+    this.minDistanceToShowHeader =
+      HeaderService.MIN_DISTANCE_TO_SHOW_HEADER;
   }
 
   handleScrollEvent(event: ScrollEvent): void {
