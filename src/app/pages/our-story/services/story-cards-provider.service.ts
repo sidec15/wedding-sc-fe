@@ -11,7 +11,7 @@ export class StoryCardsProviderService {
     },
     {
       type: 'card',
-      title: 'Un sorriso che conquista',
+      title: 'our_story.first_trip.title',
       date: { year: 1986 },
       description: 'Sorriso furbo, occhioni grandi e regina del lettino.',
       image: '/images/our-story/our-story_19860401.jpg',
