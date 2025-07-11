@@ -39,22 +39,20 @@
       "title": "Come siamo finiti qui?",
       "description": "Tutto è iniziato con un bel po' di foto d'epoca (e sì, alcune forse era meglio lasciarle nei cassetti…). Ci troverai piccoli, con facce buffe, pose improbabili e outfit che oggi fanno tendenza… ma solo su Marte. Poi arrivano gli anni in cui ci siamo incontrati e, tra una risata e l'altra, abbiamo iniziato a scrivere la nostra storia a due. Il resto? È tutto qui: viaggi, abbracci, momenti assurdi e ricordi che ci hanno portato fin dove siamo oggi. Questa è la nostra storia: un mix di momenti teneri, buffi, indimenticabili. Scorri e divertiti con noi!"
     },
-    "start": {
-      "title": "Dove tutto è iniziato",
-      "description": "Ci siamo conosciuti per la prima volta al liceo..."
-    },
-    "first_trip": {
-      "title": "Primo viaggio insieme",
-      "description": "Quell'estate in Spagna è stata indimenticabile."
-    },
-    "proposal": {
-      "title": "Ha detto sì!",
-      "description": "Una proposta emozionante sotto le stelle."
-    },
     "outro": {
       "title": "Prossima fermata: matrimonio!",
       "description": "E sì, stavolta niente outfit discutibili... forse."
-    }
+    },
+    "cards": [
+      {
+        "title": "Un sorriso che conquista",
+        "description": "Sorriso furbo, occhioni grandi e regina del lettino."
+      },
+      {
+        "title": "Tutti insieme",
+        "description": "Sorrisi, magliette a righe e Chiara con il ciuccio in braccio a mamma: la squadra era già al completo."
+      }
+    ]
   },
   "church": {
     "intro": {
