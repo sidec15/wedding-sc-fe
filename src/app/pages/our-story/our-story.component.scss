@@ -11,6 +11,7 @@
   overflow: hidden;
   outline: none;
   touch-action: pan-y pinch-zoom;
+  padding-top: 60px; // Add top padding to avoid header
 
   &:focus {
     outline: none;
@@ -85,7 +86,7 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr; // Text | Image | Comics
+  grid-template-columns: 1fr 2fr 1fr; // Reduced image column from 3fr to 2fr
   gap: 1rem;
   align-items: center;
   // padding: 2rem;
@@ -286,6 +287,10 @@
 
 // Mobile responsive styles
 @media screen and (max-width: 768px) {
+  .story-gallery {
+    padding-top: 60px; // Less padding for mobile
+  }
+
   .card-wrapper {
     max-width: 100%;
     padding: 1rem;
@@ -324,6 +329,11 @@
   .image-column {
     order: 2;
     padding: 0.5rem;
+
+    .image-container {
+      width: 100%; // Full width on mobile
+      height: 100%;
+    }
   }
 
   .comic-column {
