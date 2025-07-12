@@ -11,9 +11,9 @@ export class StoryCardsProviderService {
     },
     {
       type: 'card',
-      title: 'our_story.cards[0].title',
+      title: 'our_story.cards.0.title',
       date: { year: 1986 },
-      description: 'our_story.cards[0].description',
+      description: 'our_story.cards.0.description',
       image: '/images/our-story/our-story_19860401.jpg',
       comic: '/images/comics/comics-04.png',
       comicPositionX: 'right',
@@ -21,9 +21,9 @@ export class StoryCardsProviderService {
     },
     {
       type: 'card',
-      title: 'our_story.cards[1].title',
+      title: 'our_story.cards.1.title',
       date: { year: 1987 },
-      description: 'our_story.cards[1].description',
+      description: 'our_story.cards.1.description',
       image: '/images/our-story/our-story_19870801.jpg',
     },
     {

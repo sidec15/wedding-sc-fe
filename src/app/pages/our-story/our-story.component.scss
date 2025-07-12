@@ -224,13 +224,6 @@
     color: rgb(var(--accent));
   }
 
-  &:focus:not(.disabled) {
-    background: rgba(var(--accent), 0.2);
-    border-color: rgb(var(--accent));
-    color: rgb(var(--accent));
-    box-shadow: 0 0 0 3px rgba(var(--accent), 0.3);
-  }
-
   &:active:not(.disabled) {
     transform: scale(0.95);
   }

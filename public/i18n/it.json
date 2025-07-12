@@ -43,16 +43,16 @@
       "title": "Prossima fermata: matrimonio!",
       "description": "E sì, stavolta niente outfit discutibili... forse."
     },
-    "cards": [
-      {
+    "cards": {
+      "0": {
         "title": "Un sorriso che conquista",
         "description": "Sorriso furbo, occhioni grandi e regina del lettino."
       },
-      {
+      "1": {
         "title": "Tutti insieme",
         "description": "Sorrisi, magliette a righe e Chiara con il ciuccio in braccio a mamma: la squadra era già al completo."
       }
-    ]
+    }
   },
   "church": {
     "intro": {
