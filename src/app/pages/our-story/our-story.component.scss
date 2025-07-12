@@ -141,14 +141,6 @@
       line-height: 1.2;
     }
 
-    .date {
-      font-style: italic;
-      font-size: 1.2rem;
-      color: rgb(var(--accent));
-      margin-bottom: 1rem;
-      opacity: 0.8;
-    }
-
     .description {
       font-size: 1.3rem;
       color: rgb(var(--text));
@@ -167,7 +159,9 @@
   .image-container {
     width: 600px; // Fixed width
     height: 80vh; // Maximum height relative to viewport
-    max-height: calc(100vh - 120px); // Ensure it doesn't exceed viewport minus padding
+    max-height: calc(
+      100vh - 120px
+    ); // Ensure it doesn't exceed viewport minus padding
     display: flex;
     align-items: center;
     justify-content: center;
@@ -176,8 +170,23 @@
     box-shadow: 0 8px 24px var(--box-shadow-medium);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     opacity: 0;
-    transform: translateX(-100%) scale(0.8);
-    animation: slideInImage 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+
+    &.after {
+      transform: translateX(100%) scale(0.8);
+    }
+
+    &.before {
+      transform: translateX(-100%) scale(0.8);
+    }
+
+    &.visible {
+      transform: translateX(0) scale(1);
+    }
+
+
+
+    // transform: translateX(-100%) scale(0.8);
+    // animation: slideInImage 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 
     img {
       width: 100%;
@@ -188,14 +197,25 @@
   }
 }
 
-@keyframes slideInImage {
+@keyframes appearFromLeft {
   0% {
-    transform: translateX(-100%) scale(0.8);
+    transform: translateX(100%) scale(0.8);
     opacity: 0;
   }
   100% {
     transform: translateX(0) scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes slideOutImage {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%) scale(0.8);
+    opacity: 0;
   }
 }
 
