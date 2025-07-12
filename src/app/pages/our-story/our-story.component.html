@@ -5,7 +5,8 @@
          [ngClass]="{
            'intro-card': cards[currentIndex].type === 'intro',
            'outro-card': cards[currentIndex].type === 'outro',
-           'slide-in': true
+           'slide-in': true,
+           'transitioning': isTransitioning
          }">
 
       <!-- Intro/Outro cards - full screen text -->
