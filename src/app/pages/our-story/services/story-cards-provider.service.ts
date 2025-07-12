@@ -16,8 +16,6 @@ export class StoryCardsProviderService {
       description: 'our_story.cards.0.description',
       image: '/images/our-story/our-story_19860401.jpg',
       comic: '/images/comics/comics-04.png',
-      comicPositionX: 'right',
-      comicPositionY: 'top',
     },
     {
       type: 'card',
@@ -25,6 +23,7 @@ export class StoryCardsProviderService {
       date: { year: 1987 },
       description: 'our_story.cards.1.description',
       image: '/images/our-story/our-story_19870801.jpg',
+      comic: '/images/comics/comics-04.png',
     },
     {
       type: 'outro',
