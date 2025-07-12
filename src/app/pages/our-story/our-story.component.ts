@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 
-import { ParallaxCardModel } from './models/parallax-card';
+import { CardModel } from './models/card';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { StoryCardsProviderService } from './services/story-cards-provider.service';
@@ -23,7 +23,7 @@ import { HeaderService } from '../../services/header.service';
 export class OurStoryComponent implements OnInit, OnDestroy {
   @ViewChild('galleryContainer', { static: true }) galleryContainer!: ElementRef;
 
-  cards: ParallaxCardModel[] = [];
+  cards: CardModel[] = [];
   currentIndex: number = 0;
   private touchStartX: number = 0;
   private touchEndX: number = 0;
@@ -74,31 +74,6 @@ export class OurStoryComponent implements OnInit, OnDestroy {
         event.preventDefault();
         this.currentIndex = this.cards.length - 1;
         break;
-    }
-  }
-
-  @HostListener('touchstart', ['$event'])
-  onTouchStart(event: TouchEvent): void {
-    this.touchStartX = event.touches[0].clientX;
-  }
-
-  @HostListener('touchend', ['$event'])
-  onTouchEnd(event: TouchEvent): void {
-    this.touchEndX = event.changedTouches[0].clientX;
-    this.handleSwipe();
-  }
-
-  private handleSwipe(): void {
-    const swipeDistance = this.touchEndX - this.touchStartX;
-
-    if (Math.abs(swipeDistance) > this.SWIPE_THRESHOLD) {
-      if (swipeDistance > 0) {
-        // Swipe right - go to previous
-        this.previousCard();
-      } else {
-        // Swipe left - go to next
-        this.nextCard();
-      }
     }
   }
 

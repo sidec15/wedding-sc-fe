@@ -49,11 +49,6 @@
     padding: 0;
   }
 
-  // Slide in animation
-  &.slide-in {
-    animation: slideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
   // Transition state for fade-out/fade-in
   &.transitioning {
     .text-content,
@@ -62,17 +57,6 @@
       transform: translateY(-20px);
       transition: all 0.3s ease-out;
     }
-  }
-}
-
-@keyframes slideIn {
-  0% {
-    transform: translateX(100%) scale(0.9);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0) scale(1);
-    opacity: 1;
   }
 }
 
@@ -93,7 +77,9 @@
     border-radius: 16px;
     box-shadow: 0 8px 32px var(--box-shadow-medium);
     transition: all 0.8s ease-out;
-    animation: fadeInUp 1s ease-out 0.3s both;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease-out 0.3s forwards;
 
     h2 {
       font-size: 2rem;
@@ -144,7 +130,9 @@
     background-color: rgba(var(--bg), 0.9);
     max-width: 100%;
     transition: all 1s ease-out;
-    animation: fadeInUp 1s ease-out 0.3s both;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease-out 0.3s forwards;
 
     h2 {
       font-size: 1.7rem;
@@ -187,7 +175,9 @@
     overflow: hidden;
     box-shadow: 0 8px 24px var(--box-shadow-medium);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    animation: slideInImage 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0;
+    transform: translateX(-100%) scale(0.8);
+    animation: slideInImage 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 
     img {
       width: 100%;
@@ -224,7 +214,9 @@
     justify-content: center;
     background-color: rgba(var(--bg), 0.8);
     transition: all 1s ease-out;
-    animation: fadeInUp 1s ease-out 0.5s both;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease-out 0.5s forwards;
 
     img {
       max-width: 100%;

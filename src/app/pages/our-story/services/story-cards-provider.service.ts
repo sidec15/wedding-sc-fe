@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ParallaxCardModel } from '../models/parallax-card';
+import { CardModel } from '../models/card';
 
 @Injectable()
 export class StoryCardsProviderService {
-  private readonly cards: ParallaxCardModel[] = [
+  private readonly cards: CardModel[] = [
     {
       type: 'intro',
       title: 'our_story.intro.title',
@@ -12,7 +12,6 @@ export class StoryCardsProviderService {
     {
       type: 'card',
       title: 'our_story.cards.0.title',
-      date: { year: 1986 },
       description: 'our_story.cards.0.description',
       image: '/images/our-story/our-story_19860401.jpg',
       comic: '/images/comics/comics-04.png',
@@ -20,7 +19,6 @@ export class StoryCardsProviderService {
     {
       type: 'card',
       title: 'our_story.cards.1.title',
-      date: { year: 1987 },
       description: 'our_story.cards.1.description',
       image: '/images/our-story/our-story_19870801.jpg',
       comic: '/images/comics/comics-04.png',
@@ -34,10 +32,10 @@ export class StoryCardsProviderService {
 
   constructor() {}
 
-  getCards(): ParallaxCardModel[] {
+  getCards(): CardModel[] {
     return this.cards;
   }
-  getCard(index: number): ParallaxCardModel | null {
+  getCard(index: number): CardModel | null {
     if (index < 0 || index >= this.cards.length) {
       return null;
     }
