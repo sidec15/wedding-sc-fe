@@ -2,10 +2,10 @@
   <div class="gallery-container" #galleryContainer>
     @if (cards.length > 0) {
     <div class="card-wrapper"
-         [@slideAnimation]="currentIndex"
          [ngClass]="{
            'intro-card': cards[currentIndex].type === 'intro',
-           'outro-card': cards[currentIndex].type === 'outro'
+           'outro-card': cards[currentIndex].type === 'outro',
+           'slide-in': true
          }">
 
       <!-- Intro/Outro cards - full screen text -->
@@ -49,11 +49,6 @@
           </div>
         </div>
       }
-    </div>
-
-    <!-- Swipe hint for mobile -->
-    <div class="swipe-hint" *ngIf="cards.length > 1">
-      <i class="fas fa-hand-point-left"></i>
     </div>
 
     <div class="navigation-controls">

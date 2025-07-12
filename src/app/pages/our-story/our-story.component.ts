@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { NgClass, NgIf } from '@angular/common';
 
 import { ParallaxCardModel } from './models/parallax-card';
@@ -19,19 +18,7 @@ import { HeaderService } from '../../services/header.service';
   ],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
-  providers: [StoryCardsProviderService],
-  animations: [
-    trigger('slideAnimation', [
-      transition(':increment', [
-        style({ transform: 'translateX(100%)', opacity: 0 }),
-        animate('600ms ease-out', style({ transform: 'translateX(0%)', opacity: 1 }))
-      ]),
-      transition(':decrement', [
-        style({ transform: 'translateX(-100%)', opacity: 0 }),
-        animate('600ms ease-out', style({ transform: 'translateX(0%)', opacity: 1 }))
-      ])
-    ])
-  ]
+  providers: [StoryCardsProviderService]
 })
 export class OurStoryComponent implements OnInit, OnDestroy {
   @ViewChild('galleryContainer', { static: true }) galleryContainer!: ElementRef;
@@ -41,6 +28,7 @@ export class OurStoryComponent implements OnInit, OnDestroy {
   private touchStartX: number = 0;
   private touchEndX: number = 0;
   private readonly SWIPE_THRESHOLD = 50;
+  private isAnimating = false;
 
   constructor(
     private eventService: EventService,
@@ -114,14 +102,26 @@ export class OurStoryComponent implements OnInit, OnDestroy {
   }
 
   previousCard(): void {
-    if (this.currentIndex > 0) {
+    if (this.currentIndex > 0 && !this.isAnimating) {
+      this.isAnimating = true;
       this.currentIndex--;
+
+      // Reset animation flag after transition
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 800);
     }
   }
 
   nextCard(): void {
-    if (this.currentIndex < this.cards.length - 1) {
+    if (this.currentIndex < this.cards.length - 1 && !this.isAnimating) {
+      this.isAnimating = true;
       this.currentIndex++;
+
+      // Reset animation flag after transition
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 800);
     }
   }
 
