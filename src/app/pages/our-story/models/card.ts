@@ -5,5 +5,5 @@ export interface CardModel {
   type?: 'card' | 'intro' | 'outro';
   comic?: string; // comic image
   status?: 'visible' | 'hidden';
-  position?: 'before' | 'after' | 'current';
+  position?: 'before' | 'after' | 'current' | 'slide-in-from-left' | 'slide-in-from-right';
 }

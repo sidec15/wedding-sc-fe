@@ -89,11 +89,11 @@ export class OurStoryComponent implements OnInit, OnDestroy {
     if (isForward) {
       // Moving forward: current slides out left, next slides in from right
       currentCard.position = 'before'; // slides out to left
-      nextCard.position = 'current'; // slides in from right
+      nextCard.position = 'slide-in-from-right'; // slides in from right
     } else {
       // Moving backward: current slides out right, next slides in from left
       currentCard.position = 'after'; // slides out to right
-      nextCard.position = 'current'; // slides in from left
+      nextCard.position = 'slide-in-from-left'; // slides in from left
     }
 
     nextCard.status = 'visible';
@@ -105,7 +105,7 @@ export class OurStoryComponent implements OnInit, OnDestroy {
     // Update states after transition
     currentCard.status = 'hidden';
     currentCard.position = isForward ? 'before' : 'after';
-    // nextCard.position = 'current';
+    nextCard.position = 'current';
     this.currentIndex = newIndex;
     this.isTransitioning = false;
   }

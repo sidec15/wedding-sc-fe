@@ -48,7 +48,9 @@
                 'visible': cards[currentIndex].status === 'visible',
                 'current': cards[currentIndex].position === 'current',
                 'before': cards[currentIndex].position === 'before',
-                'after': cards[currentIndex].position === 'after'
+                'after': cards[currentIndex].position === 'after',
+                'slide-in-from-left': cards[currentIndex].position === 'slide-in-from-left',
+                'slide-in-from-right': cards[currentIndex].position === 'slide-in-from-right'
               }">
               <img [src]="cards[currentIndex].image" [alt]="cards[currentIndex].title" />
             </div>
@@ -94,7 +96,9 @@
                 [ngClass]="{
                   'visible': cards[nextIndex].status === 'visible',
                   'before': cards[nextIndex].position === 'before',
-                  'after': cards[nextIndex].position === 'after'
+                  'after': cards[nextIndex].position === 'after',
+                  'slide-in-from-left': cards[nextIndex].position === 'slide-in-from-left',
+                  'slide-in-from-right': cards[nextIndex].position === 'slide-in-from-right'
                 }">
                 <img [src]="cards[nextIndex].image" [alt]="cards[nextIndex].title" />
               </div>
