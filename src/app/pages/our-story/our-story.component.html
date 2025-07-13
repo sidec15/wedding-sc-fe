@@ -136,6 +136,7 @@
       }
     </div>
 
+    <!-- Desktop navigation controls -->
     <div class="navigation-controls">
       <button
         class="nav-btn prev-btn"
@@ -161,6 +162,25 @@
         <i class="fas fa-chevron-right"></i>
       </button>
     </div>
+
+    <!-- Mobile navigation buttons -->
+    <button
+      class="mobile-nav-btn prev-btn"
+      (click)="previousCard()"
+      [disabled]="currentIndex === 0 || isTransitioning"
+      [class.disabled]="currentIndex === 0 || isTransitioning"
+      aria-label="Previous card">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <button
+      class="mobile-nav-btn next-btn"
+      (click)="nextCard()"
+      [disabled]="currentIndex === cards.length - 1 || isTransitioning"
+      [class.disabled]="currentIndex === cards.length - 1 || isTransitioning"
+      aria-label="Next card">
+      <i class="fas fa-chevron-right"></i>
+    </button>
     }
   </div>
 </div>
