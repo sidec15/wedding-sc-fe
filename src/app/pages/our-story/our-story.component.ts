@@ -52,10 +52,12 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
     this.isMobile = this.platformService.isMobile();
     this.headerService.setMinDistanceToShowHeader(1);
     // Focus the component for keyboard navigation
-    if (typeof window !== 'undefined') {
-      const element = document.querySelector('.story-gallery');
-      if (element) {
-        (element as HTMLElement).focus();
+    if (this.isMobile) {
+      if (typeof window !== 'undefined') {
+        const element = document.querySelector('.story-gallery');
+        if (element) {
+          (element as HTMLElement).focus();
+        }
       }
     }
   }

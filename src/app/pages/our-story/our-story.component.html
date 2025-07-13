@@ -27,6 +27,10 @@
           <h2>{{ cards[currentIndex].title | translate }}</h2>
           <p>{{ cards[currentIndex].description | translate }}</p>
         </div>
+
+        @if (isMobile){
+        <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
+        }
       </div>
       }
 
@@ -84,7 +88,9 @@
             />
           </div>
         </div>
-        }
+        @if (isMobile){
+        <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
+        } }
 
         <!-- Right: Comics -->
         <div class="comic-column">
@@ -181,7 +187,7 @@
     </div>
 
     @if (!isMobile){
-      <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
+    <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
     } }
   </div>
 
