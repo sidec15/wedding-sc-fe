@@ -5,7 +5,6 @@
          [ngClass]="{
            'intro-card': cards[currentIndex].type === 'intro',
            'outro-card': cards[currentIndex].type === 'outro',
-           'transitioning': isTransitioning
          }">
 
       <!-- Intro/Outro cards - full screen text -->
@@ -20,14 +19,19 @@
 
       <!-- Regular cards - three column layout -->
       @if (cards[currentIndex].type === 'card') {
-        <div class="three-column-layout">
+        <div class="three-column-layout"
+          [ngClass]="{
+            'hidden': cards[currentIndex].status === 'hidden',
+            'visible': cards[currentIndex].status === 'visible',
+            'current': cards[currentIndex].position === 'current',
+            'before': cards[currentIndex].position === 'before',
+            'after': cards[currentIndex].position === 'after'
+          }"
+        >
           <!-- Left: Text -->
           <div class="text-column">
             <div class="text-content">
               <h2>{{ cards[currentIndex].title | translate }}</h2>
-              @if (cards[currentIndex].date) {
-                <p class="date">{{ dateTimeService.formatDate(cards[currentIndex].date) }}</p>
-              }
               <p class="description">{{ cards[currentIndex].description | translate }}</p>
             </div>
           </div>

@@ -8,6 +8,7 @@ export class StoryCardsProviderService {
       type: 'intro',
       title: 'our_story.intro.title',
       description: 'our_story.intro.description',
+      status: 'visible',
     },
     {
       type: 'card',
@@ -15,6 +16,8 @@ export class StoryCardsProviderService {
       description: 'our_story.cards.0.description',
       image: '/images/our-story/our-story_19860401.jpg',
       comic: '/images/comics/comics-04.png',
+      status: 'hidden',
+      position: 'after',
     },
     {
       type: 'card',
@@ -22,11 +25,15 @@ export class StoryCardsProviderService {
       description: 'our_story.cards.1.description',
       image: '/images/our-story/our-story_19870801.jpg',
       comic: '/images/comics/comics-04.png',
+      status: 'hidden',
+      position: 'after',
     },
     {
       type: 'outro',
       title: 'our_story.outro.title',
       description: 'our_story.outro.description',
+      status: 'hidden',
+      position: 'after',
     },
   ];
 

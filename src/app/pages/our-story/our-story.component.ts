@@ -25,11 +25,6 @@ export class OurStoryComponent implements OnInit, OnDestroy {
 
   cards: CardModel[] = [];
   currentIndex: number = 0;
-  private touchStartX: number = 0;
-  private touchEndX: number = 0;
-  private readonly SWIPE_THRESHOLD = 50;
-  private isAnimating = false;
-  isTransitioning = false;
 
   constructor(
     private eventService: EventService,
@@ -55,6 +50,33 @@ export class OurStoryComponent implements OnInit, OnDestroy {
     this.headerService.resetMinDistanceToShowHeader();
   }
 
+  previousCard(): void {
+    if (this.currentIndex > 0) {
+      // current card must disappear
+      this.cards[this.currentIndex].status = 'hidden';
+      this.cards[this.currentIndex].position = 'before';
+
+      // next card must appear
+      this.cards[this.currentIndex - 1].status = 'visible';
+      this.cards[this.currentIndex - 1].position = 'current';
+      this.currentIndex--;
+    }
+  }
+
+  nextCard(): void {
+    if (this.currentIndex < this.cards.length - 1) {
+      // current card must disappear
+      this.cards[this.currentIndex].status = 'hidden';
+      this.cards[this.currentIndex].position = 'after';
+
+      // next card must appear
+      this.cards[this.currentIndex + 1].status = 'visible';
+      this.cards[this.currentIndex + 1].position = 'current';
+      this.currentIndex++;
+
+    }
+  }
+
   @HostListener('keydown', ['$event'])
   handleKeyboardNavigation(event: KeyboardEvent): void {
     switch (event.key) {
@@ -74,42 +96,6 @@ export class OurStoryComponent implements OnInit, OnDestroy {
         event.preventDefault();
         this.currentIndex = this.cards.length - 1;
         break;
-    }
-  }
-
-  previousCard(): void {
-    if (this.currentIndex > 0 && !this.isAnimating) {
-      this.isAnimating = true;
-      this.isTransitioning = true;
-
-      // Fade out current content
-      setTimeout(() => {
-        this.currentIndex--;
-        this.isTransitioning = false;
-
-        // Reset animation flag after transition
-        setTimeout(() => {
-          this.isAnimating = false;
-        }, 800);
-      }, 300); // Fade out duration
-    }
-  }
-
-  nextCard(): void {
-    if (this.currentIndex < this.cards.length - 1 && !this.isAnimating) {
-      this.isAnimating = true;
-      this.isTransitioning = true;
-
-      // Fade out current content
-      setTimeout(() => {
-        this.currentIndex++;
-        this.isTransitioning = false;
-
-        // Reset animation flag after transition
-        setTimeout(() => {
-          this.isAnimating = false;
-        }, 800);
-      }, 300); // Fade out duration
     }
   }
 
