@@ -428,7 +428,7 @@
 // Mobile responsive styles
 @media screen and (max-width: 768px) {
   .story-gallery {
-    padding-top: 110px;
+    padding-top: 130px;
     height: auto;
     min-height: 100lvh;
     justify-content: flex-start;
@@ -446,7 +446,6 @@
   .card-wrapper {
     max-width: 100%;
     padding: 0;
-    padding-top: 20px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -595,6 +594,17 @@
       width: 40px;
       height: 40px;
       font-size: 1.2rem;
+
+      &:hover:not(.disabled) {
+        transform: none;
+        background: rgba(var(--bg), 0.8);
+        border-color: rgb(var(--text));
+        color: rgb(var(--text));
+      }
+
+      &:active:not(.disabled) {
+        transform: none;
+      }
     }
 
     .card-indicator {
