@@ -1,8 +1,9 @@
+@if (cards.length > 0) {
+<ng-container *ngTemplateOutlet="navigationControls"></ng-container>
+}
+
 <div class="story-gallery" tabindex="0">
   <div class="gallery-container" #galleryContainer>
-    @if (cards.length > 0) { @if (isMobile){
-    <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
-    }
     <div
       class="card-wrapper"
       [ngClass]="{
@@ -181,39 +182,35 @@
       </div>
       }
     </div>
-
-    @if (!isMobile){
-    <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
-    } }
   </div>
-
-  <ng-template #navigationControls>
-    <div class="navigation-controls">
-      <button
-        class="nav-btn prev-btn"
-        (click)="previousCard()"
-        [disabled]="currentIndex === 0 || isTransitioning"
-        [class.disabled]="currentIndex === 0 || isTransitioning"
-        aria-label="Previous card"
-      >
-        <i class="fas fa-chevron-left"></i>
-      </button>
-
-      <div class="card-indicator">
-        <span class="current">{{ currentIndex + 1 }}</span>
-        <span class="separator">/</span>
-        <span class="total">{{ cards.length }}</span>
-      </div>
-
-      <button
-        class="nav-btn next-btn"
-        (click)="nextCard()"
-        [disabled]="currentIndex === cards.length - 1 || isTransitioning"
-        [class.disabled]="currentIndex === cards.length - 1 || isTransitioning"
-        aria-label="Next card"
-      >
-        <i class="fas fa-chevron-right"></i>
-      </button>
-    </div>
-  </ng-template>
 </div>
+
+<ng-template #navigationControls>
+  <div class="navigation-controls">
+    <button
+      class="nav-btn prev-btn"
+      (click)="previousCard()"
+      [disabled]="currentIndex === 0 || isTransitioning"
+      [class.disabled]="currentIndex === 0 || isTransitioning"
+      aria-label="Previous card"
+    >
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="card-indicator">
+      <span class="current">{{ currentIndex + 1 }}</span>
+      <span class="separator">/</span>
+      <span class="total">{{ cards.length }}</span>
+    </div>
+
+    <button
+      class="nav-btn next-btn"
+      (click)="nextCard()"
+      [disabled]="currentIndex === cards.length - 1 || isTransitioning"
+      [class.disabled]="currentIndex === cards.length - 1 || isTransitioning"
+      aria-label="Next card"
+    >
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</ng-template>

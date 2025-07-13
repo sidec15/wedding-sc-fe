@@ -428,7 +428,7 @@
 // Mobile responsive styles
 @media screen and (max-width: 768px) {
   .story-gallery {
-    padding-top: 0px; // No padding for mobile
+    padding-top: 70px; // No padding for mobile
     height: auto;
   }
 
@@ -484,7 +484,6 @@
     }
 
     .three-column-layout {
-      padding-top: 50px;
       width: 100%;
       height: auto;
       display: flex;
@@ -578,7 +577,7 @@
 
   // Keep navigation controls visible on mobile but adjust styling
   .navigation-controls {
-    top: 50px !important;
+    top: 70px !important;
     bottom: auto !important;
     padding: 0.5rem 1rem;
 
