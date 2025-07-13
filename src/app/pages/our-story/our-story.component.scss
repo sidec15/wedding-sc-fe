@@ -593,53 +593,20 @@
     }
   }
 
-  // Hide desktop navigation on mobile
+  // Keep navigation controls visible on mobile but adjust styling
   .navigation-controls {
-    display: none;
-  }
+    bottom: 0.5rem;
+    padding: 0.5rem 1rem;
 
-  // Mobile-specific navigation buttons
-  .mobile-nav-btn {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
-    background: rgba(var(--bg), 0.8);
-    border: 2px solid rgb(var(--text));
-    border-radius: 50%;
-    color: rgb(var(--text));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    cursor: pointer;
-
-    &:hover:not(.disabled) {
-      background: rgba(var(--bg), 0.9);
-      transform: translateY(-50%) scale(1.1);
-      border-color: rgb(var(--text));
-      color: rgb(var(--text));
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
     }
 
-    &.disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
+    .card-indicator {
+      font-size: 1rem;
     }
-
-    &.prev-btn {
-      left: 1rem;
-    }
-
-    &.next-btn {
-      right: 1rem;
-    }
-  }
-
-  .card-indicator {
-    display: none; // Hide the counter on mobile
   }
 }
 
