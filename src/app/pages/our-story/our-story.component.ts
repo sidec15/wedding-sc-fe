@@ -5,8 +5,9 @@ import {
   HostListener,
   ElementRef,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 
 import { CardModel } from './models/card';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
@@ -15,16 +16,17 @@ import { StoryCardsProviderService } from './services/story-cards-provider.servi
 import { EventService } from '../../services/event.service';
 import { DateTimeService } from '../../services/date-time.service';
 import { HeaderService } from '../../services/header.service';
+import { PlatformService } from '../../services/platform.service';
 
 @Component({
   selector: 'app-parallax-showcase',
   standalone: true,
-  imports: [TranslateModule, NgClass],
+  imports: [TranslateModule, NgClass, NgTemplateOutlet],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
   providers: [StoryCardsProviderService],
 })
-export class OurStoryComponent implements OnInit, OnDestroy {
+export class OurStoryComponent implements AfterViewInit, OnDestroy {
   @ViewChild('galleryContainer', { static: true })
   galleryContainer!: ElementRef;
 
@@ -33,9 +35,10 @@ export class OurStoryComponent implements OnInit, OnDestroy {
   isTransitioning: boolean = false;
   previousIndex: number = 0;
   nextIndex: number = 0;
+  isMobile: boolean = false;
 
   constructor(
-    private eventService: EventService,
+    private platformService: PlatformService,
     private storycardsProvider: StoryCardsProviderService,
     public dateTimeService: DateTimeService,
     private headerService: HeaderService
@@ -45,7 +48,8 @@ export class OurStoryComponent implements OnInit, OnDestroy {
     this.initializeCardStates();
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.isMobile = this.platformService.isMobile();
     this.headerService.setMinDistanceToShowHeader(1);
     // Focus the component for keyboard navigation
     if (typeof window !== 'undefined') {

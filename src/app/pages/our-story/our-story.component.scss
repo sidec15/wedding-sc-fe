@@ -84,7 +84,7 @@
   overflow: hidden;
   outline: none;
   touch-action: pan-y pinch-zoom;
-  padding-top: 60px; // Add top padding to avoid header
+  padding-top: 0; // Add top padding to avoid header
 
   &:focus {
     outline: none;
