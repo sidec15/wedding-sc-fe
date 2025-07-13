@@ -528,19 +528,19 @@
 
       .text-content {
         width: 100%;
-        padding: 1.5rem;
-        background-color: rgba(var(--bg), 0.9);
-        border-radius: 12px;
-        box-shadow: 0 4px 16px var(--box-shadow-medium);
+        padding: 1rem;
+        background-color: transparent;
+        border-radius: 0;
+        box-shadow: none;
 
         h2 {
-          font-size: 1.8rem;
-          margin-bottom: 1rem;
+          font-size: 1.4rem;
+          margin-bottom: 0.8rem;
         }
 
         .description {
-          font-size: 1.2rem;
-          line-height: 1.6;
+          font-size: 1rem;
+          line-height: 1.5;
         }
       }
     }
@@ -588,10 +588,10 @@
         width: 100%;
         height: auto;
         max-height: 300px;
-        padding: 1rem;
-        background-color: rgba(var(--bg), 0.8);
-        border-radius: 12px;
-        box-shadow: 0 4px 16px var(--box-shadow-medium);
+        padding: 0.5rem;
+        background-color: transparent;
+        border-radius: 0;
+        box-shadow: none;
 
         &.visible,
         &.hidden,
