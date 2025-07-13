@@ -33,7 +33,9 @@
             <div class="text-content"
               [ngClass]="{
                 'visible': cards[currentIndex].status === 'visible',
-                'hidden': cards[currentIndex].status === 'hidden'
+                'hidden': cards[currentIndex].status === 'hidden',
+                'transitioning-out': cards[currentIndex].status === 'transitioning-out',
+                'transitioning-in': cards[currentIndex].status === 'transitioning-in'
               }">
               <h2>{{ cards[currentIndex].title | translate }}</h2>
               <p class="description">{{ cards[currentIndex].description | translate }}</p>
@@ -62,7 +64,9 @@
               <div class="comic-container"
                 [ngClass]="{
                   'visible': cards[currentIndex].status === 'visible',
-                  'hidden': cards[currentIndex].status === 'hidden'
+                  'hidden': cards[currentIndex].status === 'hidden',
+                  'transitioning-out': cards[currentIndex].status === 'transitioning-out',
+                  'transitioning-in': cards[currentIndex].status === 'transitioning-in'
                 }">
                 <img [src]="cards[currentIndex].comic" [alt]="cards[currentIndex].title + ' comic'" />
               </div>
@@ -83,7 +87,8 @@
             <div class="text-column">
               <div class="text-content"
                 [ngClass]="{
-                  'visible': cards[nextIndex].status === 'visible'
+                  'visible': cards[nextIndex].status === 'visible',
+                  'transitioning-in': cards[nextIndex].status === 'transitioning-in'
                 }">
                 <h2>{{ cards[nextIndex].title | translate }}</h2>
                 <p class="description">{{ cards[nextIndex].description | translate }}</p>
@@ -109,7 +114,8 @@
               @if (cards[nextIndex].comic) {
                 <div class="comic-container"
                   [ngClass]="{
-                    'visible': cards[nextIndex].status === 'visible'
+                    'visible': cards[nextIndex].status === 'visible',
+                    'transitioning-in': cards[nextIndex].status === 'transitioning-in'
                   }">
                   <img [src]="cards[nextIndex].comic" [alt]="cards[nextIndex].title + ' comic'" />
                 </div>

@@ -85,6 +85,10 @@ export class OurStoryComponent implements OnInit, OnDestroy {
     // Determine direction
     const isForward = newIndex > this.currentIndex;
 
+    // Start transition: hide current text/comic immediately
+    currentCard.status = 'transitioning-out';
+    nextCard.status = 'transitioning-in';
+
     // Set up simultaneous animations
     if (isForward) {
       // Moving forward: current slides out left, next slides in from right
@@ -96,15 +100,13 @@ export class OurStoryComponent implements OnInit, OnDestroy {
       nextCard.position = 'slide-in-from-left'; // slides in from left
     }
 
-    nextCard.status = 'visible';
-    currentCard.status = 'hidden';
-
     // Wait for transition to complete
     await new Promise(resolve => setTimeout(resolve, 800));
 
     // Update states after transition
     currentCard.status = 'hidden';
     currentCard.position = isForward ? 'before' : 'after';
+    nextCard.status = 'visible';
     nextCard.position = 'current';
     this.currentIndex = newIndex;
     this.isTransitioning = false;
