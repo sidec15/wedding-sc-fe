@@ -49,20 +49,22 @@
           </div>
 
           <!-- Center: Image -->
-          <div class="image-column">
-            <div class="image-container"
-              [ngClass]="{
-                'hidden': cards[currentIndex].status === 'hidden',
-                'visible': cards[currentIndex].status === 'visible',
-                'current': cards[currentIndex].position === 'current',
-                'before': cards[currentIndex].position === 'before',
-                'after': cards[currentIndex].position === 'after',
-                'slide-in-from-left': cards[currentIndex].position === 'slide-in-from-left',
-                'slide-in-from-right': cards[currentIndex].position === 'slide-in-from-right'
-              }">
-              <img [src]="cards[currentIndex].image" [alt]="cards[currentIndex].title" />
+          @if (cards[currentIndex].image) {
+            <div class="image-column">
+              <div class="image-container"
+                [ngClass]="{
+                  'hidden': cards[currentIndex].status === 'hidden',
+                  'visible': cards[currentIndex].status === 'visible',
+                  'current': cards[currentIndex].position === 'current',
+                  'before': cards[currentIndex].position === 'before',
+                  'after': cards[currentIndex].position === 'after',
+                  'slide-in-from-left': cards[currentIndex].position === 'slide-in-from-left',
+                  'slide-in-from-right': cards[currentIndex].position === 'slide-in-from-right'
+                }">
+                <img [src]="cards[currentIndex].image" [alt]="cards[currentIndex].title" />
+              </div>
             </div>
-          </div>
+          }
 
           <!-- Right: Comics -->
           <div class="comic-column">
@@ -103,18 +105,20 @@
           </div>
 
           <!-- Center: Image -->
-          <div class="image-column">
-            <div class="image-container"
-              [ngClass]="{
-                'visible': cards[nextIndex].status === 'visible',
-                'before': cards[nextIndex].position === 'before',
-                'after': cards[nextIndex].position === 'after',
-                'slide-in-from-left': cards[nextIndex].position === 'slide-in-from-left',
-                'slide-in-from-right': cards[nextIndex].position === 'slide-in-from-right'
-              }">
-              <img [src]="cards[nextIndex].image" [alt]="cards[nextIndex].title" />
+          @if (cards[nextIndex].image) {
+            <div class="image-column">
+              <div class="image-container"
+                [ngClass]="{
+                  'visible': cards[nextIndex].status === 'visible',
+                  'before': cards[nextIndex].position === 'before',
+                  'after': cards[nextIndex].position === 'after',
+                  'slide-in-from-left': cards[nextIndex].position === 'slide-in-from-left',
+                  'slide-in-from-right': cards[nextIndex].position === 'slide-in-from-right'
+                }">
+                <img [src]="cards[nextIndex].image" [alt]="cards[nextIndex].title" />
+              </div>
             </div>
-          </div>
+          }
 
           <!-- Right: Comics -->
           <div class="comic-column">
