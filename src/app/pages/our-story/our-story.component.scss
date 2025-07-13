@@ -578,7 +578,8 @@
 
   // Keep navigation controls visible on mobile but adjust styling
   .navigation-controls {
-    bottom: 0.5rem;
+    top: 50px !important;
+    bottom: auto !important;
     padding: 0.5rem 1rem;
 
     .nav-btn {
