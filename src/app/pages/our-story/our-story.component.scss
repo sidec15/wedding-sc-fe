@@ -122,15 +122,7 @@
     padding: 0;
   }
 
-  // Transition state for fade-out/fade-in
-  &.transitioning {
-    .text-content,
-    .comic-container {
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 0.3s ease-out;
-    }
-  }
+
 }
 
 // Text-only cards (intro/outro)
@@ -204,7 +196,7 @@
       transition: all 0.8s ease-out;
       opacity: 0;
       transform: translateY(30px);
-      animation: fadeInUp 1s ease-out 0.3s forwards;
+      animation: fadeInUp 0.8s ease-out 1.3s forwards;
 
       &.visible {
         animation: fadeIn 0.8s ease-out forwards;
@@ -219,7 +211,7 @@
       }
 
       &.transitioning-in {
-        animation: fadeIn 0.8s ease-out 0.5s forwards;
+        animation: fadeIn 0.8s ease-out 1.3s forwards;
       }
 
       h2 {
@@ -308,10 +300,10 @@
       transition: all 0.8s ease-out;
       opacity: 0;
       transform: translateY(30px);
-      animation: fadeInUp 1s ease-out 0.5s forwards;
+      animation: fadeInUp 0.8s ease-out 1.3s forwards;
 
       &.visible {
-        animation: fadeIn 0.8s ease-out 0.2s forwards;
+        animation: fadeIn 0.8s ease-out forwards;
       }
 
       &.hidden {
@@ -323,7 +315,7 @@
       }
 
       &.transitioning-in {
-        animation: fadeIn 0.8s ease-out 0.5s forwards;
+        animation: fadeIn 0.8s ease-out 1.3s forwards;
       }
 
       img {
