@@ -69,7 +69,20 @@ export class OurStoryComponent implements OnInit, OnDestroy {
         card.status = 'hidden';
         card.position = 'after';
       }
+
+      // Ensure type is set for all cards
+      if (!card.type) {
+        card.type = 'card';
+      }
     });
+  }
+
+  private resetCardPosition(card: CardModel, isForward: boolean): void {
+    if (isForward) {
+      card.position = 'before';
+    } else {
+      card.position = 'after';
+    }
   }
 
   private async transitionToCard(newIndex: number): Promise<void> {
@@ -85,23 +98,23 @@ export class OurStoryComponent implements OnInit, OnDestroy {
     // Determine direction
     const isForward = newIndex > this.currentIndex;
 
-    // Start transition: hide current text/comic immediately
+    // Reset card positions before transition
+    this.resetCardPosition(currentCard, isForward);
+    this.resetCardPosition(nextCard, isForward);
+
+    // All transitions work the same way - slide animations
     currentCard.status = 'transitioning-out';
     nextCard.status = 'transitioning-in';
 
-    // Set up simultaneous animations
     if (isForward) {
-      // Moving forward: current slides out left, next slides in from right
-      currentCard.position = 'before'; // slides out to left
-      nextCard.position = 'slide-in-from-right'; // slides in from right
+      currentCard.position = 'before';
+      nextCard.position = 'slide-in-from-right';
     } else {
-      // Moving backward: current slides out right, next slides in from left
-      currentCard.position = 'after'; // slides out to right
-      nextCard.position = 'slide-in-from-left'; // slides in from left
+      currentCard.position = 'after';
+      nextCard.position = 'slide-in-from-left';
     }
 
-    // Wait for transition to complete
-    await new Promise(resolve => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 800));
 
     // Update states after transition
     currentCard.status = 'hidden';

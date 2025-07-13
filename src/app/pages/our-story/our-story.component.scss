@@ -134,6 +134,19 @@
   justify-content: center;
   padding: 2rem;
 
+  // Special transitions for intro→first image and last image→outro
+  &.from-regular {
+    .text-content {
+      animation: fadeInUp 0.8s ease-out 0.8s forwards;
+    }
+  }
+
+  &.to-regular {
+    .text-content {
+      animation: fadeOut 0.3s ease-out forwards;
+    }
+  }
+
   .text-content {
     max-width: 800px;
     text-align: center;
@@ -144,7 +157,23 @@
     transition: all 0.8s ease-out;
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 1s ease-out 0.3s forwards;
+    animation: fadeInUp 0.8s ease-out 0.5s forwards;
+
+    &.visible {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    &.hidden {
+      animation: fadeOut 0.3s ease-out forwards;
+    }
+
+    &.transitioning-out {
+      animation: fadeOut 0.3s ease-out forwards;
+    }
+
+    &.transitioning-in {
+      animation: fadeIn 0.8s ease-out 0.5s forwards;
+    }
 
     h2 {
       font-size: 2rem;
@@ -182,6 +211,8 @@
     height: 100%;
     z-index: 10;
   }
+
+
 
   // Left column - Text
   .text-column {
