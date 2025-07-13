@@ -5,6 +5,7 @@
          [ngClass]="{
            'intro-card': cards[currentIndex].type === 'intro',
            'outro-card': cards[currentIndex].type === 'outro',
+           'transitioning': isTransitioning
          }">
 
       <!-- Intro/Outro cards - full screen text -->
@@ -19,18 +20,21 @@
 
       <!-- Regular cards - three column layout -->
       @if (cards[currentIndex].type === 'card') {
+        <!-- Current card -->
         <div class="three-column-layout"
           [ngClass]="{
             'hidden': cards[currentIndex].status === 'hidden',
             'visible': cards[currentIndex].status === 'visible',
-            'current': cards[currentIndex].position === 'current',
-            'before': cards[currentIndex].position === 'before',
-            'after': cards[currentIndex].position === 'after'
+            'current': cards[currentIndex].position === 'current'
           }"
         >
           <!-- Left: Text -->
           <div class="text-column">
-            <div class="text-content">
+            <div class="text-content"
+              [ngClass]="{
+                'visible': cards[currentIndex].status === 'visible',
+                'hidden': cards[currentIndex].status === 'hidden'
+              }">
               <h2>{{ cards[currentIndex].title | translate }}</h2>
               <p class="description">{{ cards[currentIndex].description | translate }}</p>
             </div>
@@ -38,7 +42,14 @@
 
           <!-- Center: Image -->
           <div class="image-column">
-            <div class="image-container">
+            <div class="image-container"
+              [ngClass]="{
+                'hidden': cards[currentIndex].status === 'hidden',
+                'visible': cards[currentIndex].status === 'visible',
+                'current': cards[currentIndex].position === 'current',
+                'before': cards[currentIndex].position === 'before',
+                'after': cards[currentIndex].position === 'after'
+              }">
               <img [src]="cards[currentIndex].image" [alt]="cards[currentIndex].title" />
             </div>
           </div>
@@ -46,12 +57,62 @@
           <!-- Right: Comics -->
           <div class="comic-column">
             @if (cards[currentIndex].comic) {
-              <div class="comic-container">
+              <div class="comic-container"
+                [ngClass]="{
+                  'visible': cards[currentIndex].status === 'visible',
+                  'hidden': cards[currentIndex].status === 'hidden'
+                }">
                 <img [src]="cards[currentIndex].comic" [alt]="cards[currentIndex].title + ' comic'" />
               </div>
             }
           </div>
         </div>
+
+        <!-- Next card (shown during transition) -->
+        @if (isTransitioning && cards[nextIndex].type === 'card') {
+          <div class="three-column-layout next-card"
+            [ngClass]="{
+              'visible': cards[nextIndex].status === 'visible',
+              'before': cards[nextIndex].position === 'before',
+              'after': cards[nextIndex].position === 'after'
+            }"
+          >
+            <!-- Left: Text -->
+            <div class="text-column">
+              <div class="text-content"
+                [ngClass]="{
+                  'visible': cards[nextIndex].status === 'visible'
+                }">
+                <h2>{{ cards[nextIndex].title | translate }}</h2>
+                <p class="description">{{ cards[nextIndex].description | translate }}</p>
+              </div>
+            </div>
+
+            <!-- Center: Image -->
+            <div class="image-column">
+              <div class="image-container"
+                [ngClass]="{
+                  'visible': cards[nextIndex].status === 'visible',
+                  'before': cards[nextIndex].position === 'before',
+                  'after': cards[nextIndex].position === 'after'
+                }">
+                <img [src]="cards[nextIndex].image" [alt]="cards[nextIndex].title" />
+              </div>
+            </div>
+
+            <!-- Right: Comics -->
+            <div class="comic-column">
+              @if (cards[nextIndex].comic) {
+                <div class="comic-container"
+                  [ngClass]="{
+                    'visible': cards[nextIndex].status === 'visible'
+                  }">
+                  <img [src]="cards[nextIndex].comic" [alt]="cards[nextIndex].title + ' comic'" />
+                </div>
+              }
+            </div>
+          </div>
+        }
       }
     </div>
 
@@ -59,8 +120,8 @@
       <button
         class="nav-btn prev-btn"
         (click)="previousCard()"
-        [disabled]="currentIndex === 0"
-        [class.disabled]="currentIndex === 0"
+        [disabled]="currentIndex === 0 || isTransitioning"
+        [class.disabled]="currentIndex === 0 || isTransitioning"
         aria-label="Previous card">
         <i class="fas fa-chevron-left"></i>
       </button>
@@ -74,8 +135,8 @@
       <button
         class="nav-btn next-btn"
         (click)="nextCard()"
-        [disabled]="currentIndex === cards.length - 1"
-        [class.disabled]="currentIndex === cards.length - 1"
+        [disabled]="currentIndex === cards.length - 1 || isTransitioning"
+        [class.disabled]="currentIndex === cards.length - 1 || isTransitioning"
         aria-label="Next card">
         <i class="fas fa-chevron-right"></i>
       </button>

@@ -11,7 +11,25 @@
   }
 }
 
-@keyframes appearFromLeft {
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInFromRight {
   0% {
     transform: translateX(100%) scale(0.8);
     opacity: 0;
@@ -19,6 +37,39 @@
   100% {
     transform: translateX(0) scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToLeft {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) scale(0.8);
+    opacity: 0;
   }
 }
 
@@ -130,16 +181,9 @@
   background-color: rgba(var(--bg), 0.05);
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-  &.after {
-    transform: translateX(100%) scale(0.8);
-  }
-
-  &.before {
-    transform: translateX(-100%) scale(0.8);
-  }
-
   &.current {
     transform: translateX(0) scale(1);
+    opacity: 1;
   }
 
   &.visible {
@@ -148,6 +192,16 @@
 
   &.hidden {
     opacity: 0;
+  }
+
+  // Next card during transition
+  &.next-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
   }
 
   // Left column - Text
@@ -160,10 +214,18 @@
     .text-content {
       background-color: rgba(var(--bg), 0.9);
       max-width: 100%;
-      transition: all 1s ease-out;
+      transition: all 0.8s ease-out;
       opacity: 0;
       transform: translateY(30px);
       animation: fadeInUp 1s ease-out 0.3s forwards;
+
+      &.visible {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+
+      &.hidden {
+        animation: fadeOut 0.3s ease-out forwards;
+      }
 
       h2 {
         font-size: 1.7rem;
@@ -199,7 +261,7 @@
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 8px 24px var(--box-shadow-medium);
-      transition: all 1s ease-out;
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
       &.hidden {
         opacity: 0;
@@ -214,11 +276,20 @@
       }
 
       &.before {
-        transform: translateX(-100%) scale(0.8);
+        animation: slideInFromLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
       }
 
       &.after {
-        transform: translateX(100%) scale(0.8);
+        animation: slideInFromRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      }
+
+      // Slide out animations for current card
+      &.slide-out-left {
+        animation: slideOutToLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      }
+
+      &.slide-out-right {
+        animation: slideOutToRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
       }
 
       img {
@@ -244,10 +315,18 @@
       align-items: center;
       justify-content: center;
       background-color: rgba(var(--bg), 0.8);
-      transition: all 1s ease-out;
+      transition: all 0.8s ease-out;
       opacity: 0;
       transform: translateY(30px);
       animation: fadeInUp 1s ease-out 0.5s forwards;
+
+      &.visible {
+        animation: fadeIn 0.8s ease-out 0.2s forwards;
+      }
+
+      &.hidden {
+        animation: fadeOut 0.3s ease-out forwards;
+      }
 
       img {
         max-width: 100%;

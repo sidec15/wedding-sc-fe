@@ -25,6 +25,9 @@ export class OurStoryComponent implements OnInit, OnDestroy {
 
   cards: CardModel[] = [];
   currentIndex: number = 0;
+  isTransitioning: boolean = false;
+  previousIndex: number = 0;
+  nextIndex: number = 0;
 
   constructor(
     private eventService: EventService,
@@ -33,6 +36,8 @@ export class OurStoryComponent implements OnInit, OnDestroy {
     private headerService: HeaderService
   ) {
     this.cards = this.storycardsProvider.getCards();
+    // Initialize all cards with proper states
+    this.initializeCardStates();
   }
 
   ngOnInit(): void {
@@ -50,30 +55,64 @@ export class OurStoryComponent implements OnInit, OnDestroy {
     this.headerService.resetMinDistanceToShowHeader();
   }
 
-  previousCard(): void {
-    if (this.currentIndex > 0) {
-      // current card must disappear
-      this.cards[this.currentIndex].status = 'hidden';
-      this.cards[this.currentIndex].position = 'before';
+  private initializeCardStates(): void {
+    this.cards.forEach((card, index) => {
+      if (index === 0) {
+        card.status = 'visible';
+        card.position = 'current';
+      } else {
+        card.status = 'hidden';
+        card.position = 'after';
+      }
+    });
+  }
 
-      // next card must appear
-      this.cards[this.currentIndex - 1].status = 'visible';
-      this.cards[this.currentIndex - 1].position = 'current';
-      this.currentIndex--;
+  private async transitionToCard(newIndex: number): Promise<void> {
+    if (this.isTransitioning || newIndex === this.currentIndex) return;
+
+    this.isTransitioning = true;
+    this.previousIndex = this.currentIndex;
+    this.nextIndex = newIndex;
+
+    const currentCard = this.cards[this.currentIndex];
+    const nextCard = this.cards[newIndex];
+
+    // Determine direction
+    const isForward = newIndex > this.currentIndex;
+
+    // Set up simultaneous animations
+    if (isForward) {
+      // Moving forward: current slides out left, next slides in from right
+      currentCard.position = 'before'; // slides out to left
+      nextCard.position = 'current'; // slides in from right
+      nextCard.status = 'visible';
+    } else {
+      // Moving backward: current slides out right, next slides in from left
+      currentCard.position = 'after'; // slides out to right
+      nextCard.position = 'current'; // slides in from left
+      nextCard.status = 'visible';
+    }
+
+    // Wait for transition to complete
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    // Update states after transition
+    currentCard.status = 'hidden';
+    currentCard.position = isForward ? 'before' : 'after';
+    // nextCard.position = 'current';
+    this.currentIndex = newIndex;
+    this.isTransitioning = false;
+  }
+
+  previousCard(): void {
+    if (this.currentIndex > 0 && !this.isTransitioning) {
+      this.transitionToCard(this.currentIndex - 1);
     }
   }
 
   nextCard(): void {
-    if (this.currentIndex < this.cards.length - 1) {
-      // current card must disappear
-      this.cards[this.currentIndex].status = 'hidden';
-      this.cards[this.currentIndex].position = 'after';
-
-      // next card must appear
-      this.cards[this.currentIndex + 1].status = 'visible';
-      this.cards[this.currentIndex + 1].position = 'current';
-      this.currentIndex++;
-
+    if (this.currentIndex < this.cards.length - 1 && !this.isTransitioning) {
+      this.transitionToCard(this.currentIndex + 1);
     }
   }
 
@@ -90,13 +129,16 @@ export class OurStoryComponent implements OnInit, OnDestroy {
         break;
       case 'Home':
         event.preventDefault();
-        this.currentIndex = 0;
+        if (this.currentIndex !== 0) {
+          this.transitionToCard(0);
+        }
         break;
       case 'End':
         event.preventDefault();
-        this.currentIndex = this.cards.length - 1;
+        if (this.currentIndex !== this.cards.length - 1) {
+          this.transitionToCard(this.cards.length - 1);
+        }
         break;
     }
   }
-
 }
