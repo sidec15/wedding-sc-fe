@@ -428,7 +428,7 @@
 // Mobile responsive styles
 @media screen and (max-width: 768px) {
   .story-gallery {
-    padding-top: 70px; // No padding for mobile
+    padding-top: 110px; // No padding for mobile
     height: auto;
   }
 
@@ -463,7 +463,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 1rem;
+      padding: 0;
 
       .text-content {
         max-width: 100%;
