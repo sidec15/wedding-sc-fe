@@ -181,19 +181,6 @@
   background-color: rgba(var(--bg), 0.05);
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-  &.current {
-    transform: translateX(0) scale(1);
-    opacity: 1;
-  }
-
-  &.visible {
-    opacity: 1;
-  }
-
-  &.hidden {
-    opacity: 0;
-  }
-
   // Next card during transition
   &.next-card {
     position: absolute;
@@ -263,32 +250,17 @@
       box-shadow: 0 8px 24px var(--box-shadow-medium);
       transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-      &.hidden {
-        opacity: 0;
-      }
-
-      &.visible {
-        opacity: 1;
-      }
-
       &.current {
         transform: translateX(0) scale(1);
       }
 
       &.before {
         animation: slideInFromLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation: slideOutToLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
       }
 
       &.after {
         animation: slideInFromRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-      }
-
-      // Slide out animations for current card
-      &.slide-out-left {
-        animation: slideOutToLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-      }
-
-      &.slide-out-right {
         animation: slideOutToRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
       }
 

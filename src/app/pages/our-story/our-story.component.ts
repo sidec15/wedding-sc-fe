@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 
 import { CardModel } from './models/card';
@@ -12,16 +19,14 @@ import { HeaderService } from '../../services/header.service';
 @Component({
   selector: 'app-parallax-showcase',
   standalone: true,
-  imports: [
-    TranslateModule,
-    NgClass
-  ],
+  imports: [TranslateModule, NgClass],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
-  providers: [StoryCardsProviderService]
+  providers: [StoryCardsProviderService],
 })
 export class OurStoryComponent implements OnInit, OnDestroy {
-  @ViewChild('galleryContainer', { static: true }) galleryContainer!: ElementRef;
+  @ViewChild('galleryContainer', { static: true })
+  galleryContainer!: ElementRef;
 
   cards: CardModel[] = [];
   currentIndex: number = 0;
@@ -85,13 +90,14 @@ export class OurStoryComponent implements OnInit, OnDestroy {
       // Moving forward: current slides out left, next slides in from right
       currentCard.position = 'before'; // slides out to left
       nextCard.position = 'current'; // slides in from right
-      nextCard.status = 'visible';
     } else {
       // Moving backward: current slides out right, next slides in from left
       currentCard.position = 'after'; // slides out to right
       nextCard.position = 'current'; // slides in from left
-      nextCard.status = 'visible';
     }
+
+    nextCard.status = 'visible';
+    currentCard.status = 'hidden';
 
     // Wait for transition to complete
     await new Promise(resolve => setTimeout(resolve, 800));
