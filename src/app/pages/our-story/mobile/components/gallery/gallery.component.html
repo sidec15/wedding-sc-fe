@@ -1,0 +1,50 @@
+<!-- Modal for the gallery -->
+@if (isGalleryOpen) {
+<div class="gallery-modal">
+  <div class="gallery-content">
+    <button class="close-btn" (click)="closeGallery()">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="gallery-text-wrapper">
+      <h3>{{ currentCard.title | translate }}</h3>
+      <p class="gallery-description">
+        {{ currentCard.description || "" | translate }}
+      </p>
+    </div>
+    <div class="gallery-image-wrapper">
+      <div class="gallery-image">
+        <img
+          [src]="currentCard.image"
+          [alt]="currentCard.title || 'Image description'"
+        />
+      </div>
+    </div>
+    <div class="gallery-buttons">
+      <button
+        class="prev-btn"
+        (click)="prevCard()"
+        [disabled]="currentCardIndex === 0"
+      >
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <span class="counter">{{ currentCardIndex + 1 }}/{{ cards.length }}</span>
+      <button
+        class="next-btn"
+        (click)="nextCard()"
+        [disabled]="currentCardIndex === cards.length - 1"
+      >
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    <div class="comic-wrapper">
+      @if (currentCard.comic) {
+      <img
+        [src]="currentCard.comic"
+        class="comic"
+        [alt]="currentCard.title || 'Comic'"
+      />
+      }
+    </div>
+  </div>
+</div>
+}

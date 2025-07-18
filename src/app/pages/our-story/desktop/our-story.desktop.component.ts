@@ -9,11 +9,11 @@ import {
 } from '@angular/core';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 
-import { CardModel } from './models/card';
 import { TranslateModule } from '@ngx-translate/core';
-import { StoryCardsProviderDesktopService } from './services/story-cards-provider-desktop.service';
 import { PlatformService } from '../../../services/platform.service';
 import { HeaderService } from '../../../services/header.service';
+import { CardsService } from '../services/cards.service';
+import { Card } from '../models/card';
 
 @Component({
   selector: 'app-our-story-desktop',
@@ -21,7 +21,7 @@ import { HeaderService } from '../../../services/header.service';
   imports: [TranslateModule, NgClass, NgTemplateOutlet],
   templateUrl: './our-story.desktop.component.html',
   styleUrls: ['./our-story.desktop.component.scss'],
-  providers: [StoryCardsProviderDesktopService],
+  providers: [CardsService],
 })
 export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
 
@@ -30,7 +30,7 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   @ViewChild('nextBtn', { static: false })
   nextBtn!: ElementRef;
 
-  cards: CardModel[] = [];
+  cards: Card[] = [];
   currentIndex: number = 0;
   isTransitioning: boolean = false;
   previousIndex: number = 0;
@@ -39,7 +39,7 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private platformService: PlatformService,
-    private storycardsProvider: StoryCardsProviderDesktopService,
+    private storycardsProvider: CardsService,
     private headerService: HeaderService
   ) {
     this.cards = this.storycardsProvider.getCards();
@@ -82,7 +82,7 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private resetCardPosition(card: CardModel, isForward: boolean): void {
+  private resetCardPosition(card: Card, isForward: boolean): void {
     if (isForward) {
       card.position = 'before';
     } else {

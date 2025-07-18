@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { CardModel } from '../models/card';
+import { Card } from '../models/card';
 
 @Injectable()
-export class StoryCardsProviderDesktopService {
-  private readonly cards: CardModel[] = [
+export class CardsService {
+  private readonly cards: Card[] = [
     {
       type: 'intro',
       title: 'our_story.intro.title',
       description: 'our_story.intro.description',
+
+      position: 'current',
       status: 'visible',
     },
     {
@@ -16,8 +18,11 @@ export class StoryCardsProviderDesktopService {
       description: 'our_story.cards.0.description',
       image: '/images/our-story/our-story_19860401.jpg',
       comic: '/images/comics/comics-04.png',
-      status: 'hidden',
+
       position: 'after',
+      status: 'hidden',
+      textPosition: 'left',
+
     },
     {
       type: 'card',
@@ -25,27 +30,32 @@ export class StoryCardsProviderDesktopService {
       description: 'our_story.cards.1.description',
       image: '/images/our-story/our-story_19870801.jpg',
       comic: '/images/comics/comics-04.png',
-      status: 'hidden',
+
       position: 'after',
+      status: 'hidden',
+      textPosition: 'left',
     },
     {
       type: 'outro',
       title: 'our_story.outro.title',
       description: 'our_story.outro.description',
-      status: 'hidden',
+
       position: 'after',
+      status: 'hidden',
     },
   ];
 
   constructor() {}
 
-  getCards(): CardModel[] {
+  getCards(): Card[] {
     return this.cards;
   }
-  getCard(index: number): CardModel | null {
+  getCard(index: number): Card | null {
     if (index < 0 || index >= this.cards.length) {
       return null;
     }
     return this.cards[index];
   }
+
+
 }
