@@ -8,8 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { PlatformService } from '../../../../services/platform.service';
-import { DateTimeService } from '../../../../services/date-time.service';
+import { PlatformService } from '../../../../../services/platform.service';
 
 @Component({
   selector: 'app-parallax-card',
@@ -19,8 +18,6 @@ import { DateTimeService } from '../../../../services/date-time.service';
   styleUrls: ['./parallax-card.component.scss'],
 })
 export class ParallaxCardComponent implements AfterViewInit {
-
-  readonly dateTimeService: DateTimeService;
 
   @Input() title = '';
   @Input() description = '';
@@ -35,12 +32,7 @@ export class ParallaxCardComponent implements AfterViewInit {
   @ViewChild('card', { static: false }) cardEl?: ElementRef<HTMLElement>;
   @ViewChild('content', { static: false }) contentEl?: ElementRef<HTMLElement>;
 
-  constructor(
-    private platformService: PlatformService,
-    dateTimeService: DateTimeService
-  ) {
-    this.dateTimeService = dateTimeService;
-  }
+  constructor(private platformService: PlatformService) {}
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return;

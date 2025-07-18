@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CardModel } from '../models/card';
 
 @Injectable()
-export class StoryCardsProviderService {
+export class StoryCardsProviderDesktopService {
   private readonly cards: CardModel[] = [
     {
       type: 'intro',
