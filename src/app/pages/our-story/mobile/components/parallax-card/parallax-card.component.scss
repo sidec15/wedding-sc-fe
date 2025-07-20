@@ -53,13 +53,6 @@
           // font-size: 2rem;
         }
 
-        .date {
-          font-style: italic;
-          font-size: 0.95rem;
-          color: rgb(var(--accent)); // Use hover color for subtle contrast
-          margin-bottom: 1rem;
-        }
-
         .description {
           // font-size: 1rem;
           color: rgb(var(--text));
@@ -68,17 +61,6 @@
       }
     }
 
-    // Left or right positioning
-    &.left .text-overlay {
-      left: 5%;
-      right: auto;
-    }
-
-    &.right .text-overlay {
-      right: 5%;
-      left: auto;
-      text-align: right;
-    }
   }
 
   &.intro,
@@ -154,7 +136,7 @@
           transition: opacity 0.4s ease, transform 0.4s ease; // Faster and smoother animation
 
           &.visible {
-            opacity: 0.5; // Fully visible when in focus
+            opacity: 0.8; // Fully visible when in focus
             transform: translateY(0); // Align perfectly with the image
           }
 
@@ -168,10 +150,6 @@
             color: rgb(var(--text));
           }
 
-          .date {
-            font-size: 0.9rem;
-            color: rgb(var(--hover)); // Use hover color for subtle contrast
-          }
         }
       }
 

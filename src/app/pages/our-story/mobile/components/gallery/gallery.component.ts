@@ -68,6 +68,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
   closeGallery(): void {
     this.isGalleryOpen = false;
     this.unlockScroll();
+    this.eventService.emitRingScrollEnabled(true);
+    this.eventService.emitGalleryStatus({
+      isOpen: false,
+      currentIndex: 0,
+    });
   }
 
   prevCard(): void {
