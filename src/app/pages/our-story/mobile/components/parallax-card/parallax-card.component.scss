@@ -1,6 +1,28 @@
 @use "../../../../../../styles/variables.scss" as *;
 @use "../../styles/our-story-styles.scss" as ourstory;
 
+@keyframes introFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introTextFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 :host {
   display: block;
   width: 100%;
@@ -101,7 +123,37 @@
     }
   }
 
-  &.intro,
+  &.intro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+
+    .text-only-content {
+      max-width: 800px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: introFadeIn 1s ease-out 0.5s forwards;
+
+      h3 {
+        font-size: 1.5rem;
+        color: rgb(var(--accent));
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: introTextFadeIn 1s ease-out 1s forwards;
+      }
+
+      .description {
+        font-size: 0.9rem;
+        color: rgb(var(--text));
+        line-height: 1.6;
+        opacity: 0;
+        animation: introTextFadeIn 1s ease-out 1.5s forwards;
+      }
+    }
+  }
+
   &.outro {
     display: flex;
     align-items: center;
