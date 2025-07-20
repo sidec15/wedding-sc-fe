@@ -17,7 +17,7 @@ export class CardsService {
       title: 'our_story.cards.0.title',
       description: 'our_story.cards.0.description',
       image: '/images/our-story/our-story_19860401.jpg',
-      comics: ['/images/comics/comics-04.png'],
+      comics: ['/images/comics/comics-04.png', '/images/comics/comics-01.png'],
 
       position: 'after',
       status: 'hidden',

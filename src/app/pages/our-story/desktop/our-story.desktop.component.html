@@ -91,7 +91,7 @@
 
         <!-- Right: Comics -->
         <div class="comic-column">
-          @if (cards[currentIndex].comic) {
+          @if (cards[currentIndex].comics && cards[currentIndex].comics!.length > 0) {
           <div
             class="comic-container"
             [ngClass]="{
@@ -103,10 +103,13 @@
                 cards[currentIndex].status === 'transitioning-in'
             }"
           >
+            @for (comic of cards[currentIndex].comics; track comic) {
             <img
-              [src]="cards[currentIndex].comic"
+              [src]="comic"
               [alt]="cards[currentIndex].title + ' comic'"
+              class="comic-image"
             />
+            }
           </div>
           }
         </div>
@@ -164,7 +167,7 @@
 
         <!-- Right: Comics -->
         <div class="comic-column">
-          @if (cards[nextIndex].comic) {
+          @if (cards[nextIndex].comics && cards[nextIndex].comics!.length > 0) {
           <div
             class="comic-container"
             [ngClass]="{
@@ -172,10 +175,13 @@
               'transitioning-in': cards[nextIndex].status === 'transitioning-in'
             }"
           >
+            @for (comic of cards[nextIndex].comics; track comic) {
             <img
-              [src]="cards[nextIndex].comic"
+              [src]="comic"
               [alt]="cards[nextIndex].title + ' comic'"
+              class="comic-image"
             />
+            }
           </div>
           }
         </div>
