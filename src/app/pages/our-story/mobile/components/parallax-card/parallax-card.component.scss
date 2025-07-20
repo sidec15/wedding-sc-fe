@@ -11,56 +11,97 @@
 .parallax-card {
   width: 100%;
   position: relative;
-  // background-color: rgb(var(--bg));
   color: rgb(var(--text));
 
   &.card {
     align-items: center;
     justify-content: space-between;
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
 
     .image-overlay {
       position: relative;
       display: flex;
-      flex-direction: row;
-      // overflow: hidden;
+      flex-direction: column;
 
       img {
         width: 100%;
         height: auto;
-        object-fit: cover;
-        cursor: pointer;
-        box-shadow: 10px 10px 15px var(--box-shadow-heavy); // Bottom-right shadow
+        position: relative;
+        z-index: 1;
+
+        // Apply a soft gradient fade at the bottom edge
+        mask-image: linear-gradient(
+          to bottom,
+          rgb(var(--mask-black)) 80%,
+          var(--mask-transparent) 100%
+        );
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          rgb(var(--mask-black)) 80%,
+          var(--mask-transparent) 100%
+        );
       }
 
       .text-overlay {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+        position: static;
+        transform: translateY(-10px);
+        opacity: 0;
+        padding: 1rem;
+        box-shadow: none;
+        margin-top: 0;
+        border-radius: 0 0 8px 8px;
+        z-index: 2;
+        transition: opacity 0.4s ease, transform 0.4s ease;
         background-color: rgba(var(--bg), 0.95);
-        padding: 1.5rem;
-        max-width: 500px;
-        transition: opacity 0.6s ease, transform 0.6s ease;
-        opacity: 1;
-        transform: translateY(60px);
-        box-shadow: 0 4px 10px var(--box-shadow-heavy);
         color: rgb(var(--text));
 
+        &.visible {
+          opacity: 0.8;
+          transform: translateY(0);
+        }
+
         h3 {
-          margin-bottom: 0.5rem;
+          font-size: 1.5rem;
           color: rgb(var(--accent));
-          // font-size: 2rem;
+          margin-bottom: 0.5rem;
         }
 
         .description {
-          // font-size: 1rem;
+          font-size: 1rem;
           color: rgb(var(--text));
         }
+      }
 
+      .comics-overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 25%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+        padding: 0.3rem;
+        background-color: rgba(var(--bg), 0.9);
+
+        .comic-image {
+          width: 100%;
+          max-height: 12vh;
+          object-fit: contain;
+          object-position: center;
+        }
       }
     }
 
+    &.left .text-overlay,
+    &.right .text-overlay {
+      text-align: center;
+      left: auto;
+      right: auto;
+    }
   }
 
   &.intro,
@@ -81,100 +122,15 @@
       }
 
       h3 {
-        font-size: 2.5rem;
+        font-size: 1.5rem;
         color: rgb(var(--accent));
         margin-bottom: 1.5rem;
       }
 
       .description {
-        font-size: 1.3rem;
+        font-size: 0.9rem;
         color: rgb(var(--text));
         line-height: 1.6;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .parallax-card {
-    &.card {
-      width: 95%;
-
-      .image-overlay {
-        position: relative;
-        flex-direction: column;
-
-        img {
-          width: 100%;
-          height: auto;
-          // border-radius: 8px 8px 0 0;
-          position: relative;
-          z-index: 1;
-
-          // Apply a soft gradient fade at the bottom edge
-          mask-image: linear-gradient(
-            to bottom,
-            rgb(var(--mask-black)) 80%,
-            var(--mask-transparent) 100%
-          );
-          -webkit-mask-image: linear-gradient(
-            to bottom,
-            rgb(var(--mask-black)) 80%,
-            var(--mask-transparent) 100%
-          );
-        }
-
-        .text-overlay {
-          position: static;
-          transform: translateY(-10px); // Start closer to the image
-          opacity: 0; // Semi-transparent by default
-          padding: 1rem;
-          box-shadow: none;
-          margin-top: 0;
-          border-radius: 0 0 8px 8px;
-          z-index: 2;
-          transition: opacity 0.4s ease, transform 0.4s ease; // Faster and smoother animation
-
-          &.visible {
-            opacity: 0.8; // Fully visible when in focus
-            transform: translateY(0); // Align perfectly with the image
-          }
-
-          h3 {
-            font-size: 1.5rem;
-            color: rgb(var(--accent));
-          }
-
-          .description {
-            font-size: 1rem;
-            color: rgb(var(--text));
-          }
-
-        }
-      }
-
-      &.left .text-overlay,
-      &.right .text-overlay {
-        text-align: center;
-        left: auto;
-        right: auto;
-      }
-    }
-
-    &.intro,
-    &.outro {
-
-      .text-only-content {
-
-        h3 {
-          font-size: 1.5rem;
-          color: rgb(var(--accent));
-          margin-bottom: 1.5rem;
-        }
-
-        .description {
-          font-size: 0.9rem;
-        }
       }
     }
   }

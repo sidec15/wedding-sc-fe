@@ -9,6 +9,13 @@
           <p class="description">{{ description | translate }}</p>
         </div>
       </div>
+      @if (comics && comics.length > 0) {
+        <div class="comics-overlay">
+          @for (comic of comics; track comic) {
+            <img [src]="comic" [alt]="title + ' comic'" class="comic-image" />
+          }
+        </div>
+      }
     }
     <!-- 📘 Intro/Outro full screen text -->
     @default {
