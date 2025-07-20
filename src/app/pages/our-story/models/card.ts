@@ -3,7 +3,7 @@ export interface Card {
   description: string;
   image?: string; // optional for intro/outro
   type?: 'card' | 'intro' | 'outro';
-  comic?: string; // comic image
+  comics?: string[]; // comic image
 
   status?: 'visible' | 'hidden' | 'transitioning-out' | 'transitioning-in';
   position?: 'before' | 'after' | 'current' | 'slide-in-from-left' | 'slide-in-from-right';

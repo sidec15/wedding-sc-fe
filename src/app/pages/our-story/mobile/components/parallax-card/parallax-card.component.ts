@@ -22,7 +22,7 @@ export class ParallaxCardComponent implements AfterViewInit {
   @Input() description = '';
   @Input() image = '';
   @Input() textPosition: 'left' | 'right' = 'left';
-  @Input() comic?: string;
+  @Input() comics?: string[];
   @Input() type: 'card' | 'intro' | 'outro' = 'card';
 
   @ViewChild('card', { static: false }) cardEl?: ElementRef<HTMLElement>;
