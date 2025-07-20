@@ -7,15 +7,15 @@
         <div class="text-overlay" #content>
           <h3>{{ title | translate }}</h3>
           <p class="description">{{ description | translate }}</p>
-        </div>
-      </div>
-      @if (comics && comics.length > 0) {
-        <div class="comics-overlay">
-          @for (comic of comics; track comic) {
-            <img [src]="comic" [alt]="title + ' comic'" class="comic-image" />
+          @if (comics && comics.length > 0) {
+            <div class="comics-section">
+              @for (comic of comics; track comic) {
+                <img [src]="comic" [alt]="title + ' comic'" class="comic-image" />
+              }
+            </div>
           }
         </div>
-      }
+      </div>
     }
     <!-- 📘 Intro/Outro full screen text -->
     @default {
