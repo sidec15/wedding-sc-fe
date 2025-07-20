@@ -56,16 +56,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isPlatformReady()) return;
     this.isMobile = this.platformService.isMobile();
-    this.cdr.detectChanges(); // force DOM to re-evaluate *ngIf
-    if (this.isMobile) {
-      this.headerService.disableAnimation(); // Disable header animation on home page
-    }
+    // this.cdr.detectChanges(); // force DOM to re-evaluate *ngIf
+    // if (this.isMobile) {
+    //   this.headerService.disableAnimation(); // Disable header animation on home page
+    // }
   }
 
   ngOnDestroy(): void {
     this.timerSub?.unsubscribe();
     // this.eventService.emitHeaderBackgroundFillEvent(false); // Emit event to reset header background
-    if (this.isMobile) this.headerService.enableAnimation(); // Re-enable header animation when leaving home page
+    // if (this.isMobile) this.headerService.enableAnimation(); // Re-enable header animation when leaving home page
   }
 
   toggleMenu(): void {
