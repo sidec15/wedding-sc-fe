@@ -1,5 +1,5 @@
 @use "../../../../../../styles/variables.scss" as *;
-@use '../../styles/our-story-styles.scss' as ourstory;
+@use "../../styles/our-story-styles.scss" as ourstory;
 
 :host {
   display: block;
@@ -72,22 +72,31 @@
           font-size: 1rem;
           color: rgb(var(--text));
         }
+      }
+    }
+    .comics-section {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
 
-        .comics-section {
-          margin-top: 1rem;
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 0.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      // transition-delay: 0.15s;
 
-          .comic-image {
-            width: calc(50% - 0.25rem);
-            max-height: 30vh;
-            object-fit: contain;
-            object-position: center;
-          }
-        }
+      &.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .comic-image {
+        width: calc(50% - 0.25rem);
+        max-height: 30vh;
+        object-fit: contain;
+        object-position: center;
       }
     }
   }
