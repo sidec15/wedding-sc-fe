@@ -29,8 +29,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   constructor(
     private platformService: PlatformService,
     private eventService: EventService,
-    private cardsService: CardsService,
     private checngeDetector: ChangeDetectorRef,
+    private cardsService: CardsService,
   ) {
     this.cards = this.cardsService.getCards()
     .filter((card) => card.type === 'card');

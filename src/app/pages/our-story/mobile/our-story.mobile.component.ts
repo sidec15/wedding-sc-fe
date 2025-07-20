@@ -5,7 +5,7 @@ import { ParallaxCardComponent } from './components/parallax-card/parallax-card.
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { EventService } from '../../../services/event.service';
 import { RingScrollComponent } from '../../../components/ring-scroll/ring-scroll.component';
-import { CardsService } from '../services/cards.service';
+import { CardsService as CardService } from '../services/cards.service';
 import { Card } from '../models/card';
 
 @Component({
@@ -19,20 +19,20 @@ import { Card } from '../models/card';
 ],
   templateUrl: './our-story.mobile.component.html',
   styleUrls: ['./our-story.mobile.component.scss'],
-  providers: [CardsService]
+  providers: [CardService]
 })
 export class OurStoryMobileComponent {
   cards: Card[] = [];
 
   constructor(
     private eventService: EventService,
-    private storycardsProvider: CardsService
+    private cardService: CardService
   ) {
-    this.cards = this.storycardsProvider.getCards();
+    this.cards = this.cardService.getCards();
   }
 
   openGallery(index: number): void {
-    const currentCard = this.storycardsProvider.getCard(index);
+    const currentCard = this.cardService.getCard(index);
     if (currentCard?.type === 'card') {
       this.eventService.emitRingScrollEnabled(false);
       this.eventService.emitGalleryStatus({

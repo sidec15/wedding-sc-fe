@@ -22,37 +22,20 @@
   overflow-y: auto;
 
   .gallery-content {
-    color: rgb(var(--text-mask));
-    min-height: 100lvh;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
     position: relative;
+    text-align: center;
+    color: rgb(var(--text-mask));
 
     .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(var(--mask), 0.8);
-      border: 2px solid rgb(var(--text-mask));
-      border-radius: 50%;
+      position: fixed; // Make the button fixed relative to the viewport
+      top: 10px; // Adjust the position to always stay visible
+      right: 10px; // Adjust the position to always stay visible
+      background: none;
+      border: none;
       color: rgb(var(--text-mask));
-      font-size: 1.5rem;
+      font-size: 2.5rem;
       cursor: pointer;
-      z-index: 1001;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background: rgba(var(--mask), 1);
-        transform: scale(1.1);
-      }
+      z-index: 1001; // Ensure it appears above everything
     }
 
     .prev-btn,
@@ -68,292 +51,74 @@
       z-index: 1001; // Ensure it appears above everything
     }
 
-    .gallery-text-wrapper {
-      flex: 1;
-      max-width: 300px;
+    h3 {
+      margin-bottom: 0.5rem;
+      color: rgb(var(--accent));
+      // font-size: 2rem;
+    }
 
-      h3 {
-        margin-bottom: 0.5rem;
-        color: rgb(var(--accent));
-        // font-size: 2rem;
-      }
+    .date {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgb(var(--accent)); // Use hover color for subtle contrast
+      margin-bottom: 1rem;
+    }
 
-      .date {
-        font-style: italic;
-        font-size: 0.95rem;
-        color: rgb(var(--accent)); // Use hover color for subtle contrast
-        margin-bottom: 1rem;
-      }
-
-      .gallery-description {
-        font-size: 1.2rem;
-      }
+    .gallery-description {
+      font-size: 1.2rem;
     }
 
     .gallery-image-wrapper {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: column; // Stack the image and buttons vertically
+      align-items: center; // Center the buttons horizontally
       position: relative;
-      flex: 2;
-      max-width: 600px;
 
       .gallery-image {
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        width: 100%;
 
         img {
           max-width: 90%;
           max-height: 80vh;
-          display: block;
+          display: block; // Ensure the image does not overflow
         }
-      }
-    }
 
-    .gallery-buttons {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1.5rem;
-      z-index: 1001;
-
-      // Simple background container
-      background: rgba(128, 128, 128, 0.8);
-      border-radius: 30px;
-      padding: 0.8rem 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-
-      .counter {
-        color: white;
-        font-size: 1rem;
-        font-weight: 600;
-        min-width: 50px;
-        text-align: center;
-        user-select: none;
       }
 
       .prev-btn,
       .next-btn {
-        background: #6c757d;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        color: white;
-        font-size: 1.4rem;
+        background: rgba(var(--mask), 0.95);
+        border: none;
+        color: rgb(var(--text-mask));
+        font-size: 2rem; // Adjust size for mobile
         cursor: pointer;
-        z-index: 1001;
-        width: 60px;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-
-        &:hover:not(:disabled) {
-          background: #5a6268;
-          transform: scale(1.1);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        &:active:not(:disabled) {
-          transform: scale(1.05);
-          transition: all 0.1s ease;
-        }
-
-        &:disabled {
-          background: #495057;
-          color: rgba(255, 255, 255, 0.4);
-          cursor: not-allowed;
-          border-color: rgba(255, 255, 255, 0.1);
-
-          &:hover {
-            transform: none;
-            box-shadow: none;
-          }
-        }
-
-        i {
-          transition: transform 0.3s ease;
-        }
+        z-index: 1001; // Ensure the buttons appear above other elements
+        padding: 0.5rem 1rem;
+        border-radius: 5px; // Optional: Add rounded corners
+        margin: 0.5rem; // Add spacing between the buttons
       }
 
       .prev-btn {
-        i {
-          margin-right: 2px;
-        }
+        align-self: flex-start; // Align the button to the left
       }
 
       .next-btn {
-        i {
-          margin-left: 2px;
-        }
+        align-self: flex-end; // Align the button to the right
       }
     }
 
-    .comic-wrapper {
-      flex: 1;
-      max-width: 300px;
-      width: 350px;
-      height: 350px;
-      z-index: 1000;
-
-      // Always maintain the space even when empty
-      flex-shrink: 0;
-
-      .comic {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        object-position: center;
-      }
-    }
   }
 }
 
 @media screen and (max-width: 768px) {
-  .gallery-modal {
-    .gallery-content {
-      flex-direction: column;
-      gap: 1rem;
-
-      .gallery-image-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-
-        .gallery-image {
-          order: 1;
-        }
-
-        h3 {
-          order: 2;
-        }
-
-        .date {
-          order: 3;
-        }
-
-        .gallery-description {
-          order: 4;
-        }
-      }
-
-      .gallery-buttons {
-        position: fixed;
-        top: 50%;
-        left: 0;
-        right: 0;
-        transform: translateY(-50%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 15px;
-        pointer-events: none;
-        gap: 1rem;
-        background: none;
-        border: none;
-        box-shadow: none;
-        border-radius: 0;
-
-        // Simple background container for mobile
-        &::before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 180px;
-          height: 60px;
-          background: rgba(128, 128, 128, 0.8);
-          border-radius: 30px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-          z-index: -1;
-        }
-
-        .counter {
-          color: white;
-          font-size: 0.9rem;
-          font-weight: 600;
-          min-width: 40px;
-          text-align: center;
-          user-select: none;
-          pointer-events: none;
-        }
-
-        .prev-btn,
-        .next-btn {
-          width: 50px;
-          height: 50px;
-          font-size: 1.2rem;
-          background: #6c757d;
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          border-radius: 50%;
-          color: white;
-          cursor: pointer;
-          z-index: 1001;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.3s ease;
-          pointer-events: auto;
-
-          &:hover:not(:disabled) {
-            background: #5a6268;
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-          }
-
-          &:active:not(:disabled) {
-            transform: scale(1.05);
-            transition: all 0.1s ease;
-          }
-
-          &:disabled {
-            background: #495057;
-            color: rgba(255, 255, 255, 0.4);
-            cursor: not-allowed;
-            border-color: rgba(255, 255, 255, 0.1);
-
-            &:hover {
-              transform: none;
-              box-shadow: none;
-            }
-          }
-
-          i {
-            transition: transform 0.3s ease;
-          }
-        }
-      }
-
-      .comic-wrapper {
-        order: 5;
-        position: static;
-        width: 300px;
-        height: 300px;
-        margin: 0;
-        transform: none;
-        top: auto; // Remove the top positioning from desktop
-
-        // Reset all positioning classes for mobile
-        &.left,
-        &.right,
-        &.top,
-        &.bottom {
-          position: static;
-          left: auto;
-          right: auto;
-          top: auto;
-          bottom: auto;
-        }
-      }
+  .gallery-image-wrapper {
+    .prev-btn,
+    .next-btn {
+      font-size: 1.5rem; // Smaller size for mobile
+      padding: 0.5rem; // Adjust padding for smaller screens
     }
   }
 }
