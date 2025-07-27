@@ -8,6 +8,10 @@
   height: 100%; // Ensure it spans the full height
 }
 
+.home-page {
+  padding-top: var(--header-height);
+}
+
 .hero-image {
   background-image: url("/images/home/home-02.jpg");
   background-size: cover;
@@ -173,6 +177,10 @@
   :host {
     margin: 0; // Ensure no margin on mobile
     padding: 0; // Optional: Remove padding if needed
+  }
+
+  .home-page {
+    padding-top: 0 !important;
   }
 
   .hero-image {

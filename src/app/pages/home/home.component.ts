@@ -8,19 +8,16 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderService } from '../../services/header.service';
 import { PlatformService } from '../../services/platform.service';
-import { EventService } from '../../services/event.service';
 import { Subscription, timer } from 'rxjs';
 import { DateTime } from 'luxon';
 import { NgTemplateOutlet } from '@angular/common';
-import { HeaderBgFillObserverDirective } from '../../directives/header-bg-fill-observer.directive';
 import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-home',
   imports: [
     TranslateModule,
-    NgTemplateOutlet,
-    HeaderBgFillObserverDirective
+    NgTemplateOutlet
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
