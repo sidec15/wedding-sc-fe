@@ -44,13 +44,33 @@
       "description": "E sì, stavolta niente outfit discutibili... forse."
     },
     "cards": {
-      "0": {
+      "chiara_neonata": {
         "title": "Un sorriso che conquista",
         "description": "Sorriso furbo, occhioni grandi e regina del lettino."
       },
-      "1": {
+      "chiara_piccola_famiglia": {
         "title": "Tutti insieme",
-        "description": "Sorrisi, magliette a righe e Chiara con il ciuccio in braccio a mamma: la squadra era già al completo."
+        "description": "Vestiti d'epoca, acconciature anni '80 e un ciuccio in primo piano."
+      },
+      "simone_piccolo_calcio": {
+        "title": "Lì è nato il sinistro",
+        "description": "Non sapevo ancora scrivere, ma il mancino già parlava."
+      },
+      "chiara_piccola_natale": {
+        "title": "Sotto l'albero, un dono che sorrideva",
+        "description": "Quel sorriso valeva più di tutte le luci natalizie."
+      },
+      "chiara_piccola_primavera": {
+        "title": "Un attimo di sole",
+        "description": "Un momento semplice, un sorriso che scaldava."
+      },
+      "simone_venezia": {
+        "title": "Tra arte e briciole",
+        "description": "Simone in vacanza a Venezia, i piccioni in pausa pranzo al buffet."
+      },
+      "chiara_piccola_nonni": {
+        "title": "Un giorno di festa in famiglia",
+        "description": "Un ricordo di famiglia: la comunione della cugina e Chiara, bambina, con i nonni e le cugine."
       }
     }
   },
