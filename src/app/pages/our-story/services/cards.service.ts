@@ -70,6 +70,13 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-simone_asilo_premio.png'],
     },
     {
+      type: 'card',
+      title: 'our_story.cards.chiara_giovane_fratelli.title',
+      description: 'our_story.cards.chiara_giovane_fratelli.description',
+      image: '/images/our-story/our-story-chiara_giovane_fratelli.jpg',
+      comics: ['/images/our-story/our-story-comics-chiara_giovane_fratelli.png'],
+    },
+    {
       type: 'outro',
       title: 'our_story.outro.title',
       description: 'our_story.outro.description',
