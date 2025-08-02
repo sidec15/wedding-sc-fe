@@ -57,6 +57,19 @@ export class CardsService {
       image: '/images/our-story/our-story-chiara_piccola_nonni.jpg',
     },
     {
+      type: 'card',
+      title: 'our_story.cards.simone_piccolo_leone.title',
+      description: 'our_story.cards.simone_piccolo_leone.description',
+      image: '/images/our-story/our-story-simone_piccolo_leone.jpg',
+    },
+    {
+      type: 'card',
+      title: 'our_story.cards.simone_asilo_premio.title',
+      description: 'our_story.cards.simone_asilo_premio.description',
+      image: '/images/our-story/our-story-simone_asilo_premio.jpg',
+      comics: ['/images/our-story/our-story-comics-simone_asilo_premio.png'],
+    },
+    {
       type: 'outro',
       title: 'our_story.outro.title',
       description: 'our_story.outro.description',

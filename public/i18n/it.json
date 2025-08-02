@@ -69,8 +69,16 @@
         "description": "Simone in vacanza a Venezia, i piccioni in pausa pranzo al buffet."
       },
       "chiara_piccola_nonni": {
-        "title": "Un giorno di festa in famiglia",
-        "description": "Un ricordo di famiglia: la comunione della cugina e Chiara, bambina, con i nonni e le cugine."
+        "title": "Un ricordo di famiglia",
+        "description": "La comunione della cugina e Chiara, bambina, con i nonni e le cugine."
+      },
+      "simone_asilo_premio": {
+        "title": "Il re dei quiz in pantaloncini corti",
+        "description": "Tra domande e risposte, Simone si aggiudica la coppa del concorso a quiz dell'asilo."
+      },
+      "simone_piccolo_leone": {
+        "title": "Il guardiano della colonna",
+        "description": "Simone in posa da eroe medievale, con il leone di pietra come fidato destriero."
       }
     }
   },
