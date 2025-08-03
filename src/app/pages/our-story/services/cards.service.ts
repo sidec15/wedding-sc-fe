@@ -80,7 +80,7 @@ export class CardsService {
       title: 'our_story.cards.chiara_simone_gmg.title',
       description: 'our_story.cards.chiara_simone_gmg.description',
       image: '/images/our-story/our-story-chiara_simone_gmg.jpg',
-      comics: ['/images/our-story/our-story-comics-chiara_simone_gmg_01.png', '/images/our-story/our-story-comics-chiara_simone_gmg_02.png', '/images/our-story/our-story-comics-chiara_simone_gmg_03.png'],
+      comics: ['/images/our-story/our-story-comics-chiara_simone_gmg.png'],
     },
     {
       type: 'outro',
