@@ -14,20 +14,19 @@ export class CardsService {
       title: 'our_story.cards.chiara_neonata.title',
       description: 'our_story.cards.chiara_neonata.description',
       image: '/images/our-story/our-story-chiara_neonata.jpg',
-      comics: ['/images/comics/comics-chiara_neonata.png'],
+      comics: ['/images/our-story/our-story-comics-chiara_neonata.png'],
     },
     {
       type: 'card',
       title: 'our_story.cards.chiara_piccola_famiglia.title',
       description: 'our_story.cards.chiara_piccola_famiglia.description',
       image: '/images/our-story/our-story-chiara_piccola_famiglia.jpg',
-      comics: ['/images/our-story/our-story-comics-chiara_piccola_famiglia.png'],
     },
     {
       type: 'card',
       title: 'our_story.cards.simone_piccolo_calcio.title',
       description: 'our_story.cards.simone_piccolo_calcio.description',
-      image: '/images/our-story/our-story-simone_piccolo_calcio.jpg',
+      image: '/images/our-story/our-story-simone_piccolo_calcio.png',
       comics: ['/images/our-story/our-story-comics-simone_piccolo_calcio.png'],
     },
     {
@@ -75,6 +74,13 @@ export class CardsService {
       description: 'our_story.cards.chiara_giovane_fratelli.description',
       image: '/images/our-story/our-story-chiara_giovane_fratelli.jpg',
       comics: ['/images/our-story/our-story-comics-chiara_giovane_fratelli.png'],
+    },
+    {
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_gmg.title',
+      description: 'our_story.cards.chiara_simone_gmg.description',
+      image: '/images/our-story/our-story-chiara_simone_gmg.jpg',
+      comics: ['/images/our-story/our-story-comics-chiara_simone_gmg_01.png', '/images/our-story/our-story-comics-chiara_simone_gmg_02.png', '/images/our-story/our-story-comics-chiara_simone_gmg_03.png'],
     },
     {
       type: 'outro',
