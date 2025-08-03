@@ -1,0 +1,105 @@
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { Comment } from './models/comment';
+
+@Component({
+  selector: 'app-comments',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
+  templateUrl: './comments.component.html',
+  styleUrl: './comments.component.scss'
+})
+export class CommentsComponent {
+  @Input() cardId: string = '';
+  @Output() commentAdded = new EventEmitter<Comment>();
+
+  comments: Comment[] = [];
+  commentForm: FormGroup;
+  isSubmitting = false;
+
+  constructor(private fb: FormBuilder) {
+    this.commentForm = this.fb.group({
+      nickname: ['', [Validators.required, Validators.minLength(2)]],
+      message: ['', [Validators.required, Validators.minLength(10)]]
+    });
+
+    // Mock data for testing
+    this.loadMockComments();
+  }
+
+  private loadMockComments(): void {
+    this.comments = [
+      {
+        id: '1',
+        nickname: 'Maria',
+        message: 'Che bella foto! 🥰',
+        createdAt: new Date('2024-01-15T10:30:00')
+      },
+      {
+        id: '2',
+        nickname: 'Giovanni',
+        message: 'Ricordo perfetto di quel giorno! 😊',
+        createdAt: new Date('2024-01-16T14:20:00')
+      },
+      {
+        id: '3',
+        nickname: 'Anna',
+        message: 'Momenti indimenticabili 💕',
+        createdAt: new Date('2024-01-17T09:15:00')
+      }
+    ];
+  }
+
+  onSubmit(): void {
+    if (this.commentForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+
+      const newComment: Comment = {
+        id: Date.now().toString(),
+        nickname: this.commentForm.get('nickname')?.value,
+        message: this.commentForm.get('message')?.value,
+        createdAt: new Date()
+      };
+
+      // Add to local array (in real app, this would be an API call)
+      this.comments.unshift(newComment);
+
+      // Emit the new comment
+      this.commentAdded.emit(newComment);
+
+      // Reset form
+      this.commentForm.reset();
+      this.isSubmitting = false;
+    }
+  }
+
+  formatDate(date: Date): string {
+    return new Intl.DateTimeFormat('it-IT', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'Europe/Rome'
+    }).format(date);
+  }
+
+  getErrorMessage(fieldName: string): string {
+    const field = this.commentForm.get(fieldName);
+    if (field?.errors && field.touched) {
+      if (field.errors['required']) {
+        return 'Campo obbligatorio';
+      }
+      if (field.errors['minlength']) {
+        return fieldName === 'nickname' ? 'Nickname troppo corto' : 'Messaggio troppo corto';
+      }
+    }
+    return '';
+  }
+
+  trackByCommentId(index: number, comment: Comment): string {
+    return comment.id;
+  }
+}

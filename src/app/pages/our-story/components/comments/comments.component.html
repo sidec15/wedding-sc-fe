@@ -1,0 +1,70 @@
+<div class="comments-section">
+  <!-- Comment Form Section -->
+  <div class="comment-form-section">
+    <h4 class="section-title">Lascia un commento</h4>
+
+    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="comment-form">
+      <div class="form-group">
+        <label for="nickname" class="form-label">Nickname *</label>
+        <input
+          type="text"
+          id="nickname"
+          formControlName="nickname"
+          class="form-input"
+          placeholder="Inserisci il tuo nickname"
+          [class.error]="commentForm.get('nickname')?.invalid && commentForm.get('nickname')?.touched"
+        />
+        <div class="error-message" *ngIf="commentForm.get('nickname')?.invalid && commentForm.get('nickname')?.touched">
+          {{ getErrorMessage('nickname') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="message" class="form-label">Messaggio *</label>
+        <textarea
+          id="message"
+          formControlName="message"
+          class="form-textarea"
+          placeholder="Scrivi il tuo commento... (supporta emoji 😊)"
+          rows="4"
+          [class.error]="commentForm.get('message')?.invalid && commentForm.get('message')?.touched"
+        ></textarea>
+        <div class="error-message" *ngIf="commentForm.get('message')?.invalid && commentForm.get('message')?.touched">
+          {{ getErrorMessage('message') }}
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="commentForm.invalid || isSubmitting"
+      >
+        <span *ngIf="!isSubmitting">Invia Commento</span>
+        <span *ngIf="isSubmitting">Invio in corso...</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Comments List Section -->
+  <div class="comments-list-section">
+    <h4 class="section-title">
+      Commenti ({{ comments.length }})
+    </h4>
+
+    <div class="comments-list" *ngIf="comments.length > 0">
+      <div class="comment-item" *ngFor="let comment of comments; trackBy: trackByCommentId">
+        <div class="comment-header">
+          <span class="comment-author">{{ comment.nickname }}</span>
+          <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
+        </div>
+        <div class="comment-message">
+          {{ comment.message }}
+        </div>
+      </div>
+    </div>
+
+    <div class="no-comments" *ngIf="comments.length === 0">
+      <p>Nessun commento ancora. Sii il primo a commentare!</p>
+    </div>
+  </div>
+</div>

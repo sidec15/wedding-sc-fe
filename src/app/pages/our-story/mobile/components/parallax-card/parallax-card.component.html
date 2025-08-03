@@ -15,6 +15,14 @@
     <img [src]="comic" [alt]="title + ' comic'" class="comic-image" />
     }
   </div>
+  }
+
+  <!-- Comments Section -->
+  @if (showComments) {
+  <app-comments
+    [cardId]="title"
+    (commentAdded)="onCommentAdded($event)"
+  ></app-comments>
   } }
   <!-- 📘 Intro/Outro full screen text -->
   @default {

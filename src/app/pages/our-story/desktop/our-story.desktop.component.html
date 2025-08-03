@@ -114,7 +114,16 @@
           }
         </div>
       </div>
-      }
+
+      <!-- Comments Section - Separate section below the card -->
+      @if (cards[currentIndex].showComments) {
+      <div class="comments-section-separate">
+        <app-comments
+          [cardId]="cards[currentIndex].title"
+          (commentAdded)="onCommentAdded($event)"
+        ></app-comments>
+      </div>
+      } }
 
       <!-- Next card (shown during transition) -->
       @if (isTransitioning && cards[nextIndex]) {
@@ -186,7 +195,16 @@
           }
         </div>
       </div>
-      }
+
+      <!-- Comments Section - Separate section below the next card -->
+      @if (cards[nextIndex].showComments) {
+      <div class="comments-section-separate">
+        <app-comments
+          [cardId]="cards[nextIndex].title"
+          (commentAdded)="onCommentAdded($event)"
+        ></app-comments>
+      </div>
+      } }
     </div>
   </div>
 </div>

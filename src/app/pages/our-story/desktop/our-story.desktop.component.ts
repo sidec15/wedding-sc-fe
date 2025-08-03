@@ -14,11 +14,13 @@ import { PlatformService } from '../../../services/platform.service';
 import { HeaderService } from '../../../services/header.service';
 import { CardsService } from '../services/cards.service';
 import { Card } from '../models/card';
+import { CommentsComponent } from '../components/comments/comments.component';
+import { Comment } from '../components/comments/models/comment';
 
 @Component({
   selector: 'app-our-story-desktop',
   standalone: true,
-  imports: [TranslateModule, NgClass, NgTemplateOutlet],
+  imports: [TranslateModule, NgClass, NgTemplateOutlet, CommentsComponent],
   templateUrl: './our-story.desktop.component.html',
   styleUrls: ['./our-story.desktop.component.scss'],
   providers: [CardsService],
@@ -185,5 +187,10 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
         }
         break;
     }
+  }
+
+  onCommentAdded(comment: Comment): void {
+    console.log('New comment added:', comment);
+    // Here you can implement API call to save the comment
   }
 }

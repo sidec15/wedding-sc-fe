@@ -15,11 +15,13 @@ import {
   EventService,
   ScrollEvent,
 } from '../../../../../services/event.service';
+import { CommentsComponent } from '../../../components/comments/comments.component';
+import { Comment } from '../../../components/comments/models/comment';
 
 @Component({
   selector: 'app-parallax-card',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, CommentsComponent],
   templateUrl: './parallax-card.component.html',
   styleUrls: ['./parallax-card.component.scss'],
 })
@@ -30,6 +32,7 @@ export class ParallaxCardComponent implements AfterViewInit, OnDestroy {
   @Input() textPosition: 'left' | 'right' = 'left';
   @Input() comics?: string[];
   @Input() type: 'card' | 'intro' | 'outro' = 'card';
+  @Input() showComments: boolean = false;
 
   @ViewChild('card', { static: false }) cardEl?: ElementRef<HTMLElement>;
   @ViewChild('content', { static: false }) contentEl?: ElementRef<HTMLElement>;
@@ -111,5 +114,10 @@ export class ParallaxCardComponent implements AfterViewInit, OnDestroy {
     } else if (position === 'below' && el.classList.contains('visible')) {
       el.classList.remove('visible');
     }
+  }
+
+  onCommentAdded(comment: Comment): void {
+    console.log('New comment added:', comment);
+    // Here you can implement API call to save the comment
   }
 }

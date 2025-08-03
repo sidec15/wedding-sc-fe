@@ -9,11 +9,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../../services/platform.service';
+import { CommentsComponent } from '../../../components/comments/comments.component';
+import { Comment } from '../../../components/comments/models/comment';
 
 @Component({
   selector: 'app-parallax-card',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, CommentsComponent],
   templateUrl: './parallax-card.component.html',
   styleUrls: ['./parallax-card.component.scss'],
 })
@@ -28,6 +30,7 @@ export class ParallaxCardComponent implements AfterViewInit {
   @Input() comic?: string;
   @Input() comicPositionX?: 'left' | 'right';
   @Input() comicPositionY?: 'top' | 'bottom';
+  @Input() showComments: boolean = false;
 
   @ViewChild('card', { static: false }) cardEl?: ElementRef<HTMLElement>;
   @ViewChild('content', { static: false }) contentEl?: ElementRef<HTMLElement>;
@@ -76,4 +79,8 @@ export class ParallaxCardComponent implements AfterViewInit {
     }
   }
 
+  onCommentAdded(comment: Comment): void {
+    console.log('New comment added:', comment);
+    // Here you can implement API call to save the comment
+  }
 }
