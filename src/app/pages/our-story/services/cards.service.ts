@@ -15,7 +15,6 @@ export class CardsService {
       description: 'our_story.cards.chiara_neonata.description',
       image: '/images/our-story/our-story-chiara_neonata.jpg',
       comics: ['/images/our-story/our-story-comics-chiara_neonata.png'],
-      showComments: false,
     },
     {
       type: 'card',

@@ -1,13 +1,12 @@
 import {
   Component,
-  OnInit,
   OnDestroy,
   HostListener,
   ElementRef,
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../services/platform.service';
@@ -20,7 +19,7 @@ import { Comment } from '../components/comments/models/comment';
 @Component({
   selector: 'app-our-story-desktop',
   standalone: true,
-  imports: [TranslateModule, NgClass, NgTemplateOutlet, CommentsComponent, NgIf, NgFor],
+  imports: [TranslateModule, NgClass, NgTemplateOutlet, CommentsComponent],
   templateUrl: './our-story.desktop.component.html',
   styleUrls: ['./our-story.desktop.component.scss'],
   providers: [CardsService],

@@ -1,7 +1,7 @@
 <!-- Only show controls if we have cards -->
-<ng-container *ngIf="cards.length > 0">
-  <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
-</ng-container>
+@if (cards.length > 0) {
+<ng-container *ngTemplateOutlet="navigationControls"></ng-container>
+}
 
 <div
   class="card-wrapper"
@@ -11,15 +11,20 @@
     transitioning: isTransitioning
   }"
 >
-  <!-- activeCard is either current or (during transition) next -->
   <ng-container
-    *ngTemplateOutlet="activeCard.type === 'card' ? cardTemplate : textOnlyTemplate;
-                        context: { $implicit: activeCard, isNext: isTransitioning && activeCard === cards[nextIndex] }">
-  </ng-container>
+    *ngTemplateOutlet="
+      activeCard.type === 'card' ? cardTemplate : textOnlyTemplate;
+      context: {
+        $implicit: activeCard,
+        isNext: isTransitioning && activeCard === cards[nextIndex]
+      }
+    "
+  ></ng-container>
 </div>
 
-<!-- intro/outro full-screen text -->
+<!-- Intro/Outro full-screen text -->
 <ng-template #textOnlyTemplate let-card>
+  @if (card.type === 'intro' || card.type === 'outro') {
   <div class="text-only-card">
     <div
       class="text-content"
@@ -34,10 +39,12 @@
       <p>{{ card.description | translate }}</p>
     </div>
   </div>
+  }
 </ng-template>
 
-<!-- regular three-column card -->
+<!-- Regular three-column card -->
 <ng-template #cardTemplate let-card let-isNext="isNext">
+  @if (card.type === 'card') {
   <div
     class="three-column-layout"
     [ngClass]="{
@@ -53,9 +60,7 @@
     <div class="text-column">
       <div
         class="text-content"
-        [ngClass]="{
-          visible: card.status === 'visible',
-        }"
+        [ngClass]="{ visible: card.status === 'visible' }"
       >
         <h2>{{ card.title | translate }}</h2>
         <p class="description">{{ card.description | translate }}</p>
@@ -63,7 +68,8 @@
     </div>
 
     <!-- Center: Image -->
-    <div class="image-column" *ngIf="card.image">
+    @if (card.image) {
+    <div class="image-column">
       <div
         class="image-container"
         [ngClass]="{
@@ -77,35 +83,37 @@
         <img [src]="card.image" [alt]="card.title" />
       </div>
     </div>
+    }
 
     <!-- Right: Comics -->
-    <div class="comic-column" *ngIf="card.comics?.length">
+    @if (card.comics && card.comics.length > 0) {
+    <div class="comic-column">
       <div
         class="comic-container"
-        [ngClass]="{
-          visible: card.status === 'visible',
-        }"
+        [ngClass]="{ visible: card.status === 'visible' }"
       >
-        <img
-          *ngFor="let comic of card.comics"
-          [src]="comic"
-          [alt]="card.title + ' comic'"
-          class="comic-image"
-        />
+        @for (comic of card.comics; track comic) {
+        <img [src]="comic" [alt]="card.title + ' comic'" class="comic-image" />
+        } @empty {
+        <p>No comics available.</p>
+        }
       </div>
     </div>
+    }
   </div>
 
-  <!-- comments (below both current & next) -->
+  <!-- Comments Section -->
+  @if (showCommentsSection) {
   <div
     class="comments-section-separate"
-    *ngIf="showCommentsSection && card.showComments"
+    [ngClass]="{ visible: card.status === 'visible' }"
   >
     <app-comments
       [cardId]="card.title"
       (commentAdded)="onCommentAdded($event)"
     ></app-comments>
   </div>
+  } }
 </ng-template>
 
 <ng-template #navigationControls>
@@ -115,6 +123,7 @@
       (click)="previousCard()"
       [disabled]="currentIndex === 0 || isTransitioning"
       aria-label="Previous card"
+      #prevBtn
     >
       <i class="fas fa-chevron-left"></i>
     </button>
@@ -130,6 +139,7 @@
       (click)="nextCard()"
       [disabled]="currentIndex === cards.length - 1 || isTransitioning"
       aria-label="Next card"
+      #nextBtn
     >
       <i class="fas fa-chevron-right"></i>
     </button>

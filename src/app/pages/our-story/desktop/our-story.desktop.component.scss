@@ -12,10 +12,7 @@
 // Mixin: fade in with delay, snap out immediately
 // $fade-in-duration: how long the fade-in takes
 // $fade-in-delay: how long to wait before starting the fade-in
-@mixin fade-after(
-  $fade-in-duration: 0.8s,
-  $fade-in-delay: 0s
-) {
+@mixin fade-after($fade-in-duration: 1.2s, $fade-in-delay: 0s) {
   // base: hidden, no transition-duration
   opacity: 0;
 
@@ -33,7 +30,6 @@
     opacity: 0;
   }
 }
-
 
 @keyframes fadeOut {
   0% {
@@ -324,6 +320,8 @@
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+
+    @include fade-after();
 
     app-comments {
       width: 100%;
