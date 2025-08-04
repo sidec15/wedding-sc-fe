@@ -38,6 +38,7 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   previousIndex: number = 0;
   nextIndex: number = 0;
   isMobile: boolean = false;
+  showCommentsSection: boolean = true;
 
   constructor(
     private platformService: PlatformService,
@@ -98,6 +99,9 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   ): Promise<void> {
     if (this.isTransitioning || newIndex === this.currentIndex) return;
 
+    // Hide comments at start of transition
+    this.showCommentsSection = false;
+
     let clickedBtnRef: ElementRef | null = null;
     if (clickedButton !== null) {
       if (clickedButton === 'prev') {
@@ -149,6 +153,9 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     nextCard.position = 'current';
     this.currentIndex = newIndex;
     this.isTransitioning = false;
+
+    // Show comments after animation
+    this.showCommentsSection = true;
   }
 
   previousCard(): void {

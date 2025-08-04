@@ -2,211 +2,201 @@
 <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
 }
 
-<div class="story-gallery" tabindex="0">
-  <div class="gallery-container" #galleryContainer>
+<div
+  class="card-wrapper"
+  [ngClass]="{
+    'intro-card': cards[currentIndex].type === 'intro',
+    'outro-card': cards[currentIndex].type === 'outro',
+    transitioning: isTransitioning
+  }"
+>
+  <!-- Intro/Outro cards - full screen text -->
+  @if (cards[currentIndex].type === 'intro' || cards[currentIndex].type ===
+  'outro') {
+  <div class="text-only-card">
     <div
-      class="card-wrapper"
+      class="text-content"
       [ngClass]="{
-        'intro-card': cards[currentIndex].type === 'intro',
-        'outro-card': cards[currentIndex].type === 'outro',
-        transitioning: isTransitioning
+        visible: cards[currentIndex].status === 'visible',
+        hidden: cards[currentIndex].status === 'hidden',
+        'transitioning-out': cards[currentIndex].status === 'transitioning-out',
+        'transitioning-in': cards[currentIndex].status === 'transitioning-in'
       }"
     >
-      <!-- Intro/Outro cards - full screen text -->
-      @if (cards[currentIndex].type === 'intro' || cards[currentIndex].type ===
-      'outro') {
-      <div class="text-only-card">
-        <div
-          class="text-content"
-          [ngClass]="{
-            visible: cards[currentIndex].status === 'visible',
-            hidden: cards[currentIndex].status === 'hidden',
-            'transitioning-out':
-              cards[currentIndex].status === 'transitioning-out',
-            'transitioning-in':
-              cards[currentIndex].status === 'transitioning-in'
-          }"
-        >
-          <h2>{{ cards[currentIndex].title | translate }}</h2>
-          <p>{{ cards[currentIndex].description | translate }}</p>
-        </div>
-      </div>
-      }
+      <h2>{{ cards[currentIndex].title | translate }}</h2>
+      <p>{{ cards[currentIndex].description | translate }}</p>
+    </div>
+  </div>
+  }
 
-      <!-- Regular cards - three column layout -->
-      @if (cards[currentIndex].type === 'card') {
-      <!-- Current card -->
+  <!-- Regular cards - three column layout -->
+  @if (cards[currentIndex].type === 'card') {
+  <!-- Current card -->
+  <div
+    class="three-column-layout"
+    [ngClass]="{
+      hidden: cards[currentIndex].status === 'hidden',
+      visible: cards[currentIndex].status === 'visible',
+      current: cards[currentIndex].position === 'current'
+    }"
+  >
+    <!-- Left: Text -->
+    <div class="text-column">
       <div
-        class="three-column-layout"
+        class="text-content"
+        [ngClass]="{
+          visible: cards[currentIndex].status === 'visible',
+          hidden: cards[currentIndex].status === 'hidden',
+          'transitioning-out':
+            cards[currentIndex].status === 'transitioning-out',
+          'transitioning-in': cards[currentIndex].status === 'transitioning-in'
+        }"
+      >
+        <h2>{{ cards[currentIndex].title | translate }}</h2>
+        <p class="description">
+          {{ cards[currentIndex].description | translate }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Center: Image -->
+    @if (cards[currentIndex].image) {
+    <div class="image-column">
+      <div
+        class="image-container"
         [ngClass]="{
           hidden: cards[currentIndex].status === 'hidden',
           visible: cards[currentIndex].status === 'visible',
-          current: cards[currentIndex].position === 'current'
+          current: cards[currentIndex].position === 'current',
+          before: cards[currentIndex].position === 'before',
+          after: cards[currentIndex].position === 'after',
+          'slide-in-from-left':
+            cards[currentIndex].position === 'slide-in-from-left',
+          'slide-in-from-right':
+            cards[currentIndex].position === 'slide-in-from-right'
         }"
       >
-        <!-- Left: Text -->
-        <div class="text-column">
-          <div
-            class="text-content"
-            [ngClass]="{
-              visible: cards[currentIndex].status === 'visible',
-              hidden: cards[currentIndex].status === 'hidden',
-              'transitioning-out':
-                cards[currentIndex].status === 'transitioning-out',
-              'transitioning-in':
-                cards[currentIndex].status === 'transitioning-in'
-            }"
-          >
-            <h2>{{ cards[currentIndex].title | translate }}</h2>
-            <p class="description">
-              {{ cards[currentIndex].description | translate }}
-            </p>
-          </div>
-        </div>
-
-        <!-- Center: Image -->
-        @if (cards[currentIndex].image) {
-        <div class="image-column">
-          <div
-            class="image-container"
-            [ngClass]="{
-              hidden: cards[currentIndex].status === 'hidden',
-              visible: cards[currentIndex].status === 'visible',
-              current: cards[currentIndex].position === 'current',
-              before: cards[currentIndex].position === 'before',
-              after: cards[currentIndex].position === 'after',
-              'slide-in-from-left':
-                cards[currentIndex].position === 'slide-in-from-left',
-              'slide-in-from-right':
-                cards[currentIndex].position === 'slide-in-from-right'
-            }"
-          >
-            <img
-              [src]="cards[currentIndex].image"
-              [alt]="cards[currentIndex].title"
-            />
-          </div>
-        </div>
-        }
-
-        <!-- Right: Comics -->
-        <div class="comic-column">
-          @if (cards[currentIndex].comics && cards[currentIndex].comics!.length > 0) {
-          <div
-            class="comic-container"
-            [ngClass]="{
-              visible: cards[currentIndex].status === 'visible',
-              hidden: cards[currentIndex].status === 'hidden',
-              'transitioning-out':
-                cards[currentIndex].status === 'transitioning-out',
-              'transitioning-in':
-                cards[currentIndex].status === 'transitioning-in'
-            }"
-          >
-            @for (comic of cards[currentIndex].comics; track comic) {
-            <img
-              [src]="comic"
-              [alt]="cards[currentIndex].title + ' comic'"
-              class="comic-image"
-            />
-            }
-          </div>
-          }
-        </div>
+        <img
+          [src]="cards[currentIndex].image"
+          [alt]="cards[currentIndex].title"
+        />
       </div>
+    </div>
+    }
 
-      <!-- Comments Section - Separate section below the card -->
-      @if (cards[currentIndex].showComments) {
-      <div class="comments-section-separate">
-        <app-comments
-          [cardId]="cards[currentIndex].title"
-          (commentAdded)="onCommentAdded($event)"
-        ></app-comments>
-      </div>
-      } }
-
-      <!-- Next card (shown during transition) -->
-      @if (isTransitioning && cards[nextIndex]) {
+    <!-- Right: Comics -->
+    <div class="comic-column">
+      @if (cards[currentIndex].comics && cards[currentIndex].comics!.length > 0)
+      {
       <div
-        class="three-column-layout next-card"
+        class="comic-container"
+        [ngClass]="{
+          visible: cards[currentIndex].status === 'visible',
+          hidden: cards[currentIndex].status === 'hidden',
+          'transitioning-out':
+            cards[currentIndex].status === 'transitioning-out',
+          'transitioning-in': cards[currentIndex].status === 'transitioning-in'
+        }"
+      >
+        @for (comic of cards[currentIndex].comics; track comic) {
+        <img
+          [src]="comic"
+          [alt]="cards[currentIndex].title + ' comic'"
+          class="comic-image"
+        />
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Comments Section - Separate section below the card -->
+  @if (showCommentsSection && cards[currentIndex].showComments) {
+  <div class="comments-section-separate">
+    <app-comments
+      [cardId]="cards[currentIndex].title"
+      (commentAdded)="onCommentAdded($event)"
+    ></app-comments>
+  </div>
+  } }
+
+  <!-- Next card (shown during transition) -->
+  @if (isTransitioning && cards[nextIndex]) {
+  <div
+    class="three-column-layout next-card"
+    [ngClass]="{
+      visible: cards[nextIndex].status === 'visible',
+      before: cards[nextIndex].position === 'before',
+      after: cards[nextIndex].position === 'after'
+    }"
+  >
+    <!-- Left: Text -->
+    <div class="text-column">
+      <div
+        class="text-content"
+        [ngClass]="{
+          visible: cards[nextIndex].status === 'visible',
+          'transitioning-in': cards[nextIndex].status === 'transitioning-in'
+        }"
+      >
+        <h2>{{ cards[nextIndex].title | translate }}</h2>
+        <p class="description">
+          {{ cards[nextIndex].description | translate }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Center: Image -->
+    @if (cards[nextIndex].image) {
+    <div class="image-column">
+      <div
+        class="image-container"
         [ngClass]="{
           visible: cards[nextIndex].status === 'visible',
           before: cards[nextIndex].position === 'before',
-          after: cards[nextIndex].position === 'after'
+          after: cards[nextIndex].position === 'after',
+          'slide-in-from-left':
+            cards[nextIndex].position === 'slide-in-from-left',
+          'slide-in-from-right':
+            cards[nextIndex].position === 'slide-in-from-right'
         }"
       >
-        <!-- Left: Text -->
-        <div class="text-column">
-          <div
-            class="text-content"
-            [ngClass]="{
-              visible: cards[nextIndex].status === 'visible',
-              'transitioning-in': cards[nextIndex].status === 'transitioning-in'
-            }"
-          >
-            <h2>{{ cards[nextIndex].title | translate }}</h2>
-            <p class="description">
-              {{ cards[nextIndex].description | translate }}
-            </p>
-          </div>
-        </div>
+        <img [src]="cards[nextIndex].image" [alt]="cards[nextIndex].title" />
+      </div>
+    </div>
+    }
 
-        <!-- Center: Image -->
-        @if (cards[nextIndex].image) {
-        <div class="image-column">
-          <div
-            class="image-container"
-            [ngClass]="{
-              visible: cards[nextIndex].status === 'visible',
-              before: cards[nextIndex].position === 'before',
-              after: cards[nextIndex].position === 'after',
-              'slide-in-from-left':
-                cards[nextIndex].position === 'slide-in-from-left',
-              'slide-in-from-right':
-                cards[nextIndex].position === 'slide-in-from-right'
-            }"
-          >
-            <img
-              [src]="cards[nextIndex].image"
-              [alt]="cards[nextIndex].title"
-            />
-          </div>
-        </div>
+    <!-- Right: Comics -->
+    <div class="comic-column">
+      @if (cards[nextIndex].comics && cards[nextIndex].comics!.length > 0) {
+      <div
+        class="comic-container"
+        [ngClass]="{
+          visible: cards[nextIndex].status === 'visible',
+          'transitioning-in': cards[nextIndex].status === 'transitioning-in'
+        }"
+      >
+        @for (comic of cards[nextIndex].comics; track comic) {
+        <img
+          [src]="comic"
+          [alt]="cards[nextIndex].title + ' comic'"
+          class="comic-image"
+        />
         }
-
-        <!-- Right: Comics -->
-        <div class="comic-column">
-          @if (cards[nextIndex].comics && cards[nextIndex].comics!.length > 0) {
-          <div
-            class="comic-container"
-            [ngClass]="{
-              visible: cards[nextIndex].status === 'visible',
-              'transitioning-in': cards[nextIndex].status === 'transitioning-in'
-            }"
-          >
-            @for (comic of cards[nextIndex].comics; track comic) {
-            <img
-              [src]="comic"
-              [alt]="cards[nextIndex].title + ' comic'"
-              class="comic-image"
-            />
-            }
-          </div>
-          }
-        </div>
       </div>
-
-      <!-- Comments Section - Separate section below the next card -->
-      @if (cards[nextIndex].showComments) {
-      <div class="comments-section-separate">
-        <app-comments
-          [cardId]="cards[nextIndex].title"
-          (commentAdded)="onCommentAdded($event)"
-        ></app-comments>
-      </div>
-      } }
+      }
     </div>
   </div>
+
+  <!-- Comments Section - Separate section below the next card -->
+  @if (cards[nextIndex].showComments) {
+  <div class="comments-section-separate">
+    <app-comments
+      [cardId]="cards[nextIndex].title"
+      (commentAdded)="onCommentAdded($event)"
+    ></app-comments>
+  </div>
+  } }
 </div>
 
 <ng-template #navigationControls>
