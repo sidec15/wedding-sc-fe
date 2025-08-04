@@ -7,7 +7,7 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../services/platform.service';
@@ -20,13 +20,12 @@ import { Comment } from '../components/comments/models/comment';
 @Component({
   selector: 'app-our-story-desktop',
   standalone: true,
-  imports: [TranslateModule, NgClass, NgTemplateOutlet, CommentsComponent],
+  imports: [TranslateModule, NgClass, NgTemplateOutlet, CommentsComponent, NgIf, NgFor],
   templateUrl: './our-story.desktop.component.html',
   styleUrls: ['./our-story.desktop.component.scss'],
   providers: [CardsService],
 })
 export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
-
   @ViewChild('prevBtn', { static: false })
   prevBtn!: ElementRef;
   @ViewChild('nextBtn', { static: false })
@@ -156,6 +155,16 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
 
     // Show comments after animation
     this.showCommentsSection = true;
+  }
+
+  /**
+   * During a transition we render the “next” card;
+   * otherwise we render the one at currentIndex.
+   */
+  get activeCard(): Card {
+    return this.isTransitioning && this.cards[this.nextIndex]
+      ? this.cards[this.nextIndex]
+      : this.cards[this.currentIndex];
   }
 
   previousCard(): void {
