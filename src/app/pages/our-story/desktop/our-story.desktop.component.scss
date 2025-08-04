@@ -1,16 +1,5 @@
 @use "../../../../styles/variables.scss" as *;
 
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -20,28 +9,31 @@
   }
 }
 
-// Mixin for “fade in after delay, fade out immediately”
+// Mixin: fade in with delay, snap out immediately
+// $fade-in-duration: how long the fade-in takes
+// $fade-in-delay: how long to wait before starting the fade-in
 @mixin fade-after(
-  $delay: 0.8s,
-  $fade-in-duration: 0.5s,
-  $fade-out-duration: 0.3s
+  $fade-in-duration: 0.8s,
+  $fade-in-delay: 0s
 ) {
+  // base: hidden, no transition-duration
   opacity: 0;
-  transition: opacity $fade-in-duration ease-out;
 
-  &.visible,
-  &.transitioning-in {
-    transition-delay: $delay;
+  // FADE-IN: only when .visible is present
+  &.visible {
+    // fade-in over $fade-in-duration, after $fade-in-delay
+    transition: opacity $fade-in-duration ease-out $fade-in-delay;
     opacity: 1;
   }
 
-  &.hidden,
-  &.transitioning-out {
-    transition-delay: 0s;
-    transition-duration: $fade-out-duration;
+  // FADE-OUT: when .visible is removed (matches both default & other states)
+  &:not(.visible) {
+    // no transition → immediate
+    transition: opacity 0s ease-out 0s;
     opacity: 0;
   }
 }
+
 
 @keyframes fadeOut {
   0% {
@@ -125,7 +117,7 @@
     // Special transitions for intro→first image and last image→outro
     &.from-regular {
       .text-content {
-        animation: fadeInUp 0.8s ease-out 0.8s forwards;
+        animation: fadeIn 0.8s ease-out 0.8s forwards;
       }
     }
 
@@ -145,7 +137,7 @@
       transition: all 0.8s ease-out;
       opacity: 0;
       transform: translateY(30px);
-      animation: fadeInUp 0.8s ease-out 0.5s forwards;
+      animation: fadeIn 0.8s ease-out 0.5s forwards;
 
       &.visible {
         animation: fadeIn 0.8s ease-out forwards;
@@ -210,7 +202,7 @@
         padding: 1rem;
         border-radius: 12px;
 
-        @include fade-after(0.8s);
+        @include fade-after();
 
         h2 {
           font-size: 1.7rem;
@@ -276,9 +268,6 @@
       height: 100%;
 
       .comic-container {
-        // cancel any leftover keyframe animation
-        animation: none !important;
-
         width: 100%;
         height: 100%;
         display: flex;
@@ -290,7 +279,7 @@
         padding: 1rem;
         overflow-y: auto;
 
-        @include fade-after(0.8s);
+        @include fade-after();
 
         .comic-image {
           max-width: 100%;

@@ -144,7 +144,6 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     // Update states after transition
     if (clickedBtnRef && clickedBtnRef.nativeElement) {
       clickedBtnRef.nativeElement.classList.remove('clicked');
-      console.log('Removed clicked class from button');
     }
     currentCard.status = 'hidden';
     currentCard.position = isForward ? 'before' : 'after';

@@ -55,9 +55,6 @@
         class="text-content"
         [ngClass]="{
           visible: card.status === 'visible',
-          hidden: card.status === 'hidden',
-          'transitioning-in': card.status === 'transitioning-in',
-          'transitioning-out': card.status === 'transitioning-out'
         }"
       >
         <h2>{{ card.title | translate }}</h2>
@@ -87,9 +84,6 @@
         class="comic-container"
         [ngClass]="{
           visible: card.status === 'visible',
-          hidden: card.status === 'hidden',
-          'transitioning-in': card.status === 'transitioning-in',
-          'transitioning-out': card.status === 'transitioning-out'
         }"
       >
         <img
