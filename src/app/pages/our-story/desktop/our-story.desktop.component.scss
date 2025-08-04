@@ -81,7 +81,7 @@
   touch-action: pan-y pinch-zoom;
   max-width: 1400px; // Larger max width for three columns
   margin: 0 auto;
-  padding: 2rem;
+  margin-top: calc(var(--header-height) + 0.5rem);
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   // Allow full width for intro/outro cards
@@ -98,7 +98,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
 
     // Special transitions for intro→first image and last image→outro
     &.from-regular {
@@ -164,7 +163,6 @@
     grid-template-columns: 1fr 2fr 1fr; // Reduced image column from 3fr to 2fr
     gap: 1rem;
     align-items: center;
-    // padding: 2rem;
     background-color: rgba(var(--bg), 0.05);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
@@ -226,9 +224,6 @@
 
     // Center column - Image
     .image-column {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       height: 100%;
 
       .image-container {
@@ -237,9 +232,6 @@
         max-height: calc(
           100lvh - 120px
         ); // Ensure it doesn't exceed viewport minus padding
-        display: flex;
-        align-items: center;
-        justify-content: center;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 8px 24px var(--box-shadow-medium);
