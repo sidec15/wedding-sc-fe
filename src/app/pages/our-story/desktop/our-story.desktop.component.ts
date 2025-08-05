@@ -15,6 +15,7 @@ import { CardsService } from '../services/cards.service';
 import { Card } from '../models/card';
 import { CommentsComponent } from '../components/comments/comments.component';
 import { Comment } from '../components/comments/models/comment';
+import { wait } from '../../../utils/time.utils';
 
 @Component({
   selector: 'app-our-story-desktop',
@@ -138,7 +139,7 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
       nextCard.position = 'slide-in-from-left';
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await wait(800);
 
     // Update states after transition
     if (clickedBtnRef && clickedBtnRef.nativeElement) {
@@ -146,10 +147,19 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     }
     currentCard.status = 'hidden';
     currentCard.position = isForward ? 'before' : 'after';
-    nextCard.status = 'visible';
+
     nextCard.position = 'current';
     this.currentIndex = newIndex;
     this.isTransitioning = false;
+
+    // Small 1 ms delay ensures the "transitioning-in" state is rendered in the DOM
+    // before switching to "visible". Without this, Angular may apply both states
+    // within the same frame when adding the next card, causing the browser to skip
+    // the opacity transition entirely (especially for intro/outro ↔ card changes).
+    // This guarantees the fade-in animation for text and comics will always trigger.
+
+    await wait(1);
+    nextCard.status = 'visible';
 
     // Show comments after animation
     this.showCommentsSection = true;
