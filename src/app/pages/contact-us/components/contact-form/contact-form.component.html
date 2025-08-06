@@ -1,74 +1,181 @@
-name: Deploy Angular to AWS On Master Push
+<section class="contact-form">
+  @if (showSuccess) {
+  <div class="success-message">
+    {{ "contact_us.contact_form.success_message" | translate }}
+  </div>
+  } @if (showError) {
+  <div class="error-message">
+    {{ "contact_us.contact_form.error_message" | translate }}
+  </div>
+  }
+  <h2>{{ "contact_us.contact_form.title" | translate }}</h2>
+  <!-- Chiara image for mobile -->
+  <ng-container *ngIf="isMobile">
+    <div class="contact-form-image chiara">
+      <img src="images/comics/comics-02.png" alt="Contact Us Chiara" />
+    </div>
+  </ng-container>
+  <h3>{{ "contact_us.contact_form.subtitle" | translate }}</h3>
+  <p>{{ "contact_us.contact_form.description" | translate }}</p>
 
-on:
-  push:
-    branches:
-      - master
-  workflow_dispatch: # allows manual trigger without requiring a tag
+  <div class="form-row">
+    <!-- Chiara image for desktop -->
+    <ng-container *ngIf="!isMobile">
+      <div class="contact-form-image chiara">
+        <img src="images/comics/comics-02.png" alt="Contact Us Chiara" />
+      </div>
+    </ng-container>
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+    <form
+      class="contact-form-container"
+      [formGroup]="contactForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <!-- Honeypot field -->
+      <div class="hidden">
+        <input type="text" formControlName="website" autocomplete="off" />
+      </div>
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      <div class="form-group">
+        <label for="name"
+          >{{ "contact_us.contact_form.name" | translate }} *</label
+        >
+        <input type="text" id="name" formControlName="name" maxlength="50" />
+        @if (contactForm.get('name')?.errors?.['required'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.name_required" | translate }}
+        </div>
+        } @if (contactForm.get('name')?.errors?.['maxlength'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.name_too_long" | translate }}
+        </div>
+        }
+      </div>
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.14.0
+      <div class="form-group">
+        <label for="surname"
+          >{{ "contact_us.contact_form.surname" | translate }} *</label
+        >
+        <input
+          type="text"
+          id="surname"
+          formControlName="surname"
+          maxlength="50"
+        />
+        @if (contactForm.get('surname')?.errors?.['required'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.surname_required" | translate }}
+        </div>
+        } @if (contactForm.get('surname')?.errors?.['maxlength'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.surname_too_long" | translate }}
+        </div>
+        }
+      </div>
 
-      - name: Install dependencies
-        run: npm ci
+      <div class="form-group">
+        <label for="phone">{{
+          "contact_us.contact_form.phone" | translate
+        }}</label>
+        <input
+          type="tel"
+          id="phone"
+          formControlName="phone"
+          placeholder="+39 123 456 7890"
+        />
+        @if (contactForm.get('phone')?.errors?.['pattern'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.phone_invalid" | translate }}
+        </div>
+        }
+      </div>
 
-      - name: Build Angular project
-        run: npm run build -- --configuration production
+      <div class="form-group">
+        <label for="email">{{
+          "contact_us.contact_form.email" | translate
+        }}</label>
+        <input type="email" id="email" formControlName="email" required />
+        @if (contactForm.get('email')?.errors?.['email'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.email_invalid" | translate }}
+        </div>
+        }
+      </div>
 
-      # Upload everything except translation JSON files
-      - name: Upload non-translation files to S3
-        uses: jakejarvis/s3-sync-action@v0.5.1
-        with:
-          args: --delete --exclude "i18n/*.json"
-        env:
-          AWS_S3_BUCKET: ${{ vars.S3_BUCKET_NAME }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ vars.AWS_REGION }}
-          SOURCE_DIR: dist/wedding-sc-fe/browser
+      <div class="form-group">
+        <label for="message"
+          >{{ "contact_us.contact_form.message" | translate }} *</label
+        >
+        <textarea
+          id="message"
+          formControlName="message"
+          rows="5"
+          required
+        ></textarea>
+        <div class="char-count">
+          {{ contactForm.get("message")?.value?.length || 0 }}/{{
+            maxMessageLength
+          }}
+        </div>
+        @if (contactForm.get('message')?.errors?.['required'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.message_required" | translate }}
+        </div>
+        } @if (contactForm.get('message')?.errors?.['maxlength'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.message_too_long" | translate }}
+        </div>
+        }
+      </div>
 
-      # Upload translation JSON files with correct headers
-      - name: Upload translation JSON files with no-cache
-        run: |
-          aws s3 cp dist/wedding-sc-fe/browser/i18n/ s3://${{ vars.S3_BUCKET_NAME }}/i18n/ \
-            --recursive \
-            --cache-control "no-cache, no-store, must-revalidate" \
-            --content-type "application/json"
-        env:
-          AWS_REGION: ${{ vars.AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      <div class="form-group">
+        <re-captcha
+          formControlName="captcha"
+          [siteKey]="captchaKey"
+          (resolved)="onCaptchaResolved($event)"
+          (error)="onCaptchaError()"
+        ></re-captcha>
 
-      # Upload index.html with no-cache
-      - name: Upload index.html with no-cache
-        run: |
-          aws s3 cp dist/wedding-sc-fe/browser/index.html s3://${{ vars.S3_BUCKET_NAME }}/index.html \
-            --cache-control "no-cache, no-store, must-revalidate" \
-            --content-type "text/html" \
-            --metadata-directive REPLACE
-        env:
-          AWS_REGION: ${{ vars.AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        @if (contactForm.get('captcha')?.errors?.['required'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.captcha_required" | translate }}
+        </div>
+        }
+      </div>
 
-      # Invalidate entire CloudFront distribution
-      - name: Invalidate CloudFront cache
-        uses: chetan/invalidate-cloudfront-action@v2
-        env:
-          DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-          PATHS: '/*'
-          AWS_REGION: ${{ vars.AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      <div class="form-group checkbox">
+        <input type="checkbox" id="privacy" formControlName="privacyConsent" />
+        <label for="privacy" class="privacy-consent-label">
+          {{ "contact_us.contact_form.privacy_consent" | translate }}
+          <a href="/privacy-policy?skipSplash=true" target="_blank">{{
+            "contact_us.contact_form.privacy_policy" | translate
+          }}</a>
+        </label>
+        @if (contactForm.get('privacyConsent')?.errors?.['required'] &&
+        submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.privacy_required" | translate }}
+        </div>
+        }
+      </div>
+
+      <button class="btn" type="submit">
+        {{ "contact_us.contact_form.submit" | translate }}
+      </button>
+    </form>
+
+    <!-- Simone image for desktop -->
+    <ng-container *ngIf="!isMobile">
+      <div class="contact-form-image simone">
+        <img src="images/comics/comics-03.png" alt="Contact Us Simone" />
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Simone image for mobile -->
+  <ng-container *ngIf="isMobile">
+    <div class="contact-form-image simone">
+      <img src="images/comics/comics-03.png" alt="Contact Us Simone" />
+    </div>
+  </ng-container>
+</section>
