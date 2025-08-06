@@ -287,10 +287,12 @@
   },
   "privacy_policy": {
     "title": "Privacy Policy",
-    "p1": "Pursuant to Article 13 of Regulation (EU) 2016/679 (GDPR), we inform you that the personal data collected through this form (first name, last name, phone number, email, and message) will be used exclusively to respond to your contact request.",
-    "p2": "Providing your data is optional, except for the email address, which is required in order to reply to you.",
-    "p3": "The data will not be shared with third parties in any way, nor used for purposes other than those indicated. The legal basis for the processing is the consent freely given by the user by selecting the appropriate checkbox before submitting the message.",
-    "p4": "The data will be stored only for the time strictly necessary to process the request and in any case no longer than 6 months from the receipt of the message.",
-    "p5": "At any time, you have the right to access your personal data, request its correction, deletion, or restriction of processing, or object to it, as well as to withdraw the consent given. To exercise these rights, you can write to <a href=\"mailto:simone.decristofaro85@gmail.com\">simone.decristofaro85@gmail.com</a>."
+    "p1": "Pursuant to Article 13 of Regulation (EU) 2016/679 (GDPR), we inform you that the personal data collected through this website (including name, email address, phone number, and any other information voluntarily provided in the contact form or comments section) will be used exclusively for the purposes described below.",
+    "p2": "If you use the contact form, the data will be used solely to respond to your request. If you post a comment, the data will be used to publish your comment and, if you choose to provide your email address, to send you notifications about new comments on the same photo or story section.",
+    "p3": "Providing your data is optional, except for the email address, which is required for us to reply to you via the contact form or to send you comment notifications if you opt in.",
+    "p4": "Email notifications will only be sent with your explicit consent, given by selecting the appropriate checkbox before submission. You may unsubscribe at any time using the link provided in each notification email.",
+    "p5": "The data will not be shared with third parties, nor used for marketing purposes. The legal basis for the processing is the consent freely given by the user.",
+    "p6": "Contact form data will be stored only for the time strictly necessary to process the request and in any case no longer than 6 months from receipt. Comment-related data will be stored for as long as the comment is visible on the site or until you request its deletion.",
+    "p7": "At any time, you have the right to access your personal data, request its correction, deletion, or restriction of processing, or object to its processing, as well as to withdraw the consent given. To exercise these rights, you can write to <a href=\"mailto:info@chiaraesimone.it\">info@chiaraesimone.it</a>."
   }
 }

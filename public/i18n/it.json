@@ -286,11 +286,13 @@
     }
   },
   "privacy_policy": {
-    "title": "Informativa sul trattamento dei dati personali",
-    "p1": "Ai sensi dell'articolo 13 del Regolamento (UE) 2016/679 (GDPR), ti informiamo che i dati personali raccolti tramite questo modulo (nome, cognome, telefono, email e messaggio) saranno utilizzati esclusivamente per rispondere alla tua richiesta di contatto.",
-    "p2": "Il conferimento dei dati è facoltativo, ad eccezione dell'indirizzo email, che è necessario per poterti rispondere.",
-    "p3": "I dati non saranno in alcun modo comunicati a terzi né utilizzati per finalità diverse da quelle indicate. La base giuridica del trattamento è il consenso liberamente espresso dall'utente tramite la selezione dell'apposita casella prima dell'invio del messaggio.",
-    "p4": "I dati saranno conservati per il tempo strettamente necessario a evadere la richiesta e comunque non oltre 6 mesi dalla ricezione del messaggio.",
-    "p5": "In qualsiasi momento hai il diritto di accedere ai tuoi dati personali, chiederne la rettifica, la cancellazione, la limitazione del trattamento o opporti allo stesso, nonché di revocare il consenso prestato. Per esercitare tali diritti puoi scrivere a <a href=\"mailto:simone.decristofaro85@gmail.com\">simone.decristofaro85@gmail.com</a>."
+    "title": "Informativa sulla Privacy",
+    "p1": "Ai sensi dell’articolo 13 del Regolamento (UE) 2016/679 (GDPR), ti informiamo che i dati personali raccolti tramite questo sito web (inclusi nome, indirizzo email, numero di telefono e qualsiasi altra informazione volontariamente fornita nel modulo di contatto o nella sezione commenti) saranno utilizzati esclusivamente per le finalità descritte di seguito.",
+    "p2": "Se utilizzi il modulo di contatto, i dati saranno usati unicamente per rispondere alla tua richiesta. Se pubblichi un commento, i dati saranno utilizzati per pubblicare il tuo commento e, se scegli di fornire il tuo indirizzo email, per inviarti notifiche riguardo nuovi commenti sulla stessa foto o sezione della storia.",
+    "p3": "Il conferimento dei dati è facoltativo, ad eccezione dell’indirizzo email, che è necessario per risponderti tramite il modulo di contatto o per inviarti notifiche sui commenti se decidi di riceverle.",
+    "p4": "Le notifiche via email saranno inviate solo previo tuo consenso esplicito, fornito selezionando l’apposita casella prima dell’invio. Potrai annullare l’iscrizione in qualsiasi momento utilizzando il link presente in ciascuna email di notifica.",
+    "p5": "I dati non saranno ceduti a terzi né utilizzati per finalità di marketing. La base giuridica del trattamento è il consenso liberamente prestato dall’utente.",
+    "p6": "I dati raccolti tramite il modulo di contatto saranno conservati solo per il tempo strettamente necessario a evadere la richiesta e comunque non oltre 6 mesi dalla ricezione. I dati relativi ai commenti saranno conservati per tutto il tempo in cui il commento resterà visibile sul sito o fino a quando ne richiederai la cancellazione.",
+    "p7": "In qualsiasi momento hai il diritto di accedere ai tuoi dati personali, chiederne la rettifica, la cancellazione o la limitazione del trattamento, opporti al trattamento, nonché revocare il consenso prestato. Per esercitare questi diritti, puoi scrivere a <a href=\"mailto:info@chiaraesimone.it\">info@chiaraesimone.it</a>."
   }
 }
