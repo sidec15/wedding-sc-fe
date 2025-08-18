@@ -76,15 +76,11 @@ export class CommentsComponent {
     }
   }
 
-  formatDate(date: Date): string {
-    return new Intl.DateTimeFormat('it-IT', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'Europe/Rome'
-    }).format(date);
+  formatDate(date: DateTime): string {
+    return date
+      .setZone('Europe/Rome')
+      .setLocale('it')
+      .toLocaleString(DateTime.DATETIME_MED);
   }
 
   getErrorMessage(fieldName: string): string {

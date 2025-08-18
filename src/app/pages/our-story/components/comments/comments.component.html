@@ -5,17 +5,17 @@
 
     <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="comment-form">
       <div class="form-group">
-        <label for="nickname" class="form-label">Nickname *</label>
+        <label for="authorName" class="form-label">Nickname *</label>
         <input
           type="text"
-          id="nickname"
-          formControlName="nickname"
+          id="authorName"
+          formControlName="authorName"
           class="form-input"
-          placeholder="Inserisci il tuo nickname"
-          [class.error]="commentForm.get('nickname')?.invalid && commentForm.get('nickname')?.touched"
+          placeholder="Inserisci il tuo authorName"
+          [class.error]="commentForm.get('authorName')?.invalid && commentForm.get('authorName')?.touched"
         />
-        <div class="error-message" *ngIf="commentForm.get('nickname')?.invalid && commentForm.get('nickname')?.touched">
-          {{ getErrorMessage('nickname') }}
+        <div class="error-message" *ngIf="commentForm.get('authorName')?.invalid && commentForm.get('authorName')?.touched">
+          {{ getErrorMessage('authorName') }}
         </div>
       </div>
 
@@ -54,11 +54,11 @@
     <div class="comments-list" *ngIf="comments.length > 0">
       <div class="comment-item" *ngFor="let comment of comments; trackBy: trackByCommentId">
         <div class="comment-header">
-          <span class="comment-author">{{ comment.nickname }}</span>
+          <span class="comment-author">{{ comment.authorName }}</span>
           <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
         </div>
-        <div class="comment-message">
-          {{ comment.message }}
+        <div class="comment-content">
+          {{ comment.content }}
         </div>
       </div>
     </div>
