@@ -1,7 +1,9 @@
+import { DateTime } from "luxon";
+
 export interface Comment {
-  id: string;
-  nickname: string;
-  email?: string;
-  message: string;
-  createdAt: Date;
+  photoId?: string;
+  commentId: string;
+  createdAt: DateTime;
+  authorName: string;
+  content: string;
 }

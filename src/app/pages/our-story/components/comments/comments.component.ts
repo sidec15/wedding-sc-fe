@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { Comment } from './models/comment';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-comments',
@@ -21,7 +22,7 @@ export class CommentsComponent {
 
   constructor(private fb: FormBuilder) {
     this.commentForm = this.fb.group({
-      nickname: ['', [Validators.required, Validators.minLength(2)]],
+      authorName: ['', [Validators.required, Validators.minLength(2)]],
       message: ['', [Validators.required, Validators.minLength(10)]]
     });
 
@@ -32,22 +33,22 @@ export class CommentsComponent {
   private loadMockComments(): void {
     this.comments = [
       {
-        id: '1',
-        nickname: 'Maria',
-        message: 'Che bella foto! 🥰',
-        createdAt: new Date('2024-01-15T10:30:00')
+        commentId: '1',
+        authorName: 'Maria',
+        content: 'Che bella foto! 🥰',
+        createdAt: DateTime.fromJSDate(new Date('2024-01-15T10:30:00'))
       },
       {
-        id: '2',
-        nickname: 'Giovanni',
-        message: 'Ricordo perfetto di quel giorno! 😊',
-        createdAt: new Date('2024-01-16T14:20:00')
+        commentId: '2',
+        authorName: 'Giovanni',
+        content: 'Ricordo perfetto di quel giorno! 😊',
+        createdAt: DateTime.fromJSDate(new Date('2024-01-16T14:20:00'))
       },
       {
-        id: '3',
-        nickname: 'Anna',
-        message: 'Momenti indimenticabili 💕',
-        createdAt: new Date('2024-01-17T09:15:00')
+        commentId: '3',
+        authorName: 'Anna',
+        content: 'Momenti indimenticabili 💕',
+        createdAt: DateTime.fromJSDate(new Date('2024-01-17T09:15:00'))
       }
     ];
   }
@@ -57,10 +58,10 @@ export class CommentsComponent {
       this.isSubmitting = true;
 
       const newComment: Comment = {
-        id: Date.now().toString(),
-        nickname: this.commentForm.get('nickname')?.value,
-        message: this.commentForm.get('message')?.value,
-        createdAt: new Date()
+        commentId: Date.now().toString(),
+        authorName: this.commentForm.get('authorName')?.value,
+        content: this.commentForm.get('message')?.value,
+        createdAt: DateTime.fromJSDate(new Date())
       };
 
       // Add to local array (in real app, this would be an API call)
@@ -93,13 +94,13 @@ export class CommentsComponent {
         return 'Campo obbligatorio';
       }
       if (field.errors['minlength']) {
-        return fieldName === 'nickname' ? 'Nickname troppo corto' : 'Messaggio troppo corto';
+        return fieldName === 'authorName' ? 'Nickname troppo corto' : 'Messaggio troppo corto';
       }
     }
     return '';
   }
 
   trackByCommentId(index: number, comment: Comment): string {
-    return comment.id;
+    return comment.commentId;
   }
 }
