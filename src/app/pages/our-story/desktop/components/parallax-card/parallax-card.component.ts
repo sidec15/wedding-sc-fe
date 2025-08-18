@@ -30,7 +30,6 @@ export class ParallaxCardComponent implements AfterViewInit {
   @Input() comic?: string;
   @Input() comicPositionX?: 'left' | 'right';
   @Input() comicPositionY?: 'top' | 'bottom';
-  @Input() showComments: boolean = false;
 
   @ViewChild('card', { static: false }) cardEl?: ElementRef<HTMLElement>;
   @ViewChild('content', { static: false }) contentEl?: ElementRef<HTMLElement>;

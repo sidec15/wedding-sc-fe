@@ -11,48 +11,47 @@
     transitioning: isTransitioning
   }"
 >
-<!-- Current card -->
-<ng-container
-  *ngTemplateOutlet="
-    cards[currentIndex].type === 'card' ? cardTemplate : textOnlyTemplate;
-    context: { $implicit: cards[currentIndex], isNext: false }
-  "
-></ng-container>
+  <!-- Current card -->
+  <ng-container
+    *ngTemplateOutlet="
+      cards[currentIndex].type === 'card' ? cardTemplate : textOnlyTemplate;
+      context: { $implicit: cards[currentIndex], isNext: false }
+    "
+  ></ng-container>
 
-<!-- Next card (only during transition) -->
-@if (isTransitioning && cards[nextIndex]) {
+  <!-- Next card (only during transition) -->
+  @if (isTransitioning && cards[nextIndex]) {
   <ng-container
     *ngTemplateOutlet="
       cards[nextIndex].type === 'card' ? cardTemplate : textOnlyTemplate;
       context: { $implicit: cards[nextIndex], isNext: true }
     "
   ></ng-container>
-}
-
-
-<!-- Intro/Outro full-screen text -->
-<ng-template #textOnlyTemplate let-card>
-  @if (card.type === 'intro' || card.type === 'outro') {
-  <div class="text-only-card">
-    <div
-      class="text-content"
-      [ngClass]="{
-        visible: card.status === 'visible',
-        hidden: card.status === 'hidden',
-        'transitioning-in': card.status === 'transitioning-in',
-        'transitioning-out': card.status === 'transitioning-out'
-      }"
-    >
-      <h2>{{ card.title | translate }}</h2>
-      <p>{{ card.description | translate }}</p>
-    </div>
-  </div>
   }
-</ng-template>
 
-<!-- Regular three-column card -->
-<ng-template #cardTemplate let-card let-isNext="isNext">
-  @if (card.type === 'card') {
+  <!-- Intro/Outro full-screen text -->
+  <ng-template #textOnlyTemplate let-card>
+    @if (card.type === 'intro' || card.type === 'outro') {
+    <div class="text-only-card">
+      <div
+        class="text-content"
+        [ngClass]="{
+          visible: card.status === 'visible',
+          hidden: card.status === 'hidden',
+          'transitioning-in': card.status === 'transitioning-in',
+          'transitioning-out': card.status === 'transitioning-out'
+        }"
+      >
+        <h2>{{ card.title | translate }}</h2>
+        <p>{{ card.description | translate }}</p>
+      </div>
+    </div>
+    }
+  </ng-template>
+
+  <!-- Regular three-column card -->
+  <ng-template #cardTemplate let-card let-isNext="isNext">
+    @if (card.type === 'card') {
     <div
       class="three-column-layout"
       [ngClass]="{
@@ -82,20 +81,20 @@
 
       <!-- Center: Image -->
       @if (card.image) {
-        <div class="image-column">
-          <div
-            class="image-container"
-            [ngClass]="{
-              visible: card.status === 'visible',
-              before: card.position === 'before',
-              after: card.position === 'after',
-              'slide-in-from-left': card.position === 'slide-in-from-left',
-              'slide-in-from-right': card.position === 'slide-in-from-right'
-            }"
-          >
-            <img [src]="card.image" [alt]="card.title" />
-          </div>
+      <div class="image-column">
+        <div
+          class="image-container"
+          [ngClass]="{
+            visible: card.status === 'visible',
+            before: card.position === 'before',
+            after: card.position === 'after',
+            'slide-in-from-left': card.position === 'slide-in-from-left',
+            'slide-in-from-right': card.position === 'slide-in-from-right'
+          }"
+        >
+          <img [src]="card.image" [alt]="card.title" />
         </div>
+      </div>
       }
 
       <!-- Right: Comics (wrapper always present) -->
@@ -110,11 +109,11 @@
           }"
         >
           @for (comic of card.comics; track comic) {
-            <img
-              [src]="comic"
-              [alt]="card.title + ' comic'"
-              class="comic-image"
-            />
+          <img
+            [src]="comic"
+            [alt]="card.title + ' comic'"
+            class="comic-image"
+          />
           }
         </div>
       </div>
@@ -130,43 +129,41 @@
         'transitioning-out': card.status === 'transitioning-out'
       }"
     >
-      @if (showCommentsSection && card.showComments) {
-        <app-comments
-          [cardId]="card.title"
-          (commentAdded)="onCommentAdded($event)"
-        ></app-comments>
-      }
+      <app-comments
+        [cardId]="card.title"
+        (commentAdded)="onCommentAdded($event)"
+      ></app-comments>
     </div>
-  }
-</ng-template>
+    }
+  </ng-template>
 
+  <ng-template #navigationControls>
+    <div class="navigation-controls">
+      <button
+        class="nav-btn prev-btn"
+        (click)="previousCard()"
+        [disabled]="currentIndex === 0 || isTransitioning"
+        aria-label="Previous card"
+        #prevBtn
+      >
+        <i class="fas fa-chevron-left"></i>
+      </button>
 
-<ng-template #navigationControls>
-  <div class="navigation-controls">
-    <button
-      class="nav-btn prev-btn"
-      (click)="previousCard()"
-      [disabled]="currentIndex === 0 || isTransitioning"
-      aria-label="Previous card"
-      #prevBtn
-    >
-      <i class="fas fa-chevron-left"></i>
-    </button>
+      <div class="card-indicator">
+        <span class="current">{{ currentIndex + 1 }}</span>
+        <span class="separator">/</span>
+        <span class="total">{{ cards.length }}</span>
+      </div>
 
-    <div class="card-indicator">
-      <span class="current">{{ currentIndex + 1 }}</span>
-      <span class="separator">/</span>
-      <span class="total">{{ cards.length }}</span>
+      <button
+        class="nav-btn next-btn"
+        (click)="nextCard()"
+        [disabled]="currentIndex === cards.length - 1 || isTransitioning"
+        aria-label="Next card"
+        #nextBtn
+      >
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
-
-    <button
-      class="nav-btn next-btn"
-      (click)="nextCard()"
-      [disabled]="currentIndex === cards.length - 1 || isTransitioning"
-      aria-label="Next card"
-      #nextBtn
-    >
-      <i class="fas fa-chevron-right"></i>
-    </button>
-  </div>
-</ng-template>
+  </ng-template>
+</div>

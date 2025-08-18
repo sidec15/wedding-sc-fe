@@ -23,7 +23,7 @@ export class CommentsComponent {
   constructor(private fb: FormBuilder) {
     this.commentForm = this.fb.group({
       authorName: ['', [Validators.required, Validators.minLength(2)]],
-      message: ['', [Validators.required, Validators.minLength(10)]]
+      message: ['', [Validators.required, Validators.maxLength(1000)]]
     });
 
     // Mock data for testing
@@ -90,7 +90,7 @@ export class CommentsComponent {
         return 'Campo obbligatorio';
       }
       if (field.errors['minlength']) {
-        return fieldName === 'authorName' ? 'Nickname troppo corto' : 'Messaggio troppo corto';
+        return fieldName === 'authorName' ? 'Nickname troppo corto' : 'Messaggio troppo lungo';
       }
     }
     return '';

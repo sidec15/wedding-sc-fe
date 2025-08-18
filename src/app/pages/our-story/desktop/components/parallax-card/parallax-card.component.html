@@ -7,7 +7,10 @@
     <div class="text-overlay" #content>
       <h3>{{ title | translate }}</h3>
       @if (date) {
-      <p class="date">{{ date.year }}{{ date.month ? '-' + date.month : '' }}{{ date.day ? '-' + date.day : '' }}</p>
+      <p class="date">
+        {{ date.year }}{{ date.month ? "-" + date.month : ""
+        }}{{ date.day ? "-" + date.day : "" }}
+      </p>
       }
       <p class="description">{{ description | translate }}</p>
     </div>
@@ -19,12 +22,11 @@
   </div>
 
   <!-- Comments Section -->
-  @if (showComments) {
   <app-comments
     [cardId]="title"
     (commentAdded)="onCommentAdded($event)"
   ></app-comments>
-  } }
+  }
   <!-- 📘 Intro/Outro full screen text -->
   @default {
   <div class="text-only-content" #content>
