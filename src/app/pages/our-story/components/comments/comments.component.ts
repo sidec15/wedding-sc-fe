@@ -1,6 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { Comment } from './models/comment';
 import { DateTime } from 'luxon';
@@ -10,7 +16,7 @@ import { DateTime } from 'luxon';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './comments.component.html',
-  styleUrl: './comments.component.scss'
+  styleUrl: './comments.component.scss',
 })
 export class CommentsComponent {
   @Input() cardId: string = '';
@@ -19,11 +25,12 @@ export class CommentsComponent {
   comments: Comment[] = [];
   commentForm: FormGroup;
   isSubmitting = false;
+  maxMessageLength = 1000;
 
   constructor(private fb: FormBuilder) {
     this.commentForm = this.fb.group({
       authorName: ['', [Validators.required, Validators.minLength(2)]],
-      message: ['', [Validators.required, Validators.maxLength(1000)]]
+      message: ['', [Validators.required, Validators.maxLength(this.maxMessageLength)]],
     });
 
     // Mock data for testing
@@ -36,20 +43,20 @@ export class CommentsComponent {
         commentId: '1',
         authorName: 'Maria',
         content: 'Che bella foto! 🥰',
-        createdAt: DateTime.fromJSDate(new Date('2024-01-15T10:30:00'))
+        createdAt: DateTime.fromJSDate(new Date('2024-01-15T10:30:00')),
       },
       {
         commentId: '2',
         authorName: 'Giovanni',
         content: 'Ricordo perfetto di quel giorno! 😊',
-        createdAt: DateTime.fromJSDate(new Date('2024-01-16T14:20:00'))
+        createdAt: DateTime.fromJSDate(new Date('2024-01-16T14:20:00')),
       },
       {
         commentId: '3',
         authorName: 'Anna',
         content: 'Momenti indimenticabili 💕',
-        createdAt: DateTime.fromJSDate(new Date('2024-01-17T09:15:00'))
-      }
+        createdAt: DateTime.fromJSDate(new Date('2024-01-17T09:15:00')),
+      },
     ];
   }
 
@@ -61,7 +68,7 @@ export class CommentsComponent {
         commentId: Date.now().toString(),
         authorName: this.commentForm.get('authorName')?.value,
         content: this.commentForm.get('message')?.value,
-        createdAt: DateTime.fromJSDate(new Date())
+        createdAt: DateTime.fromJSDate(new Date()),
       };
 
       // Add to local array (in real app, this would be an API call)
@@ -90,7 +97,9 @@ export class CommentsComponent {
         return 'Campo obbligatorio';
       }
       if (field.errors['minlength']) {
-        return fieldName === 'authorName' ? 'Nickname troppo corto' : 'Messaggio troppo lungo';
+        return fieldName === 'authorName'
+          ? 'Nickname troppo corto'
+          : 'Messaggio troppo lungo';
       }
     }
     return '';

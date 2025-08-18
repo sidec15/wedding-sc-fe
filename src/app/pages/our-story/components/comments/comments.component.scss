@@ -1,16 +1,18 @@
+@use "../../../../../styles/variables.scss" as *;
+
 .comments-section {
   margin-top: 2rem;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(var(--bg), 0.95);
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px var(--box-shadow-light);
+  backdrop-filter: var(--backdrop-filter);
 }
 
 .section-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #333;
+  color: rgb(var(--text));
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -19,7 +21,7 @@
 .comment-form-section {
   margin-bottom: 2rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid rgb(var(--light-gray));
 }
 
 .comment-form {
@@ -36,23 +38,24 @@
 
 .form-label {
   font-weight: 500;
-  color: #555;
+  color: rgba(var(--text), 0.8);
   font-size: 0.9rem;
 }
 
 .form-input,
 .form-textarea {
   padding: 0.75rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid rgb(var(--light-gray));
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: white;
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
 
   &:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    border-color: rgb(var(--accent));
+    box-shadow: 0 0 0 3px rgba(var(--accent), 0.2);
   }
 
   &.error {
@@ -74,8 +77,12 @@
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  color: white;
+  background: linear-gradient(
+    135deg,
+    rgb(var(--accent)),
+    rgb(var(--hover))
+  );
+  color: #fff;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -87,7 +94,7 @@
 
   &:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(var(--accent), 0.3);
   }
 
   &:disabled {
@@ -112,15 +119,15 @@
 }
 
 .comment-item {
-  background: #f8f9fa;
+  background: rgb(var(--light-gray));
   border-radius: 8px;
   padding: 1rem;
-  border-left: 4px solid #007bff;
+  border-left: 4px solid rgb(var(--accent));
   transition: all 0.3s ease;
 
   &:hover {
     transform: translateX(4px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px var(--box-shadow-light);
   }
 }
 
@@ -135,18 +142,18 @@
 
 .comment-author {
   font-weight: 600;
-  color: #007bff;
+  color: rgb(var(--accent));
   font-size: 0.9rem;
 }
 
 .comment-date {
-  color: #6c757d;
+  color: rgba(var(--text), 0.6);
   font-size: 0.8rem;
   font-style: italic;
 }
 
 .comment-content {
-  color: #333;
+  color: rgb(var(--text));
   line-height: 1.5;
   word-wrap: break-word;
 }
@@ -154,7 +161,7 @@
 .no-comments {
   text-align: center;
   padding: 2rem;
-  color: #6c757d;
+  color: rgba(var(--text), 0.6);
   font-style: italic;
 }
 

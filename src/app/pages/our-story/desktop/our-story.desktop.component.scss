@@ -92,7 +92,8 @@
   touch-action: pan-y pinch-zoom;
   max-width: 1400px; // Larger max width for three columns
   margin: 0 auto;
-  margin-top: calc(var(--header-height) + 0.5rem);
+  margin-top: calc(var(--header-height) + 1rem);
+  margin-bottom: 2rem;
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   // Allow full width for intro/outro cards
