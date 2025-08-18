@@ -26,14 +26,6 @@ export class ContactService {
       'Accept': 'application/json',
     });
 
-    // // mock loading and success response
-    // return of(true).pipe(
-    //   delay(4000),
-    //   catchError(error => {
-    //     console.error('Contact form submission failed', error);
-    //     return throwError(() => error);
-    //   })
-    // );
     return this.http.post(this.apiUrl, data, { headers })
       .pipe(
         catchError(error => {
