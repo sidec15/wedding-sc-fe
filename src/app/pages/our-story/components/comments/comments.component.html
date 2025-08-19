@@ -1,7 +1,9 @@
 <div class="comments-section">
   <!-- Comments List Section -->
   <div class="comments-list-section">
-    <h4 class="section-title">Commenti ({{ comments.length }})</h4>
+    <h4 class="section-title">
+      {{ "our_story.comments.title" | translate }} ({{ comments.length }})
+    </h4>
 
     <div class="comments-list" *ngIf="comments.length > 0">
       <div
@@ -19,13 +21,15 @@
     </div>
 
     <div class="no-comments" *ngIf="comments.length === 0">
-      <p>Nessun commento ancora. Sii il primo a commentare!</p>
+      <p>{{ "our_story.comments.no_comment" | translate }}</p>
     </div>
   </div>
 
   <!-- Comment Form Section -->
   <div class="comment-form-section">
-    <h4 class="section-title">Lascia un commento</h4>
+    <h4 class="section-title">
+      {{ "our_story.comments.leave_comment_message" | translate }}
+    </h4>
 
     <form
       [formGroup]="commentForm"
@@ -39,7 +43,7 @@
           id="authorName"
           formControlName="authorName"
           class="form-input"
-          placeholder="Inserisci il tuo nickname"
+          [placeholder]="'our_story.comments.nickname_placeholder' | translate"
           [class.error]="
             commentForm.get('authorName')?.invalid &&
             commentForm.get('authorName')?.touched
@@ -56,32 +60,9 @@
         </div>
       </div>
 
-      <!-- <div class="form-group">
-        <label for="message" class="form-label">Messaggio *</label>
-        <textarea
-          id="message"
-          formControlName="message"
-          class="form-textarea"
-          placeholder="Scrivi il tuo commento... (supporta emoji 😊)"
-          rows="4"
-          [class.error]="
-            commentForm.get('message')?.invalid &&
-            commentForm.get('message')?.touched
-          "
-        ></textarea>
-        <div
-          class="error-message"
-          *ngIf="
-            commentForm.get('message')?.invalid &&
-            commentForm.get('message')?.touched
-          "
-        >
-          {{ getErrorMessage("message") }}
-        </div>
-      </div> -->
       <div class="form-group">
         <label for="message"
-          >{{ "contact_us.contact_form.message" | translate }} *</label
+          >{{ "our_story.comments.comment" | translate }} *</label
         >
         <textarea
           id="message"

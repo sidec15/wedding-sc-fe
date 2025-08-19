@@ -35,6 +35,13 @@
     "lets_start": "Iniziamo!"
   },
   "our_story": {
+    "comments":{
+      "title": "Commenti",
+      "no_comment": "Nessun commento ancora. Sii il primo a commentare!",
+      "leave_comment_message": "Lascia un commento",
+      "nickname_placeholder": "Inserisci il tuo nickname",
+      "comment": "Commento"
+    },
     "intro": {
       "title": "Come siamo finiti qui?",
       "description": "Tutto è iniziato con un bel po' di foto d'epoca (e sì, alcune forse era meglio lasciarle nei cassetti…). Ci troverai piccoli, con facce buffe, pose improbabili e outfit che oggi fanno tendenza… ma solo su Marte. Poi arrivano gli anni in cui ci siamo incontrati e, tra una risata e l'altra, abbiamo iniziato a scrivere la nostra storia a due. Il resto? È tutto qui: viaggi, abbracci, momenti assurdi e ricordi che ci hanno portato fin dove siamo oggi. Questa è la nostra storia: un mix di momenti teneri, buffi, indimenticabili. Scorri e divertiti con noi!"
