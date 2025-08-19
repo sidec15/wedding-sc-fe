@@ -68,13 +68,15 @@
           id="message"
           formControlName="message"
           class="form-textarea"
-          placeholder="Scrivi il tuo commento... (supporta emoji 😊)"
+          [placeholder]="'our_story.comments.write_comment' | translate"
           rows="4"
+          [attr.maxlength]="maxMessageLength"
           [class.error]="
             commentForm.get('message')?.invalid &&
             commentForm.get('message')?.touched
           "
         ></textarea>
+
         <div class="char-count">
           {{ commentForm.get("message")?.value?.length || 0 }}/{{
             maxMessageLength
@@ -96,8 +98,12 @@
         class="submit-btn"
         [disabled]="commentForm.invalid || isSubmitting"
       >
-        <span *ngIf="!isSubmitting">Invia Commento</span>
-        <span *ngIf="isSubmitting">Invio in corso...</span>
+        <span *ngIf="!isSubmitting">{{
+          "our_story.comments.submit" | translate
+        }}</span>
+        <span *ngIf="isSubmitting">{{
+          "our_story.comments.submitting" | translate
+        }}</span>
       </button>
     </form>
   </div>

@@ -12,6 +12,7 @@ import { ContactService } from '../../services/contact.service';
 import { EventService } from '../../../../services/event.service';
 import { environment } from '../../../../../environments/environment';
 import { RecaptchaModule } from 'ng-recaptcha-2';
+import * as securityUtils from '../../../../utils/security.utils';
 
 @Component({
   selector: 'app-contact-form',
@@ -72,14 +73,6 @@ export class ContactFormComponent implements AfterViewInit {
     this.isMobile = this.platformService.isMobile();
   }
 
-  private sanitizeInput(value: string): string {
-    return value
-      .replace(/[<>]/g, '') // Remove < and > to prevent HTML injection
-      .replace(/javascript:/gi, '') // Remove javascript: protocol
-      .replace(/on\w+=/gi, '') // Remove on* event handlers
-      .trim();
-  }
-
   onSubmit() {
     this.submitted = true;
 
@@ -104,7 +97,7 @@ export class ContactFormComponent implements AfterViewInit {
 
       Object.keys(formData).forEach((key) => {
         if (typeof formData[key] === 'string') {
-          formData[key] = this.sanitizeInput(formData[key]);
+          formData[key] = securityUtils.sanitizeInput(formData[key]);
         }
       });
 
@@ -138,7 +131,6 @@ export class ContactFormComponent implements AfterViewInit {
         },
       });
     }
-
   }
 
   onCaptchaResolved(token: string | null): void {
@@ -150,5 +142,4 @@ export class ContactFormComponent implements AfterViewInit {
     console.log('captcha error');
     this.contactForm.get('captcha')?.setValue(null);
   }
-
 }

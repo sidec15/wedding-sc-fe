@@ -40,7 +40,10 @@
       "no_comment": "Nessun commento ancora. Sii il primo a commentare!",
       "leave_comment_message": "Lascia un commento",
       "nickname_placeholder": "Inserisci il tuo nickname",
-      "comment": "Commento"
+      "comment": "Commento",
+      "write_comment": "Scrivi il tuo commento...",
+      "submit": "Invia Commento",
+      "submitting": "Invio in corso..."
     },
     "intro": {
       "title": "Come siamo finiti qui?",

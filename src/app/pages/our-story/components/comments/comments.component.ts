@@ -25,7 +25,7 @@ export class CommentsComponent {
   comments: Comment[] = [];
   commentForm: FormGroup;
   isSubmitting = false;
-  maxMessageLength = 1000;
+  maxMessageLength = 100;
 
   constructor(private fb: FormBuilder) {
     this.commentForm = this.fb.group({

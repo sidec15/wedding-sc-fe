@@ -11,6 +11,16 @@
     transitioning: isTransitioning
   }"
 >
+  @if (showSuccess) {
+  <div class="success-message">
+    {{ "contact_us.contact_form.success_message" | translate }}
+  </div>
+  } @if (showError) {
+  <div class="error-message">
+    {{ "contact_us.contact_form.error_message" | translate }}
+  </div>
+  }
+
   <!-- Current card -->
   <ng-container
     *ngTemplateOutlet="

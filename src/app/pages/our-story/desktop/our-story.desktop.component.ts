@@ -38,6 +38,9 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   nextIndex: number = 0;
   isMobile: boolean = false;
   showCommentsSection: boolean = true;
+  showSuccess = false;
+  showError = false;
+  responseMessageTimeoutMs = 3000;
 
   constructor(
     private platformService: PlatformService,
@@ -187,34 +190,34 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('keydown', ['$event'])
-  handleKeyboardNavigation(event: KeyboardEvent): void {
-    switch (event.key) {
-      case 'ArrowLeft':
-        event.preventDefault();
-        this.previousCard();
-        break;
-      case 'ArrowRight':
-        event.preventDefault();
-        this.nextCard();
-        break;
-      case 'Home':
-        event.preventDefault();
-        if (this.currentIndex !== 0) {
-          this.transitionToCard(0, null);
-        }
-        break;
-      case 'End':
-        event.preventDefault();
-        if (this.currentIndex !== this.cards.length - 1) {
-          this.transitionToCard(this.cards.length - 1, null);
-        }
-        break;
-    }
-  }
-
   onCommentAdded(comment: Comment): void {
     console.log('New comment added:', comment);
-    // Here you can implement API call to save the comment
+
   }
+
+  // @HostListener('keydown', ['$event'])
+  // handleKeyboardNavigation(event: KeyboardEvent): void {
+  //   switch (event.key) {
+  //     case 'ArrowLeft':
+  //       event.preventDefault();
+  //       this.previousCard();
+  //       break;
+  //     case 'ArrowRight':
+  //       event.preventDefault();
+  //       this.nextCard();
+  //       break;
+  //     case 'Home':
+  //       event.preventDefault();
+  //       if (this.currentIndex !== 0) {
+  //         this.transitionToCard(0, null);
+  //       }
+  //       break;
+  //     case 'End':
+  //       event.preventDefault();
+  //       if (this.currentIndex !== this.cards.length - 1) {
+  //         this.transitionToCard(this.cards.length - 1, null);
+  //       }
+  //       break;
+  //   }
+  // }
 }
