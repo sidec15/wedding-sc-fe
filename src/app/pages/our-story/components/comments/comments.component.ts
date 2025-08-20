@@ -12,9 +12,13 @@ import { DateTime } from 'luxon';
 import { Comment } from './models/comment';
 import { RichTextEditorComponent } from '../../../../components/rich-text-editor/rich-text-editor.component';
 import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
-import { plainTextMaxLength, plainTextRequired } from '../../../../components/rich-text-editor/validators/validators';
-
-// ⬇️ import the reusable editor + safe HTML pipe
+import {
+  plainTextMaxLength,
+  plainTextRequired,
+} from '../../../../components/rich-text-editor/validators/validators';
+import { EventService } from '../../../../services/event.service';
+import { CommentsService } from './services/comments.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-comments',
@@ -40,11 +44,33 @@ export class CommentsComponent {
   maxMessageLength = 100; // editor uses this as plain-text max
   currentLen = 0; // for live counter from (lengthChange)
 
-  constructor(private fb: FormBuilder, private translate: TranslateService) {
+  maxNicknameLength = 20;
+
+  responseMessageTimeoutMs = 3000;
+  showSuccess = false;
+  showError = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private translate: TranslateService,
+    private eventService: EventService,
+    private commentsService: CommentsService
+  ) {
     this.commentForm = this.fb.group({
-      authorName: ['', [Validators.required, Validators.minLength(2)]],
+      authorName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(this.maxNicknameLength),
+          Validators.pattern(/^[a-zA-Z0-9\s]+$/), // only letters, numbers, spaces
+        ],
+      ],
       // holds HTML string from the editor
-      messageHtml: ['', [plainTextRequired(), plainTextMaxLength(this.maxMessageLength)]],
+      messageHtml: [
+        '',
+        [plainTextRequired(), plainTextMaxLength(this.maxMessageLength)],
+      ],
     });
 
     this.loadMockComments();
@@ -77,20 +103,39 @@ export class CommentsComponent {
     if (this.commentForm.invalid || this.isSubmitting) return;
 
     this.isSubmitting = true;
+    this.eventService.emitLoadingMask(true);
 
-    const newComment: Comment = {
-      authorName: this.commentForm.get('authorName')?.value,
-      content: this.commentForm.get('messageHtml')?.value, // HTML from editor
-      createdAt: DateTime.fromJSDate(new Date()),
-    };
+    const nickname = (this.commentForm.get('authorName')?.value || '').trim();
+    const messageHtml = this.commentForm.get('messageHtml')?.value || '';
 
-    // Add locally (replace with API call in real app)
-    this.comments.unshift(newComment);
-    this.commentAdded.emit(newComment);
+    this.commentsService
+      .create(this.cardId, { nickname, message: messageHtml })
+      .pipe(
+        finalize(() => {
+          this.isSubmitting = false;
+          this.eventService.emitLoadingMask(false);
+        })
+      )
+      .subscribe({
+        next: (created) => {
+          this.comments.unshift(created);
+          this.commentAdded.emit(created);
 
-    this.commentForm.reset();
-    this.currentLen = 0;
-    this.isSubmitting = false;
+          this.commentForm.reset();
+          this.currentLen = 0;
+          setTimeout(() => {
+            this.showSuccess = false;
+          }, this.responseMessageTimeoutMs);
+        },
+        error: (err) => {
+          console.error('Failed to create comment', err);
+          this.showError = true;
+          setTimeout(
+            () => (this.showError = false),
+            this.responseMessageTimeoutMs
+          );
+        },
+      });
   }
 
   get messageCtrl() {
@@ -103,18 +148,37 @@ export class CommentsComponent {
       .setLocale('it')
       .toLocaleString(DateTime.DATETIME_MED);
   }
-
   getErrorMessage(fieldName: string): string {
     const field = this.commentForm.get(fieldName);
     if (field?.errors && field.touched) {
       if (field.errors['required']) {
-        return this.translate.instant('rich_text_editor.errors.required_fields');
+        return this.translate.instant(
+          'rich_text_editor.errors.required_fields'
+        );
       }
-      if (field.errors['minlength']) {
-        return this.translate.instant('rich_text_editor.errors.invalid_nickname');
+
+      if (fieldName === 'authorName') {
+        if (field.errors['minlength']) {
+          return this.translate.instant(
+            'rich_text_editor.errors.invalid_nickname_min'
+          );
+        }
+        if (field.errors['maxlength']) {
+          return this.translate.instant(
+            'rich_text_editor.errors.invalid_nickname_max'
+          );
+        }
+        if (field.errors['pattern']) {
+          return this.translate.instant(
+            'rich_text_editor.errors.invalid_nickname_chars'
+          );
+        }
       }
-      if (field.errors['maxPlainTextLen']) {
-        return this.translate.instant('rich_text_editor.errors.invalid_content');
+
+      if (fieldName === 'messageHtml' && field.errors['maxPlainTextLen']) {
+        return this.translate.instant(
+          'rich_text_editor.errors.invalid_content'
+        );
       }
     }
     return '';
