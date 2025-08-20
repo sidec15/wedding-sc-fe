@@ -1,5 +1,5 @@
 <!-- src/app/shared/ui/rich-text-editor/rich-text-editor.component.html -->
-<div class="rte-wrapper">
+<div class="rte-wrapper" (focusout)="markTouched()">
   <div class="rte-toolbar">
     <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
 
@@ -8,39 +8,23 @@
       type="button"
       class="emoji-btn"
       (click)="showEmoji = !showEmoji"
-      [aria-label]="'rich_text_editor.open_emoji' | translate"
+      [attr.aria-label]="'rich_text_editor.open_emoji' | translate"
     >
       😊
     </button>
   </div>
 
-  <picker
+  <emoji-mart
     *ngIf="emojiEnabled && showEmoji"
     (emojiSelect)="insertEmoji($event)"
     title="Emoji"
     emoji="point_up"
     set="apple"
-    style="width: 100%; max-width: 320px"
-  ></picker>
+  ></emoji-mart>
 
   <ngx-editor
     [editor]="editor"
     [placeholder]="placeholder"
-    [ngModel]="control.value"
-    (ngModelChange)="control.setValue($event)"
-    (blur)="markTouched()"
+    [formControl]="control"
   ></ngx-editor>
-
-  <div class="rte-meta">
-    <span *ngIf="showCounter"> {{ plainTextLength }}/{{ maxLength }} </span>
-    <span class="rte-error" *ngIf="required && plainTextLength === 0">
-      * {{ rich_text_editor.errors.required | translate }}
-    </span>
-    <span
-      class="rte-error"
-      *ngIf="maxLength > 0 && plainTextLength > maxLength"
-    >
-      {{ rich_text_editor.errors.max_length | translate }}
-    </span>
-  </div>
 </div>

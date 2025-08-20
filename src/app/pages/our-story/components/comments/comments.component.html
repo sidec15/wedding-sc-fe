@@ -64,26 +64,24 @@
       </div>
 
       <div class="form-group">
-        <label for="messageHtml"
-          >{{ "our_story.comments.comment" | translate }} *</label
-        >
+        <label for="messageHtml" class="form-label">
+          {{ "our_story.comments.comment" | translate }} *
+        </label>
 
-        <!-- Reusable rich-text editor -->
         <app-rich-text-editor
           id="messageHtml"
           formControlName="messageHtml"
           [placeholder]="'our_story.comments.write_comment' | translate"
-          [maxLength]="maxMessageLength"
-          [required]="true"
           [emojiEnabled]="true"
           (lengthChange)="currentLen = $event"
-        >
-        </app-rich-text-editor>
+        ></app-rich-text-editor>
 
+        <!-- Counter lives in parent -->
         <div class="char-count">
           {{ currentLen || 0 }}/{{ maxMessageLength }}
         </div>
 
+        <!-- Validation errors (parent-driven) -->
         <div
           class="error-message"
           *ngIf="

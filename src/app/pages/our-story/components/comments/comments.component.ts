@@ -12,6 +12,7 @@ import { DateTime } from 'luxon';
 import { Comment } from './models/comment';
 import { RichTextEditorComponent } from '../../../../components/rich-text-editor/rich-text-editor.component';
 import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
+import { plainTextMaxLength } from '../../../../components/rich-text-editor/validators/max-length.validator';
 
 // ⬇️ import the reusable editor + safe HTML pipe
 
@@ -36,14 +37,14 @@ export class CommentsComponent {
   comments: Comment[] = [];
   commentForm: FormGroup;
   isSubmitting = false;
-  maxMessageLength = 2000; // editor uses this as plain-text max
+  maxMessageLength = 100; // editor uses this as plain-text max
   currentLen = 0; // for live counter from (lengthChange)
 
   constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.commentForm = this.fb.group({
       authorName: ['', [Validators.required, Validators.minLength(2)]],
       // holds HTML string from the editor
-      messageHtml: ['', [Validators.required]],
+      messageHtml: ['', [Validators.required, plainTextMaxLength(this.maxMessageLength)]],
     });
 
     this.loadMockComments();
@@ -78,7 +79,6 @@ export class CommentsComponent {
     this.isSubmitting = true;
 
     const newComment: Comment = {
-      commentId: Date.now().toString(),
       authorName: this.commentForm.get('authorName')?.value,
       content: this.commentForm.get('messageHtml')?.value, // HTML from editor
       createdAt: DateTime.fromJSDate(new Date()),
@@ -116,7 +116,7 @@ export class CommentsComponent {
     return '';
   }
 
-  trackByCommentId(index: number, comment: Comment): string {
+  trackByCommentId(index: number, comment: Comment): string | undefined {
     return comment.commentId;
   }
 }

@@ -5,11 +5,13 @@ import { Card } from '../models/card';
 export class CardsService {
   private readonly cards: Card[] = [
     {
+      id: "intro",
       type: 'intro',
       title: 'our_story.intro.title',
       description: 'our_story.intro.description',
     },
     {
+      id: 'chiara_neonata',
       type: 'card',
       title: 'our_story.cards.chiara_neonata.title',
       description: 'our_story.cards.chiara_neonata.description',
@@ -17,12 +19,14 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-chiara_neonata.png'],
     },
     {
+      id: 'chiara_piccola_famiglia',
       type: 'card',
       title: 'our_story.cards.chiara_piccola_famiglia.title',
       description: 'our_story.cards.chiara_piccola_famiglia.description',
       image: '/images/our-story/our-story-chiara_piccola_famiglia.jpg',
     },
     {
+      id: 'simone_piccolo_calcio',
       type: 'card',
       title: 'our_story.cards.simone_piccolo_calcio.title',
       description: 'our_story.cards.simone_piccolo_calcio.description',
@@ -30,12 +34,14 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-simone_piccolo_calcio.png'],
     },
     {
+      id: 'chiara_piccola_primavera',
       type: 'card',
       title: 'our_story.cards.chiara_piccola_primavera.title',
       description: 'our_story.cards.chiara_piccola_primavera.description',
       image: '/images/our-story/our-story-chiara_piccola_primavera.jpg',
     },
     {
+      id: 'simone_venezia',
       type: 'card',
       title: 'our_story.cards.simone_venezia.title',
       description: 'our_story.cards.simone_venezia.description',
@@ -43,6 +49,7 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-simone_venezia.png'],
     },
     {
+      id: 'chiara_piccola_natale',
       type: 'card',
       title: 'our_story.cards.chiara_piccola_natale.title',
       description: 'our_story.cards.chiara_piccola_natale.description',
@@ -50,18 +57,21 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-chiara_piccola_natale.png'],
     },
     {
+      id: 'chiara_piccola_nonni',
       type: 'card',
       title: 'our_story.cards.chiara_piccola_nonni.title',
       description: 'our_story.cards.chiara_piccola_nonni.description',
       image: '/images/our-story/our-story-chiara_piccola_nonni.jpg',
     },
     {
+      id: 'simone_piccolo_leone',
       type: 'card',
       title: 'our_story.cards.simone_piccolo_leone.title',
       description: 'our_story.cards.simone_piccolo_leone.description',
       image: '/images/our-story/our-story-simone_piccolo_leone.jpg',
     },
     {
+      id: 'chiara_giovane_fratelli',
       type: 'card',
       title: 'our_story.cards.simone_asilo_premio.title',
       description: 'our_story.cards.simone_asilo_premio.description',
@@ -69,6 +79,7 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-simone_asilo_premio.png'],
     },
     {
+      id: 'chiara_giovane_fratelli',
       type: 'card',
       title: 'our_story.cards.chiara_giovane_fratelli.title',
       description: 'our_story.cards.chiara_giovane_fratelli.description',
@@ -76,6 +87,7 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-chiara_giovane_fratelli.png'],
     },
     {
+      id: 'chiara_simone_gmg',
       type: 'card',
       title: 'our_story.cards.chiara_simone_gmg.title',
       description: 'our_story.cards.chiara_simone_gmg.description',
@@ -83,6 +95,7 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-chiara_simone_gmg.png'],
     },
     {
+      id: "outro",
       type: 'outro',
       title: 'our_story.outro.title',
       description: 'our_story.outro.description',
@@ -106,7 +119,8 @@ export class CardsService {
   getCards(): Card[] {
     return this.cards;
   }
-  getCard(index: number): Card | null {
+
+  getCardByIndex(index: number): Card | null {
     if (index < 0 || index >= this.cards.length) {
       return null;
     }

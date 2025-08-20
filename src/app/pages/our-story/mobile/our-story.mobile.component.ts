@@ -32,7 +32,7 @@ export class OurStoryMobileComponent {
   }
 
   openGallery(index: number): void {
-    const currentCard = this.cardService.getCard(index);
+    const currentCard = this.cardService.getCardByIndex(index);
     if (currentCard?.type === 'card') {
       this.eventService.emitRingScrollEnabled(false);
       this.eventService.emitGalleryStatus({
