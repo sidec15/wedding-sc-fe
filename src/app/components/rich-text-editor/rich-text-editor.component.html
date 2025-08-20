@@ -1,8 +1,10 @@
-<!-- src/app/shared/ui/rich-text-editor/rich-text-editor.component.html -->
-<div class="rte-wrapper" (focusout)="markTouched()">
+<div
+  class="rte-wrapper"
+  [class.error]="error"
+  (focusout)="markTouched()"
+>
   <div class="rte-toolbar">
     <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-
     <button
       *ngIf="emojiEnabled"
       type="button"
@@ -23,6 +25,7 @@
   ></emoji-mart>
 
   <ngx-editor
+    class="editor-content"
     [editor]="editor"
     [placeholder]="placeholder"
     [formControl]="control"

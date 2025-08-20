@@ -74,14 +74,13 @@
           [placeholder]="'our_story.comments.write_comment' | translate"
           [emojiEnabled]="true"
           (lengthChange)="currentLen = $event"
+          [error]="!!(messageCtrl?.invalid && messageCtrl?.touched)"
         ></app-rich-text-editor>
 
-        <!-- Counter lives in parent -->
         <div class="char-count">
           {{ currentLen || 0 }}/{{ maxMessageLength }}
         </div>
 
-        <!-- Validation errors (parent-driven) -->
         <div
           class="error-message"
           *ngIf="

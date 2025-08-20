@@ -12,7 +12,7 @@ import { DateTime } from 'luxon';
 import { Comment } from './models/comment';
 import { RichTextEditorComponent } from '../../../../components/rich-text-editor/rich-text-editor.component';
 import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
-import { plainTextMaxLength } from '../../../../components/rich-text-editor/validators/max-length.validator';
+import { plainTextMaxLength, plainTextRequired } from '../../../../components/rich-text-editor/validators/validators';
 
 // ⬇️ import the reusable editor + safe HTML pipe
 
@@ -44,7 +44,7 @@ export class CommentsComponent {
     this.commentForm = this.fb.group({
       authorName: ['', [Validators.required, Validators.minLength(2)]],
       // holds HTML string from the editor
-      messageHtml: ['', [Validators.required, plainTextMaxLength(this.maxMessageLength)]],
+      messageHtml: ['', [plainTextRequired(), plainTextMaxLength(this.maxMessageLength)]],
     });
 
     this.loadMockComments();
@@ -91,6 +91,10 @@ export class CommentsComponent {
     this.commentForm.reset();
     this.currentLen = 0;
     this.isSubmitting = false;
+  }
+
+  get messageCtrl() {
+    return this.commentForm.get('messageHtml');
   }
 
   formatDate(date: DateTime): string {

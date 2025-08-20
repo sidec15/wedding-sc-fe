@@ -19,8 +19,6 @@ import { Editor, Toolbar, NgxEditorModule } from 'ngx-editor';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import DOMPurify from 'dompurify';
 
-import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
-import { StripHtmlLengthPipe } from '../../pipes/strip-html-length.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -31,8 +29,6 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     NgxEditorModule,
     PickerModule,
-    SafeHtmlPipe,
-    StripHtmlLengthPipe,
     TranslateModule,
   ],
   templateUrl: './rich-text-editor.component.html',
@@ -65,6 +61,7 @@ export class RichTextEditorComponent
       ? this.control.disable({ emitEvent: false })
       : this.control.enable({ emitEvent: false });
   }
+  @Input() error = false;
 
   // ========== Outputs ==========
   @Output() submitted = new EventEmitter<void>();
