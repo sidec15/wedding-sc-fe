@@ -54,12 +54,12 @@
   &:focus-within {
     outline: none;
     border-color: rgb(var(--accent));
-    box-shadow: 0 0 0 3px rgba(var(--accent), 0.2);
+    // box-shadow: 0 0 0 3px rgba(var(--accent), 0.2);
   }
 
   &.error {
-    border-color: #dc3545;
-    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+    border-color: var(--error-border);
+    // box-shadow: 0 0 0 3px var(--box-shadow-medium);
   }
 }
 
@@ -76,12 +76,12 @@
 :host ::ng-deep app-rich-text-editor .rte-wrapper:focus-within {
   outline: none;
   border-color: rgb(var(--accent));
-  box-shadow: 0 0 0 3px rgba(var(--accent), 0.2);
+  // box-shadow: 0 0 0 3px rgba(var(--accent), 0.2);
 }
 
 :host ::ng-deep app-rich-text-editor .rte-wrapper.error {
-  border-color: #dc3545;
-  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+  border-color: var(--error-border);
+  // box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
 }
 
 :host ::ng-deep app-rich-text-editor .rte-wrapper .NgxEditor__Content {
@@ -91,7 +91,7 @@
 }
 
 .error-message {
-  color: #dc3545;
+  color: var(--error-text);
   font-size: 0.8rem;
   margin-top: 0.25rem;
 }
