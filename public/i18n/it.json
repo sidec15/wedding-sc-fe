@@ -22,6 +22,13 @@
   "global_loading_mask": {
     "loading": "Caricamento..."
   },
+  "rich_text_editor": {
+    "open_emoji": "Apri emoji",
+    "errors": {
+      "required": "obbligatorio",
+      "max_length": "superato il limite"
+    }
+  },
   "home": {
     "welcome": "Benvenuti!",
     "description_line1": "Il nostro grande giorno si avvicina",
@@ -35,7 +42,7 @@
     "lets_start": "Iniziamo!"
   },
   "our_story": {
-    "comments":{
+    "comments": {
       "title": "Commenti",
       "no_comment": "Nessun commento ancora. Sii il primo a commentare!",
       "leave_comment_message": "Lascia un commento",
