@@ -7,14 +7,25 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-import { Comment } from './models/comment';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DateTime } from 'luxon';
+import { Comment } from './models/comment';
+import { RichTextEditorComponent } from '../../../../components/rich-text-editor/rich-text-editor.component';
+import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
+
+// ⬇️ import the reusable editor + safe HTML pipe
 
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    RichTextEditorComponent,
+    SafeHtmlPipe,
+  ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss',
 })
@@ -25,15 +36,16 @@ export class CommentsComponent {
   comments: Comment[] = [];
   commentForm: FormGroup;
   isSubmitting = false;
-  maxMessageLength = 100;
+  maxMessageLength = 2000; // editor uses this as plain-text max
+  currentLen = 0; // for live counter from (lengthChange)
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.commentForm = this.fb.group({
       authorName: ['', [Validators.required, Validators.minLength(2)]],
-      message: ['', [Validators.required, Validators.maxLength(this.maxMessageLength)]],
+      // holds HTML string from the editor
+      messageHtml: ['', [Validators.required]],
     });
 
-    // Mock data for testing
     this.loadMockComments();
   }
 
@@ -42,45 +54,43 @@ export class CommentsComponent {
       {
         commentId: '1',
         authorName: 'Maria',
-        content: 'Che bella foto! 🥰',
+        content: '<p>Che bella foto! 🥰</p>',
         createdAt: DateTime.fromJSDate(new Date('2024-01-15T10:30:00')),
       },
       {
         commentId: '2',
         authorName: 'Giovanni',
-        content: 'Ricordo perfetto di quel giorno! 😊',
+        content: '<p>Ricordo perfetto di quel giorno! 😊</p>',
         createdAt: DateTime.fromJSDate(new Date('2024-01-16T14:20:00')),
       },
       {
         commentId: '3',
         authorName: 'Anna',
-        content: 'Momenti indimenticabili 💕',
+        content: '<p>Momenti indimenticabili <strong>💕</strong></p>',
         createdAt: DateTime.fromJSDate(new Date('2024-01-17T09:15:00')),
       },
     ];
   }
 
   onSubmit(): void {
-    if (this.commentForm.valid && !this.isSubmitting) {
-      this.isSubmitting = true;
+    if (this.commentForm.invalid || this.isSubmitting) return;
 
-      const newComment: Comment = {
-        commentId: Date.now().toString(),
-        authorName: this.commentForm.get('authorName')?.value,
-        content: this.commentForm.get('message')?.value,
-        createdAt: DateTime.fromJSDate(new Date()),
-      };
+    this.isSubmitting = true;
 
-      // Add to local array (in real app, this would be an API call)
-      this.comments.unshift(newComment);
+    const newComment: Comment = {
+      commentId: Date.now().toString(),
+      authorName: this.commentForm.get('authorName')?.value,
+      content: this.commentForm.get('messageHtml')?.value, // HTML from editor
+      createdAt: DateTime.fromJSDate(new Date()),
+    };
 
-      // Emit the new comment
-      this.commentAdded.emit(newComment);
+    // Add locally (replace with API call in real app)
+    this.comments.unshift(newComment);
+    this.commentAdded.emit(newComment);
 
-      // Reset form
-      this.commentForm.reset();
-      this.isSubmitting = false;
-    }
+    this.commentForm.reset();
+    this.currentLen = 0;
+    this.isSubmitting = false;
   }
 
   formatDate(date: DateTime): string {
@@ -94,12 +104,13 @@ export class CommentsComponent {
     const field = this.commentForm.get(fieldName);
     if (field?.errors && field.touched) {
       if (field.errors['required']) {
-        return 'Campo obbligatorio';
+        return this.translate.instant('rich_text_editor.errors.required_fields');
       }
       if (field.errors['minlength']) {
-        return fieldName === 'authorName'
-          ? 'Nickname troppo corto'
-          : 'Messaggio troppo lungo';
+        return this.translate.instant('rich_text_editor.errors.invalid_nickname');
+      }
+      if (field.errors['maxPlainTextLen']) {
+        return this.translate.instant('rich_text_editor.errors.invalid_content');
       }
     }
     return '';

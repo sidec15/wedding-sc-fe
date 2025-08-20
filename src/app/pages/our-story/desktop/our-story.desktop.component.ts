@@ -55,6 +55,7 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.isMobile = this.platformService.isMobile();
     this.headerService.setMinDistanceToShowHeader(1);
+
     // Focus the component for keyboard navigation
     if (this.isMobile) {
       if (typeof window !== 'undefined') {

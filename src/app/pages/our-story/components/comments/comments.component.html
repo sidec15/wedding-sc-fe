@@ -14,9 +14,12 @@
           <span class="comment-author">{{ comment.authorName }}</span>
           <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
         </div>
-        <div class="comment-content">
-          {{ comment.content }}
-        </div>
+
+        <!-- Render HTML content safely -->
+        <div
+          class="comment-content"
+          [innerHTML]="comment.content | safeHtml"
+        ></div>
       </div>
     </div>
 
@@ -61,35 +64,34 @@
       </div>
 
       <div class="form-group">
-        <label for="message"
+        <label for="messageHtml"
           >{{ "our_story.comments.comment" | translate }} *</label
         >
-        <textarea
-          id="message"
-          formControlName="message"
-          class="form-textarea"
+
+        <!-- Reusable rich-text editor -->
+        <app-rich-text-editor
+          id="messageHtml"
+          formControlName="messageHtml"
           [placeholder]="'our_story.comments.write_comment' | translate"
-          rows="4"
-          [attr.maxlength]="maxMessageLength"
-          [class.error]="
-            commentForm.get('message')?.invalid &&
-            commentForm.get('message')?.touched
-          "
-        ></textarea>
+          [maxLength]="maxMessageLength"
+          [required]="true"
+          [emojiEnabled]="true"
+          (lengthChange)="currentLen = $event"
+        >
+        </app-rich-text-editor>
 
         <div class="char-count">
-          {{ commentForm.get("message")?.value?.length || 0 }}/{{
-            maxMessageLength
-          }}
+          {{ currentLen || 0 }}/{{ maxMessageLength }}
         </div>
+
         <div
           class="error-message"
           *ngIf="
-            commentForm.get('message')?.invalid &&
-            commentForm.get('message')?.touched
+            commentForm.get('messageHtml')?.invalid &&
+            commentForm.get('messageHtml')?.touched
           "
         >
-          {{ getErrorMessage("message") }}
+          {{ getErrorMessage("messageHtml") }}
         </div>
       </div>
 

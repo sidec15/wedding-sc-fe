@@ -26,7 +26,10 @@
     "open_emoji": "Apri emoji",
     "errors": {
       "required": "obbligatorio",
-      "max_length": "superato il limite"
+      "max_length": "superato il limite",
+      "required_fields": "Campo obbligatorio",
+      "invalid_nickname": "Nickname troppo corto",
+      "invalid_content": "Messaggio troppo lungo"
     }
   },
   "home": {
