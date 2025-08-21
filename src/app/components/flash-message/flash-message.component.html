@@ -1,0 +1,35 @@
+<div
+  class="flash"
+  [class.flash--success]="type === 'success'"
+  [class.flash--error]="type === 'error'"
+  [class.flash--warning]="type === 'warning'"
+  [class.flash--info]="type === 'info'"
+  [style.--flash-hide-delay]="autoHide ? hideAfterMs / 1000 + 's' : '0s'"
+  [class.flash--sticky]="!autoHide"
+  role="alert"
+  aria-live="polite"
+>
+  <div class="flash__icon" aria-hidden="true">
+    @switch (type) { @case ('success') { ✓ } @case ('error') { ⚠ } @case
+    ('warning') { ! } @case ('info') { i } }
+  </div>
+
+  <div class="flash__content">
+    @if (i18nKey) {
+    {{ i18nKey | translate : i18nParams }}
+    } @else if (message) {
+    {{ message }}
+    }
+  </div>
+
+  @if (dismissible) {
+  <button
+    type="button"
+    class="flash__close"
+    aria-label="Close"
+    (click)="onClose()"
+  >
+    ×
+  </button>
+  }
+</div>

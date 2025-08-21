@@ -5,7 +5,6 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
-  AbstractControl,
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
@@ -15,6 +14,7 @@ import { environment } from '../../../../../environments/environment';
 import { RecaptchaModule } from 'ng-recaptcha-2';
 import * as securityUtils from '../../../../utils/security.utils';
 import { CaptchaService } from '../../../../services/captcha.service';
+import { FlashMessageComponent } from '../../../../components/flash-message/flash-message.component';
 
 @Component({
   selector: 'app-contact-form',
@@ -23,6 +23,7 @@ import { CaptchaService } from '../../../../services/captcha.service';
     ReactiveFormsModule,
     TranslateModule,
     RecaptchaModule,
+    FlashMessageComponent
   ],
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss'],
@@ -119,18 +120,12 @@ export class ContactFormComponent implements AfterViewInit {
           this.eventService.emitLoadingMask(false);
           this.showSuccess = true;
           this.submitted = false;
-          setTimeout(() => {
-            this.showSuccess = false;
-          }, this.responseMessageTimeoutMs);
         },
         error: (err) => {
           this.eventService.emitLoadingMask(false);
           console.error('Contact form submission failed', err);
           // show error message to user
           this.showError = true;
-          setTimeout(() => {
-            this.showError = false;
-          }, this.responseMessageTimeoutMs);
         },
       });
     }

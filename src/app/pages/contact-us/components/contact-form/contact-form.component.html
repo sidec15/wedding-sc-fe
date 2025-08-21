@@ -1,13 +1,31 @@
 <section class="contact-form">
-  @if (showSuccess) {
-  <div class="success-message">
-    {{ "contact_us.contact_form.success_message" | translate }}
-  </div>
-  } @if (showError) {
-  <div class="error-message">
-    {{ "contact_us.contact_form.error_message" | translate }}
-  </div>
-  }
+  <section class="contact-form">
+
+    @if (showSuccess) {
+      <app-flash-message
+        class="flash flash--success"
+        i18nKey="contact_us.contact_form.success_message"
+        [dismissible]="true"
+        [autoHide]="true"
+        [hideAfterMs]="responseMessageTimeoutMs"
+        (closed)="showSuccess = false"
+      />
+    }
+
+    @if (showError) {
+      <app-flash-message
+        class="flash flash--error"
+        i18nKey="contact_us.contact_form.error_message"
+        [dismissible]="true"
+        [autoHide]="true"
+        [hideAfterMs]="responseMessageTimeoutMs"
+        (closed)="showError = false"
+      />
+    }
+
+    <!-- ...rest of your form... -->
+  </section>
+
   <h2>{{ "contact_us.contact_form.title" | translate }}</h2>
   <!-- Chiara image for mobile -->
   <ng-container *ngIf="isMobile">

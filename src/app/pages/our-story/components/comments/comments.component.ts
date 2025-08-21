@@ -19,6 +19,7 @@ import {
 import { EventService } from '../../../../services/event.service';
 import { CommentsService } from './services/comments.service';
 import { finalize } from 'rxjs';
+import { FlashService } from '../../../../services/flash.service';
 
 @Component({
   selector: 'app-comments',
@@ -41,20 +42,16 @@ export class CommentsComponent {
   comments: Comment[] = [];
   commentForm: FormGroup;
   isSubmitting = false;
-  maxMessageLength = 100; // editor uses this as plain-text max
-  currentLen = 0; // for live counter from (lengthChange)
-
+  maxMessageLength = 100;
+  currentLen = 0;
   maxNicknameLength = 20;
-
-  responseMessageTimeoutMs = 3000;
-  showSuccess = false;
-  showError = false;
 
   constructor(
     private fb: FormBuilder,
     private translate: TranslateService,
     private eventService: EventService,
-    private commentsService: CommentsService
+    private commentsService: CommentsService,
+    private flashService: FlashService
   ) {
     this.commentForm = this.fb.group({
       authorName: [
@@ -63,10 +60,9 @@ export class CommentsComponent {
           Validators.required,
           Validators.minLength(2),
           Validators.maxLength(this.maxNicknameLength),
-          Validators.pattern(/^[a-zA-Z0-9\s]+$/), // only letters, numbers, spaces
+          Validators.pattern(/^[a-zA-Z0-9\s]+$/),
         ],
       ],
-      // holds HTML string from the editor
       messageHtml: [
         '',
         [plainTextRequired(), plainTextMaxLength(this.maxMessageLength)],
@@ -123,17 +119,25 @@ export class CommentsComponent {
 
           this.commentForm.reset();
           this.currentLen = 0;
-          setTimeout(() => {
-            this.showSuccess = false;
-          }, this.responseMessageTimeoutMs);
+
+          this.flashService.show({
+            type: 'success',
+            message: this.translate.instant('comments.success_message'),
+            autoHide: true,
+            hideAfterMs: 5000,
+            dismissible: true,
+          });
         },
         error: (err) => {
           console.error('Failed to create comment', err);
-          this.showError = true;
-          setTimeout(
-            () => (this.showError = false),
-            this.responseMessageTimeoutMs
-          );
+
+          this.flashService.show({
+            type: 'error',
+            message: this.translate.instant('comments.error_message'),
+            autoHide: true,
+            hideAfterMs: 5000,
+            dismissible: true,
+          });
         },
       });
   }
@@ -157,7 +161,6 @@ export class CommentsComponent {
           'rich_text_editor.errors.required_fields'
         );
       }
-
       if (fieldName === 'authorName') {
         if (field.errors['minlength']) {
           return this.translate.instant(
@@ -175,7 +178,6 @@ export class CommentsComponent {
           );
         }
       }
-
       if (fieldName === 'messageHtml' && field.errors['maxPlainTextLen']) {
         return this.translate.instant(
           'rich_text_editor.errors.invalid_content'
@@ -188,5 +190,4 @@ export class CommentsComponent {
   trackByCommentId(index: number, comment: Comment): string | undefined {
     return comment.commentId;
   }
-
 }

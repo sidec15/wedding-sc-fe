@@ -138,39 +138,6 @@
     display: none;
   }
 
-  .success-message {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #4caf50;
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-in 4.7s forwards;
-    z-index: 1000;
-    font-weight: 500;
-    text-align: center;
-    min-width: 300px;
-  }
-
-  .error-message {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #dc3545;
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-in 4.7s forwards;
-    z-index: 1000;
-    font-weight: 500;
-    text-align: center;
-    min-width: 300px;
-  }
 }
 
 @media screen and (max-width: 768px) {
