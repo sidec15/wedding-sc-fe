@@ -117,12 +117,30 @@ export class RichTextEditorComponent
 
   // ========== Public ==========
   insertEmoji(e: any) {
-    const emoji = e?.emoji?.native || e?.native || '';
-    if (emoji) {
-      this.editor.commands.insertText(emoji);
-      this.showEmoji = false;
-      this.markTouched();
+    const emoji = e?.emoji?.native ?? e?.native ?? '';
+
+    if (!emoji) {
+      console.warn('⚠️ No emoji found in event payload');
+      return;
     }
+
+    // Focus the editor so the selection is valid
+    this.editor.commands.focus();
+
+    const view = this.editor.view;
+    if (!view) {
+      console.warn('⚠️ Editor view not ready');
+      return;
+    }
+
+    // Insert at current selection using ProseMirror's transaction
+    const { state, dispatch } = view;
+    dispatch(state.tr.insertText(emoji));
+
+    // Optional: collapse emoji picker and mark as touched
+    this.showEmoji = false;
+    this.markTouched();
+
   }
 
   submit() {

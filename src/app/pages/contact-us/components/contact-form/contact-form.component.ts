@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  AbstractControl,
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
@@ -13,6 +14,7 @@ import { EventService } from '../../../../services/event.service';
 import { environment } from '../../../../../environments/environment';
 import { RecaptchaModule } from 'ng-recaptcha-2';
 import * as securityUtils from '../../../../utils/security.utils';
+import { CaptchaService } from '../../../../services/captcha.service';
 
 @Component({
   selector: 'app-contact-form',
@@ -44,7 +46,8 @@ export class ContactFormComponent implements AfterViewInit {
     private fb: FormBuilder,
     private platformService: PlatformService,
     private contactService: ContactService,
-    private eventService: EventService
+    private eventService: EventService,
+    private captchaService: CaptchaService
   ) {
     this.contactForm = this.fb.group({
       name: [
@@ -134,12 +137,10 @@ export class ContactFormComponent implements AfterViewInit {
   }
 
   onCaptchaResolved(token: string | null): void {
-    console.log('captcha resolved', token);
-    this.contactForm.get('captcha')?.setValue(token);
+    this.captchaService.onCaptchaResolved(token, this.contactForm.get('captcha'));
   }
 
   onCaptchaError() {
-    console.log('captcha error');
-    this.contactForm.get('captcha')?.setValue(null);
+    this.captchaService.onCaptchaError(this.contactForm.get('captcha'));
   }
 }

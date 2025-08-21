@@ -148,6 +148,7 @@ export class CommentsComponent {
       .setLocale('it')
       .toLocaleString(DateTime.DATETIME_MED);
   }
+
   getErrorMessage(fieldName: string): string {
     const field = this.commentForm.get(fieldName);
     if (field?.errors && field.touched) {
@@ -187,4 +188,5 @@ export class CommentsComponent {
   trackByCommentId(index: number, comment: Comment): string | undefined {
     return comment.commentId;
   }
+
 }
