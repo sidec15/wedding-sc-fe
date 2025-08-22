@@ -27,9 +27,7 @@
     "errors": {
       "required": "required",
       "max_length": "limit exceeded",
-      "required_fields": "Required field",
-      "invalid_nickname": "Nickname too short",
-      "invalid_content": "Message too long"
+      "required_fields": "Required field"
     }
   },
   "home": {
@@ -76,7 +74,13 @@
         "submit": "Submit Comment",
         "submitting": "Submitting...",
         "success_message": "Your comment has been posted successfully!",
-        "error_message": "An error occurred while posting the comment. Please try again."
+        "error_message": "An error occurred while posting the comment. Please try again.",
+        "errors": {
+          "invalid_nickname_min": "Nickname is too short.",
+          "invalid_nickname_max": "Nickname is too long. Maximum 20 characters.",
+          "invalid_nickname_chars": "Unsupported character. Use only letters, numbers, apostrophes ('), spaces, and hyphens (-).",
+          "invalid_content": "Message is too long."
+        }
       }
     }
   },

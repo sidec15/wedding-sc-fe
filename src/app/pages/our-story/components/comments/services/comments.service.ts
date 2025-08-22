@@ -8,7 +8,7 @@ import { DateTime } from 'luxon';
 
 @Injectable({ providedIn: 'root' })
 export class CommentsService {
-  private apiUrl = `${environment.apiUrl}/contact`;
+  private apiUrl = `${environment.apiUrl}/photos`;
 
   constructor(private http: HttpClient) {}
 
@@ -25,7 +25,7 @@ export class CommentsService {
     if (opts.order) params = params.set('order', opts.order);
     if (opts.cursor) params = params.set('cursor', opts.cursor);
 
-    const url = `${this.apiUrl}/photos/${encodeURIComponent(photoId)}/comments`;
+    const url = `${this.apiUrl}/${encodeURIComponent(photoId)}/comments`;
 
     return this.http
       .get<PaginatedResult<CommentResponse>>(url, { params })
@@ -49,7 +49,7 @@ export class CommentsService {
     photoId: string,
     input: { nickname: string; message: string }
   ): Observable<Comment> {
-    const url = `${this.apiUrl}/photos/${encodeURIComponent(photoId)}/comments`;
+    const url = `${this.apiUrl}/${encodeURIComponent(photoId)}/comments`;
     const body = {
       authorName: input.nickname,
       content: input.message,

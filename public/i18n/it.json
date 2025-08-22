@@ -27,9 +27,7 @@
     "errors": {
       "required": "obbligatorio",
       "max_length": "superato il limite",
-      "required_fields": "Campo obbligatorio",
-      "invalid_nickname": "Nickname troppo corto",
-      "invalid_content": "Messaggio troppo lungo"
+      "required_fields": "Campo obbligatorio"
     }
   },
   "home": {
@@ -55,7 +53,13 @@
       "submit": "Invia Commento",
       "submitting": "Invio in corso...",
       "success_message": "Il tuo commento è stato pubblicato con successo!",
-      "error_message": "Si è verificato un errore durante la pubblicazione del commento. Riprova."
+      "error_message": "Si è verificato un errore durante la pubblicazione del commento. Riprova.",
+      "errors": {
+        "invalid_nickname_min": "Nickname troppo corto.",
+        "invalid_nickname_max": "Nickname troppo lungo. Massimo 20 caratteri.",
+        "invalid_nickname_chars": "Carattere non consentito. Usa solo lettere, numeri, apostrofi ('), spazi e trattini (-).",
+        "invalid_content": "Messaggio troppo lungo."
+      }
     },
     "intro": {
       "title": "Come siamo finiti qui?",

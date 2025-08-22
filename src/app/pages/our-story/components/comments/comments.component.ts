@@ -44,7 +44,7 @@ export class CommentsComponent {
   maxCommentLength = 1000;
   currentLen = 0;
   maxNicknameLength = 20;
-  commentRegex = /^[a-zA-Z0-9\s]+$/;
+  commentRegex = /^[a-zA-Z0-9' -]+$/;
   toastDurationMs = 5000;
 
   constructor(
@@ -164,23 +164,23 @@ export class CommentsComponent {
       if (fieldName === 'authorName') {
         if (field.errors['minlength']) {
           return this.translate.instant(
-            'rich_text_editor.errors.invalid_nickname_min'
+            'our_story.comments.errors.invalid_nickname_min'
           );
         }
         if (field.errors['maxlength']) {
           return this.translate.instant(
-            'rich_text_editor.errors.invalid_nickname_max'
+            'our_story.comments.errors.invalid_nickname_max'
           );
         }
         if (field.errors['pattern']) {
           return this.translate.instant(
-            'rich_text_editor.errors.invalid_nickname_chars'
+            'our_story.comments.errors.invalid_nickname_chars'
           );
         }
       }
       if (fieldName === 'messageHtml' && field.errors['maxPlainTextLen']) {
         return this.translate.instant(
-          'rich_text_editor.errors.invalid_content'
+          'our_story.comments.errors.invalid_content'
         );
       }
     }
