@@ -69,30 +69,8 @@ export class CommentsComponent {
       ],
     });
 
-    this.loadMockComments();
-  }
 
-  private loadMockComments(): void {
-    this.comments = [
-      {
-        commentId: '1',
-        authorName: 'Maria',
-        content: '<p>Che bella foto! 🥰</p>',
-        createdAt: DateTime.fromJSDate(new Date('2024-01-15T10:30:00')),
-      },
-      {
-        commentId: '2',
-        authorName: 'Giovanni',
-        content: '<p>Ricordo perfetto di quel giorno! 😊</p>',
-        createdAt: DateTime.fromJSDate(new Date('2024-01-16T14:20:00')),
-      },
-      {
-        commentId: '3',
-        authorName: 'Anna',
-        content: '<p>Momenti indimenticabili <strong>💕</strong></p>',
-        createdAt: DateTime.fromJSDate(new Date('2024-01-17T09:15:00')),
-      },
-    ];
+
   }
 
   onSubmit(): void {
