@@ -1,48 +1,92 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription, timer } from 'rxjs';
-
-type FlashType = 'success' | 'error' | 'info' | 'warning';
+import { EventService, FlashMessage } from '../../services/event.service';
 
 @Component({
   selector: 'app-flash-message',
+  standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './flash-message.component.html',
   styleUrls: ['./flash-message.component.scss'],
 })
-export class FlashMessageComponent implements OnInit, OnDestroy {
-  @Input() type: FlashType = 'info';
+export class FlashMessageComponent implements AfterViewInit, OnDestroy {
+  visible = false;
 
-  /** Provide either message or i18nKey (+ i18nParams) */
-  @Input() message?: string;
-  @Input() i18nKey?: string;
-  @Input() i18nParams?: Record<string, unknown>;
+  // current toast state
+  current: Required<
+    Pick<FlashMessage, 'type' | 'dismissible' | 'autoHide' | 'hideAfterMs'>
+  > & {
+    message?: string;
+    i18nKey?: string;
+    i18nParams?: Record<string, unknown>;
+  } = {
+    type: 'info',
+    dismissible: true,
+    autoHide: true,
+    hideAfterMs: 3000,
+    message: undefined,
+    i18nKey: undefined,
+    i18nParams: undefined,
+  };
 
-  /** Close button */
-  @Input() dismissible = true;
+  private sub?: Subscription;
+  private hideSub?: Subscription;
 
-  /** Auto-hide behavior (handled inside the component) */
-  @Input() autoHide = true;
-  @Input() hideAfterMs = 3000; // default 3s, matches your previous value
+  constructor(
+    private eventService: EventService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  /** Emits when the toast closes (auto or manual) */
-  @Output() closed = new EventEmitter<void>();
-
-  private autoHideSub?: Subscription;
-
-  ngOnInit(): void {
-    if (this.autoHide && this.hideAfterMs > 0) {
-      this.autoHideSub = timer(this.hideAfterMs).subscribe(() => this.onClose());
-    }
+  ngAfterViewInit(): void {
+    this.sub = this.eventService.flashMask$.subscribe((flash: FlashMessage) => {
+      // Small microtask to avoid ExpressionChangedAfterItHasBeenChecked errors
+      Promise.resolve().then(() => this.show(flash));
+    });
   }
 
   ngOnDestroy(): void {
-    this.autoHideSub?.unsubscribe();
+    this.sub?.unsubscribe();
+    this.hideSub?.unsubscribe();
   }
 
-  onClose(): void {
-    this.autoHideSub?.unsubscribe();
-    this.closed.emit();
+  /** Show a new toast and set up autohide if requested */
+  private show(flash: FlashMessage) {
+    // cancel any previous autohide timer
+    this.hideSub?.unsubscribe();
+
+    // merge defaults
+    this.current = {
+      type: flash.type,
+      dismissible: flash.dismissible ?? true,
+      autoHide: flash.autoHide ?? true,
+      hideAfterMs: flash.hideAfterMs ?? 3000,
+      i18nKey: flash.i18nKey,
+      i18nParams: flash.i18nParams,
+    };
+
+    this.visible = true;
+
+    // start autohide
+    if (this.current.autoHide && this.current.hideAfterMs > 0) {
+      this.hideSub = timer(this.current.hideAfterMs).subscribe(() =>
+        this.close()
+      );
+    }
+
+    this.cdr.detectChanges();
+  }
+
+  /** Manually close the toast (also used by the × button) */
+  close() {
+    this.hideSub?.unsubscribe();
+    this.visible = false;
+    this.cdr.detectChanges();
   }
 }

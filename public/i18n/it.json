@@ -53,7 +53,9 @@
       "comment": "Commento",
       "write_comment": "Scrivi il tuo commento...",
       "submit": "Invia Commento",
-      "submitting": "Invio in corso..."
+      "submitting": "Invio in corso...",
+      "success_message": "Il tuo commento è stato pubblicato con successo!",
+      "error_message": "Si è verificato un errore durante la pubblicazione del commento. Riprova."
     },
     "intro": {
       "title": "Come siamo finiti qui?",

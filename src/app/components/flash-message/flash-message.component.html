@@ -1,35 +1,32 @@
-<div
-  class="flash"
-  [class.flash--success]="type === 'success'"
-  [class.flash--error]="type === 'error'"
-  [class.flash--warning]="type === 'warning'"
-  [class.flash--info]="type === 'info'"
-  [style.--flash-hide-delay]="autoHide ? hideAfterMs / 1000 + 's' : '0s'"
-  [class.flash--sticky]="!autoHide"
-  role="alert"
-  aria-live="polite"
->
-  <div class="flash__icon" aria-hidden="true">
-    @switch (type) { @case ('success') { ✓ } @case ('error') { ⚠ } @case
-    ('warning') { ! } @case ('info') { i } }
-  </div>
+@if (visible) {
+  <div
+    class="flash"
+    [class.flash--success]="current.type === 'success'"
+    [class.flash--error]="current.type === 'error'"
+    [class.flash--warning]="current.type === 'warning'"
+    [class.flash--info]="current.type === 'info'"
+    [style.--flash-hide-delay]="current.autoHide ? (current.hideAfterMs / 1000) + 's' : '0s'"
+    [class.flash--sticky]="!current.autoHide"
+    role="alert"
+    aria-live="polite"
+  >
+    <div class="flash__content">
+      @if (current.i18nKey) {
+        {{ current.i18nKey | translate: current.i18nParams }}
+      } @else if (current.message) {
+        {{ current.message }}
+      }
+    </div>
 
-  <div class="flash__content">
-    @if (i18nKey) {
-    {{ i18nKey | translate : i18nParams }}
-    } @else if (message) {
-    {{ message }}
+    @if (current.dismissible) {
+      <button
+        type="button"
+        class="flash__close"
+        aria-label="Close"
+        (click)="close()"
+      >
+        ×
+      </button>
     }
   </div>
-
-  @if (dismissible) {
-  <button
-    type="button"
-    class="flash__close"
-    aria-label="Close"
-    (click)="onClose()"
-  >
-    ×
-  </button>
-  }
-</div>
+}

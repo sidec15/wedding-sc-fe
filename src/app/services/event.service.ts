@@ -39,6 +39,9 @@ export class EventService {
   private loadingMaskSubject = new BehaviorSubject<boolean>(false);
   loadingMask$ = this.loadingMaskSubject.asObservable();
 
+  private flashSubject = new Subject<FlashMessage>();
+  flashMask$ = this.flashSubject.asObservable();
+
   emitLanguageChanged(language: string): void {
     this.languageChangedSubject.next(language);
   }
@@ -86,6 +89,10 @@ export class EventService {
   emitLoadingMask(visible: boolean): void {
     this.loadingMaskSubject.next(visible);
   }
+
+  emitFlash(flashMessage: FlashMessage): void {
+    this.flashSubject.next(flashMessage);
+  }
 }
 
 export class ScrollEvent {
@@ -131,4 +138,15 @@ export class HeaderBackgroundEvent {
 export interface GalleryStatus {
   isOpen: boolean;
   currentIndex: number;
+}
+
+export type FlashType = 'success' | 'error' | 'info' | 'warning';
+
+export interface FlashMessage {
+  type: FlashType;
+  i18nKey?: string;
+  i18nParams?: Record<string, unknown>;
+  dismissible?: boolean;
+  autoHide?: boolean;
+  hideAfterMs?: number;
 }

@@ -22,6 +22,16 @@
   "global_loading_mask": {
     "loading": "Loading..."
   },
+  "rich_text_editor": {
+    "open_emoji": "Open emoji",
+    "errors": {
+      "required": "required",
+      "max_length": "limit exceeded",
+      "required_fields": "Required field",
+      "invalid_nickname": "Nickname too short",
+      "invalid_content": "Message too long"
+    }
+  },
   "home": {
     "welcome": "Welcome!",
     "description_line1": "Our big day is approaching",
@@ -54,6 +64,20 @@
     "outro": {
       "title": "Next stop: the wedding!",
       "description": "And yes, this time no questionable outfits... we hope."
+    },
+    "our_story": {
+      "comments": {
+        "title": "Comments",
+        "no_comment": "No comments yet. Be the first to comment!",
+        "leave_comment_message": "Leave a comment",
+        "nickname_placeholder": "Enter your nickname",
+        "comment": "Comment",
+        "write_comment": "Write your comment...",
+        "submit": "Submit Comment",
+        "submitting": "Submitting...",
+        "success_message": "Your comment has been posted successfully!",
+        "error_message": "An error occurred while posting the comment. Please try again."
+      }
     }
   },
   "church": {

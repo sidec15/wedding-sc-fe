@@ -1,16 +1,6 @@
 <app-header></app-header>
 <app-global-loading-mask></app-global-loading-mask>
-<!-- Global flash outlet -->
-<app-flash-message
-  *ngIf="globalFlash"
-  class="flash"
-  [type]="globalFlash.type"
-  [message]="globalFlash.message"
-  [autoHide]="globalFlash.autoHide ?? true"
-  [hideAfterMs]="globalFlash.hideAfterMs ?? 3000"
-  [dismissible]="globalFlash.dismissible ?? true"
-  (closed)="globalFlash = null"
-/>
+<app-flash-message></app-flash-message>
 <main>
   <router-outlet></router-outlet>
 </main>

@@ -14,7 +14,6 @@ import { environment } from '../../../../../environments/environment';
 import { RecaptchaModule } from 'ng-recaptcha-2';
 import * as securityUtils from '../../../../utils/security.utils';
 import { CaptchaService } from '../../../../services/captcha.service';
-import { FlashMessageComponent } from '../../../../components/flash-message/flash-message.component';
 
 @Component({
   selector: 'app-contact-form',
@@ -23,7 +22,6 @@ import { FlashMessageComponent } from '../../../../components/flash-message/flas
     ReactiveFormsModule,
     TranslateModule,
     RecaptchaModule,
-    FlashMessageComponent
   ],
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss'],
@@ -34,9 +32,6 @@ export class ContactFormComponent implements AfterViewInit {
   maxMessageLength = 1000;
   maxNameLength = 50;
   maxSurnameLength = 50;
-  responseMessageTimeoutMs = 3000;
-  showSuccess = false;
-  showError = false;
   isMobile = false;
   captchaKey = environment.captcha.siteKey;
 
@@ -90,7 +85,12 @@ export class ContactFormComponent implements AfterViewInit {
     if (!this.contactForm.get('captcha')?.value) {
       console.log('captcha not valid');
       console.log(this.contactForm.get('captcha')?.value);
-      this.showError = true;
+      this.eventService.emitFlash({
+        type: 'error',
+        i18nKey: 'contact_us.contact_form.error_message',
+        autoHide: true,
+        dismissible: true,
+      });
       return;
     }
 
@@ -118,21 +118,33 @@ export class ContactFormComponent implements AfterViewInit {
         next: () => {
           this.contactForm.reset();
           this.eventService.emitLoadingMask(false);
-          this.showSuccess = true;
+          this.eventService.emitFlash({
+            type: 'info',
+            i18nKey: 'contact_us.contact_form.success_message',
+            autoHide: true,
+            dismissible: true,
+          });
           this.submitted = false;
         },
         error: (err) => {
           this.eventService.emitLoadingMask(false);
           console.error('Contact form submission failed', err);
-          // show error message to user
-          this.showError = true;
+          this.eventService.emitFlash({
+            type: 'error',
+            i18nKey: 'contact_us.contact_form.error_message',
+            autoHide: true,
+            dismissible: true,
+          });
         },
       });
     }
   }
 
   onCaptchaResolved(token: string | null): void {
-    this.captchaService.onCaptchaResolved(token, this.contactForm.get('captcha'));
+    this.captchaService.onCaptchaResolved(
+      token,
+      this.contactForm.get('captcha')
+    );
   }
 
   onCaptchaError() {

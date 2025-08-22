@@ -19,7 +19,6 @@ import {
 import { EventService } from '../../../../services/event.service';
 import { CommentsService } from './services/comments.service';
 import { finalize } from 'rxjs';
-import { FlashService } from '../../../../services/flash.service';
 
 @Component({
   selector: 'app-comments',
@@ -42,16 +41,17 @@ export class CommentsComponent {
   comments: Comment[] = [];
   commentForm: FormGroup;
   isSubmitting = false;
-  maxMessageLength = 100;
+  maxCommentLength = 1000;
   currentLen = 0;
   maxNicknameLength = 20;
+  commentRegex = /^[a-zA-Z0-9\s]+$/;
+  toastDurationMs = 5000;
 
   constructor(
     private fb: FormBuilder,
     private translate: TranslateService,
     private eventService: EventService,
-    private commentsService: CommentsService,
-    private flashService: FlashService
+    private commentsService: CommentsService
   ) {
     this.commentForm = this.fb.group({
       authorName: [
@@ -60,12 +60,12 @@ export class CommentsComponent {
           Validators.required,
           Validators.minLength(2),
           Validators.maxLength(this.maxNicknameLength),
-          Validators.pattern(/^[a-zA-Z0-9\s]+$/),
+          Validators.pattern(this.commentRegex),
         ],
       ],
       messageHtml: [
         '',
-        [plainTextRequired(), plainTextMaxLength(this.maxMessageLength)],
+        [plainTextRequired(), plainTextMaxLength(this.maxCommentLength)],
       ],
     });
 
@@ -120,22 +120,22 @@ export class CommentsComponent {
           this.commentForm.reset();
           this.currentLen = 0;
 
-          this.flashService.show({
+          this.eventService.emitFlash({
             type: 'success',
-            message: this.translate.instant('comments.success_message'),
+            i18nKey: 'our_story.comments.success_message',
             autoHide: true,
-            hideAfterMs: 5000,
+            hideAfterMs: this.toastDurationMs,
             dismissible: true,
           });
         },
         error: (err) => {
           console.error('Failed to create comment', err);
 
-          this.flashService.show({
+          this.eventService.emitFlash({
             type: 'error',
-            message: this.translate.instant('comments.error_message'),
+            i18nKey: 'our_story.comments.error_message',
             autoHide: true,
-            hideAfterMs: 5000,
+            hideAfterMs: this.toastDurationMs,
             dismissible: true,
           });
         },

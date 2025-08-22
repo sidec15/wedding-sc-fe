@@ -8,7 +8,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { LanguageService } from './services/language.service';
 import { GlobalLoadingMaskComponent } from './components/global-loading-mask/global-loading-mask.component';
 import { ThemeService } from './services/theme.service';
-import { FlashService } from './services/flash.service';
 import { FlashMessageComponent } from './components/flash-message/flash-message.component';
 
 @Component({
@@ -38,13 +37,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private scrollManager: ScrollManagerService,
     private languageService: LanguageService,
     private themeService: ThemeService,
-    private flashService: FlashService
   ) {}
 
   ngOnInit(): void {
     this.themeService.initTheme();
     this.languageService.init();
-    this.flashService.flash$.subscribe(f => this.globalFlash = f);
     this.resetScroll();
   }
 
