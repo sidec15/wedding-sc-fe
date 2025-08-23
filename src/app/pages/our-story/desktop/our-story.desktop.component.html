@@ -150,7 +150,17 @@
       </button>
 
       <div class="card-indicator">
-        <span class="current">{{ currentIndex + 1 }}</span>
+        <input
+          #jumpBox
+          type="number"
+          class="card-jump-input"
+          min="1"
+          [max]="cards.length"
+          [value]="currentIndex + 1"
+          (keydown.enter)="onJump(jumpBox.valueAsNumber)"
+          (blur)="onJump(jumpBox.valueAsNumber)"
+          aria-label="Go to card number"
+        />
         <span class="separator">/</span>
         <span class="total">{{ cards.length }}</span>
       </div>
@@ -166,4 +176,5 @@
       </button>
     </div>
   </ng-template>
+
 </div>

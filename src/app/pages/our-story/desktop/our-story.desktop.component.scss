@@ -404,5 +404,33 @@
     font-weight: 500;
     user-select: none;
     opacity: 0.7;
+
+    .card-jump-input {
+      width: 2.5rem;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: rgb(var(--text));
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(var(--text), 0.4);
+      outline: none;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        border-color: rgb(var(--accent));
+      }
+
+      // Remove number arrows (cross-browser)
+      appearance: textfield;
+      -moz-appearance: textfield;
+      -webkit-appearance: none;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
   }
 }

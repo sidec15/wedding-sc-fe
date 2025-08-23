@@ -237,35 +237,25 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   }
 
   goToCardId(cardId: string): void {
-    const idx = this.cards.findIndex(c => c.id === cardId);
+    const idx = this.cards.findIndex((c) => c.id === cardId);
     if (idx === -1 || this.isTransitioning || idx === this.currentIndex) return;
     this.transitionToCard(idx, null);
   }
 
+  private clampIndex(zeroBased: number): number {
+    const max = Math.max(0, this.cards.length - 1);
+    return Math.min(Math.max(zeroBased, 0), max);
+  }
 
-  // @HostListener('keydown', ['$event'])
-  // handleKeyboardNavigation(event: KeyboardEvent): void {
-  //   switch (event.key) {
-  //     case 'ArrowLeft':
-  //       event.preventDefault();
-  //       this.previousCard();
-  //       break;
-  //     case 'ArrowRight':
-  //       event.preventDefault();
-  //       this.nextCard();
-  //       break;
-  //     case 'Home':
-  //       event.preventDefault();
-  //       if (this.currentIndex !== 0) {
-  //         this.transitionToCard(0, null);
-  //       }
-  //       break;
-  //     case 'End':
-  //       event.preventDefault();
-  //       if (this.currentIndex !== this.cards.length - 1) {
-  //         this.transitionToCard(this.cards.length - 1, null);
-  //       }
-  //       break;
-  //   }
-  // }
+  onJump(userValue: number | null): void {
+    if (this.isTransitioning) return;
+    if (userValue == null || Number.isNaN(userValue)) return;
+
+    // user enters 1-based; convert to 0-based and clamp
+    const target = this.clampIndex((userValue as number) - 1);
+    if (target === this.currentIndex) return;
+
+    // use your existing animated transition
+    this.transitionToCard(target, null);
+  }
 }
