@@ -83,6 +83,19 @@
           "invalid_nickname_max": "Nickname is too long. Maximum 20 characters.",
           "invalid_nickname_chars": "Unsupported character. Use only letters, numbers, apostrophes ('), spaces, and hyphens (-).",
           "invalid_content": "Message is too long."
+        },
+        "subscriptions":{
+          "subscribe": "Subscribe",
+          "subscribing": "Subscribing...",
+          "unsubscribe": "Unsubscribe",
+          "unsubscribing": "Unsubscribing...",
+          "subscribe_success": "Subscribed successfully. You will receive notifications for new comments.",
+          "subscribe_error": "An error occurred while subscribing. Please try again later.",
+          "unsubscribe_success": "Unsubscribed successfully. You will no longer receive notifications.",
+          "unsubscribe_error": "An error occurred while unsubscribing. Please try again later.",
+          "notify_email_label": "Notification email",
+          "notify_email_placeholder": "Enter your email",
+          "notify_email_invalid": "Please enter a valid email address."
         }
       }
     }

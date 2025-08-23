@@ -26,6 +26,7 @@ import {
 import { EventService } from '../../../../services/event.service';
 import { CommentsService } from './services/comments.service';
 import { finalize } from 'rxjs';
+import { SubscriptionsService } from './services/subscriptions.service';
 
 @Component({
   selector: 'app-comments',
@@ -56,6 +57,11 @@ export class CommentsComponent implements OnChanges {
   isInitialLoading = false;
   isLoadingMore = false;
 
+  isSubscribing = false;
+  isUnsubscribing = false;
+  showSubscribeBox = false;
+  isSubscribed = false; // local UI state (backend can be idempotent)
+
   // Form state
   commentForm: FormGroup;
   isSubmitting = false;
@@ -64,12 +70,14 @@ export class CommentsComponent implements OnChanges {
   maxNicknameLength = 20;
   commentRegex = /^[a-zA-Z0-9' -]+$/;
   toastDurationMs = 5000;
+  subscriptionForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private translate: TranslateService,
     private eventService: EventService,
-    private commentsService: CommentsService
+    private commentsService: CommentsService,
+    private subscriptionsService: SubscriptionsService
   ) {
     this.commentForm = this.fb.group({
       authorName: [
@@ -86,6 +94,10 @@ export class CommentsComponent implements OnChanges {
         [plainTextRequired(), plainTextMaxLength(this.maxCommentLength)],
       ],
     });
+
+    this.subscriptionForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
   }
 
   // Reload when photo/card changes
@@ -93,6 +105,10 @@ export class CommentsComponent implements OnChanges {
     if (changes['cardId'] && this.cardId) {
       this.resetAndLoad();
     }
+  }
+
+  get subEmailCtrl() {
+    return this.subscriptionForm.get('email');
   }
 
   /** Reset pagination and load first page */
@@ -219,7 +235,9 @@ export class CommentsComponent implements OnChanges {
     const field = this.commentForm.get(fieldName);
     if (field?.errors && field.touched) {
       if (field.errors['required']) {
-        return this.translate.instant('rich_text_editor.errors.required_fields');
+        return this.translate.instant(
+          'rich_text_editor.errors.required_fields'
+        );
       }
       if (fieldName === 'authorName') {
         if (field.errors['minlength']) {
@@ -247,7 +265,72 @@ export class CommentsComponent implements OnChanges {
     return '';
   }
 
-  trackByCommentId(index: number, comment: Comment): string | undefined {
-    return comment.commentId;
+  toggleSubscribeBox(): void {
+    this.showSubscribeBox = !this.showSubscribeBox;
+  }
+
+  subscribe(): void {
+    if (this.subscriptionForm.invalid || this.isSubscribing) return;
+    const email = (this.subEmailCtrl?.value || '').trim();
+
+    this.isSubscribing = true;
+    this.commentsService
+      .create(this.cardId, email)
+      .pipe(finalize(() => (this.isSubscribing = false)))
+      .subscribe({
+        next: () => {
+          this.isSubscribed = true;
+          this.eventService.emitFlash({
+            type: 'success',
+            i18nKey: 'our_story.comments.subscribe_success',
+            autoHide: true,
+            hideAfterMs: this.toastDurationMs,
+            dismissible: true,
+          });
+          this.showSubscribeBox = false;
+        },
+        error: (err) => {
+          console.error('Subscribe failed', err);
+          this.eventService.emitFlash({
+            type: 'error',
+            i18nKey: 'our_story.comments.subscribe_error',
+            autoHide: true,
+            hideAfterMs: this.toastDurationMs,
+            dismissible: true,
+          });
+        },
+      });
+  }
+
+  unsubscribe(): void {
+    const email = (this.subEmailCtrl?.value || '').trim();
+    if (!email || this.isUnsubscribing) return;
+
+    this.isUnsubscribing = true;
+    this.subscriptionsService
+      .delete(this.cardId, email)
+      .pipe(finalize(() => (this.isUnsubscribing = false)))
+      .subscribe({
+        next: () => {
+          this.isSubscribed = false;
+          this.eventService.emitFlash({
+            type: 'success',
+            i18nKey: 'our_story.comments.unsubscribe_success',
+            autoHide: true,
+            hideAfterMs: this.toastDurationMs,
+            dismissible: true,
+          });
+        },
+        error: (err) => {
+          console.error('Unsubscribe failed', err);
+          this.eventService.emitFlash({
+            type: 'error',
+            i18nKey: 'our_story.comments.unsubscribe_error',
+            autoHide: true,
+            hideAfterMs: this.toastDurationMs,
+            dismissible: true,
+          });
+        },
+      });
   }
 }

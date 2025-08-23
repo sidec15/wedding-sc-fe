@@ -62,6 +62,19 @@
         "invalid_nickname_max": "Nickname troppo lungo. Massimo 20 caratteri.",
         "invalid_nickname_chars": "Carattere non consentito. Usa solo lettere, numeri, apostrofi ('), spazi e trattini (-).",
         "invalid_content": "Messaggio troppo lungo."
+      },
+      "subscriptions": {
+        "subscribe": "Iscriviti",
+        "subscribing": "Iscrizione in corso...",
+        "unsubscribe": "Annulla iscrizione",
+        "unsubscribing": "Annullamento in corso...",
+        "subscribe_success": "Iscrizione effettuata. Riceverai le notifiche per i nuovi commenti.",
+        "subscribe_error": "Si è verificato un errore durante l'iscrizione. Riprova più tardi.",
+        "unsubscribe_success": "Iscrizione annullata. Non riceverai più notifiche.",
+        "unsubscribe_error": "Si è verificato un errore durante l'annullamento dell'iscrizione. Riprova più tardi.",
+        "notify_email_label": "Email di notifica",
+        "notify_email_placeholder": "Inserisci la tua email",
+        "notify_email_invalid": "Inserisci un indirizzo email valido."
       }
     },
     "intro": {
