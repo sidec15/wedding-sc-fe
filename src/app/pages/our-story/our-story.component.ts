@@ -6,7 +6,6 @@ import { OurStoryMobileComponent } from './mobile/our-story.mobile.component';
 
 @Component({
   selector: 'app-our-story',
-  standalone: true,
   imports: [TranslateModule, OurStoryDesktopComponent, OurStoryMobileComponent],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],

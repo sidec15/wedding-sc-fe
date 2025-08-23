@@ -15,8 +15,7 @@ import { Card } from '../models/card';
 import { CommentsComponent } from '../components/comments/comments.component';
 import { Comment } from '../components/comments/models/comment';
 import { wait } from '../../../utils/time.utils';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from 'express';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-our-story-desktop',
