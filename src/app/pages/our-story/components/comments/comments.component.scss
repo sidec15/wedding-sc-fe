@@ -76,12 +76,10 @@
 :host ::ng-deep app-rich-text-editor .rte-wrapper:focus-within {
   outline: none;
   border-color: rgb(var(--accent));
-  // box-shadow: 0 0 0 3px rgba(var(--accent), 0.2);
 }
 
 :host ::ng-deep app-rich-text-editor .rte-wrapper.error {
   border-color: var(--error-border);
-  // box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
 }
 
 :host ::ng-deep app-rich-text-editor .rte-wrapper .NgxEditor__Content {
@@ -186,6 +184,45 @@
   gap: 0.75rem;
   font-size: 0.85rem;
   color: rgba(var(--text), 0.7);
+}
+
+// Subscriptions Section
+.subscriptions-section {
+  margin: 2rem 0;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgb(var(--light-gray));
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+
+  .section-title {
+    margin-bottom: 0.25rem;
+    text-align: left;
+  }
+
+  .section-helper {
+    font-size: 0.9rem;
+    color: rgba(var(--text), 0.7);
+    margin-bottom: 0.75rem;
+  }
+
+  .subscribe-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .form-input {
+    flex: 1 1 300px; // keep a good width for desktop
+    max-width: 400px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+  }
 }
 
 // Responsive Design

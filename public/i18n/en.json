@@ -84,7 +84,9 @@
           "invalid_nickname_chars": "Unsupported character. Use only letters, numbers, apostrophes ('), spaces, and hyphens (-).",
           "invalid_content": "Message is too long."
         },
-        "subscriptions":{
+        "subscriptions": {
+          "title": "Stay updated",
+          "description": "Enter your email to receive notifications when new comments are added to this photo. You can unsubscribe at any time.",
           "subscribe": "Subscribe",
           "subscribing": "Subscribing...",
           "unsubscribe": "Unsubscribe",

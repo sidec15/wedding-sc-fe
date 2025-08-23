@@ -64,6 +64,8 @@
         "invalid_content": "Messaggio troppo lungo."
       },
       "subscriptions": {
+        "title": "Rimani aggiornato",
+        "description": "Inserisci la tua email per ricevere notifiche quando vengono aggiunti nuovi commenti a questa foto. Puoi annullare l'iscrizione in qualsiasi momento.",
         "subscribe": "Iscriviti",
         "subscribing": "Iscrizione in corso...",
         "unsubscribe": "Annulla iscrizione",

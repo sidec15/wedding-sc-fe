@@ -57,20 +57,23 @@ export class CommentsComponent implements OnChanges {
   isInitialLoading = false;
   isLoadingMore = false;
 
+  // Subscriptions UI
   isSubscribing = false;
   isUnsubscribing = false;
   showSubscribeBox = false;
-  isSubscribed = false; // local UI state (backend can be idempotent)
+  isSubscribed = false; // local UI state (server can keep it idempotent)
 
-  // Form state
+  // Forms
   commentForm: FormGroup;
+  subscriptionForm: FormGroup;
+
+  // Other UI
   isSubmitting = false;
   maxCommentLength = 1000;
   currentLen = 0;
   maxNicknameLength = 20;
   commentRegex = /^[a-zA-Z0-9' -]+$/;
   toastDurationMs = 5000;
-  subscriptionForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -270,19 +273,22 @@ export class CommentsComponent implements OnChanges {
   }
 
   subscribe(): void {
+    if (!this.cardId) return;
     if (this.subscriptionForm.invalid || this.isSubscribing) return;
+
     const email = (this.subEmailCtrl?.value || '').trim();
+    if (!email) return;
 
     this.isSubscribing = true;
-    this.commentsService
-      .create(this.cardId, email)
+    this.subscriptionsService
+      .create(this.cardId, email) // <-- use SubscriptionsService here
       .pipe(finalize(() => (this.isSubscribing = false)))
       .subscribe({
         next: () => {
           this.isSubscribed = true;
           this.eventService.emitFlash({
             type: 'success',
-            i18nKey: 'our_story.comments.subscribe_success',
+            i18nKey: 'our_story.comments.subscriptions.subscribe_success',
             autoHide: true,
             hideAfterMs: this.toastDurationMs,
             dismissible: true,
@@ -293,7 +299,7 @@ export class CommentsComponent implements OnChanges {
           console.error('Subscribe failed', err);
           this.eventService.emitFlash({
             type: 'error',
-            i18nKey: 'our_story.comments.subscribe_error',
+            i18nKey: 'our_story.comments.subscriptions.subscribe_error',
             autoHide: true,
             hideAfterMs: this.toastDurationMs,
             dismissible: true,
@@ -303,6 +309,8 @@ export class CommentsComponent implements OnChanges {
   }
 
   unsubscribe(): void {
+    if (!this.cardId) return;
+
     const email = (this.subEmailCtrl?.value || '').trim();
     if (!email || this.isUnsubscribing) return;
 
@@ -315,7 +323,7 @@ export class CommentsComponent implements OnChanges {
           this.isSubscribed = false;
           this.eventService.emitFlash({
             type: 'success',
-            i18nKey: 'our_story.comments.unsubscribe_success',
+            i18nKey: 'our_story.comments.subscriptions.unsubscribe_success',
             autoHide: true,
             hideAfterMs: this.toastDurationMs,
             dismissible: true,
@@ -325,7 +333,7 @@ export class CommentsComponent implements OnChanges {
           console.error('Unsubscribe failed', err);
           this.eventService.emitFlash({
             type: 'error',
-            i18nKey: 'our_story.comments.unsubscribe_error',
+            i18nKey: 'our_story.comments.subscriptions.unsubscribe_error',
             autoHide: true,
             hideAfterMs: this.toastDurationMs,
             dismissible: true,
