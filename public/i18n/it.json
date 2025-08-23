@@ -370,5 +370,12 @@
     "p3": "I dati non saranno in alcun modo comunicati a terzi né utilizzati per finalità diverse da quelle indicate. La base giuridica del trattamento è il consenso liberamente espresso dall'utente tramite la selezione dell'apposita casella prima dell'invio del messaggio.",
     "p4": "I dati saranno conservati per il tempo strettamente necessario a evadere la richiesta e comunque non oltre 6 mesi dalla ricezione del messaggio.",
     "p5": "In qualsiasi momento hai il diritto di accedere ai tuoi dati personali, chiederne la rettifica, la cancellazione, la limitazione del trattamento o opporti allo stesso, nonché di revocare il consenso prestato. Per esercitare tali diritti puoi scrivere a <a href=\"mailto:simone.decristofaro85@gmail.com\">simone.decristofaro85@gmail.com</a>."
+  },
+  "unsubscribe": {
+    "title_success": "Disiscrizione avvenuta con successo ✅",
+    "message_success": "<strong>{{email}}</strong> è stato disiscritto dalle notifiche{{photoPart}}.",
+    "title_error": "Disiscrizione non riuscita ❌",
+    "message_error": "Non è stato possibile elaborare la tua richiesta. Riprova più tardi.",
+    "photo_part": " per la foto \"{{photo}}\""
   }
 }

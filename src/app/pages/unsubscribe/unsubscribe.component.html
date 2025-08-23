@@ -1,0 +1,24 @@
+<section class="unsubscribe-container">
+  @if (status() === 'ok') {
+  <div class="card">
+    <h1>{{ "unsubscribe.title_success" | translate }}</h1>
+    <p
+      [innerHTML]="
+        'unsubscribe.message_success'
+          | translate
+            : {
+                email: email(),
+                photoPart: photo()
+                  ? ('unsubscribe.photo_part' | translate : { photo: photo() })
+                  : ''
+              }
+      "
+    ></p>
+  </div>
+  } @else {
+  <div class="card error">
+    <h1>{{ "unsubscribe.title_error" | translate }}</h1>
+    <p>{{ "unsubscribe.message_error" | translate }}</p>
+  </div>
+  }
+</section>

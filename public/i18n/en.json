@@ -338,5 +338,12 @@
     "p3": "The data will not be shared with third parties in any way, nor used for purposes other than those indicated. The legal basis for the processing is the consent freely given by the user by selecting the appropriate checkbox before submitting the message.",
     "p4": "The data will be stored only for the time strictly necessary to process the request and in any case no longer than 6 months from the receipt of the message.",
     "p5": "At any time, you have the right to access your personal data, request its correction, deletion, or restriction of processing, or object to it, as well as to withdraw the consent given. To exercise these rights, you can write to <a href=\"mailto:simone.decristofaro85@gmail.com\">simone.decristofaro85@gmail.com</a>."
+  },
+  "unsubscribe": {
+    "title_success": "Unsubscription successful ✅",
+    "message_success": "<strong>{{email}}</strong> has been unsubscribed from notifications{{photoPart}}.",
+    "title_error": "Unsubscription failed ❌",
+    "message_error": "We couldn't process your request. Please try again later.",
+    "photo_part": " for photo \"{{photo}}\""
   }
 }
