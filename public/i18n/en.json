@@ -74,7 +74,10 @@
         "submit": "Submit Comment",
         "submitting": "Submitting...",
         "success_message": "Your comment has been posted successfully!",
-        "error_message": "An error occurred while posting the comment. Please try again.",
+        "error_creating_comment": "An error occurred while posting the comment. Please try again later.",
+        "error_retrieving_comments": "An error occurred while retrieving comments. Please try again later.",
+        "load_more": "Load more",
+        "loading": "Loading...",
         "errors": {
           "invalid_nickname_min": "Nickname is too short.",
           "invalid_nickname_max": "Nickname is too long. Maximum 20 characters.",

@@ -6,7 +6,7 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { CommonModule, NgClass, NgTemplateOutlet } from '@angular/common';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../services/platform.service';
@@ -19,8 +19,7 @@ import { wait } from '../../../utils/time.utils';
 
 @Component({
   selector: 'app-our-story-desktop',
-  standalone: true,
-  imports: [TranslateModule, NgClass, NgTemplateOutlet, CommentsComponent],
+  imports: [TranslateModule, CommonModule, CommentsComponent],
   templateUrl: './our-story.desktop.component.html',
   styleUrls: ['./our-story.desktop.component.scss'],
   providers: [CardsService],
@@ -38,9 +37,6 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   nextIndex: number = 0;
   isMobile: boolean = false;
   showCommentsSection: boolean = true;
-  showSuccess = false;
-  showError = false;
-  responseMessageTimeoutMs = 3000;
 
   constructor(
     private platformService: PlatformService,
@@ -193,7 +189,6 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
 
   onCommentAdded(comment: Comment): void {
     console.log('New comment added:', comment);
-
   }
 
   // @HostListener('keydown', ['$event'])

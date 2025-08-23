@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -32,13 +39,24 @@ import { finalize } from 'rxjs';
     SafeHtmlPipe,
   ],
   templateUrl: './comments.component.html',
-  styleUrl: './comments.component.scss',
+  styleUrls: ['./comments.component.scss'],
 })
-export class CommentsComponent {
+export class CommentsComponent implements OnChanges {
   @Input() cardId: string = '';
   @Output() commentAdded = new EventEmitter<Comment>();
 
+  // List + pagination state
   comments: Comment[] = [];
+  pageSize = 2;
+  cursor: string | null = null;
+  hasNext = false;
+  totalCount: number | null = null;
+
+  // Loading flags
+  isInitialLoading = false;
+  isLoadingMore = false;
+
+  // Form state
   commentForm: FormGroup;
   isSubmitting = false;
   maxCommentLength = 1000;
@@ -68,9 +86,71 @@ export class CommentsComponent {
         [plainTextRequired(), plainTextMaxLength(this.maxCommentLength)],
       ],
     });
+  }
 
+  // Reload when photo/card changes
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['cardId'] && this.cardId) {
+      this.resetAndLoad();
+    }
+  }
 
+  /** Reset pagination and load first page */
+  private resetAndLoad(): void {
+    this.comments = [];
+    this.cursor = null;
+    this.hasNext = false;
+    this.totalCount = null;
+    this.loadComments(true);
+  }
 
+  /** Load comments (first page when initial=true, otherwise append next page) */
+  loadComments(initial = false): void {
+    if (!this.cardId) return;
+
+    if (initial) {
+      this.isInitialLoading = true;
+    } else {
+      if (this.isLoadingMore) return; // prevent double clicks
+      this.isLoadingMore = true;
+    }
+
+    this.commentsService
+      .list(this.cardId, {
+        limit: this.pageSize,
+        order: 'desc',
+        cursor: this.cursor ?? undefined,
+      })
+      .pipe(
+        finalize(() => {
+          this.isInitialLoading = false;
+          this.isLoadingMore = false;
+        })
+      )
+      .subscribe({
+        next: (res) => {
+          this.comments = initial
+            ? res.elements
+            : [...this.comments, ...res.elements];
+
+          this.cursor = res.cursor ?? null;
+          this.hasNext = !!res.hasNext;
+          this.totalCount =
+            typeof res.totalElements === 'number'
+              ? res.totalElements
+              : (this.totalCount ?? 0) + res.elements.length;
+        },
+        error: (err) => {
+          console.error('Failed to retrieve comments', err);
+          this.eventService.emitFlash({
+            type: 'error',
+            i18nKey: 'our_story.comments.error_retrieving_comments',
+            autoHide: true,
+            hideAfterMs: this.toastDurationMs,
+            dismissible: true,
+          });
+        },
+      });
   }
 
   onSubmit(): void {
@@ -92,12 +172,11 @@ export class CommentsComponent {
       )
       .subscribe({
         next: (created) => {
-          this.comments.unshift(created);
-          this.commentAdded.emit(created);
-
+          // Clear form & counter
           this.commentForm.reset();
           this.currentLen = 0;
 
+          // Notify success
           this.eventService.emitFlash({
             type: 'success',
             i18nKey: 'our_story.comments.success_message',
@@ -105,13 +184,18 @@ export class CommentsComponent {
             hideAfterMs: this.toastDurationMs,
             dismissible: true,
           });
+
+          // Reload from the beginning to reflect canonical order & counts
+          this.resetAndLoad();
+
+          // Still emit outside if parent cares
+          this.commentAdded.emit(created);
         },
         error: (err) => {
           console.error('Failed to create comment', err);
-
           this.eventService.emitFlash({
             type: 'error',
-            i18nKey: 'our_story.comments.error_message',
+            i18nKey: 'our_story.comments.error_creating_comment',
             autoHide: true,
             hideAfterMs: this.toastDurationMs,
             dismissible: true,
@@ -135,9 +219,7 @@ export class CommentsComponent {
     const field = this.commentForm.get(fieldName);
     if (field?.errors && field.touched) {
       if (field.errors['required']) {
-        return this.translate.instant(
-          'rich_text_editor.errors.required_fields'
-        );
+        return this.translate.instant('rich_text_editor.errors.required_fields');
       }
       if (fieldName === 'authorName') {
         if (field.errors['minlength']) {

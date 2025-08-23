@@ -2,30 +2,55 @@
   <!-- Comments List Section -->
   <div class="comments-list-section">
     <h4 class="section-title">
-      {{ "our_story.comments.title" | translate }} ({{ comments.length }})
+      {{ "our_story.comments.title" | translate }}
+      ({{ totalCount ?? comments.length }})
     </h4>
 
-    <div class="comments-list" *ngIf="comments.length > 0">
-      <div
-        class="comment-item"
-        *ngFor="let comment of comments; trackBy: trackByCommentId"
-      >
-        <div class="comment-header">
-          <span class="comment-author">{{ comment.authorName }}</span>
-          <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
-        </div>
-
-        <!-- Render HTML content safely -->
-        <div
-          class="comment-content"
-          [innerHTML]="comment.content | safeHtml"
-        ></div>
+    <!-- Initial loader -->
+    @if (isInitialLoading) {
+      <div class="loading">
+        {{ "our_story.comments.loading" | translate }}
       </div>
-    </div>
+    }
 
-    <div class="no-comments" *ngIf="comments.length === 0">
-      <p>{{ "our_story.comments.no_comment" | translate }}</p>
-    </div>
+    @if (!isInitialLoading && comments.length > 0) {
+      <div class="comments-list">
+        @for (comment of comments; track comment.commentId) {
+          <div class="comment-item">
+            <div class="comment-header">
+              <span class="comment-author">{{ comment.authorName }}</span>
+              <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
+            </div>
+
+            <div class="comment-content" [innerHTML]="comment.content | safeHtml"></div>
+          </div>
+        }
+
+        <!-- Load more -->
+        @if (hasNext) {
+          <div class="load-more">
+            <button
+              type="button"
+              class="submit-btn"
+              (click)="loadComments(false)"
+              [disabled]="isLoadingMore"
+            >
+              @if (!isLoadingMore) {
+                {{ "our_story.comments.load_more" | translate }}
+              } @else {
+                {{ "our_story.comments.loading" | translate }}
+              }
+            </button>
+          </div>
+        }
+      </div>
+    }
+
+    @if (!isInitialLoading && comments.length === 0) {
+      <div class="no-comments">
+        <p>{{ "our_story.comments.no_comment" | translate }}</p>
+      </div>
+    }
   </div>
 
   <!-- Comment Form Section -->
@@ -34,11 +59,7 @@
       {{ "our_story.comments.leave_comment_message" | translate }}
     </h4>
 
-    <form
-      [formGroup]="commentForm"
-      (ngSubmit)="onSubmit()"
-      class="comment-form"
-    >
+    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="comment-form">
       <div class="form-group">
         <label for="authorName" class="form-label">Nickname *</label>
         <input
@@ -52,15 +73,14 @@
             commentForm.get('authorName')?.touched
           "
         />
-        <div
-          class="error-message"
-          *ngIf="
-            commentForm.get('authorName')?.invalid &&
-            commentForm.get('authorName')?.touched
-          "
-        >
-          {{ getErrorMessage("authorName") }}
-        </div>
+        @if (
+          commentForm.get('authorName')?.invalid &&
+          commentForm.get('authorName')?.touched
+        ) {
+          <div class="error-message">
+            {{ getErrorMessage("authorName") }}
+          </div>
+        }
       </div>
 
       <div class="form-group">
@@ -81,15 +101,14 @@
           {{ currentLen || 0 }}/{{ maxCommentLength }}
         </div>
 
-        <div
-          class="error-message"
-          *ngIf="
-            commentForm.get('messageHtml')?.invalid &&
-            commentForm.get('messageHtml')?.touched
-          "
-        >
-          {{ getErrorMessage("messageHtml") }}
-        </div>
+        @if (
+          commentForm.get('messageHtml')?.invalid &&
+          commentForm.get('messageHtml')?.touched
+        ) {
+          <div class="error-message">
+            {{ getErrorMessage("messageHtml") }}
+          </div>
+        }
       </div>
 
       <button
@@ -97,12 +116,11 @@
         class="submit-btn"
         [disabled]="commentForm.invalid || isSubmitting"
       >
-        <span *ngIf="!isSubmitting">{{
-          "our_story.comments.submit" | translate
-        }}</span>
-        <span *ngIf="isSubmitting">{{
-          "our_story.comments.submitting" | translate
-        }}</span>
+        @if (!isSubmitting) {
+          {{ "our_story.comments.submit" | translate }}
+        } @else {
+          {{ "our_story.comments.submitting" | translate }}
+        }
       </button>
     </form>
   </div>

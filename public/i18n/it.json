@@ -53,7 +53,10 @@
       "submit": "Invia Commento",
       "submitting": "Invio in corso...",
       "success_message": "Il tuo commento è stato pubblicato con successo!",
-      "error_message": "Si è verificato un errore durante la pubblicazione del commento. Riprova.",
+      "error_creating_comment": "Si è verificato un errore durante la pubblicazione del commento. Riprova più tardi.",
+      "error_retrieving_comments": "Si è verificato un errore durante il recupero dei commenti. Riprova più tardi.",
+      "load_more": "Carica altri",
+      "loading": "Caricamento...",
       "errors": {
         "invalid_nickname_min": "Nickname troppo corto.",
         "invalid_nickname_max": "Nickname troppo lungo. Massimo 20 caratteri.",
