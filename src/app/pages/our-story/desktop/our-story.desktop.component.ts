@@ -1,7 +1,6 @@
 import {
   Component,
   OnDestroy,
-  HostListener,
   ElementRef,
   ViewChild,
   AfterViewInit,
@@ -16,6 +15,8 @@ import { Card } from '../models/card';
 import { CommentsComponent } from '../components/comments/comments.component';
 import { Comment } from '../components/comments/models/comment';
 import { wait } from '../../../utils/time.utils';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from 'express';
 
 @Component({
   selector: 'app-our-story-desktop',
@@ -41,7 +42,9 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   constructor(
     private platformService: PlatformService,
     private storycardsProvider: CardsService,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.cards = this.storycardsProvider.getCards();
     // Initialize all cards with proper states
@@ -61,6 +64,17 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
         }
       }
     }
+
+    // --- NEW: read ?cardId=... and jump without animation
+    this.route.queryParamMap.subscribe((params) => {
+      const idFromUrl = params.get('cardId');
+      if (!idFromUrl) return;
+
+      const idx = this.cards.findIndex((c) => c.id === idFromUrl);
+      if (idx !== -1 && idx !== this.currentIndex) {
+        this.jumpDirect(idx); // no animation on initial load
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -163,6 +177,8 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
 
     // Show comments after animation
     this.showCommentsSection = true;
+
+    this.updateUrlForCurrentCard();
   }
 
   /**
@@ -190,6 +206,43 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   onCommentAdded(comment: Comment): void {
     console.log('New comment added:', comment);
   }
+
+  private jumpDirect(newIndex: number): void {
+    if (newIndex < 0 || newIndex >= this.cards.length) return;
+
+    // hide comments to avoid flicker during state flip
+    this.showCommentsSection = false;
+
+    // reset all cards around the new index
+    this.cards.forEach((card, i) => {
+      card.status = i === newIndex ? 'visible' : 'hidden';
+      card.position =
+        i < newIndex ? 'before' : i > newIndex ? 'after' : 'current';
+    });
+
+    this.currentIndex = newIndex;
+
+    // show comments again
+    this.showCommentsSection = true;
+  }
+
+  private updateUrlForCurrentCard(): void {
+    const currentId = this.cards[this.currentIndex]?.id;
+    if (!currentId) return;
+
+    this.router.navigate([], {
+      queryParams: { cardId: currentId },
+      queryParamsHandling: 'merge',
+      replaceUrl: false,
+    });
+  }
+
+  goToCardId(cardId: string): void {
+    const idx = this.cards.findIndex(c => c.id === cardId);
+    if (idx === -1 || this.isTransitioning || idx === this.currentIndex) return;
+    this.transitionToCard(idx, null);
+  }
+
 
   // @HostListener('keydown', ['$event'])
   // handleKeyboardNavigation(event: KeyboardEvent): void {
