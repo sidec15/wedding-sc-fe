@@ -3,17 +3,18 @@ import { Theme } from '../models/theme';
 import { PlatformService } from './platform.service';
 import { StorageService } from './storage.service';
 import { constants } from '../constants';
+import { EventService, ThemeMessage } from './event.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-
   private currentTheme: Theme = constants.DEFAULT_THEME;
 
   constructor(
     private platformService: PlatformService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private eventService: EventService
   ) {}
 
   getCurrentTheme(): Theme {
@@ -23,10 +24,13 @@ export class ThemeService {
   setCurrentTheme(theme: Theme): void {
     this.currentTheme = theme;
     this.storageService.set('theme', theme);
-    this.applyTheme(theme);
+    const themeToApply = this.applyTheme(this.currentTheme);
+    this.eventService.emitThemeChange({
+      theme: themeToApply,
+    } as ThemeMessage);
   }
 
-  private applyTheme(theme: Theme): void {
+  private applyTheme(theme: Theme) {
     // avoid SSR crash
     if (!this.platformService.isPlatformReady()) return;
 
@@ -39,6 +43,8 @@ export class ThemeService {
     }
 
     document.documentElement.setAttribute('data-theme', themeToApply);
+
+    return themeToApply;
   }
 
   /**

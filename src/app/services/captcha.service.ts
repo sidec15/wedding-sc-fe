@@ -5,6 +5,7 @@ import { AbstractControl } from "@angular/forms";
   providedIn: 'root',
 })
 export class CaptchaService {
+
   onCaptchaResolved(
     token: string | null,
     control: AbstractControl<any, any> | null

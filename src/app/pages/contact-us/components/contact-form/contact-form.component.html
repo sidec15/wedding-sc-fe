@@ -1,5 +1,4 @@
 <section class="contact-form">
-
   <h2>{{ "contact_us.contact_form.title" | translate }}</h2>
   <!-- Chiara image for mobile -->
   <ng-container *ngIf="isMobile">
@@ -120,36 +119,14 @@
         }
       </div>
 
-      <div class="form-group">
-        <re-captcha
-          formControlName="captcha"
-          [siteKey]="captchaKey"
-          (resolved)="onCaptchaResolved($event)"
-          (error)="onCaptchaError()"
-        ></re-captcha>
-
-        @if (contactForm.get('captcha')?.errors?.['required'] && submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.captcha_required" | translate }}
-        </div>
-        }
-      </div>
-
-      <div class="form-group checkbox">
-        <input type="checkbox" id="privacy" formControlName="privacyConsent" />
-        <label for="privacy" class="privacy-consent-label">
-          {{ "contact_us.contact_form.privacy_consent" | translate }}
-          <a href="/privacy-policy?skipSplash=true" target="_blank">{{
-            "contact_us.contact_form.privacy_policy" | translate
-          }}</a>
-        </label>
-        @if (contactForm.get('privacyConsent')?.errors?.['required'] &&
-        submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.privacy_required" | translate }}
-        </div>
-        }
-      </div>
+      <!-- todo_here  -->
+      <app-security-consent
+        [form]="contactForm"
+        [submitted]="submitted"
+        privacyPolicyHref="/privacy-policy?skipSplash=true"
+        captchaControlName="captcha"
+        privacyControlName="privacyConsent"
+      />
 
       <button class="btn" type="submit">
         {{ "contact_us.contact_form.submit" | translate }}

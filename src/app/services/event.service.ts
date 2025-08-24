@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { constants } from '../constants';
+import { Theme } from '../models/theme';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,9 @@ export class EventService {
 
   private flashSubject = new Subject<FlashMessage>();
   flashMask$ = this.flashSubject.asObservable();
+
+  private themeSubject = new Subject<ThemeMessage>();
+  theme$ = this.themeSubject.asObservable();
 
   emitLanguageChanged(language: string): void {
     this.languageChangedSubject.next(language);
@@ -93,6 +97,11 @@ export class EventService {
   emitFlash(flashMessage: FlashMessage): void {
     this.flashSubject.next(flashMessage);
   }
+
+  emitThemeChange(themeMessage: ThemeMessage){
+    this.themeSubject.next(themeMessage);
+  }
+
 }
 
 export class ScrollEvent {
@@ -149,4 +158,8 @@ export interface FlashMessage {
   dismissible?: boolean;
   autoHide?: boolean;
   hideAfterMs?: number;
+}
+
+export interface ThemeMessage {
+  theme: Theme;
 }

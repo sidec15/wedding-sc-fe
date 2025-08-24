@@ -90,29 +90,6 @@
         }
       }
 
-      .checkbox {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-
-        input[type="checkbox"] {
-          margin: 0;
-        }
-
-        label {
-          margin: 0;
-        }
-
-        a {
-          color: rgb(var(--accent));
-          text-decoration: underline;
-
-          &:hover {
-            color: rgb(var(--hover));
-          }
-        }
-      }
-
       .btn {
         align-self: center;
       }

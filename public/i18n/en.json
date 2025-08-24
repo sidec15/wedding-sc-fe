@@ -316,8 +316,6 @@
       "success_message": "Message sent successfully!",
       "error_message": "An error occurred. Please try later.",
       "sending_message": "Sending message...",
-      "privacy_consent": "I consent to the processing of my personal data in accordance with the D.Lgs. 196/2003 and the EU Regulation 2016/679 (GDPR).",
-      "privacy_policy": "Privacy Policy",
       "name_required": "Name is required",
       "surname_required": "Surname is required",
       "name_too_long": "Name must be less than 50 characters",
@@ -326,9 +324,7 @@
       "email_required": "Email is required",
       "email_invalid": "Invalid email address",
       "message_required": "Message is required",
-      "message_too_long": "Message must be less than 1000 characters",
-      "privacy_required": "Privacy consent is required",
-      "captcha_required": "Captcha is required"
+      "message_too_long": "Message must be less than 1000 characters"
     }
   },
   "privacy_policy": {
@@ -345,5 +341,11 @@
     "title_error": "Unsubscription failed ❌",
     "message_error": "We couldn't process your request. Please try again later.",
     "photo_part": " for photo \"{{photo}}\""
+  },
+  "security": {
+    "privacy_consent": "I consent to the processing of my personal data in accordance with the D.Lgs. 196/2003 and the EU Regulation 2016/679 (GDPR).",
+    "privacy_policy": "Privacy Policy",
+    "privacy_required": "Privacy consent is required",
+    "captcha_required": "Captcha is required"
   }
 }

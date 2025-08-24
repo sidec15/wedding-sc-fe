@@ -348,8 +348,6 @@
       "success_message": "Messaggio inviato con successo!",
       "error_message": "Si è verificato un errore. Per favore, prova più tardi.",
       "sending_message": "Invio messaggio...",
-      "privacy_consent": "Dichiaro di aver letto e accettato la",
-      "privacy_policy": "Privacy Policy",
       "name_required": "Nome è obbligatorio",
       "surname_required": "Cognome è obbligatorio",
       "name_too_long": "Nome deve essere minore di 50 caratteri",
@@ -358,9 +356,7 @@
       "email_required": "Email è obbligatoria",
       "email_invalid": "Email non valida",
       "message_required": "Messaggio è obbligatorio",
-      "message_too_long": "Messaggio deve essere minore di 1000 caratteri",
-      "privacy_required": "Consenso alla privacy è obbligatorio",
-      "captcha_required": "Captcha è obbligatorio"
+      "message_too_long": "Messaggio deve essere minore di 1000 caratteri"
     }
   },
   "privacy_policy": {
@@ -377,5 +373,11 @@
     "title_error": "Disiscrizione non riuscita ❌",
     "message_error": "Non è stato possibile elaborare la tua richiesta. Riprova più tardi.",
     "photo_part": " per la foto \"{{photo}}\""
+  },
+  "security": {
+    "privacy_consent": "Acconsento al trattamento dei miei dati personali in conformità al D.Lgs. 196/2003 e al Regolamento UE 2016/679 (GDPR).",
+    "privacy_policy": "Informativa sulla Privacy",
+    "privacy_required": "Il consenso alla privacy è obbligatorio",
+    "captcha_required": "Il captcha è obbligatorio"
   }
 }

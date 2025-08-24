@@ -10,10 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
 import { ContactService } from '../../services/contact.service';
 import { EventService } from '../../../../services/event.service';
-import { environment } from '../../../../../environments/environment';
-import { RecaptchaModule } from 'ng-recaptcha-2';
 import * as securityUtils from '../../../../utils/security.utils';
-import { CaptchaService } from '../../../../services/captcha.service';
+import { SecurityConsentComponent } from '../../../../components/security-consent/security-consent.component';
 
 @Component({
   selector: 'app-contact-form',
@@ -21,7 +19,7 @@ import { CaptchaService } from '../../../../services/captcha.service';
     CommonModule,
     ReactiveFormsModule,
     TranslateModule,
-    RecaptchaModule,
+    SecurityConsentComponent,
   ],
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.scss'],
@@ -33,7 +31,6 @@ export class ContactFormComponent implements AfterViewInit {
   maxNameLength = 50;
   maxSurnameLength = 50;
   isMobile = false;
-  captchaKey = environment.captcha.siteKey;
 
   // Phone regex that allows international format
   private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
@@ -42,8 +39,7 @@ export class ContactFormComponent implements AfterViewInit {
     private fb: FormBuilder,
     private platformService: PlatformService,
     private contactService: ContactService,
-    private eventService: EventService,
-    private captchaService: CaptchaService
+    private eventService: EventService
   ) {
     this.contactForm = this.fb.group({
       name: [
@@ -61,10 +57,8 @@ export class ContactFormComponent implements AfterViewInit {
         [Validators.required, Validators.maxLength(this.maxMessageLength)],
       ],
       privacyConsent: [false, Validators.requiredTrue],
-      // Honeypot field
-      website: [''],
-      // Captcha field
-      captcha: ['', Validators.required],
+      website: [''], // Honeypot field
+      captcha: ['', Validators.required], // Captcha field
     });
   }
 
@@ -75,16 +69,13 @@ export class ContactFormComponent implements AfterViewInit {
   onSubmit() {
     this.submitted = true;
 
-    // Honeypot field check to prevent spam.
-    // If the honeypot field is filled, return.
+    // Honeypot anti-spam
     if (this.contactForm.get('website')?.value) {
       return;
     }
 
     // Enforce CAPTCHA
     if (!this.contactForm.get('captcha')?.value) {
-      console.log('captcha not valid');
-      console.log(this.contactForm.get('captcha')?.value);
       this.eventService.emitFlash({
         type: 'error',
         i18nKey: 'contact_us.contact_form.error_message',
@@ -94,7 +85,6 @@ export class ContactFormComponent implements AfterViewInit {
       return;
     }
 
-    // If the form is valid, send the data to the server.
     if (this.contactForm.valid) {
       this.eventService.emitLoadingMask(true);
       const formData = { ...this.contactForm.value };
@@ -138,16 +128,5 @@ export class ContactFormComponent implements AfterViewInit {
         },
       });
     }
-  }
-
-  onCaptchaResolved(token: string | null): void {
-    this.captchaService.onCaptchaResolved(
-      token,
-      this.contactForm.get('captcha')
-    );
-  }
-
-  onCaptchaError() {
-    this.captchaService.onCaptchaError(this.contactForm.get('captcha'));
   }
 }
