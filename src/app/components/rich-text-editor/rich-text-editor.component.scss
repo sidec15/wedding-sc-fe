@@ -37,11 +37,14 @@
       background: rgba(var(--accent), 0.18);
       border-color: rgba(var(--accent), 0.6);
     }
+
+    &:focus-visible {
+      outline: 2px solid rgba(var(--accent), .7);
+      outline-offset: 2px;
+    }
   }
 
-  /* --- HEADING DROPDOWN FIXES --- */
-  /* Make the dropdown container transparent (no border/background),
-     so we don't get the "button under button" effect */
+  /* --- HEADING DROPDOWN (no double button) --- */
   .NgxEditor__MenuBar .NgxEditor__Dropdown {
     background: transparent;
     border: none;
@@ -50,13 +53,13 @@
     box-shadow: none;
   }
 
-  /* Style only the trigger button INSIDE the dropdown */
+  /* Trigger button inside dropdown */
   .NgxEditor__MenuBar .NgxEditor__Dropdown > button {
     display: inline-flex;
     align-items: center;
-    justify-content: space-between;   /* label left, caret right */
+    justify-content: space-between;
     height: 36px;
-    min-width: 110px;                 /* room for label + caret */
+    min-width: 110px;
     padding: 0 .7rem;
     border-radius: 8px;
     border: 1px solid rgba(var(--text), 0.2);
@@ -66,17 +69,19 @@
     transition: background .15s ease, border-color .15s ease;
 
     &:hover {
-      background: rgba(var(--text), 0.08);
+      background: rgba(var(--light-gray), 1);
       border-color: rgba(var(--text), 0.35);
     }
-
     &.ngx-editor-active,
     &[aria-pressed="true"] {
       background: rgba(var(--accent), 0.18);
       border-color: rgba(var(--accent), 0.6);
     }
+    &:focus-visible {
+      outline: 2px solid rgba(var(--accent), .7);
+      outline-offset: 2px;
+    }
 
-    /* caret */
     .NgxEditor__Dropdown--Caret {
       margin-left: .5rem;
       font-size: .8rem;
@@ -85,7 +90,7 @@
     }
   }
 
-  /* Dropdown panel + items (no white contour) */
+  /* --- DROPDOWN PANEL & OPTIONS (coherent hover/focus, no white contour) --- */
   .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel {
     background: rgba(var(--light-gray), 1);
     color: rgb(var(--text));
@@ -93,20 +98,47 @@
     border-radius: 8px;
     padding: .25rem 0;
     box-shadow: 0 6px 22px rgba(0,0,0,.28);
-    overflow: hidden;                 /* prevents side outlines on items */
+    overflow: hidden; /* hides any item edge artifacts */
   }
-  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li {
+
+  /* Some builds render li > button; support both */
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li,
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li > button,
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li > a {
+    display: block;
+    width: 100%;
     padding: .5rem 1rem;
     font-size: .95rem;
+    color: rgb(var(--text));
+    background: transparent;
+    border: 0;             /* remove white contours */
+    border-radius: 0;      /* flush with panel edges */
+    outline: none;
     cursor: pointer;
     transition: background .12s ease;
-    margin: 0;                        /* remove gaps that show panel bg */
-    border: 0;                        /* no borders on items */
-    border-radius: 0;                 /* keep edges flush with panel */
-    outline: none;
+  }
 
-    &:hover {
-      background: rgba(var(--accent), 0.15);
+  /* Hover state */
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li:hover,
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li > button:hover,
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li > a:hover {
+    background: rgba(var(--text), 0.08);
+  }
+
+  /* Active / keyboard focus state (coherent with toolbar focus) */
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li:focus-visible,
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li > button:focus-visible,
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel li > a:focus-visible {
+    background: rgba(var(--accent), 0.2);
+    outline: 2px solid rgba(var(--accent), .7);
+    outline-offset: -2px; /* keeps outline inside the panel */
+  }
+
+  .NgxEditor__MenuBar button{
+    border-radius: 0;
+
+    &:hover{
+      background: rgba(var(--light-gray), 1) !important;
     }
   }
 
@@ -119,8 +151,8 @@
   .NgxEditor__Content {
     min-height: 140px;
     padding: 0.9rem 1rem;
-    background: rgba(var(--light-gray), 1) !important; /* dark pane */
-    color: rgb(var(--text)) !important;                /* light text */
+    background: rgba(var(--light-gray), 1) !important;
+    color: rgb(var(--text)) !important;
     caret-color: rgb(var(--text)) !important;
   }
 
@@ -170,5 +202,4 @@
   gap: 0.5rem;
 }
 
-/* No separate .emoji-btn rules needed here:
-   it is already normalized alongside toolbar buttons above */
+/* .emoji-btn already normalized above */
