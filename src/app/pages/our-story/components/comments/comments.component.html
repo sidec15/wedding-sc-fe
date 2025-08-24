@@ -8,108 +8,123 @@
 
     <!-- Initial loader -->
     @if (isInitialLoading) {
-      <div class="loading">
-        {{ "our_story.comments.loading" | translate }}
+    <div class="loading">
+      {{ "our_story.comments.loading" | translate }}
+    </div>
+    } @if (!isInitialLoading && comments.length > 0) {
+    <div class="comments-list">
+      @for (comment of comments; track comment.commentId) {
+      <div class="comment-item">
+        <div class="comment-header">
+          <span class="comment-author">{{ comment.authorName }}</span>
+          <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
+        </div>
+
+        <div
+          class="comment-content"
+          [innerHTML]="comment.content | safeHtml"
+        ></div>
       </div>
-    }
+      }
 
-    @if (!isInitialLoading && comments.length > 0) {
-      <div class="comments-list">
-        @for (comment of comments; track comment.commentId) {
-          <div class="comment-item">
-            <div class="comment-header">
-              <span class="comment-author">{{ comment.authorName }}</span>
-              <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
-            </div>
-
-            <div class="comment-content" [innerHTML]="comment.content | safeHtml"></div>
-          </div>
-        }
-
-        <!-- Load more -->
-        @if (hasNext) {
-          <div class="load-more">
-            <button
-              type="button"
-              class="submit-btn"
-              (click)="loadComments(false)"
-              [disabled]="isLoadingMore"
-            >
-              @if (!isLoadingMore) {
-                {{ "our_story.comments.load_more" | translate }}
-              } @else {
-                {{ "our_story.comments.loading" | translate }}
-              }
-            </button>
-          </div>
-        }
+      <!-- Load more -->
+      @if (hasNext) {
+      <div class="load-more">
+        <button
+          type="button"
+          class="submit-btn"
+          (click)="loadComments(false)"
+          [disabled]="isLoadingMore"
+        >
+          @if (!isLoadingMore) {
+          {{ "our_story.comments.load_more" | translate }}
+          } @else {
+          {{ "our_story.comments.loading" | translate }}
+          }
+        </button>
       </div>
-    }
-
-    @if (!isInitialLoading && comments.length === 0) {
-      <div class="no-comments">
-        <p>{{ "our_story.comments.no_comment" | translate }}</p>
-      </div>
+      }
+    </div>
+    } @if (!isInitialLoading && comments.length === 0) {
+    <div class="no-comments">
+      <p>{{ "our_story.comments.no_comment" | translate }}</p>
+    </div>
     }
   </div>
 
   <!-- Subscriptions Section -->
   <div class="subscriptions-section" [formGroup]="subscriptionForm">
-    <h4 class="section-title">
-      {{ "our_story.comments.subscriptions.title" | translate }}
-    </h4>
-
-    <p class="section-helper">
-      {{ "our_story.comments.subscriptions.description" | translate }}
-    </p>
-
-    <div class="subscribe-row">
-
-      <input
-        id="subEmail"
-        type="email"
-        class="form-input"
-        formControlName="email"
-        [class.error]="subEmailCtrl?.invalid && subEmailCtrl?.touched"
-        [placeholder]="
-          'our_story.comments.subscriptions.notify_email_placeholder' | translate
-        "
-      />
-
-      <div class="actions">
-        <button
-          type="button"
-          class="submit-btn"
-          (click)="subscribe()"
-          [disabled]="subscriptionForm.invalid || isSubscribing"
-        >
-          @if (!isSubscribing) {
-            {{ "our_story.comments.subscriptions.subscribe" | translate }}
-          } @else {
-            {{ "our_story.comments.subscriptions.subscribing" | translate }}
-          }
-        </button>
-
-        <button
-          type="button"
-          class="submit-btn secondary"
-          (click)="unsubscribe()"
-          [disabled]="!subEmailCtrl?.value || isUnsubscribing"
-        >
-          @if (!isUnsubscribing) {
-            {{ "our_story.comments.subscriptions.unsubscribe" | translate }}
-          } @else {
-            {{ "our_story.comments.subscriptions.unsubscribing" | translate }}
-          }
-        </button>
-      </div>
+    <div class="section-title">
+      <button
+        type="button"
+        (click)="isSubsOpen = !isSubsOpen"
+        [attr.aria-expanded]="isSubsOpen"
+      >
+        <h4>{{ "our_story.comments.subscriptions.title" | translate }}</h4>
+        <span class="chevron" [class.open]="isSubsOpen">▸</span>
+      </button>
     </div>
 
-    @if (subEmailCtrl?.invalid && subEmailCtrl?.touched) {
-      <div class="error-message">
-        {{ "our_story.comments.subscriptions.notify_email_invalid" | translate }}
+    <div
+      id="subscriptions-content"
+      class="subscriptions-body"
+      [class.open]="isSubsOpen"
+      [attr.aria-hidden]="!isSubsOpen"
+    >
+      <p class="section-helper">
+        {{ "our_story.comments.subscriptions.description" | translate }}
+      </p>
+
+      <div class="subscribe-row">
+        <input
+          id="subEmail"
+          type="email"
+          class="form-input"
+          formControlName="email"
+          [class.error]="subEmailCtrl?.invalid && subEmailCtrl?.touched"
+          [placeholder]="
+            'our_story.comments.subscriptions.notify_email_placeholder'
+              | translate
+          "
+        />
+
+        <div class="actions">
+          <button
+            type="button"
+            class="submit-btn"
+            (click)="subscribe()"
+            [disabled]="subscriptionForm.invalid || isSubscribing"
+          >
+            @if (!isSubscribing) {
+            {{ "our_story.comments.subscriptions.subscribe" | translate }}
+            } @else {
+            {{ "our_story.comments.subscriptions.subscribing" | translate }}
+            }
+          </button>
+
+          <button
+            type="button"
+            class="submit-btn secondary"
+            (click)="unsubscribe()"
+            [disabled]="!subEmailCtrl?.value || isUnsubscribing"
+          >
+            @if (!isUnsubscribing) {
+            {{ "our_story.comments.subscriptions.unsubscribe" | translate }}
+            } @else {
+            {{ "our_story.comments.subscriptions.unsubscribing" | translate }}
+            }
+          </button>
+        </div>
       </div>
-    }
+
+      @if (subEmailCtrl?.invalid && subEmailCtrl?.touched) {
+      <div class="error-message">
+        {{
+          "our_story.comments.subscriptions.notify_email_invalid" | translate
+        }}
+      </div>
+      }
+    </div>
   </div>
 
   <!-- Comment Form Section -->
@@ -118,7 +133,11 @@
       {{ "our_story.comments.leave_comment_message" | translate }}
     </h4>
 
-    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="comment-form">
+    <form
+      [formGroup]="commentForm"
+      (ngSubmit)="onSubmit()"
+      class="comment-form"
+    >
       <div class="form-group">
         <label for="authorName" class="form-label">Nickname *</label>
         <input
@@ -132,13 +151,11 @@
             commentForm.get('authorName')?.touched
           "
         />
-        @if (
-          commentForm.get('authorName')?.invalid &&
-          commentForm.get('authorName')?.touched
-        ) {
-          <div class="error-message">
-            {{ getErrorMessage("authorName") }}
-          </div>
+        @if ( commentForm.get('authorName')?.invalid &&
+        commentForm.get('authorName')?.touched ) {
+        <div class="error-message">
+          {{ getErrorMessage("authorName") }}
+        </div>
         }
       </div>
 
@@ -160,13 +177,11 @@
           {{ currentLen || 0 }}/{{ maxCommentLength }}
         </div>
 
-        @if (
-          commentForm.get('messageHtml')?.invalid &&
-          commentForm.get('messageHtml')?.touched
-        ) {
-          <div class="error-message">
-            {{ getErrorMessage("messageHtml") }}
-          </div>
+        @if ( commentForm.get('messageHtml')?.invalid &&
+        commentForm.get('messageHtml')?.touched ) {
+        <div class="error-message">
+          {{ getErrorMessage("messageHtml") }}
+        </div>
         }
       </div>
 
@@ -176,9 +191,9 @@
         [disabled]="commentForm.invalid || isSubmitting"
       >
         @if (!isSubmitting) {
-          {{ "our_story.comments.submit" | translate }}
+        {{ "our_story.comments.submit" | translate }}
         } @else {
-          {{ "our_story.comments.submitting" | translate }}
+        {{ "our_story.comments.submitting" | translate }}
         }
       </button>
     </form>

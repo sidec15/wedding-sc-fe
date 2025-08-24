@@ -74,6 +74,7 @@ export class CommentsComponent implements OnChanges {
   maxNicknameLength = 20;
   commentRegex = /^[a-zA-Z0-9' -]+$/;
   toastDurationMs = 5000;
+  isSubsOpen = false; // default: hidden
 
   constructor(
     private fb: FormBuilder,
