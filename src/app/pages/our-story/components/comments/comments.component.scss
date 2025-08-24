@@ -9,6 +9,10 @@
   backdrop-filter: var(--backdrop-filter);
 }
 
+.loading{
+  color: rgb(var(--text));
+}
+
 .section-title {
   font-size: 1.25rem;
   font-weight: 600;
@@ -44,22 +48,28 @@
 
 .form-input {
   padding: 0.75rem;
-  border: 2px solid rgb(var(--light-gray));
-  border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: rgb(var(--bg));
+
+  border: 1px solid rgb(var(--light-gray));
+  border-radius: 4px;
+  background-color: rgb(var(--bg));
   color: rgb(var(--text));
 
-  &:focus-within {
+  &:focus {
     outline: none;
     border-color: rgb(var(--accent));
-    // box-shadow: 0 0 0 3px rgba(var(--accent), 0.2);
+  }
+
+  &:-webkit-autofill {
+    box-shadow: 0 0 0 1000px rgb(var(--bg)) inset !important;
+    -webkit-text-fill-color: rgb(var(--text)) !important;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: rgb(var(--text));
   }
 
   &.error {
     border-color: var(--error-border);
-    // box-shadow: 0 0 0 3px var(--box-shadow-medium);
   }
 }
 

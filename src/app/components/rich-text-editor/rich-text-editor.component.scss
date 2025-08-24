@@ -1,19 +1,111 @@
 @use "../../../styles/variables.scss" as *;
 
+/* ===== NgxEditor minimal, theme-aware overrides ===== */
+/* Keep :host ::ng-deep when this stays in the component's SCSS */
+:host ::ng-deep {
+  /* Toolbar container */
+  .NgxEditor__MenuBar {
+    background: rgba(var(--light-gray), 1);
+    border: 1px solid rgba(var(--text), 0.15);
+    border-radius: 8px;
+    padding: .25rem;
+  }
+
+  /* Make ALL toolbar controls identical (buttons, dropdowns, emoji) */
+  .NgxEditor__MenuBar button,
+  .NgxEditor__MenuBar .NgxEditor__Dropdown,
+  .emoji-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    min-width: 36px;
+    padding: 0 .6rem;
+    border-radius: 8px;
+    border: 1px solid rgba(var(--text), 0.2);
+    background: rgba(var(--bg), 0.9);
+    color: rgb(var(--text));
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+
+    &:hover {
+      background: rgba(var(--text), 0.08);
+      border-color: rgba(var(--text), 0.35);
+    }
+
+    &.ngx-editor-active,
+    &[aria-pressed="true"] {
+      background: rgba(var(--accent), 0.18);
+      border-color: rgba(var(--accent), 0.6);
+    }
+  }
+
+  /* Editor frame: keep your global form borders; only fix background */
+  .editor-content {
+    background: rgba(var(--light-gray), 1) !important;
+  }
+
+  /* Actual editable area */
+  .NgxEditor__Content {
+    min-height: 140px;
+    padding: 0.9rem 1rem;
+    background: rgba(var(--light-gray), 1) !important; /* dark pane */
+    color: rgb(var(--text)) !important;                /* light text */
+    caret-color: rgb(var(--text)) !important;
+  }
+
+  /* Placeholder */
+  .NgxEditor__Placeholder {
+    color: rgba(var(--text), 0.45) !important;
+  }
+
+  /* Typography helpers */
+  .NgxEditor__Content a {
+    color: rgb(var(--accent));
+    text-decoration: underline;
+  }
+  .NgxEditor__Content code {
+    background: rgba(var(--bg), 0.08);
+    border: 1px solid rgba(var(--text), 0.15);
+    border-radius: 6px;
+    padding: .1rem .35rem;
+  }
+  .NgxEditor__Content pre {
+    background: rgba(var(--bg), 0.08);
+    border: 1px solid rgba(var(--text), 0.15);
+    border-radius: 8px;
+    padding: .75rem .9rem;
+    overflow: auto;
+  }
+  .NgxEditor__Content blockquote {
+    border-left: 3px solid rgba(var(--text), 0.25);
+    margin: .5rem 0;
+    padding: .25rem .75rem;
+    color: rgba(var(--text), 0.85);
+    background: rgba(var(--bg), 0.06);
+    border-radius: 6px;
+  }
+
+  /* Dropdown panels */
+  .NgxEditor__Dropdown .NgxEditor__Dropdown--Panel {
+    background: rgba(var(--bg), 1);
+    color: rgb(var(--text));
+    border: 1px solid rgba(var(--text), 0.2);
+  }
+}
+
+/* ===== Your wrapper/tools (outside of ::ng-deep) ===== */
 .rte-wrapper {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
+
 .rte-toolbar {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-.emoji-btn {
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  border: 1px solid rgba(var(--accent), 0.3);
-  background: rgba(var(--bg), 0.8);
-  cursor: pointer;
-}
+
+/* No separate .emoji-btn rules needed here:
+   it is already normalized alongside toolbar buttons above */
