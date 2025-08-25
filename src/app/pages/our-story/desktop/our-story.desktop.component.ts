@@ -16,10 +16,16 @@ import { CommentsComponent } from '../components/comments/comments.component';
 import { Comment } from '../components/comments/models/comment';
 import { wait } from '../../../utils/time.utils';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RingScrollComponent } from '../../../components/ring-scroll/ring-scroll.component';
 
 @Component({
   selector: 'app-our-story-desktop',
-  imports: [TranslateModule, CommonModule, CommentsComponent],
+  imports: [
+    TranslateModule,
+    CommonModule,
+    CommentsComponent,
+    RingScrollComponent,
+  ],
   templateUrl: './our-story.desktop.component.html',
   styleUrls: ['./our-story.desktop.component.scss'],
   providers: [CardsService],
