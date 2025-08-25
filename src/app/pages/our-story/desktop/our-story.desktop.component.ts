@@ -264,4 +264,18 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     // use your existing animated transition
     this.transitionToCard(target, null);
   }
+
+  goToFirstCard(): void {
+    if (!this.isTransitioning && this.currentIndex > 0) {
+      this.onJump(1);
+    }
+  }
+
+  goToLastCard(): void {
+    if (!this.isTransitioning && this.currentIndex < this.cards.length - 1) {
+      this.onJump(this.cards.length);
+    }
+  }
+
+
 }
