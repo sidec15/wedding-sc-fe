@@ -9,7 +9,7 @@
   backdrop-filter: var(--backdrop-filter);
 }
 
-.loading{
+.loading {
   color: rgb(var(--text));
 }
 
@@ -285,28 +285,6 @@
   }
 }
 
-// Responsive Design
-@media (max-width: 768px) {
-  .comments-section {
-    padding: 1rem;
-    margin-top: 1rem;
-  }
-
-  .comment-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
-
-  .submit-btn {
-    align-self: stretch;
-  }
-
-  .form-textarea {
-    min-height: 80px;
-  }
-}
-
 // Animation for new comments
 .comment-item {
   animation: slideIn 0.3s ease-out;
@@ -320,5 +298,157 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ===========================
+   Comments — Mobile (≤768px)
+   =========================== */
+@media (max-width: 768px) {
+  .comments-section {
+    padding: 1rem !important;
+    margin-top: 1rem !important;
+    border-radius: 10px !important;
+    box-shadow: 0 3px 12px var(--box-shadow-light) !important;
+  }
+
+  .section-title {
+    font-size: 1.1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Form */
+  .comment-form-section {
+    margin-bottom: 1.5rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  .comment-form {
+    gap: 1rem !important;
+  }
+
+  .form-group {
+    gap: 0.4rem !important;
+  }
+
+  .form-label {
+    font-size: 0.95rem !important;
+  }
+
+  .form-input {
+    padding: 0.65rem 0.75rem !important;
+    font-size: 1rem !important;
+    border-radius: 6px !important;
+  }
+
+  /* Rich text editor area */
+  :host ::ng-deep app-rich-text-editor .rte-wrapper {
+    padding: 0.6rem !important;
+    border-radius: 8px !important;
+  }
+  :host ::ng-deep app-rich-text-editor .rte-wrapper .NgxEditor__Content {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .char-count {
+    justify-content: flex-end !important;
+    font-size: 0.85rem !important;
+    margin-top: -0.25rem !important;
+  }
+
+  .submit-btn {
+    align-self: stretch !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 1rem !important;
+    border-radius: 10px !important;
+  }
+
+  /* Comments list */
+  .comments-list {
+    gap: 0.75rem !important;
+  }
+
+  .comment-item {
+    padding: 0.85rem !important;
+    border-radius: 10px !important;
+    border-left-width: 3px !important;
+  }
+
+  .comment-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.25rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .comment-author {
+    font-size: 0.95rem !important;
+  }
+  .comment-date {
+    font-size: 0.8rem !important;
+  }
+
+  .comment-content {
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+    word-break: break-word !important;
+  }
+
+  .no-comments {
+    padding: 1.25rem !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* Load more */
+  .load-more .submit-btn {
+    width: 100% !important;
+  }
+
+  /* Subscriptions block */
+  .subscriptions-section {
+    gap: 0.75rem !important;
+    margin: 1.5rem 0 !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .subscriptions-section .section-title button h4 {
+    font-size: 1.05rem !important;
+  }
+
+  .subscriptions-section .section-helper {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .subscriptions-section .subscribe-row {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+  }
+
+  .subscriptions-section .form-input {
+    flex: 1 1 auto !important;
+    max-width: 100% !important;
+  }
+
+  .subscriptions-section .actions {
+    width: 100% !important;
+    gap: 0.5rem !important;
+  }
+
+  .subscriptions-section .actions .submit-btn {
+    flex: 1 1 0 !important;
+    padding: 0.7rem 0.9rem !important;
+  }
+
+  /* Collapsible body easing on mobile */
+  .subscriptions-section .subscriptions-body {
+    transition: max-height 0.26s ease, opacity 0.2s ease !important;
+  }
+
+  /* Loading text */
+  .loading {
+    text-align: center !important;
+    padding-block: 0.75rem !important;
   }
 }
