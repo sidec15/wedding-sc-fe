@@ -71,6 +71,7 @@ export class RichTextEditorComponent
   editor!: Editor;
   showEmoji = false;
   control = new FormControl<string>('', { nonNullable: true });
+  toolbarOpen = false; // collapsed by default on mobile
 
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};

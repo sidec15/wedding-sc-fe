@@ -1,10 +1,31 @@
 <div
   class="rte-wrapper"
   [class.error]="error"
+  [class.toolbar-open]="toolbarOpen"
   (focusout)="markTouched()"
 >
   <div class="rte-toolbar">
-    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+    <!-- Collapse/Expand (mobile only via CSS) -->
+    <button
+      type="button"
+      class="toolbar-toggle"
+      (click)="toolbarOpen = !toolbarOpen"
+      [attr.aria-expanded]="toolbarOpen"
+      aria-controls="ngx-toolbar"
+    >
+      <span class="label">{{ toolbarOpen ? 'Hide' : 'More' }}</span>
+      <span class="icon">⋯</span>
+    </button>
+
+    <!-- Real toolbar -->
+    <ngx-editor-menu
+      id="ngx-toolbar"
+      [editor]="editor"
+      [toolbar]="toolbar"
+      class="ngx-toolbar"
+    ></ngx-editor-menu>
+
+    <!-- Emoji stays available even when collapsed -->
     <button
       *ngIf="emojiEnabled"
       type="button"
