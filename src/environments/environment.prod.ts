@@ -2,6 +2,6 @@ export const environment = {
   production: true,
   apiUrl: 'https://api.matrimonio.chiaraesimone.it',
   captcha: {
-    siteKey: '6LeGlWkrAAAAADh2u8GPtjSZd7AMF4EqGR6fk_-F'
+    siteKey: '6LdrO7ErAAAAAN3jncLIIk2F3bRz4hwbMDYN7CDl'
   },
 };

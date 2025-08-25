@@ -1,16 +1,15 @@
 <!-- Bind directly to the parent form instance -->
 <div class="form-group" [formGroup]="form">
   <!-- security-consent.component.html -->
-<ng-container *ngIf="showCaptcha">
-  <re-captcha
-    [siteKey]="siteKey"
-    [formControlName]="captchaControlName"
-    (resolved)="onCaptchaResolved($event)"
-    (error)="onCaptchaError()"
-    [attr.data-theme]="recaptchaTheme"
-  ></re-captcha>
-</ng-container>
-
+  <ng-container *ngIf="showCaptcha">
+    <re-captcha
+      [siteKey]="siteKey"
+      [theme]="recaptchaTheme"
+      [formControlName]="captchaControlName"
+      (resolved)="onCaptchaResolved($event)"
+      (error)="onCaptchaError()"
+    ></re-captcha>
+  </ng-container>
 
   @if (form.get(captchaControlName)?.errors?.['required'] && submitted) {
   <div class="error">
