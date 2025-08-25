@@ -210,34 +210,11 @@
     margin-bottom: 0.25rem;
     width: 100%;
 
-    button {
-      all: unset; // reset default button styles
-      display: flex;
-      align-items: center;
-      gap: 0.5rem; // space between title and arrow
-      cursor: pointer;
-
-      &:focus-visible {
-        outline: 2px solid rgba(var(--text), 0.35);
-        outline-offset: 2px;
-      }
-
-      h4 {
-        margin: 0;
-        font-size: 1.1rem;
-        font-weight: 600;
-        text-align: left;
-      }
-
-      .chevron {
-        font-size: 1.4rem; // bigger arrow
-        transition: transform 0.25s ease;
-        transform: rotate(0deg);
-
-        &.open {
-          transform: rotate(90deg);
-        }
-      }
+    h4 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
     }
   }
 
@@ -245,13 +222,8 @@
   .subscriptions-body {
     width: 100%;
     overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transition: max-height 0.28s ease, opacity 0.2s ease;
-  }
-  .subscriptions-body.open {
-    max-height: 1000px;
     opacity: 1;
+    transition: max-height 0.28s ease, opacity 0.2s ease;
   }
 
   .section-helper {
@@ -314,7 +286,6 @@
 
   .section-title {
     font-size: 1.1rem !important;
-    margin-bottom: 1rem !important;
   }
 
   /* Form */
