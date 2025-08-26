@@ -15,21 +15,12 @@ import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-home',
-  imports: [
-    TranslateModule,
-    NgTemplateOutlet
-],
+  imports: [TranslateModule, NgTemplateOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
-  countdown = {
-    days: '00',
-    hours: '00',
-    minutes: '00',
-    seconds: '00',
-  };
-
+export class HomeComponent implements OnInit, OnDestroy {
+  countdown = { days: '00', hours: '00', minutes: '00', seconds: '00' };
   isMobile = false;
 
   private timerSub!: Subscription;
@@ -42,27 +33,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private platformService: PlatformService,
     private headerService: HeaderService,
     private menuService: MenuService,
-    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     if (!this.platformService.isPlatformReady()) return;
-    this.timerSub = timer(0, 1000).subscribe(() => this.updateCountdown());
-  }
 
-  ngAfterViewInit(): void {
-    if (!this.platformService.isPlatformReady()) return;
+    // 1) Decide layout before first render
     this.isMobile = this.platformService.isMobile();
-    // this.cdr.detectChanges(); // force DOM to re-evaluate *ngIf
-    // if (this.isMobile) {
-    //   this.headerService.disableAnimation(); // Disable header animation on home page
-    // }
+
+    // 2) Do one initial compute (no error)
+    this.updateCountdown();
+
+    // 3) Start ticking AFTER first render to avoid NG0100
+    this.timerSub = timer(1000, 1000).subscribe(() => this.updateCountdown());
   }
 
   ngOnDestroy(): void {
     this.timerSub?.unsubscribe();
-    // this.eventService.emitHeaderBackgroundFillEvent(false); // Emit event to reset header background
-    // if (this.isMobile) this.headerService.enableAnimation(); // Re-enable header animation when leaving home page
   }
 
   toggleMenu(): void {
@@ -76,7 +63,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         .diff(now, ['days', 'hours', 'minutes', 'seconds'])
         .toObject();
 
-      if (!diff || diff.seconds! < 0) {
+      if (
+        !diff ||
+        (diff.days ?? 0) +
+          (diff.hours ?? 0) +
+          (diff.minutes ?? 0) +
+          (diff.seconds ?? 0) <
+          0
+      ) {
         this.countdown = {
           days: '00',
           hours: '00',
@@ -87,10 +81,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       this.countdown = {
-        days: String(Math.floor(diff.days ?? 0)).padStart(2, '0'),
-        hours: String(Math.floor(diff.hours ?? 0)).padStart(2, '0'),
-        minutes: String(Math.floor(diff.minutes ?? 0)).padStart(2, '0'),
-        seconds: String(Math.floor(diff.seconds ?? 0)).padStart(2, '0'),
+        days: String(Math.max(0, Math.floor(diff.days ?? 0))).padStart(2, '0'),
+        hours: String(Math.max(0, Math.floor(diff.hours ?? 0))).padStart(
+          2,
+          '0'
+        ),
+        minutes: String(Math.max(0, Math.floor(diff.minutes ?? 0))).padStart(
+          2,
+          '0'
+        ),
+        seconds: String(Math.max(0, Math.floor(diff.seconds ?? 0))).padStart(
+          2,
+          '0'
+        ),
       };
     } catch (err) {
       console.error('Countdown error:', err);

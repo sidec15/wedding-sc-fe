@@ -2,11 +2,6 @@
   class="home-page"
   >
 
-  <!-- appHeaderBgFillObserver
-  [fillOnVisible]="false"
-  [isEnabled]="!isMobile"
-   -->
-  <!-- Desktop Countdown (in hero image) -->
   <div class="hero-image">
     @if (!isMobile) {
       <div class="countdown">
@@ -37,7 +32,6 @@
         <ng-container *ngTemplateOutlet="funnyImageTemplate"></ng-container>
       }
 
-      <!-- Mobile Countdown -->
       @if (isMobile) {
         <div class="countdown">
           <ng-container *ngTemplateOutlet="countdownTemplate"></ng-container>

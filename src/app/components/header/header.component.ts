@@ -144,6 +144,7 @@ export class HeaderComponent {
       nav.classList.remove('closing');
       this.setBodyScrollLock(false);
     } else if (event.status === 'openStart') {
+      this.headerService.enableHeader();
       this.setBodyScrollLock(true);
     }
   }
