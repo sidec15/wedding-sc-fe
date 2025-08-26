@@ -545,119 +545,119 @@
       }
 
       /* Turn 3 columns into a single-column ordered flow */
-      // .three-column-layout {
-      //   display: grid !important;
-      //   grid-template-columns: 1fr !important;
-      //   /* Visual order: title → image → description → comics */
-      //   grid-template-areas:
-      //     "title"
-      //     "image"
-      //     "desc"
-      //     "comics" !important;
-      //   align-items: start !important;
-      //   gap: 0.75rem !important;
-      //   background-color: transparent !important;
+      .three-column-layout {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        /* Visual order: title → image → description → comics */
+        grid-template-areas:
+          "title"
+          "image"
+          "desc"
+          "comics" !important;
+        align-items: start !important;
+        gap: 0.75rem !important;
+        background-color: transparent !important;
 
-      //   /* Let inner wrappers disappear so children can be placed as grid items */
-      //   .text-column,
-      //   .text-column .text-content {
-      //     display: contents !important;
-      //   }
+        /* Let inner wrappers disappear so children can be placed as grid items */
+        .text-column,
+        .text-column .text-content {
+          display: contents !important;
+        }
 
-      //   /* Title */
-      //   .text-column .text-content > h2 {
-      //     grid-area: title !important;
-      //     font-size: 1.4rem !important;
-      //     line-height: 1.25 !important;
-      //     margin: 0 0 0.25rem 0 !important;
-      //     text-align: center !important;
-      //   }
+        /* Title */
+        .text-column .text-content > h2 {
+          grid-area: title !important;
+          font-size: 1.4rem !important;
+          line-height: 1.25 !important;
+          margin: 0 0 0.25rem 0 !important;
+          text-align: center !important;
+        }
 
-      //   /* Image */
-      //   .image-column {
-      //     grid-area: image !important;
-      //     justify-self: center !important;
-      //     width: 100% !important;
+        /* Image */
+        .image-column {
+          grid-area: image !important;
+          justify-self: center !important;
+          width: 100% !important;
 
-      //     .image-container {
-      //       width: 100% !important;
-      //       max-width: 100% !important;
-      //       height: auto !important;
-      //       max-height: 60svh !important; /* good viewport fit */
-      //       box-shadow: 0 4px 16px var(--box-shadow-medium) !important;
-      //       border-radius: 12px !important;
-      //       padding: 0 !important;
+          .image-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            max-height: 60svh !important; /* good viewport fit */
+            box-shadow: 0 4px 16px var(--box-shadow-medium) !important;
+            border-radius: 12px !important;
+            padding: 0 !important;
 
-      //       img {
-      //         max-width: 100% !important;
-      //         max-height: 100% !important;
-      //         width: auto !important;
-      //         height: auto !important;
-      //         object-fit: contain !important;
-      //         display: block !important;
-      //       }
+            img {
+              max-width: 100% !important;
+              max-height: 100% !important;
+              width: auto !important;
+              height: auto !important;
+              object-fit: contain !important;
+              display: block !important;
+            }
 
-      //       /* So transitions don’t jank on mobile */
-      //       &.before,
-      //       &.after,
-      //       &.slide-in-from-left,
-      //       &.slide-in-from-right {
-      //         animation-duration: 0.6s !important;
-      //       }
-      //     }
-      //   }
+            /* So transitions don’t jank on mobile */
+            &.before,
+            &.after,
+            &.slide-in-from-left,
+            &.slide-in-from-right {
+              animation-duration: 0.6s !important;
+            }
+          }
+        }
 
-      //   /* Description */
-      //   .text-column .text-content > .description {
-      //     grid-area: desc !important;
-      //     font-size: 1.05rem !important;
-      //     line-height: 1.5 !important;
-      //     color: rgb(var(--text)) !important;
-      //     background: rgba(var(--bg), 0.9) !important;
-      //     border-radius: 12px !important;
-      //     padding: 0.75rem 1rem !important;
-      //     margin-top: 0.25rem !important;
-      //   }
+        /* Description */
+        .text-column .text-content > .description {
+          grid-area: desc !important;
+          font-size: 1.05rem !important;
+          line-height: 1.5 !important;
+          color: rgb(var(--text)) !important;
+          background: rgba(var(--bg), 0.9) !important;
+          border-radius: 12px !important;
+          padding: 0.75rem 1rem !important;
+          margin-top: 0.25rem !important;
+        }
 
-      //   /* Comics */
-      //   .comic-column {
-      //     grid-area: comics !important;
-      //     justify-self: stretch !important;
-      //     height: auto !important;
+        /* Comics */
+        .comic-column {
+          grid-area: comics !important;
+          justify-self: stretch !important;
+          height: auto !important;
 
-      //     .comic-container {
-      //       background: rgba(var(--bg), 0.8) !important;
-      //       padding: 0.75rem !important;
-      //       border-radius: 12px !important;
-      //       gap: 0.75rem !important;
-      //       max-height: none !important;
-      //       overflow-y: visible !important;
+          .comic-container {
+            background: rgba(var(--bg), 0.8) !important;
+            padding: 0.75rem !important;
+            border-radius: 12px !important;
+            gap: 0.75rem !important;
+            max-height: none !important;
+            overflow-y: visible !important;
 
-      //       .comic-image {
-      //         max-width: 100% !important;
-      //         height: auto !important;
-      //         object-fit: contain !important;
+            .comic-image {
+              max-width: 100% !important;
+              height: auto !important;
+              object-fit: contain !important;
 
-      //         /* Tighter, simpler dynamic heights for comics on mobile */
-      //         &:nth-child(1):only-child {
-      //           max-height: 40svh !important;
-      //         }
-      //         &:nth-child(1):not(:only-child) {
-      //           max-height: 28svh !important;
-      //         }
-      //         &:nth-child(2) {
-      //           max-height: 24svh !important;
-      //         }
-      //         &:nth-child(3) {
-      //           max-height: 20svh !important;
-      //         }
-      //         &:nth-child(n + 4) {
-      //           max-height: 16svh !important;
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
+              /* Tighter, simpler dynamic heights for comics on mobile */
+              &:nth-child(1):only-child {
+                max-height: 40svh !important;
+              }
+              &:nth-child(1):not(:only-child) {
+                max-height: 28svh !important;
+              }
+              &:nth-child(2) {
+                max-height: 24svh !important;
+              }
+              &:nth-child(3) {
+                max-height: 20svh !important;
+              }
+              &:nth-child(n + 4) {
+                max-height: 16svh !important;
+              }
+            }
+          }
+        }
+      }
 
       /* Comments block full-width, lighter chrome */
       .comments-section-separate {
