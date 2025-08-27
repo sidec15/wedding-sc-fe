@@ -95,7 +95,8 @@ export class EventService {
   }
 
   emitFlash(flashMessage: FlashMessage): void {
-    this.flashSubject.next(flashMessage);
+    // debug_sdc
+    // this.flashSubject.next(flashMessage);
   }
 
   emitThemeChange(themeMessage: ThemeMessage){

@@ -550,8 +550,9 @@
         grid-template-columns: 1fr !important;
         /* Visual order: title → image → description → comics */
         grid-template-areas:
-          "title"
-          "image"
+        "image"
+        "title"
+
           "desc"
           "comics" !important;
         align-items: start !important;
@@ -597,13 +598,6 @@
               display: block !important;
             }
 
-            /* So transitions don’t jank on mobile */
-            &.before,
-            &.after,
-            &.slide-in-from-left,
-            &.slide-in-from-right {
-              animation-duration: 0.6s !important;
-            }
           }
         }
 
