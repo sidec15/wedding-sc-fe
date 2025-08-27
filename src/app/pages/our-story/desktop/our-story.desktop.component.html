@@ -21,7 +21,7 @@
     ></ng-container>
 
     <!-- Next card (only during transition) -->
-    @if (isTransitioning && cards[nextIndex]) {
+    @if (isTransitioning && !isGreaterJump) {
     <ng-container
       *ngTemplateOutlet="
         cards[nextIndex].type === 'card' ? cardTemplate : textOnlyTemplate;

@@ -49,6 +49,7 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
   nextIndex: number = 0;
   isMobile: boolean = false;
   showCommentsSection: boolean = true;
+  isGreaterJump = false;
 
   constructor(
     private platformService: PlatformService,
@@ -146,6 +147,9 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     this.isTransitioning = true;
     this.previousIndex = this.currentIndex;
     this.nextIndex = newIndex;
+    this.isGreaterJump =
+      (this.previousIndex == 0 && this.nextIndex == this.cards.length - 1) ||
+      (this.previousIndex == this.cards.length - 1 && this.nextIndex == 0);
 
     const currentCard = this.cards[this.currentIndex];
     const nextCard = this.cards[newIndex];
@@ -175,7 +179,7 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     if (clickedBtnRef && clickedBtnRef.nativeElement) {
       clickedBtnRef.nativeElement.classList.remove('clicked');
     }
-    if(this.isMobile){
+    if (this.isMobile) {
       this.temporarilyDisableHover(clickedBtnRef);
     }
     currentCard.status = 'hidden';
