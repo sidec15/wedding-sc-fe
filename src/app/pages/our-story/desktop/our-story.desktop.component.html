@@ -139,13 +139,14 @@
     </ng-template>
 
     <ng-template #navigationControls>
-      <div class="navigation-controls">
+      <div class="navigation-controls" #navCtrl>
         <!-- Go to first -->
         <button
           class="nav-btn first-btn"
           (click)="goToFirstCard()"
           [disabled]="currentIndex === 0 || isTransitioning"
           aria-label="First card"
+          #firstBtn
         >
           <i class="fas fa-angle-double-left"></i>
         </button>
@@ -192,6 +193,7 @@
           (click)="goToLastCard()"
           [disabled]="currentIndex === cards.length - 1 || isTransitioning"
           aria-label="Last card"
+          #lastBtn
         >
           <i class="fas fa-angle-double-right"></i>
         </button>

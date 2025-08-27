@@ -31,10 +31,16 @@ import { RingScrollComponent } from '../../../components/ring-scroll/ring-scroll
   providers: [CardsService],
 })
 export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('navCtrl', { static: false })
+  navCtrl!: ElementRef;
   @ViewChild('prevBtn', { static: false })
   prevBtn!: ElementRef;
   @ViewChild('nextBtn', { static: false })
   nextBtn!: ElementRef;
+  @ViewChild('firstBtn', { static: false })
+  firstBtn!: ElementRef;
+  @ViewChild('lastBtn', { static: false })
+  lastBtn!: ElementRef;
 
   cards: Card[] = [];
   currentIndex: number = 0;
@@ -113,7 +119,7 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
 
   private async transitionToCard(
     newIndex: number,
-    clickedButton: 'prev' | 'next' | null
+    clickedButton: ClickedButton | null
   ): Promise<void> {
     if (this.isTransitioning || newIndex === this.currentIndex) return;
 
@@ -124,9 +130,14 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     if (clickedButton !== null) {
       if (clickedButton === 'prev') {
         clickedBtnRef = this.prevBtn;
-      } else {
+      } else if (clickedButton === 'next') {
         clickedBtnRef = this.nextBtn;
+      } else if (clickedButton === 'first') {
+        clickedBtnRef = this.firstBtn;
+      } else {
+        clickedBtnRef = this.lastBtn;
       }
+
       if (clickedBtnRef && clickedBtnRef.nativeElement) {
         clickedBtnRef.nativeElement.classList.add('clicked');
       }
@@ -163,6 +174,9 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     // Update states after transition
     if (clickedBtnRef && clickedBtnRef.nativeElement) {
       clickedBtnRef.nativeElement.classList.remove('clicked');
+    }
+    if(this.isMobile){
+      this.temporarilyDisableHover(clickedBtnRef);
     }
     currentCard.status = 'hidden';
     currentCard.position = isForward ? 'before' : 'after';
@@ -262,7 +276,8 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     if (target === this.currentIndex) return;
 
     // use your existing animated transition
-    this.transitionToCard(target, null);
+    const clieckedButton: ClickedButton = target === 0 ? 'first' : 'last';
+    this.transitionToCard(target, clieckedButton);
   }
 
   goToFirstCard(): void {
@@ -277,5 +292,23 @@ export class OurStoryDesktopComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  private temporarilyDisableHover(elRef: ElementRef | null) {
+    if (!elRef?.nativeElement) return;
 
+    const element = elRef.nativeElement;
+    const originalPointerEvents = element.style.pointerEvents;
+
+    // Disable pointer events to clear hover
+    element.style.pointerEvents = 'none';
+
+    // Force reflow to ensure hover state is cleared
+    void element.offsetWidth;
+
+    // Restore pointer events after a very short delay
+    setTimeout(() => {
+      element.style.pointerEvents = originalPointerEvents || '';
+    }, 100);
+  }
 }
+
+type ClickedButton = 'first' | 'prev' | 'next' | 'last';
