@@ -1,12 +1,59 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, map, shareReplay, Subject } from 'rxjs';
 import { constants } from '../constants';
 import { Theme } from '../models/theme';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { LayoutType } from '../models/layout';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
+  /**
+   * Emits the current {@link LayoutType} (e.g. `LayoutType.mobile` or `LayoutType.desktop`)
+   * whenever the viewport crosses the defined breakpoint.
+   *
+   * - Breakpoint used: `(max-width: 768px)`
+   *   - ≤ 768px → emits `LayoutType.mobile`
+   *   - > 768px → emits `LayoutType.desktop`
+   *
+   * This observable is:
+   * - **Hot**: All subscribers share the same underlying `BreakpointObserver` listener.
+   * - **Replayable**: Thanks to `shareReplay(1)`, new subscribers immediately receive
+   *   the latest known layout without waiting for a resize event.
+   *
+   * ### Example usage in a component:
+   * ```ts
+   * layout$ = this.eventService.layout$;
+   * ```
+   *
+   * ```html
+   * <div *ngIf="(layout$ | async) === LayoutType.mobile">
+   *   Mobile layout
+   * </div>
+   * <div *ngIf="(layout$ | async) === LayoutType.desktop">
+   *   Desktop layout
+   * </div>
+   * ```
+   */
+  readonly layout$;
+
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.layout$ = this.breakpointObserver.observe(['(max-width: 768px)']).pipe(
+      // Map BreakpointState → LayoutType enum
+      map((result) =>
+        result.matches ? LayoutType.mobile : LayoutType.desktop
+      ),
+
+      /**
+       * shareReplay(1) ensures:
+       * 1. All subscribers share the same resize listener (no duplicate work).
+       * 2. The most recent value is replayed to new subscribers immediately.
+       */
+      shareReplay(1)
+    );
+  }
+
   // the difference between Subject and BehaviorSubject is that
   // BehaviorSubject requires an initial value and always emits the current value
 
@@ -99,10 +146,9 @@ export class EventService {
     // this.flashSubject.next(flashMessage);
   }
 
-  emitThemeChange(themeMessage: ThemeMessage){
+  emitThemeChange(themeMessage: ThemeMessage) {
     this.themeSubject.next(themeMessage);
   }
-
 }
 
 export class ScrollEvent {

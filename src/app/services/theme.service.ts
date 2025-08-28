@@ -21,6 +21,22 @@ export class ThemeService {
     return this.currentTheme;
   }
 
+  getCurrentThemeToApply(): Theme {
+    return this.getThemeToApply(this.getCurrentTheme());
+  }
+
+  private getThemeToApply(theme: Theme) {
+    let themeToApply = theme;
+    if (theme === Theme.System) {
+      const prefersDarkScheme = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
+      themeToApply = prefersDarkScheme ? Theme.Dark : Theme.Light;
+      themeToApply;
+    }
+    return themeToApply;
+  }
+
   setCurrentTheme(theme: Theme): void {
     this.currentTheme = theme;
     this.storageService.set('theme', theme);
@@ -34,13 +50,7 @@ export class ThemeService {
     // avoid SSR crash
     if (!this.platformService.isPlatformReady()) return;
 
-    let themeToApply = theme;
-    if (theme === Theme.System) {
-      const prefersDarkScheme = window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      ).matches;
-      themeToApply = prefersDarkScheme ? Theme.Dark : Theme.Light;
-    }
+    let themeToApply = this.getThemeToApply(theme);
 
     document.documentElement.setAttribute('data-theme', themeToApply);
 

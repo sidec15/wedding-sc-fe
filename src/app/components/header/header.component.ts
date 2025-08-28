@@ -1,20 +1,30 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { combineLatest, map, Observable, startWith, Subscription } from 'rxjs';
 import { Theme } from '../../models/theme';
-import { EventService, MenuEvent } from '../../services/event.service';
+import {
+  EventService,
+  MenuEvent,
+  ThemeMessage,
+} from '../../services/event.service';
 import { HeaderService } from '../../services/header.service';
 import { MenuService } from '../../services/menu.service';
 import { PlatformService } from '../../services/platform.service';
 import { ThemeService } from '../../services/theme.service';
 import { LanguageService } from '../../services/language.service';
-import { NgClass, NgStyle } from '@angular/common';
+import { CommonModule, NgClass, NgStyle } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { constants } from '../../constants';
+import { LayoutType } from '../../models/layout';
 
 @Component({
   selector: 'app-header',
-  imports: [TranslateModule, RouterModule, NgClass, NgStyle],
+  imports: [TranslateModule, RouterModule, CommonModule, NgClass],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -23,9 +33,43 @@ export class HeaderComponent {
 
   languageDropdownOpen = false;
   themeDropdownOpen = false;
+  /**
+   * navBackground$ is an observable string representing the CSS `background-image`
+   * for the navigation menu.
+   *
+   * Reactive behavior:
+   * - Listens to both theme changes (`eventService.theme$`) and layout changes (`eventService.layout$`).
+   * - If the layout is **desktop**, it always emits `"none"`, meaning no background image is applied.
+   * - If the layout is **mobile**, it computes the appropriate background image URL based on the current theme.
+   *
+   * Technical details:
+   * - `combineLatest` merges the two streams (`theme$` and `layout$`), so any change
+   *   in theme or layout triggers a new emission.
+   * - `startWith` ensures both streams have an initial value immediately:
+   *   - theme$: initialized with the current theme from ThemeService
+   *   - layout$: initialized with `LayoutType.desktop` (or whatever your default is)
+   * - `map` applies the logic: return `"none"` for desktop, or `computeBackground(...)` for mobile.
+   *
+   * Benefits:
+   * - Fully reactive: no manual subscriptions or `markForCheck()` needed.
+   * - Prevents ExpressionChangedAfterItHasBeenCheckedError on initialization.
+   * - Keeps logic declarative and easy to maintain.
+   *
+   * Example usage in template:
+   * ```html
+   * <ul
+   *   class="nav-links"
+   *   [class.open]="isMenuOpen"
+   *   [style.background-image]="navBackground$ | async"
+   * ></ul>
+   * ```
+   */
+  readonly navBackground$: Observable<string>;
 
   private menuSub!: Subscription;
   private headerBgSub!: Subscription;
+  private themeSub!: Subscription;
+  private layoutSub!: Subscription;
 
   @ViewChild('languageDropdown', { static: false })
   languageDropdownRef!: ElementRef;
@@ -42,8 +86,24 @@ export class HeaderComponent {
     private headerService: HeaderService,
     private menuService: MenuService,
     private themeService: ThemeService,
-    private languageService: LanguageService
-  ) {}
+    private languageService: LanguageService,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.navBackground$ = combineLatest([
+      this.eventService.theme$.pipe(
+        startWith({ theme: this.themeService.getCurrentThemeToApply() } as ThemeMessage)
+      ),
+      this.eventService.layout$.pipe(
+        startWith(LayoutType.desktop) // fallback if no value yet
+      )
+    ]).pipe(
+      map(([themeMessage, layout]) =>
+        layout === LayoutType.desktop
+          ? 'none'
+          : this.computeBackground(themeMessage.theme)
+      )
+    );
+  }
 
   ngAfterViewInit(): void {
     if (!this.platformService.isPlatformReady()) return;
@@ -59,24 +119,18 @@ export class HeaderComponent {
         this.isHeaderFilled = e.fillBackground; // Update header background state
       }
     );
+
+    this.layoutSub = this.eventService.layout$.subscribe((e) => {
+      this.onLayoutEvent(e);
+    });
   }
 
   ngOnDestroy(): void {
     this.menuSub?.unsubscribe(); // Unsubscribe from menu events
     this.headerBgSub?.unsubscribe(); // Unsubscribe from header background events
+    this.themeSub?.unsubscribe();
     this.headerService.destroy(); // Clean up header service
     this.removeDocumentClickListener();
-  }
-
-  get isMobile(): boolean {
-    return this.platformService.isMobile(); // Check if the platform is mobile
-  }
-
-  get navBackground(): string {
-    if (this.themeService.getCurrentTheme() === Theme.Dark) {
-      return 'url("/images/mobile-menu/bg-02.png")';
-    }
-    return 'url("/images/mobile-menu/bg-01.png")';
   }
 
   get isMenuOpen(): boolean {
@@ -126,7 +180,7 @@ export class HeaderComponent {
   }
 
   private setBodyScrollLock(lock: boolean) {
-    if (this.isMobile) {
+    if (this.platformService.isMobile()) {
       document.body.style.overflow = lock ? 'hidden' : '';
       document.body.style.touchAction = lock ? 'none' : '';
     }
@@ -152,7 +206,8 @@ export class HeaderComponent {
   private addDocumentClickListener(type: 'language' | 'theme') {
     this.removeDocumentClickListener();
     this.documentClickListener = (event: MouseEvent) => {
-      const dropdownRef = type === 'language' ? this.languageDropdownRef : this.themeDropdownRef;
+      const dropdownRef =
+        type === 'language' ? this.languageDropdownRef : this.themeDropdownRef;
       if (dropdownRef && !dropdownRef.nativeElement.contains(event.target)) {
         if (type === 'language') this.languageDropdownOpen = false;
         if (type === 'theme') this.themeDropdownOpen = false;
@@ -166,6 +221,21 @@ export class HeaderComponent {
     if (this.documentClickListener) {
       document.removeEventListener('click', this.documentClickListener, true);
       this.documentClickListener = undefined;
+    }
+  }
+
+  private computeBackground(t: Theme) {
+    const url =
+      t === Theme.Dark
+        ? 'url("/images/mobile-menu/bg-02.png")'
+        : 'url("/images/mobile-menu/bg-01.png")';
+
+    return url;
+  }
+
+  private onLayoutEvent(layoutType: LayoutType) {
+    if (layoutType == LayoutType.desktop && this.isMenuOpen) {
+      this.menuService.closeMenu();
     }
   }
 }
