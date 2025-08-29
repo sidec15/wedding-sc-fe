@@ -80,6 +80,12 @@ export class HeaderComponent {
 
   private documentClickListener?: (event: MouseEvent) => void;
 
+  // --- Swipe up to close menu logic ---
+  private touchStartY: number | null = null;
+  private touchEndY: number | null = null;
+  private swipeListenerAdded = false;
+  private swipeUpThreshold = 60;
+
   constructor(
     private platformService: PlatformService,
     private eventService: EventService,

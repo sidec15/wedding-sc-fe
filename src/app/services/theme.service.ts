@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Theme } from '../models/theme';
 import { PlatformService } from './platform.service';
-import { StorageService } from './storage.service';
 import { constants } from '../constants';
 import { EventService, ThemeMessage } from './event.service';
+import { StorageService } from './storage.service';
+import * as themeUtils from '../utils/theme.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -62,11 +63,7 @@ export class ThemeService {
    */
   initTheme(): void {
     if (!this.platformService.isPlatformReady()) return;
-    const stored = this.storageService.get('theme') as Theme | null;
-    if (stored && Object.values(Theme).includes(stored)) {
-      this.setCurrentTheme(stored);
-    } else {
-      this.setCurrentTheme(constants.DEFAULT_THEME);
-    }
+    const theme = themeUtils.getTheme();
+    this.setCurrentTheme(theme);
   }
 }

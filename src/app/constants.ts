@@ -5,4 +5,5 @@ export const constants = {
   LANGUAGE: 'it',
   SUPPORTED_LANGUAGES: ['en', 'it'],
   DEFAULT_THEME: Theme.System,
+  THEME_KEY: 'theme',
 };

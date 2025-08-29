@@ -359,14 +359,21 @@
       "message_too_long": "Messaggio deve essere minore di 1000 caratteri"
     }
   },
-  "privacy_policy": {
-    "title": "Informativa sul trattamento dei dati personali",
-    "p1": "Ai sensi dell'articolo 13 del Regolamento (UE) 2016/679 (GDPR), ti informiamo che i dati personali raccolti tramite questo modulo (nome, cognome, telefono, email e messaggio) saranno utilizzati esclusivamente per rispondere alla tua richiesta di contatto.",
-    "p2": "Il conferimento dei dati è facoltativo, ad eccezione dell'indirizzo email, che è necessario per poterti rispondere.",
-    "p3": "I dati non saranno in alcun modo comunicati a terzi né utilizzati per finalità diverse da quelle indicate. La base giuridica del trattamento è il consenso liberamente espresso dall'utente tramite la selezione dell'apposita casella prima dell'invio del messaggio.",
-    "p4": "I dati saranno conservati per il tempo strettamente necessario a evadere la richiesta e comunque non oltre 6 mesi dalla ricezione del messaggio.",
-    "p5": "In qualsiasi momento hai il diritto di accedere ai tuoi dati personali, chiederne la rettifica, la cancellazione, la limitazione del trattamento o opporti allo stesso, nonché di revocare il consenso prestato. Per esercitare tali diritti puoi scrivere a <a href=\"mailto:simone.decristofaro85@gmail.com\">simone.decristofaro85@gmail.com</a>."
-  },
+    "privacy_policy": {
+      "title": "Informativa Privacy",
+      "p1": "Ai sensi dell'art. 13 del Regolamento (UE) 2016/679 (GDPR), La informiamo che i dati personali raccolti tramite questo sito web saranno trattati come descritto di seguito. Il titolare del trattamento è Chiara & Simone (sito: chiaraesimone.it; email: <a href=\"mailto:info@chiaraesimone.it\">info@chiaraesimone.it</a>).",
+      "p2": "Categorie di dati: nome, indirizzo email, numero di telefono (se fornito) e ogni altra informazione inserita volontariamente nel modulo di contatto o nella sezione commenti. Dati tecnici (es. indirizzo IP, metadati del dispositivo/browser) possono essere trattati per finalità di sicurezza e anti-spam (es. reCAPTCHA, se attivo).",
+      "p3": "Finalità: (a) rispondere ai messaggi inviati tramite il modulo di contatto; (b) pubblicare i commenti inviati e, se acconsente, inviare notifiche via email sui nuovi commenti relativi alla stessa foto o sezione; (c) proteggere il servizio da abusi e spam (es. tramite reCAPTCHA, se attivo); (d) garantire la sicurezza e il corretto funzionamento del sito.",
+      "p4": "Basi giuridiche: (a) legittimo interesse a rispondere alle richieste (art. 6, par. 1, lett. f GDPR); (b) consenso per la pubblicazione dei commenti e per l'invio di notifiche email, ove richieste (art. 6, par. 1, lett. a GDPR); (c) legittimo interesse a garantire la sicurezza e prevenire abusi (art. 6, par. 1, lett. f GDPR). Quando la base è il consenso, è possibile revocarlo in qualsiasi momento senza pregiudicare la liceità del trattamento effettuato prima della revoca.",
+      "p5": "Il conferimento dei dati è facoltativo. Tuttavia, l'indirizzo email è necessario per rispondere alla richiesta o per inviare le notifiche se richieste. In assenza dei dati necessari, alcune funzionalità potrebbero non essere disponibili.",
+      "p6": "Destinatari/Responsabili: ci avvaliamo di fornitori affidabili per l'hosting e l'invio email (es. servizi AWS con localizzazione principalmente in UE/SEE) e per l'anti-spam (es. Google reCAPTCHA, se attivo). Tali fornitori trattano i dati per nostro conto sulla base di idonei accordi sul trattamento dei dati. Per maggiori dettagli, consultare le rispettive informative privacy.",
+      "p7": "Ubicazione e trasferimenti: laddove possibile, i dati sono conservati nell'UE/SEE (es. AWS eu-west-1). Alcune attività (come invio email o anti-spam) possono comportare trasferimenti verso Paesi extra-UE/SEE; in tali casi applichiamo garanzie adeguate (es. Clausole Contrattuali Standard).",
+      "p8": "Conservazione: i dati del modulo di contatto sono conservati per il tempo strettamente necessario a gestire la richiesta e, comunque, non oltre 6 mesi dalla ricezione. I dati relativi ai commenti sono conservati finché il commento resta visibile sul sito o fino a richiesta di cancellazione. I dati delle iscrizioni alle notifiche sono conservati fino alla disiscrizione.",
+      "p9": "Diritti dell'interessato: può chiederci in qualsiasi momento l'accesso, la rettifica, la cancellazione o la limitazione del trattamento dei Suoi dati personali, nonché opporsi al trattamento e revocare il consenso quando applicabile. Per esercitare i diritti scrivere a: <a href=\"mailto:info@chiaraesimone.it\">info@chiaraesimone.it</a>. Ha inoltre il diritto di proporre reclamo al Garante per la Protezione dei Dati Personali.",
+      "p10": "Cookie e strumenti di terze parti: non utilizziamo cookie di analisi. Se attivo, Google reCAPTCHA può impostare cookie strettamente necessari per sicurezza e anti-spam. Il selettore di emoji utilizzato sul sito (**@ctrl/ngx-emoji-mart**) funziona interamente nel Suo browser e può memorizzare le emoji usate di recente o preferenze dell'interfaccia nel Suo dispositivo (localStorage) per migliorare l'esperienza d'uso; non invia i Suoi dati personali a terze parti.",
+      "p11": "Minori: questo sito è destinato a un pubblico generico. Se non ha l'età richiesta dalla legge applicabile per prestare un valido consenso, ottenga il consenso di un genitore/tutore prima di usare le funzionalità interattive.",
+      "p12": "Aggiornamenti: potremmo aggiornare periodicamente la presente Informativa. La versione più recente è sempre disponibile in questa pagina. Ultimo aggiornamento: 29/08/2025."
+    },
   "unsubscribe": {
     "title_success": "Disiscrizione avvenuta con successo ✅",
     "message_success": "<strong>{{email}}</strong> è stato disiscritto dalle notifiche{{photoPart}}.",

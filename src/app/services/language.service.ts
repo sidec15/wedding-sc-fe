@@ -20,18 +20,29 @@ export class LanguageService {
   private currentLanguage!: string;
 
   init(): void {
+    // Detect language
+    let detectedLang = detectInitialLanguage();
 
-    // Enhanced language detection with SSR support
-    this.currentLanguage = detectInitialLanguage();
+    // Ensure detected language is supported
+    if (!this.isSupportedLanguage(detectedLang)) {
+      console.warn(`Unsupported detected language: ${detectedLang}. Falling back to default: ${constants.LANGUAGE}`);
+      detectedLang = constants.LANGUAGE;
+    }
 
-    this.translateService.setDefaultLang(constants.LANGUAGE);
+    this.currentLanguage = detectedLang;
 
-    // Enhanced translation loading with better error handling
+    // Set fallback default language only if different from current
+    if (this.currentLanguage !== constants.LANGUAGE) {
+      this.translateService.setDefaultLang(constants.LANGUAGE);
+    }
+
+    // Load the current language
     this.translateService.use(this.currentLanguage).subscribe({
       next: () => console.log(`Translation loaded for: ${this.currentLanguage}`),
       error: (err) => console.error('Translation load error:', err)
     });
   }
+
 
   private isSupportedLanguage(lang: string): boolean {
     return constants.SUPPORTED_LANGUAGES.includes(lang);
