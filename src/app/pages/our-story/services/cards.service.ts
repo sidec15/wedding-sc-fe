@@ -71,7 +71,7 @@ export class CardsService {
       image: '/images/our-story/our-story-simone_piccolo_leone.jpg',
     },
     {
-      id: 'chiara_giovane_fratelli',
+      id: 'simone_asilo_premio',
       type: 'card',
       title: 'our_story.cards.simone_asilo_premio.title',
       description: 'our_story.cards.simone_asilo_premio.description',
