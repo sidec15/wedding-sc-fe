@@ -114,13 +114,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
    * - Otherwise, navigation proceeds normally.
    */
   private onPopState(event: PopStateEvent) {
-    console.log(
-      '[AppComponent] popstate triggered, menu open?',
-      this.menuService.isMenuOpened()
-    );
 
     if (this.platformService.isMobile() && this.menuService.isMenuOpened()) {
-      console.log('[AppComponent] Closing menu instead of navigating back');
       this.menuService.closeMenu();
 
       // Re-add the current state so the URL doesn’t change after closing the menu
