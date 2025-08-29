@@ -3,7 +3,7 @@ import {
   importProvidersFrom,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import {
   provideClientHydration,
   withEventReplay,
@@ -41,7 +41,13 @@ export function recaptchaLoaderConfig(): RecaptchaLoaderOptions {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top', // <--- always scroll to top on nav
+        anchorScrolling: 'enabled', // optional: allow #anchor links
+      })
+    ),
     provideClientHydration(withEventReplay()),
     provideHttpClient(),
     provideAnimations(),
