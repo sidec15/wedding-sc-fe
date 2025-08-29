@@ -4,18 +4,24 @@ import { OurStoryComponent } from './pages/our-story/our-story.component';
 import { ChurchComponent } from './pages/church/church.component';
 import { ReceptionComponent } from './pages/reception/reception.component';
 import { GuestsComponent } from './pages/guests/guests.component';
-import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { UnsubscribeComponent } from './pages/unsubscribe/unsubscribe.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent }, // Default route
-  { path: 'our-story', component: OurStoryComponent }, // Our Story route
-  { path: 'church', component: ChurchComponent }, // Church route
-  { path: 'reception', component: ReceptionComponent }, // Reception route
-  { path: 'guests', component: GuestsComponent }, // Guests route
-  { path: 'contact-us', component: ContactUsComponent }, // Contact Us route
-  { path: 'privacy-policy', component: PrivacyPolicyComponent }, // Privacy Policy route
-  { path: 'unsubscribe', component: UnsubscribeComponent }, // Unsubscribe
-  { path: '**', redirectTo: '' } // Wildcard route to redirect to home
+  {
+    path: '',
+    // canDeactivate: [closeMenuOnBackGuard],
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'our-story', component: OurStoryComponent },
+      { path: 'church', component: ChurchComponent },
+      { path: 'reception', component: ReceptionComponent },
+      { path: 'guests', component: GuestsComponent },
+      { path: 'contact-us', component: ContactUsComponent },
+      { path: 'privacy-policy', component: PrivacyPolicyComponent },
+      { path: 'unsubscribe', component: UnsubscribeComponent },
+      { path: '**', redirectTo: '' }
+    ]
+  }
 ];
