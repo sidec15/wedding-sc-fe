@@ -110,6 +110,14 @@
         }
       </div>
 
+      <app-security-consent
+        #consentComment
+        [form]="commentForm"
+        [submitted]="isSubmitting"
+        captchaControlName="captcha"
+        privacyControlName="privacyConsent"
+      />
+
       <button
         type="submit"
         class="submit-btn"
@@ -130,10 +138,7 @@
       <h4>{{ "our_story.comments.subscriptions.title" | translate }}</h4>
     </div>
 
-    <div
-      id="subscriptions-content"
-      class="subscriptions-body"
-    >
+    <div id="subscriptions-content" class="subscriptions-body">
       <p class="section-helper">
         {{ "our_story.comments.subscriptions.description" | translate }}
       </p>
@@ -149,6 +154,14 @@
             'our_story.comments.subscriptions.notify_email_placeholder'
               | translate
           "
+        />
+
+        <app-security-consent
+          #consentSubscription
+          [form]="subscriptionForm"
+          [submitted]="isSubscribing"
+          captchaControlName="captchaSubscription"
+          privacyControlName="privacyConsentSubscription"
         />
 
         <div class="actions">
@@ -169,7 +182,7 @@
             type="button"
             class="submit-btn secondary"
             (click)="unsubscribe()"
-            [disabled]="!subEmailCtrl?.value || isUnsubscribing"
+            [disabled]="subscriptionForm.invalid || isUnsubscribing"
           >
             @if (!isUnsubscribing) {
             {{ "our_story.comments.subscriptions.unsubscribe" | translate }}

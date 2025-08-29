@@ -27,6 +27,7 @@ import { EventService } from '../../../../services/event.service';
 import { CommentsService } from './services/comments.service';
 import { finalize } from 'rxjs';
 import { SubscriptionsService } from './services/subscriptions.service';
+import { SecurityConsentComponent } from '../../../../components/security-consent/security-consent.component';
 
 @Component({
   selector: 'app-comments',
@@ -38,6 +39,7 @@ import { SubscriptionsService } from './services/subscriptions.service';
     TranslateModule,
     RichTextEditorComponent,
     SafeHtmlPipe,
+    SecurityConsentComponent,
   ],
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.scss'],
@@ -96,10 +98,16 @@ export class CommentsComponent implements OnChanges {
         '',
         [plainTextRequired(), plainTextMaxLength(this.maxCommentLength)],
       ],
+      privacyConsent: [false, Validators.requiredTrue],
+      website: [''], // Honeypot field
+      captcha: ['', Validators.required], // Captcha field
     });
 
     this.subscriptionForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
+      privacyConsentSubscription: [false, Validators.requiredTrue],
+      websiteSubscription: [''], // Honeypot field
+      captchaSubscription: ['', Validators.required], // Captcha field
     });
   }
 
@@ -174,6 +182,11 @@ export class CommentsComponent implements OnChanges {
 
   onSubmit(): void {
     if (this.commentForm.invalid || this.isSubmitting) return;
+
+    // Honeypot anti-spam
+    if (this.commentForm.get('website')?.value) {
+      return;
+    }
 
     this.isSubmitting = true;
     this.eventService.emitLoadingMask(true);
@@ -279,6 +292,11 @@ export class CommentsComponent implements OnChanges {
     const email = (this.subEmailCtrl?.value || '').trim();
     if (!email) return;
 
+    // Honeypot anti-spam
+    if (this.commentForm.get('websiteSubscription')?.value) {
+      return;
+    }
+
     this.isSubscribing = true;
     this.subscriptionsService
       .create(this.cardId, email) // <-- use SubscriptionsService here
@@ -313,6 +331,11 @@ export class CommentsComponent implements OnChanges {
 
     const email = (this.subEmailCtrl?.value || '').trim();
     if (!email || this.isUnsubscribing) return;
+
+    // Honeypot anti-spam
+    if (this.commentForm.get('websiteSubscription')?.value) {
+      return;
+    }
 
     this.isUnsubscribing = true;
     this.subscriptionsService

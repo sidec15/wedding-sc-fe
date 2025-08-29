@@ -50,7 +50,7 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
     if (!this.platformService.isPlatformReady()) return;
 
     // Set the initial theme synchronously
-    this.applyTheme(this.themeService.getCurrentTheme(), /*force*/ true);
+    this.applyTheme(this.themeService.getCurrentThemeToApply(), /*force*/ true);
 
     // Then react to theme changes
     this.themeSub = this.eventService.theme$.subscribe((msg: ThemeMessage) => {
@@ -67,6 +67,9 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
     if (!force && newTheme === this.recaptchaTheme) return;
 
     this.recaptchaTheme = newTheme;
+
+    //debug_sdc
+    console.log("captcha theme: " + newTheme);
 
     // ReCAPTCHA v2 requires re-render for theme change
     // Force unmount/remount of <re-captcha>

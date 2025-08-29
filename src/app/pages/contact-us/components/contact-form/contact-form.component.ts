@@ -74,17 +74,6 @@ export class ContactFormComponent implements AfterViewInit {
       return;
     }
 
-    // Enforce CAPTCHA
-    if (!this.contactForm.get('captcha')?.value) {
-      this.eventService.emitFlash({
-        type: 'error',
-        i18nKey: 'contact_us.contact_form.error_message',
-        autoHide: true,
-        dismissible: true,
-      });
-      return;
-    }
-
     if (this.contactForm.valid) {
       this.eventService.emitLoadingMask(true);
       const formData = { ...this.contactForm.value };
