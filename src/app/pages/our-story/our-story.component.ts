@@ -41,6 +41,8 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   firstBtn!: ElementRef;
   @ViewChild('lastBtn', { static: false })
   lastBtn!: ElementRef;
+  @ViewChild('cardWrapper', { static: true })
+  cardWrapper!: ElementRef<HTMLElement>;
 
   cards: Card[] = [];
   currentIndex: number = 0;
@@ -50,6 +52,14 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   isMobile: boolean = false;
   showCommentsSection: boolean = true;
   isGreaterJump = false;
+  showSwipeOnboarding = false;
+
+  private touchStartX = 0;
+  private touchStartY = 0;
+  private touchEndX = 0;
+  private touchEndY = 0;
+  private swipeThreshold = 50; // px
+  private swipeListenerAdded = false;
 
   constructor(
     private platformService: PlatformService,
@@ -69,6 +79,15 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
 
     // Focus the component for keyboard navigation
     if (this.isMobile) {
+      // ✅ Defer onboarding flag to avoid ExpressionChangedAfterItHasBeenCheckedError
+      if (!localStorage.getItem('ourStorySwipeOnboardingShown')) {
+        setTimeout(() => {
+          // Show onboarding only first time (localStorage flag)
+          this.showSwipeOnboarding = true;
+        }, 0);
+      }
+
+      this.addSwipeListeners();
       if (typeof window !== 'undefined') {
         const element = document.querySelector('.story-gallery');
         if (element) {
@@ -90,6 +109,7 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.removeSwipeListeners();
     this.headerService.resetMinDistanceToShowHeader();
   }
 
@@ -226,6 +246,11 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  dismissSwipeOnboarding(): void {
+    this.showSwipeOnboarding = false;
+    localStorage.setItem('ourStorySwipeOnboardingShown', 'true');
+  }
+
   onCommentAdded(comment: Comment): void {
     console.log('New comment added:', comment);
   }
@@ -312,6 +337,56 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
     setTimeout(() => {
       element.style.pointerEvents = originalPointerEvents || '';
     }, 100);
+  }
+
+  // ---------------- SWIPE HANDLING ----------------
+  private addSwipeListeners() {
+    if (this.swipeListenerAdded) return;
+    const el = this.cardWrapper.nativeElement;
+
+    el.addEventListener('touchstart', this.onTouchStart, { passive: true });
+    el.addEventListener('touchend', this.onTouchEnd, { passive: true });
+
+    this.swipeListenerAdded = true;
+  }
+
+  private removeSwipeListeners() {
+    if (!this.swipeListenerAdded) return;
+    const el = this.cardWrapper.nativeElement;
+
+    el.removeEventListener('touchstart', this.onTouchStart);
+    el.removeEventListener('touchend', this.onTouchEnd);
+
+    this.swipeListenerAdded = false;
+  }
+
+  private onTouchStart = (event: TouchEvent) => {
+    this.touchStartX = event.changedTouches[0].screenX;
+    this.touchStartY = event.changedTouches[0].screenY;
+  };
+
+  private onTouchEnd = (event: TouchEvent) => {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.touchEndY = event.changedTouches[0].screenY;
+    this.handleSwipeGesture();
+  };
+
+  private handleSwipeGesture() {
+    const deltaX = this.touchEndX - this.touchStartX;
+    const deltaY = this.touchEndY - this.touchStartY;
+
+    // Ignore vertical swipes (scrolling)
+    if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+
+    // Left swipe
+    if (deltaX < -this.swipeThreshold) {
+      this.nextCard();
+    }
+
+    // Right swipe
+    if (deltaX > this.swipeThreshold) {
+      this.previousCard();
+    }
   }
 }
 

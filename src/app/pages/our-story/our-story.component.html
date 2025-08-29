@@ -1,4 +1,18 @@
 <section class="our-story">
+  <!-- Swipe Onboarding Mask -->
+  @if (showSwipeOnboarding && isMobile) {
+  <div class="swipe-onboarding-mask" (click)="dismissSwipeOnboarding()">
+    <div class="onboarding-content">
+      <p>{{ "our_story.swipe_onboarding.message" | translate }}</p>
+      <div class="arrows">
+        <i class="fas fa-chevron-left"></i>
+        <i class="fas fa-chevron-right"></i>
+      </div>
+      <span class="hint">{{ "our_story.swipe_onboarding.hint" | translate }}</span>
+    </div>
+  </div>
+  }
+
   <!-- Only show controls if we have cards -->
   @if (cards.length > 0) {
   <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
@@ -6,6 +20,7 @@
 
   <div
     class="card-wrapper"
+    #cardWrapper
     [ngClass]="{
       'intro-card': activeCard.type === 'intro',
       'outro-card': activeCard.type === 'outro',

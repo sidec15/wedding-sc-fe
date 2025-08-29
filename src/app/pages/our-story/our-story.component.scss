@@ -84,8 +84,61 @@
   }
 }
 
+@keyframes pulse {
+  from {
+    opacity: 0.5;
+    transform: translateX(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(5px);
+  }
+}
+
 .our-story {
   margin-top: calc(var(--header-height) + 1rem);
+
+  .swipe-onboarding-mask {
+    position: fixed;
+    inset: 0; // shorthand for top/right/bottom/left
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+
+    .onboarding-content {
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.6);
+      max-width: 90%;
+      font-size: 1.2rem;
+
+      p {
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+      }
+
+      .arrows {
+        font-size: 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem auto;
+        width: 120px;
+        animation: pulse 1.5s infinite alternate;
+      }
+
+      .hint {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        display: block;
+        margin-top: 1rem;
+      }
+    }
+  }
 
   .card-wrapper {
     width: 100%;
@@ -407,7 +460,6 @@
         color: rgb(var(--accent)) !important;
         transform: scale(0.95) !important;
       }
-
     }
 
     .nav-btn.first-btn,
@@ -482,10 +534,10 @@
         font-size: 1.1rem !important;
 
         &:hover {
-          background: rgba(var(--bg), 0.8);  // keep background consistent
+          background: rgba(var(--bg), 0.8); // keep background consistent
           transform: none;
-          border-color: rgb(var(--text));    // use theme text color
-          color: rgb(var(--text));           // use theme text color
+          border-color: rgb(var(--text)); // use theme text color
+          color: rgb(var(--text)); // use theme text color
         }
 
         /* Clicked style remains unchanged on mobile */

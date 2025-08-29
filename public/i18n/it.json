@@ -43,6 +43,10 @@
     "lets_start": "Iniziamo!"
   },
   "our_story": {
+    "swipe_onboarding": {
+      "message": "Scorri a sinistra o a destra per esplorare la storia",
+      "hint": "(Tocca ovunque per continuare)"
+    },
     "comments": {
       "title": "Commenti",
       "no_comment": "Nessun commento ancora. Sii il primo a commentare!",
