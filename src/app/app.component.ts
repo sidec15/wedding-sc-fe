@@ -10,6 +10,7 @@ import { GlobalLoadingMaskComponent } from './components/global-loading-mask/glo
 import { ThemeService } from './services/theme.service';
 import { FlashMessageComponent } from './components/flash-message/flash-message.component';
 import { MenuService } from './services/menu.service';
+import { EventService, MenuEvent } from './services/event.service';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'wedding-sc-fe';
   currentYear = new Date().getFullYear();
 
+  private hasMenuSentinel = false;
+
   /**
    * Bound reference to the popstate handler so it can be removed on destroy.
    * This listens to browser history events (back/forward gestures and buttons).
@@ -41,7 +44,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private scrollManager: ScrollManagerService,
     private languageService: LanguageService,
     private themeService: ThemeService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private eventService: EventService
   ) {}
 
   /**
@@ -55,7 +59,23 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.themeService.initTheme();
     this.languageService.init();
     this.resetScroll();
+
+    // When menu opens, push one sentinel state
+    this.eventService.menuEvent$.subscribe((e: MenuEvent) => {
+      if (!this.platformService.isMobile()) return;
+
+      if (e.status === 'openStart' && !this.hasMenuSentinel) {
+        history.pushState({ menuOverlay: true }, '', window.location.href);
+        this.hasMenuSentinel = true;
+      }
+
+      if (e.status === 'closeEnd' && this.hasMenuSentinel) {
+        // optional: clear the sentinel marker; the pop will consume it anyway
+        this.hasMenuSentinel = false;
+      }
+    });
   }
+
 
   /**
    * Lifecycle: AfterViewInit
@@ -103,23 +123,16 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 100);
   }
 
-  /**
-   * Handles browser back/forward navigation (popstate).
-   *
-   * Behavior:
-   * - If on mobile and the menu is currently open:
-   *   - Closes the menu.
-   *   - Pushes the current state back into history so the URL does not change.
-   *   - Prevents leaving the page (user must press back again after closing the menu).
-   * - Otherwise, navigation proceeds normally.
-   */
   private onPopState(event: PopStateEvent) {
-
-    if (this.platformService.isMobile() && this.menuService.isMenuOpened()) {
+    // If the popped state is our sentinel, just close the menu and stop.
+    if ((event.state && event.state.menuOverlay) || this.menuService.isMenuOpened()) {
       this.menuService.closeMenu();
-
-      // Re-add the current state so the URL doesn’t change after closing the menu
-      history.pushState(null, '', window.location.href);
+      // Replace the current state to avoid stacking multiple sentinels
+      history.replaceState(null, '', window.location.href);
+      this.hasMenuSentinel = false;
+      return;
     }
+
   }
+
 }
