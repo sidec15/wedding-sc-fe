@@ -1,1 +1,205 @@
-<app-our-story-desktop></app-our-story-desktop>
+<section class="our-story">
+  <!-- Only show controls if we have cards -->
+  @if (cards.length > 0) {
+  <ng-container *ngTemplateOutlet="navigationControls"></ng-container>
+  }
+
+  <div
+    class="card-wrapper"
+    [ngClass]="{
+      'intro-card': activeCard.type === 'intro',
+      'outro-card': activeCard.type === 'outro',
+      transitioning: isTransitioning
+    }"
+  >
+    <!-- Current card -->
+    <ng-container
+      *ngTemplateOutlet="
+        cards[currentIndex].type === 'card' ? cardTemplate : textOnlyTemplate;
+        context: { $implicit: cards[currentIndex], isNext: false }
+      "
+    ></ng-container>
+
+    <!-- Next card (only during transition) -->
+    @if (isTransitioning && !isGreaterJump) {
+    <ng-container
+      *ngTemplateOutlet="
+        cards[nextIndex].type === 'card' ? cardTemplate : textOnlyTemplate;
+        context: { $implicit: cards[nextIndex], isNext: true }
+      "
+    ></ng-container>
+    }
+
+    <!-- Intro/Outro full-screen text -->
+    <ng-template #textOnlyTemplate let-card>
+      @if (card.type === 'intro' || card.type === 'outro') {
+      <div class="text-only-card">
+        <div
+          class="text-content"
+          [ngClass]="{
+            visible: card.status === 'visible',
+            hidden: card.status === 'hidden',
+            'transitioning-in': card.status === 'transitioning-in',
+            'transitioning-out': card.status === 'transitioning-out'
+          }"
+        >
+          <h2>{{ card.title | translate }}</h2>
+          <p>{{ card.description | translate }}</p>
+        </div>
+      </div>
+      }
+    </ng-template>
+
+    <!-- Regular three-column card -->
+    <ng-template #cardTemplate let-card let-isNext="isNext">
+      @if (card.type === 'card') {
+      <div
+        class="three-column-layout"
+        [ngClass]="{
+          'next-card': isNext,
+          hidden: card.status === 'hidden',
+          visible: card.status === 'visible',
+          current: card.position === 'current',
+          before: card.position === 'before',
+          after: card.position === 'after'
+        }"
+      >
+        <!-- Left: Text -->
+        <div class="text-column">
+          <div
+            class="text-content"
+            [ngClass]="{
+              visible: card.status === 'visible',
+              hidden: card.status === 'hidden',
+              'transitioning-in': card.status === 'transitioning-in',
+              'transitioning-out': card.status === 'transitioning-out'
+            }"
+          >
+            <h2>{{ card.title | translate }}</h2>
+            <p class="description">{{ card.description | translate }}</p>
+          </div>
+        </div>
+
+        <!-- Center: Image -->
+        @if (card.image) {
+        <div class="image-column">
+          <div
+            class="image-container"
+            [ngClass]="{
+              visible: card.status === 'visible',
+              before: card.position === 'before',
+              after: card.position === 'after',
+              'slide-in-from-left': card.position === 'slide-in-from-left',
+              'slide-in-from-right': card.position === 'slide-in-from-right'
+            }"
+          >
+            <img [src]="card.image" [alt]="card.title" />
+          </div>
+        </div>
+        }
+
+        <!-- Right: Comics (wrapper always present) -->
+        <div class="comic-column">
+          <div
+            class="comic-container"
+            [ngClass]="{
+              visible: card.status === 'visible',
+              hidden: card.status === 'hidden',
+              'transitioning-in': card.status === 'transitioning-in',
+              'transitioning-out': card.status === 'transitioning-out'
+            }"
+          >
+            @for (comic of card.comics; track comic) {
+            <img
+              [src]="comic"
+              [alt]="card.title + ' comic'"
+              class="comic-image"
+            />
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments section (wrapper always present) -->
+      <div
+        class="comments-section-separate"
+        [ngClass]="{
+          visible: card.status === 'visible',
+          hidden: card.status === 'hidden',
+          'transitioning-in': card.status === 'transitioning-in',
+          'transitioning-out': card.status === 'transitioning-out'
+        }"
+      >
+        <app-comments
+          [cardId]="card.id"
+          (commentAdded)="onCommentAdded($event)"
+        ></app-comments>
+      </div>
+      }
+    </ng-template>
+
+    <ng-template #navigationControls>
+      <div class="navigation-controls" #navCtrl>
+        <!-- Go to first -->
+        <button
+          class="nav-btn first-btn"
+          (click)="goToFirstCard()"
+          [disabled]="currentIndex === 0 || isTransitioning"
+          aria-label="First card"
+          #firstBtn
+        >
+          <i class="fas fa-angle-double-left"></i>
+        </button>
+
+        <button
+          class="nav-btn prev-btn"
+          (click)="previousCard()"
+          [disabled]="currentIndex === 0 || isTransitioning"
+          aria-label="Previous card"
+          #prevBtn
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="card-indicator">
+          <input
+            #jumpBox
+            type="number"
+            class="card-jump-input"
+            min="1"
+            [max]="cards.length"
+            [value]="currentIndex + 1"
+            (keydown.enter)="onJump(jumpBox.valueAsNumber)"
+            (blur)="onJump(jumpBox.valueAsNumber)"
+            aria-label="Go to card number"
+          />
+          <span class="separator">/</span>
+          <span class="total">{{ cards.length }}</span>
+        </div>
+
+        <button
+          class="nav-btn next-btn"
+          (click)="nextCard()"
+          [disabled]="currentIndex === cards.length - 1 || isTransitioning"
+          aria-label="Next card"
+          #nextBtn
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Go to last -->
+        <button
+          class="nav-btn last-btn"
+          (click)="goToLastCard()"
+          [disabled]="currentIndex === cards.length - 1 || isTransitioning"
+          aria-label="Last card"
+          #lastBtn
+        >
+          <i class="fas fa-angle-double-right"></i>
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</section>
+
+<app-ring-scroll></app-ring-scroll>
