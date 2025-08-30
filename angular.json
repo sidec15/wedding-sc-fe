@@ -77,7 +77,8 @@
               "buildTarget": "wedding-sc-fe:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": { "allowedHosts": [".ngrok-free.app"] }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
