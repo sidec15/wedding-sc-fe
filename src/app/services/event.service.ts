@@ -143,7 +143,7 @@ export class EventService {
 
   emitFlash(flashMessage: FlashMessage): void {
     // debug_sdc
-    // this.flashSubject.next(flashMessage);
+    this.flashSubject.next(flashMessage);
   }
 
   emitThemeChange(themeMessage: ThemeMessage) {

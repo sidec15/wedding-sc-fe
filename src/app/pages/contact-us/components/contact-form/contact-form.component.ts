@@ -98,7 +98,7 @@ export class ContactFormComponent implements AfterViewInit {
           this.contactForm.reset();
           this.eventService.emitLoadingMask(false);
           this.eventService.emitFlash({
-            type: 'info',
+            type: 'success',
             i18nKey: 'contact_us.contact_form.success_message',
             autoHide: true,
             dismissible: true,

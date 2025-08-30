@@ -15,12 +15,12 @@ export class SubscriptionsService {
    * body: { email }
    * Returns: {} (empty object) on success.
    */
-  create(photoId: string, email: string): Observable<void> {
+  create(photoId: string, email: string, recaptchaToken: string): Observable<void> {
     const url = `${this.apiUrl}/${encodeURIComponent(
       photoId
     )}/subscriptions`;
     return this.http
-      .post<Record<string, never>>(url, { email })
+      .post<Record<string, never>>(url, { email, recaptchaToken })
       .pipe(map(() => void 0));
   }
 

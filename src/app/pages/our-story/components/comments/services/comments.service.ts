@@ -47,12 +47,13 @@ export class CommentsService {
    */
   create(
     photoId: string,
-    input: { nickname: string; message: string }
+    input: { nickname: string; message: string, recaptchaToken: string }
   ): Observable<Comment> {
     const url = `${this.apiUrl}/${encodeURIComponent(photoId)}/comments`;
     const body = {
       authorName: input.nickname,
       content: input.message,
+      recaptchaToken: input.recaptchaToken
     };
 
     return this.http

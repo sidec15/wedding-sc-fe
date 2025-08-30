@@ -1,13 +1,17 @@
 import {
-  Component, Input, ChangeDetectionStrategy, OnInit, OnDestroy, ChangeDetectorRef
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha-2';
-import { CaptchaService } from '../../services/captcha.service';
 import { environment } from '../../../environments/environment';
-import { Subscription } from 'rxjs';
+import { distinctUntilChanged, map, Subscription } from 'rxjs';
 import { PlatformService } from '../../services/platform.service';
 import { EventService, ThemeMessage } from '../../services/event.service';
 import { Theme } from '../../models/theme';
@@ -16,7 +20,14 @@ import { ThemeService } from '../../services/theme.service';
 @Component({
   selector: 'app-security-consent',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule, RecaptchaModule, RecaptchaFormsModule, NgIf],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+    NgIf,
+  ],
   templateUrl: './security-consent.component.html',
   styleUrls: ['./security-consent.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +50,6 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
   private themeSub?: Subscription;
 
   constructor(
-    private captchaService: CaptchaService,
     private platformService: PlatformService,
     private eventService: EventService,
     private themeService: ThemeService,
@@ -53,9 +63,13 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
     this.applyTheme(this.themeService.getCurrentThemeToApply(), /*force*/ true);
 
     // Then react to theme changes
-    this.themeSub = this.eventService.theme$.subscribe((msg: ThemeMessage) => {
-      this.applyTheme(msg.theme);
-    });
+    this.themeSub = this.eventService.theme$
+      .pipe(
+        // only react when the actual theme changes
+        map((m: ThemeMessage) => m.theme),
+        distinctUntilChanged()
+      )
+      .subscribe((t) => this.applyTheme(t));
   }
 
   ngOnDestroy(): void {
@@ -68,31 +82,27 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
 
     this.recaptchaTheme = newTheme;
 
-    //debug_sdc
-    console.log("captcha theme: " + newTheme);
+    // Prevent valueChanges storms
+    this.form.get(this.captchaControlName)?.reset(null, { emitEvent: false });
 
-    // ReCAPTCHA v2 requires re-render for theme change
-    // Force unmount/remount of <re-captcha>
     this.showCaptcha = false;
-    this.cdr.detectChanges(); // remove immediately
-
-    // drop any previous token to avoid stale values
-    this.form.get(this.captchaControlName)?.reset();
+    this.cdr.detectChanges();
 
     setTimeout(() => {
-      this.showCaptcha = true;   // recreate with new [theme]
+      this.showCaptcha = true;
       this.cdr.detectChanges();
-      // console.log('reCAPTCHA re-rendered with theme:', this.recaptchaTheme);
     });
   }
 
   onCaptchaResolved(token: string | null): void {
-    const ctrl = this.form.get(this.captchaControlName);
-    this.captchaService.onCaptchaResolved(token, ctrl);
+    console.debug('On captcha resolved from component. Token: ' + token);
+    // const ctrl = this.form.get(this.captchaControlName);
+    // this.captchaService.onCaptchaResolved(token, ctrl);
   }
 
   onCaptchaError(): void {
-    const ctrl = this.form.get(this.captchaControlName);
-    this.captchaService.onCaptchaError(ctrl);
+    console.debug('On captcha error from component.');
+    // const ctrl = this.form.get(this.captchaControlName);
+    // this.captchaService.onCaptchaError(ctrl);
   }
 }

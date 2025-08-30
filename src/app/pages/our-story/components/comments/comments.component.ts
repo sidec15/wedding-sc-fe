@@ -99,15 +99,15 @@ export class CommentsComponent implements OnChanges {
         [plainTextRequired(), plainTextMaxLength(this.maxCommentLength)],
       ],
       privacyConsent: [false, Validators.requiredTrue],
-      website: [''], // Honeypot field
       captcha: ['', Validators.required], // Captcha field
+      website: [''], // Honeypot field
     });
 
     this.subscriptionForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       privacyConsentSubscription: [false, Validators.requiredTrue],
-      websiteSubscription: [''], // Honeypot field
       captchaSubscription: ['', Validators.required], // Captcha field
+      websiteSubscription: [''], // Honeypot field
     });
   }
 
@@ -193,9 +193,10 @@ export class CommentsComponent implements OnChanges {
 
     const nickname = (this.commentForm.get('authorName')?.value || '').trim();
     const messageHtml = this.commentForm.get('messageHtml')?.value || '';
+    const recaptchaToken = this.commentForm.get('captcha')?.value || '';
 
     this.commentsService
-      .create(this.cardId, { nickname, message: messageHtml })
+      .create(this.cardId, { nickname, message: messageHtml, recaptchaToken })
       .pipe(
         finalize(() => {
           this.isSubmitting = false;
@@ -204,8 +205,16 @@ export class CommentsComponent implements OnChanges {
       )
       .subscribe({
         next: (created) => {
-          // Clear form & counter
-          this.commentForm.reset();
+          this.commentForm.reset(
+            {
+              authorName: '',
+              messageHtml: '',
+              privacyConsent: false,
+              website: '',
+              captcha: null,
+            },
+            { emitEvent: false }
+          );
           this.currentLen = 0;
 
           // Notify success
@@ -293,13 +302,14 @@ export class CommentsComponent implements OnChanges {
     if (!email) return;
 
     // Honeypot anti-spam
-    if (this.commentForm.get('websiteSubscription')?.value) {
+    if (this.subscriptionForm.get('websiteSubscription')?.value) {
       return;
     }
 
     this.isSubscribing = true;
+    const recaptchaToken = this.subscriptionForm.get('captchaSubscription')?.value || '';
     this.subscriptionsService
-      .create(this.cardId, email) // <-- use SubscriptionsService here
+      .create(this.cardId, email, recaptchaToken) // <-- use SubscriptionsService here
       .pipe(finalize(() => (this.isSubscribing = false)))
       .subscribe({
         next: () => {
