@@ -28,6 +28,7 @@ import { CommentsService } from './services/comments.service';
 import { finalize } from 'rxjs';
 import { SubscriptionsService } from './services/subscriptions.service';
 import { SecurityConsentComponent } from '../../../../components/security-consent/security-consent.component';
+import { SecuritySessionService } from '../../../../services/security-session.service';
 
 @Component({
   selector: 'app-comments',
@@ -48,7 +49,7 @@ export class CommentsComponent implements OnChanges {
   @Input() cardId: string = '';
   @Output() commentAdded = new EventEmitter<Comment>();
 
-  // List + pagination state
+  // Comment list state
   comments: Comment[] = [];
   pageSize = 2;
   cursor: string | null = null;
@@ -59,22 +60,22 @@ export class CommentsComponent implements OnChanges {
   isInitialLoading = false;
   isLoadingMore = false;
 
-  // Subscriptions UI
+  // Subscription form state
   isSubscribing = false;
   isUnsubscribing = false;
   showSubscribeBox = false;
-  isSubscribed = false; // local UI state (server can keep it idempotent)
+  isSubscribed = false;
 
   // Forms
   commentForm: FormGroup;
   subscriptionForm: FormGroup;
 
-  // Other UI
-  isSubmitting = false;
+  // UI
+  isCommentSubmitting = false;
   maxCommentLength = 1000;
-  currentLen = 0;
+  commentCharCount = 0;
   maxNicknameLength = 20;
-  commentRegex = /^[a-zA-Z0-9' -]+$/;
+  nicknamePattern = /^[a-zA-Z0-9' -]+$/;
   toastDurationMs = 5000;
 
   constructor(
@@ -82,8 +83,10 @@ export class CommentsComponent implements OnChanges {
     private translate: TranslateService,
     private eventService: EventService,
     private commentsService: CommentsService,
-    private subscriptionsService: SubscriptionsService
+    private subscriptionsService: SubscriptionsService,
+    private securitySessionService: SecuritySessionService
   ) {
+    // Comment form with section-explicit control names
     this.commentForm = this.fb.group({
       authorName: [
         '',
@@ -91,23 +94,24 @@ export class CommentsComponent implements OnChanges {
           Validators.required,
           Validators.minLength(2),
           Validators.maxLength(this.maxNicknameLength),
-          Validators.pattern(this.commentRegex),
+          Validators.pattern(this.nicknamePattern),
         ],
       ],
       messageHtml: [
         '',
         [plainTextRequired(), plainTextMaxLength(this.maxCommentLength)],
       ],
-      privacyConsent: [false, Validators.requiredTrue],
-      captcha: ['', Validators.required], // Captcha field
-      website: [''], // Honeypot field
+      privacyCommentCreate: [false, Validators.requiredTrue],
+      captchaCommentCreate: ['', Validators.required],
+      websiteCommentCreate: [''], // honeypot
     });
 
+    // Subscription form with section-explicit control names
     this.subscriptionForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      privacyConsentSubscription: [false, Validators.requiredTrue],
-      captchaSubscription: ['', Validators.required], // Captcha field
-      websiteSubscription: [''], // Honeypot field
+      privacySubscription: [false, Validators.requiredTrue],
+      captchaSubscription: ['', Validators.required],
+      websiteSubscription: [''], // honeypot
     });
   }
 
@@ -118,7 +122,7 @@ export class CommentsComponent implements OnChanges {
     }
   }
 
-  get subEmailCtrl() {
+  get subscriptionEmailControl() {
     return this.subscriptionForm.get('email');
   }
 
@@ -180,42 +184,56 @@ export class CommentsComponent implements OnChanges {
       });
   }
 
+  // === Comment create ===
   onSubmit(): void {
-    if (this.commentForm.invalid || this.isSubmitting) return;
+    if (this.commentForm.invalid || this.isCommentSubmitting) return;
 
     // Honeypot anti-spam
-    if (this.commentForm.get('website')?.value) {
-      return;
-    }
+    if (this.commentForm.get('websiteCommentCreate')?.value) return;
 
-    this.isSubmitting = true;
+    this.isCommentSubmitting = true;
     this.eventService.emitLoadingMask(true);
 
     const nickname = (this.commentForm.get('authorName')?.value || '').trim();
     const messageHtml = this.commentForm.get('messageHtml')?.value || '';
-    const recaptchaToken = this.commentForm.get('captcha')?.value || '';
+    const recaptchaToken = (this.commentForm.get('captchaCommentCreate')
+      ?.value || null) as string | null;
+    const privacyAccepted = !!this.commentForm.get('privacyCommentCreate')
+      ?.value;
 
     this.commentsService
-      .create(this.cardId, { nickname, message: messageHtml, recaptchaToken })
+      .create(this.cardId, {
+        nickname,
+        message: messageHtml,
+        recaptchaToken: recaptchaToken ?? '',
+      })
       .pipe(
         finalize(() => {
-          this.isSubmitting = false;
+          this.isCommentSubmitting = false;
           this.eventService.emitLoadingMask(false);
         })
       )
       .subscribe({
         next: (created) => {
+          // >>> Persist to session AFTER success and BEFORE reset
+          if (recaptchaToken)
+            this.securitySessionService.setCaptchaToken(recaptchaToken);
+          if (privacyAccepted) this.securitySessionService.setPrivacyConsent();
+
+          // Reset the form (optionally preserve remembered state)
           this.commentForm.reset(
             {
               authorName: '',
               messageHtml: '',
-              privacyConsent: false,
-              website: '',
-              captcha: null,
+              privacyCommentCreate:
+                this.securitySessionService.hasPrivacyConsent(),
+              captchaCommentCreate:
+                this.securitySessionService.getCaptchaToken(),
+              websiteCommentCreate: '',
             },
             { emitEvent: false }
           );
-          this.currentLen = 0;
+          this.commentCharCount = 0;
 
           // Notify success
           this.eventService.emitFlash({
@@ -226,10 +244,8 @@ export class CommentsComponent implements OnChanges {
             dismissible: true,
           });
 
-          // Reload from the beginning to reflect canonical order & counts
+          // Reload list & emit event
           this.resetAndLoad();
-
-          // Still emit outside if parent cares
           this.commentAdded.emit(created);
         },
         error: (err) => {
@@ -245,7 +261,7 @@ export class CommentsComponent implements OnChanges {
       });
   }
 
-  get messageCtrl() {
+  get messageControl() {
     return this.commentForm.get('messageHtml');
   }
 
@@ -290,30 +306,35 @@ export class CommentsComponent implements OnChanges {
     return '';
   }
 
-  toggleSubscribeBox(): void {
-    this.showSubscribeBox = !this.showSubscribeBox;
-  }
-
+  // === Subscriptions ===
   subscribe(): void {
     if (!this.cardId) return;
     if (this.subscriptionForm.invalid || this.isSubscribing) return;
 
-    const email = (this.subEmailCtrl?.value || '').trim();
+    // Honeypot anti-spam
+    if (this.subscriptionForm.get('websiteSubscription')?.value) return;
+
+    const email = (this.subscriptionEmailControl?.value || '').trim();
     if (!email) return;
 
-    // Honeypot anti-spam
-    if (this.subscriptionForm.get('websiteSubscription')?.value) {
-      return;
-    }
-
     this.isSubscribing = true;
-    const recaptchaToken = this.subscriptionForm.get('captchaSubscription')?.value || '';
+    const recaptchaToken = (this.subscriptionForm.get('captchaSubscription')
+      ?.value || null) as string | null;
+    const privacyAccepted = !!this.subscriptionForm.get('privacySubscription')
+      ?.value;
+
     this.subscriptionsService
-      .create(this.cardId, email, recaptchaToken) // <-- use SubscriptionsService here
+      .create(this.cardId, email, recaptchaToken ?? '')
       .pipe(finalize(() => (this.isSubscribing = false)))
       .subscribe({
         next: () => {
           this.isSubscribed = true;
+
+          // >>> Persist to session AFTER success
+          if (recaptchaToken)
+            this.securitySessionService.setCaptchaToken(recaptchaToken);
+          if (privacyAccepted) this.securitySessionService.setPrivacyConsent();
+
           this.eventService.emitFlash({
             type: 'success',
             i18nKey: 'our_story.comments.subscriptions.subscribe_success',
@@ -322,6 +343,19 @@ export class CommentsComponent implements OnChanges {
             dismissible: true,
           });
           this.showSubscribeBox = false;
+
+          // Optional: reset preserving remembered state
+          this.subscriptionForm.reset(
+            {
+              email: '',
+              privacySubscription:
+                this.securitySessionService.hasPrivacyConsent(),
+              captchaSubscription:
+                this.securitySessionService.getCaptchaToken(),
+              websiteSubscription: '',
+            },
+            { emitEvent: false }
+          );
         },
         error: (err) => {
           console.error('Subscribe failed', err);
@@ -336,42 +370,4 @@ export class CommentsComponent implements OnChanges {
       });
   }
 
-  unsubscribe(): void {
-    if (!this.cardId) return;
-
-    const email = (this.subEmailCtrl?.value || '').trim();
-    if (!email || this.isUnsubscribing) return;
-
-    // Honeypot anti-spam
-    if (this.commentForm.get('websiteSubscription')?.value) {
-      return;
-    }
-
-    this.isUnsubscribing = true;
-    this.subscriptionsService
-      .delete(this.cardId, email)
-      .pipe(finalize(() => (this.isUnsubscribing = false)))
-      .subscribe({
-        next: () => {
-          this.isSubscribed = false;
-          this.eventService.emitFlash({
-            type: 'success',
-            i18nKey: 'our_story.comments.subscriptions.unsubscribe_success',
-            autoHide: true,
-            hideAfterMs: this.toastDurationMs,
-            dismissible: true,
-          });
-        },
-        error: (err) => {
-          console.error('Unsubscribe failed', err);
-          this.eventService.emitFlash({
-            type: 'error',
-            i18nKey: 'our_story.comments.subscriptions.unsubscribe_error',
-            autoHide: true,
-            hideAfterMs: this.toastDurationMs,
-            dismissible: true,
-          });
-        },
-      });
-  }
 }

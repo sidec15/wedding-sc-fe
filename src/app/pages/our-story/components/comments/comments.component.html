@@ -1,17 +1,17 @@
 <div class="comments-section">
-  <!-- Comments List Section -->
+  <!-- Comments List -->
   <div class="comments-list-section">
     <h4 class="section-title">
-      {{ "our_story.comments.title" | translate }}
-      ({{ totalCount ?? comments.length }})
+      {{ "our_story.comments.title" | translate }} ({{
+        totalCount ?? comments.length
+      }})
     </h4>
 
-    <!-- Initial loader -->
     @if (isInitialLoading) {
     <div class="loading">
       {{ "our_story.comments.loading" | translate }}
     </div>
-    } @if (!isInitialLoading && comments.length > 0) {
+    } @else if (comments.length > 0) {
     <div class="comments-list">
       @for (comment of comments; track comment.commentId) {
       <div class="comment-item">
@@ -19,16 +19,12 @@
           <span class="comment-author">{{ comment.authorName }}</span>
           <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
         </div>
-
         <div
           class="comment-content"
           [innerHTML]="comment.content | safeHtml"
         ></div>
       </div>
-      }
-
-      <!-- Load more -->
-      @if (hasNext) {
+      } @if (hasNext) {
       <div class="load-more">
         <button
           type="button"
@@ -45,14 +41,14 @@
       </div>
       }
     </div>
-    } @if (!isInitialLoading && comments.length === 0) {
+    } @else {
     <div class="no-comments">
       <p>{{ "our_story.comments.no_comment" | translate }}</p>
     </div>
     }
   </div>
 
-  <!-- Comment Form Section -->
+  <!-- Comment Form -->
   <div class="comment-form-section">
     <h4 class="section-title">
       {{ "our_story.comments.leave_comment_message" | translate }}
@@ -76,11 +72,10 @@
             commentForm.get('authorName')?.touched
           "
         />
-        @if ( commentForm.get('authorName')?.invalid &&
-        commentForm.get('authorName')?.touched ) {
-        <div class="error-message">
-          {{ getErrorMessage("authorName") }}
-        </div>
+
+        @if (commentForm.get('authorName')?.invalid &&
+        commentForm.get('authorName')?.touched) {
+        <div class="error-message">{{ getErrorMessage("authorName") }}</div>
         }
       </div>
 
@@ -94,36 +89,34 @@
           formControlName="messageHtml"
           [placeholder]="'our_story.comments.write_comment' | translate"
           [emojiEnabled]="true"
-          (lengthChange)="currentLen = $event"
-          [error]="!!(messageCtrl?.invalid && messageCtrl?.touched)"
-        ></app-rich-text-editor>
+          (lengthChange)="commentCharCount = $event"
+          [error]="!!(messageControl?.invalid && messageControl?.touched)"
+        >
+        </app-rich-text-editor>
 
         <div class="char-count">
-          {{ currentLen || 0 }}/{{ maxCommentLength }}
+          {{ commentCharCount || 0 }}/{{ maxCommentLength }}
         </div>
 
-        @if ( commentForm.get('messageHtml')?.invalid &&
-        commentForm.get('messageHtml')?.touched ) {
-        <div class="error-message">
-          {{ getErrorMessage("messageHtml") }}
-        </div>
+        @if (commentForm.get('messageHtml')?.invalid &&
+        commentForm.get('messageHtml')?.touched) {
+        <div class="error-message">{{ getErrorMessage("messageHtml") }}</div>
         }
       </div>
 
       <app-security-consent
-        #consentComment
         [form]="commentForm"
-        [submitted]="isSubmitting"
-        captchaControlName="captcha"
-        privacyControlName="privacyConsent"
+        [submitted]="isCommentSubmitting"
+        captchaControlName="captchaCommentCreate"
+        privacyControlName="privacyCommentCreate"
       />
 
       <button
         type="submit"
         class="submit-btn"
-        [disabled]="commentForm.invalid || isSubmitting"
+        [disabled]="commentForm.invalid || isCommentSubmitting"
       >
-        @if (!isSubmitting) {
+        @if (!isCommentSubmitting) {
         {{ "our_story.comments.submit" | translate }}
         } @else {
         {{ "our_story.comments.submitting" | translate }}
@@ -132,7 +125,7 @@
     </form>
   </div>
 
-  <!-- Subscriptions Section -->
+  <!-- Subscriptions -->
   <div class="subscriptions-section" [formGroup]="subscriptionForm">
     <div class="section-title">
       <h4>{{ "our_story.comments.subscriptions.title" | translate }}</h4>
@@ -149,7 +142,10 @@
           type="email"
           class="form-input"
           formControlName="email"
-          [class.error]="subEmailCtrl?.invalid && subEmailCtrl?.touched"
+          [class.error]="
+            subscriptionEmailControl?.invalid &&
+            subscriptionEmailControl?.touched
+          "
           [placeholder]="
             'our_story.comments.subscriptions.notify_email_placeholder'
               | translate
@@ -157,11 +153,10 @@
         />
 
         <app-security-consent
-          #consentSubscription
           [form]="subscriptionForm"
           [submitted]="isSubscribing"
           captchaControlName="captchaSubscription"
-          privacyControlName="privacyConsentSubscription"
+          privacyControlName="privacySubscription"
         />
 
         <div class="actions">
@@ -178,22 +173,11 @@
             }
           </button>
 
-          <button
-            type="button"
-            class="submit-btn secondary"
-            (click)="unsubscribe()"
-            [disabled]="subscriptionForm.invalid || isUnsubscribing"
-          >
-            @if (!isUnsubscribing) {
-            {{ "our_story.comments.subscriptions.unsubscribe" | translate }}
-            } @else {
-            {{ "our_story.comments.subscriptions.unsubscribing" | translate }}
-            }
-          </button>
         </div>
       </div>
 
-      @if (subEmailCtrl?.invalid && subEmailCtrl?.touched) {
+      @if (subscriptionEmailControl?.invalid &&
+      subscriptionEmailControl?.touched) {
       <div class="error-message">
         {{
           "our_story.comments.subscriptions.notify_email_invalid" | translate

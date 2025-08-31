@@ -1,18 +1,15 @@
-<!-- Bind directly to the parent form instance -->
 <div class="form-group" [formGroup]="form">
-  <!-- security-consent.component.html -->
-  <ng-container *ngIf="showCaptcha">
-    <re-captcha
-      [siteKey]="siteKey"
-      [theme]="recaptchaTheme"
-      [formControlName]="captchaControlName"
-    ></re-captcha>
-  </ng-container>
-
-  @if (form.get(captchaControlName)?.errors?.['required'] && submitted) {
-  <div class="error">
-    {{ "security.captcha_required" | translate }}
-  </div>
+  @if (!hideCaptchaUI && showCaptcha) {
+  <re-captcha
+    [siteKey]="siteKey"
+    [theme]="recaptchaTheme"
+    [formControlName]="captchaControlName"
+    (resolved)="onCaptchaResolved($event)"
+    (error)="onCaptchaError()"
+  >
+  </re-captcha>
+  } @if (form.get(captchaControlName)?.hasError('required') && submitted) {
+  <div class="error">{{ "security.captcha_required" | translate }}</div>
   }
 </div>
 
@@ -20,7 +17,7 @@
   <input
     type="checkbox"
     [id]="privacyControlName"
-    formControlName="{{ privacyControlName }}"
+    [formControlName]="privacyControlName"
   />
   <label [for]="privacyControlName" class="privacy-consent-label">
     {{ "security.privacy_consent" | translate }}
@@ -29,9 +26,7 @@
     </a>
   </label>
 
-  @if (form.get(privacyControlName)?.errors?.['required'] && submitted) {
-  <div class="error">
-    {{ "security.privacy_required" | translate }}
-  </div>
+  @if (form.get(privacyControlName)?.hasError('required') && submitted) {
+  <div class="error">{{ "security.privacy_required" | translate }}</div>
   }
 </div>
