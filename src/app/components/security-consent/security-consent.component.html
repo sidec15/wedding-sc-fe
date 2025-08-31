@@ -1,15 +1,18 @@
 <div class="form-group" [formGroup]="form">
-  @if (!hideCaptchaUI && showCaptcha) {
-  <re-captcha
-    [siteKey]="siteKey"
-    [theme]="recaptchaTheme"
-    [formControlName]="captchaControlName"
-    (resolved)="onCaptchaResolved($event)"
-    (error)="onCaptchaError()"
-  >
-  </re-captcha>
-  } @if (form.get(captchaControlName)?.hasError('required') && submitted) {
-  <div class="error">{{ "security.captcha_required" | translate }}</div>
+  @if (showCaptcha) {
+    <re-captcha
+      [siteKey]="siteKey"
+      [theme]="recaptchaTheme"
+      [formControlName]="captchaControlName"
+      (resolved)="onCaptchaResolved($event)"
+      (error)="onCaptchaError()"
+    ></re-captcha>
+  }
+
+  @if (form.get(captchaControlName)?.errors?.['required'] && submitted) {
+    <div class="error">
+      {{ "security.captcha_required" | translate }}
+    </div>
   }
 </div>
 
@@ -26,7 +29,9 @@
     </a>
   </label>
 
-  @if (form.get(privacyControlName)?.hasError('required') && submitted) {
-  <div class="error">{{ "security.privacy_required" | translate }}</div>
+  @if (form.get(privacyControlName)?.errors?.['required'] && submitted) {
+    <div class="error">
+      {{ "security.privacy_required" | translate }}
+    </div>
   }
 </div>
