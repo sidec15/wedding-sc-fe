@@ -220,7 +220,7 @@ export class CommentsComponent implements OnChanges {
             this.securitySessionService.setCaptchaToken(recaptchaToken);
           if (privacyAccepted) this.securitySessionService.setPrivacyConsent();
 
-          // Reset the form (optionally preserve remembered state)
+          // Reset the form (prefill remembered state)
           this.commentForm.reset(
             {
               authorName: '',
@@ -248,7 +248,35 @@ export class CommentsComponent implements OnChanges {
           this.resetAndLoad();
           this.commentAdded.emit(created);
         },
+
         error: (err) => {
+          if (this.securitySessionService.handleCaptchaError(err)) {
+            this.eventService.emitFlash({
+              type: 'error',
+              i18nKey: 'security.captcha_expired_or_invalid',
+              autoHide: true,
+              hideAfterMs: this.toastDurationMs,
+              dismissible: true,
+            });
+            // Optionally also clear the control immediately:
+            this.commentForm
+              .get('captchaCommentCreate')
+              ?.reset('', { emitEvent: false });
+            return;
+          }
+
+          if (this.securitySessionService.isCaptchaUnavailable(err)) {
+            this.eventService.emitFlash({
+              type: 'error',
+              i18nKey: 'security.captcha_unavailable_try_later',
+              autoHide: true,
+              hideAfterMs: this.toastDurationMs,
+              dismissible: true,
+            });
+            return;
+          }
+
+          // Fallback: generic error
           console.error('Failed to create comment', err);
           this.eventService.emitFlash({
             type: 'error',
@@ -318,6 +346,7 @@ export class CommentsComponent implements OnChanges {
     if (!email) return;
 
     this.isSubscribing = true;
+
     const recaptchaToken = (this.subscriptionForm.get('captchaSubscription')
       ?.value || null) as string | null;
     const privacyAccepted = !!this.subscriptionForm.get('privacySubscription')
@@ -330,7 +359,7 @@ export class CommentsComponent implements OnChanges {
         next: () => {
           this.isSubscribed = true;
 
-          // >>> Persist to session AFTER success
+          // Persist to session AFTER success
           if (recaptchaToken)
             this.securitySessionService.setCaptchaToken(recaptchaToken);
           if (privacyAccepted) this.securitySessionService.setPrivacyConsent();
@@ -344,7 +373,7 @@ export class CommentsComponent implements OnChanges {
           });
           this.showSubscribeBox = false;
 
-          // Optional: reset preserving remembered state
+          // Reset preserving remembered state
           this.subscriptionForm.reset(
             {
               email: '',
@@ -357,7 +386,37 @@ export class CommentsComponent implements OnChanges {
             { emitEvent: false }
           );
         },
+
         error: (err) => {
+          // Captcha-specific handling
+          if (this.securitySessionService.handleCaptchaError(err)) {
+            // Clear control so the widget shows again immediately
+            this.subscriptionForm
+              .get('captchaSubscription')
+              ?.reset('', { emitEvent: false });
+
+            this.eventService.emitFlash({
+              type: 'error',
+              i18nKey: 'security.captcha_expired_or_invalid',
+              autoHide: true,
+              hideAfterMs: this.toastDurationMs,
+              dismissible: true,
+            });
+            return;
+          }
+
+          if (this.securitySessionService.isCaptchaUnavailable(err)) {
+            this.eventService.emitFlash({
+              type: 'error',
+              i18nKey: 'security.captcha_unavailable_try_later',
+              autoHide: true,
+              hideAfterMs: this.toastDurationMs,
+              dismissible: true,
+            });
+            return;
+          }
+
+          // Fallback: generic error
           console.error('Subscribe failed', err);
           this.eventService.emitFlash({
             type: 'error',
@@ -369,5 +428,4 @@ export class CommentsComponent implements OnChanges {
         },
       });
   }
-
 }

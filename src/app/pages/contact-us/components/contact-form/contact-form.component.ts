@@ -13,6 +13,7 @@ import { EventService } from '../../../../services/event.service';
 import * as securityUtils from '../../../../utils/security.utils';
 import { SecurityConsentComponent } from '../../../../components/security-consent/security-consent.component';
 import { SecuritySessionService } from '../../../../services/security-session.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-contact-form',
@@ -100,47 +101,76 @@ export class ContactFormComponent implements AfterViewInit {
       recaptchaToken: recaptchaToken ?? '',
     };
 
-    this.contactService.sendContactForm(dto).subscribe({
-      next: () => {
-        // Persist to session AFTER success (so other sections can skip)
-        if (recaptchaToken)
-          this.securitySession.setCaptchaToken(recaptchaToken);
-        if (privacyAccepted) this.securitySession.setPrivacyConsent();
+    this.contactService
+      .sendContactForm(dto)
+      .pipe(finalize(() => this.eventService.emitLoadingMask(false)))
+      .subscribe({
+        next: () => {
+          // Persist to session AFTER success (so other sections can skip)
+          if (recaptchaToken)
+            this.securitySession.setCaptchaToken(recaptchaToken);
+          if (privacyAccepted) this.securitySession.setPrivacyConsent();
 
-        // Reset and prefill from session
-        this.contactForm.reset(
-          {
-            name: '',
-            surname: '',
-            phone: '',
-            email: '',
-            message: '',
-            privacyContactForm: this.securitySession.hasPrivacyConsent(),
-            captchaContactForm: this.securitySession.getCaptchaToken(),
-            websiteContactForm: '',
-          },
-          { emitEvent: false }
-        );
+          // Reset and prefill from session
+          this.contactForm.reset(
+            {
+              name: '',
+              surname: '',
+              phone: '',
+              email: '',
+              message: '',
+              privacyContactForm: this.securitySession.hasPrivacyConsent(),
+              captchaContactForm: this.securitySession.getCaptchaToken(),
+              websiteContactForm: '',
+            },
+            { emitEvent: false }
+          );
 
-        this.eventService.emitLoadingMask(false);
-        this.eventService.emitFlash({
-          type: 'success',
-          i18nKey: 'contact_us.contact_form.success_message',
-          autoHide: true,
-          dismissible: true,
-        });
-        this.submitted = false;
-      },
-      error: (err) => {
-        this.eventService.emitLoadingMask(false);
-        console.error('Contact form submission failed', err);
-        this.eventService.emitFlash({
-          type: 'error',
-          i18nKey: 'contact_us.contact_form.error_message',
-          autoHide: true,
-          dismissible: true,
-        });
-      },
-    });
+          this.eventService.emitFlash({
+            type: 'success',
+            i18nKey: 'contact_us.contact_form.success_message',
+            autoHide: true,
+            dismissible: true,
+          });
+          this.submitted = false;
+        },
+
+        error: (err) => {
+          // Captcha-specific handling
+          if (this.securitySession.handleCaptchaError(err)) {
+            // Clear control so the widget shows again immediately
+            this.contactForm
+              .get('captchaContactForm')
+              ?.reset('', { emitEvent: false });
+
+            this.eventService.emitFlash({
+              type: 'error',
+              i18nKey: 'security.captcha_expired_or_invalid',
+              autoHide: true,
+              dismissible: true,
+            });
+            return;
+          }
+
+          if (this.securitySession.isCaptchaUnavailable(err)) {
+            this.eventService.emitFlash({
+              type: 'error',
+              i18nKey: 'security.captcha_unavailable_try_later',
+              autoHide: true,
+              dismissible: true,
+            });
+            return;
+          }
+
+          // Fallback: generic error
+          console.error('Contact form submission failed', err);
+          this.eventService.emitFlash({
+            type: 'error',
+            i18nKey: 'contact_us.contact_form.error_message',
+            autoHide: true,
+            dismissible: true,
+          });
+        },
+      });
   }
 }
