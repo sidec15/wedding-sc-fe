@@ -216,8 +216,6 @@ export class CommentsComponent implements OnChanges {
       .subscribe({
         next: (created) => {
           // >>> Persist to session AFTER success and BEFORE reset
-          if (recaptchaToken)
-            this.securitySessionService.setCaptchaToken(recaptchaToken);
           if (privacyAccepted) this.securitySessionService.setPrivacyConsent();
 
           // Reset the form (prefill remembered state)
@@ -227,8 +225,7 @@ export class CommentsComponent implements OnChanges {
               messageHtml: '',
               privacyCommentCreate:
                 this.securitySessionService.hasPrivacyConsent(),
-              captchaCommentCreate:
-                this.securitySessionService.getCaptchaToken(),
+              captchaCommentCreate: '',
               websiteCommentCreate: '',
             },
             { emitEvent: false }
@@ -360,8 +357,6 @@ export class CommentsComponent implements OnChanges {
           this.isSubscribed = true;
 
           // Persist to session AFTER success
-          if (recaptchaToken)
-            this.securitySessionService.setCaptchaToken(recaptchaToken);
           if (privacyAccepted) this.securitySessionService.setPrivacyConsent();
 
           this.eventService.emitFlash({
@@ -379,8 +374,7 @@ export class CommentsComponent implements OnChanges {
               email: '',
               privacySubscription:
                 this.securitySessionService.hasPrivacyConsent(),
-              captchaSubscription:
-                this.securitySessionService.getCaptchaToken(),
+              captchaSubscription: '',
               websiteSubscription: '',
             },
             { emitEvent: false }

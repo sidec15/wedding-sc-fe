@@ -107,8 +107,6 @@ export class ContactFormComponent implements AfterViewInit {
       .subscribe({
         next: () => {
           // Persist to session AFTER success (so other sections can skip)
-          if (recaptchaToken)
-            this.securitySession.setCaptchaToken(recaptchaToken);
           if (privacyAccepted) this.securitySession.setPrivacyConsent();
 
           // Reset and prefill from session
@@ -120,7 +118,7 @@ export class ContactFormComponent implements AfterViewInit {
               email: '',
               message: '',
               privacyContactForm: this.securitySession.hasPrivacyConsent(),
-              captchaContactForm: this.securitySession.getCaptchaToken(),
+              captchaContactForm: '',
               websiteContactForm: '',
             },
             { emitEvent: false }

@@ -44,7 +44,6 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
 
   recaptchaTheme: 'light' | 'dark' = 'dark';
   showCaptcha = true; // used for theme re-mount
-  hideCaptchaUI = false; // when a valid session token exists
 
   private subs = new Subscription();
 
@@ -59,32 +58,12 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (!this.platform.isPlatformReady()) return;
 
-    // Theme sync (keep your own distinctUntilChanged pipeline as you had)
+    // Theme sync
     this.applyTheme(this.themeService.getCurrentThemeToApply(), true);
     this.subs.add(
       this.eventBus.theme$
         .pipe(distinctUntilChanged((a, b) => a.theme === b.theme))
         .subscribe(({ theme }) => this.applyTheme(theme))
-    );
-
-    // Subscribe to captcha token changes
-    this.subs.add(
-      this.session.captchaToken$
-        .pipe(distinctUntilChanged())
-        .subscribe((token) => {
-          const ctrl = this.form.get(this.captchaControlName);
-          if (!ctrl) return;
-
-          if (token) {
-            ctrl.setValue(token, { emitEvent: false });
-            this.hideCaptchaUI = true;
-          } else {
-            // token expired/cleared -> show widget again
-            this.hideCaptchaUI = false;
-            ctrl.reset(null, { emitEvent: false });
-          }
-          this.cdr.markForCheck();
-        })
     );
 
     // Subscribe to privacy consent changes
@@ -108,9 +87,7 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
     if (!force && newTheme === this.recaptchaTheme) return;
     this.recaptchaTheme = newTheme;
 
-    // If we’re hiding the widget due to session token, no need to remount
-    if (this.hideCaptchaUI) return;
-
+    // Force remount the captcha widget (to apply new theme)
     this.form.get(this.captchaControlName)?.reset(null, { emitEvent: false });
     this.showCaptcha = false;
     this.cdr.detectChanges();
@@ -120,13 +97,13 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
     });
   }
 
-  // If you keep handlers, never write to storage here (submit success will do it)
   onCaptchaResolved(token: string | null): void {
-    this.form
-      .get(this.captchaControlName)
-      ?.setValue(token, { emitEvent: false });
+    // Just write to the form control; no caching in storage
+    this.form.get(this.captchaControlName)?.setValue(token, { emitEvent: false });
   }
+
   onCaptchaError(): void {
-    /* optionally mark errors */
+    // Optionally set a validation error on the form control
+    this.form.get(this.captchaControlName)?.setErrors({ error: true });
   }
 }
