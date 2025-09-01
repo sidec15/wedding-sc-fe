@@ -30,14 +30,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'wedding-sc-fe';
   currentYear = new Date().getFullYear();
 
-  private hasMenuSentinel = false;
-
-  /**
-   * Bound reference to the popstate handler so it can be removed on destroy.
-   * This listens to browser history events (back/forward gestures and buttons).
-   */
-  private popStateHandler = (event: PopStateEvent) => this.onPopState(event);
-
   constructor(
     public router: Router,
     private platformService: PlatformService,
@@ -55,25 +47,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
    * - Resets scroll restoration to manual so each page starts at the top.
    */
   ngOnInit(): void {
-    window.addEventListener('popstate', this.popStateHandler);
     this.themeService.initTheme();
     this.languageService.init();
     this.resetScroll();
-
-    // When menu opens, push one sentinel state
-    this.eventService.menuEvent$.subscribe((e: MenuEvent) => {
-      if (!this.platformService.isMobile()) return;
-
-      if (e.status === 'openStart' && !this.hasMenuSentinel) {
-        history.pushState({ menuOverlay: true }, '', window.location.href);
-        this.hasMenuSentinel = true;
-      }
-
-      if (e.status === 'closeEnd' && this.hasMenuSentinel) {
-        // optional: clear the sentinel marker; the pop will consume it anyway
-        this.hasMenuSentinel = false;
-      }
-    });
   }
 
 
@@ -92,7 +68,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
    * - Destroys the scroll manager if running in the browser.
    */
   ngOnDestroy(): void {
-    window.removeEventListener('popstate', this.popStateHandler);
     if (!this.platformService.isBrowser()) return;
     this.scrollManager.destroy();
   }
@@ -121,18 +96,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       document.documentElement.style.scrollBehavior = '';
       document.body.style.scrollBehavior = '';
     }, 100);
-  }
-
-  private onPopState(event: PopStateEvent) {
-    // If the popped state is our sentinel, just close the menu and stop.
-    if ((event.state && event.state.menuOverlay) || this.menuService.isMenuOpened()) {
-      this.menuService.closeMenu();
-      // Replace the current state to avoid stacking multiple sentinels
-      history.replaceState(null, '', window.location.href);
-      this.hasMenuSentinel = false;
-      return;
-    }
-
   }
 
 }

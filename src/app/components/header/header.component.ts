@@ -1,7 +1,10 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
+  OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,7 +31,7 @@ import { LayoutType } from '../../models/layout';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   Theme = Theme; // expose enum to template if needed
 
   languageDropdownOpen = false;
@@ -80,11 +83,13 @@ export class HeaderComponent {
 
   private documentClickListener?: (event: MouseEvent) => void;
 
-  // --- Swipe up to close menu logic ---
-  private touchStartY: number | null = null;
-  private touchEndY: number | null = null;
-  private swipeListenerAdded = false;
-  private swipeUpThreshold = 60;
+  /**
+   * Bound reference to the popstate handler so it can be removed on destroy.
+   * This listens to browser history events (back/forward gestures and buttons).
+   */
+  private popStateHandler = (event: PopStateEvent) => this.onPopState(event);
+
+  private hasMenuSentinel = false;
 
   constructor(
     private platformService: PlatformService,
@@ -92,15 +97,17 @@ export class HeaderComponent {
     private headerService: HeaderService,
     private menuService: MenuService,
     private themeService: ThemeService,
-    private languageService: LanguageService,
+    private languageService: LanguageService
   ) {
     this.navBackground$ = combineLatest([
       this.eventService.theme$.pipe(
-        startWith({ theme: this.themeService.getCurrentThemeToApply() } as ThemeMessage)
+        startWith({
+          theme: this.themeService.getCurrentThemeToApply(),
+        } as ThemeMessage)
       ),
       this.eventService.layout$.pipe(
         startWith(LayoutType.desktop) // fallback if no value yet
-      )
+      ),
     ]).pipe(
       map(([themeMessage, layout]) =>
         layout === LayoutType.desktop
@@ -108,6 +115,24 @@ export class HeaderComponent {
           : this.computeBackground(themeMessage.theme)
       )
     );
+  }
+
+  ngOnInit(): void {
+    window.addEventListener('popstate', this.popStateHandler);
+    // When menu opens, push one sentinel state
+    this.eventService.menuEvent$.subscribe((e: MenuEvent) => {
+      if (!this.platformService.isMobile()) return;
+
+      if (e.status === 'openStart' && !this.hasMenuSentinel) {
+        history.pushState({ menuOverlay: true }, '', window.location.href);
+        this.hasMenuSentinel = true;
+      }
+
+      if (e.status === 'closeEnd' && this.hasMenuSentinel) {
+        // optional: clear the sentinel marker; the pop will consume it anyway
+        this.hasMenuSentinel = false;
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -131,10 +156,12 @@ export class HeaderComponent {
   }
 
   ngOnDestroy(): void {
+    window.removeEventListener('popstate', this.popStateHandler);
     this.menuSub?.unsubscribe(); // Unsubscribe from menu events
     this.headerBgSub?.unsubscribe(); // Unsubscribe from header background events
     this.themeSub?.unsubscribe();
     this.headerService.destroy(); // Clean up header service
+    this.layoutSub?.unsubscribe();
     this.removeDocumentClickListener();
   }
 
@@ -241,6 +268,20 @@ export class HeaderComponent {
   private onLayoutEvent(layoutType: LayoutType) {
     if (layoutType == LayoutType.desktop && this.isMenuOpen) {
       this.menuService.closeMenu();
+    }
+  }
+
+  private onPopState(event: PopStateEvent) {
+    // If the popped state is our sentinel, just close the menu and stop.
+    if (
+      (event.state && event.state.menuOverlay) ||
+      this.menuService.isMenuOpened()
+    ) {
+      this.menuService.closeMenu();
+      // Replace the current state to avoid stacking multiple sentinels
+      history.replaceState(null, '', window.location.href);
+      this.hasMenuSentinel = false;
+      return;
     }
   }
 }
