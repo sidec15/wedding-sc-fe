@@ -5,7 +5,85 @@ section {
   margin-bottom: 0px;
 }
 
-// Consolidated heading styles
+section.guests-wrapper {
+  /* Layout */
+  margin-bottom: 0;
+  position: relative;
+  /* Create a stacking context so we can layer a fixed bg under content on mobile */
+  z-index: 0;
+
+  /* Make the section at least viewport height (prefer stable units where supported) */
+  min-height: 100vh;
+  @supports (min-height: 100lvh) {
+    min-height: 100lvh;
+  }
+
+  /* Desktop/tablet default: classic fixed background */
+  background-image: url("/images/mobile-menu/bg-02.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* desktop key line */
+
+  /* Optional readability overlay */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.18) 0%,
+      rgba(0, 0, 0, 0.12) 40%,
+      rgba(0, 0, 0, 0.18) 100%
+    );
+  }
+
+  /* Ensure actual content sits above any background layer we add on mobile */
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* Mobile: replace background-attachment: fixed with a fixed viewport layer.
+   This avoids the resize/jump when browser UI bars show/hide. */
+@media (hover: none) and (pointer: coarse) {
+  section.guests-wrapper {
+    /* Prevent double-painting: move bg to the fixed layer below */
+    background: none;
+  }
+
+  section.guests-wrapper::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+
+    /* Fallback size */
+    height: 100vh;
+
+    /* Prefer the largest/stable viewport height so it doesn't change with URL bar */
+    @supports (height: 100lvh) {
+      height: 100lvh;
+    }
+
+    background-image: url("/images/mobile-menu/bg-02.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    /* Layer under the content of guests-wrapper */
+    z-index: 0;
+    pointer-events: none;
+
+    /* Nudge GPU compositing to smooth repaints on iOS */
+    transform: translateZ(0);
+  }
+}
+
+/* Consolidated heading styles */
 h2 {
   color: rgb(var(--accent));
   text-align: center;
