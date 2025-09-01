@@ -93,7 +93,6 @@ export class HeaderComponent {
     private menuService: MenuService,
     private themeService: ThemeService,
     private languageService: LanguageService,
-    private cdr: ChangeDetectorRef
   ) {
     this.navBackground$ = combineLatest([
       this.eventService.theme$.pipe(

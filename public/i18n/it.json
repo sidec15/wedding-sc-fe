@@ -94,47 +94,47 @@
     "cards": {
       "chiara_neonata": {
         "title": "Un sorriso che conquista",
-        "description": "Sorriso furbo, occhioni grandi e regina del lettino."
+        "description": "Chiara: \"Non mi ricordo nulla… ma sembra proprio che mi stessi divertendo!\""
       },
       "chiara_piccola_famiglia": {
         "title": "Tutti insieme",
-        "description": "Vestiti d'epoca, acconciature anni '80 e un ciuccio in primo piano."
+        "description": "Chiara: \"Vestiti d'epoca, acconciature anni '80… e io ovviamente al centro della scena con tutta la squadra!\""
       },
       "simone_piccolo_calcio": {
         "title": "Lì è nato il sinistro",
-        "description": "Non sapevo ancora scrivere, ma il mancino già parlava."
+        "description": "Simone: \"Non sapevo ancora parlare bene, ma col sinistro mi facevo capire alla grande.\""
       },
       "chiara_piccola_natale": {
         "title": "Sotto l'albero, un dono che sorrideva",
-        "description": "Quel sorriso valeva più di tutte le luci natalizie."
+        "description": "Chiara: \"Con quell'abitino rosso sotto l'albero… l'imbarazzo era il mio vero accessorio di Natale.\""
       },
       "chiara_piccola_primavera": {
         "title": "Un attimo di sole",
-        "description": "Un momento semplice, un sorriso che scaldava."
+        "description": "Chiara: \"Altro che bouquet: mi bastava un ramo di primavera per essere felice.\""
       },
       "simone_venezia": {
         "title": "Tra arte e briciole",
-        "description": "Simone in vacanza a Venezia, i piccioni in pausa pranzo al buffet."
+        "description": "Simone: \"Io turista a Venezia… i piccioni al buffet di briciole! Eravamo tutti felici.\""
       },
       "chiara_piccola_nonni": {
         "title": "Un ricordo di famiglia",
-        "description": "La comunione della cugina e Chiara, bambina, con i nonni e le cugine."
+        "description": "Chiara: \"Con i miei nonni materni e le cugine, un ricordo di famiglia che porto nel cuore.\""
       },
       "simone_asilo_premio": {
         "title": "Il re dei quiz in pantaloncini corti",
-        "description": "Tra domande e risposte, Simone si aggiudica la coppa del concorso a quiz dell'asilo."
+        "description": "Simone: \"Non so se fosse più grande la mia coppa o il coraggio di indossare quei pantaloncini.\""
       },
       "simone_piccolo_leone": {
         "title": "Il guardiano della colonna",
-        "description": "Simone in posa da eroe medievale, con il leone di pietra come fidato destriero."
+        "description": "Simone: \"Un piccolo cavaliere medievale... armato solo di occhiali giganti.\""
       },
       "chiara_giovane_fratelli": {
         "title": "Fratelli sul ring",
-        "description": "La foto perfetta per dimostrare che l'amore fraterno può includere... anche un po' di wrestling!"
+        "description": "Chiara: \"La foto perfetta per dimostrare che l'amore fraterno può includere... anche un po' di wrestling!\""
       },
       "chiara_simone_gmg": {
         "title": "Chi l'avrebbe detto?",
-        "description": "GMG 2000: \"eccomi lì, in primo piano, ignaro di tutto… e dietro di me, seduta tranquilla, c'era Chiara! Non ci conoscevamo ancora, ma eravamo già vicini di sacco a pelo.\""
+        "description": "Simone: \"GMG 2000: eccomi lì, in primo piano, senza immaginare nulla...\"\nChiara: \"...e dietro di lui, seduta tranquilla, c'ero io! Non ci conoscevamo ancora, ma eravamo già vicini di sacco a pelo.\""
       }
     }
   },
