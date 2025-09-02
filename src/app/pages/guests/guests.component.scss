@@ -1,6 +1,14 @@
 @use "../../../styles/variables.scss" as *;
 @use "../../../styles/mixins.scss" as *;
 
+.frosted-box {
+  background: rgba(var(--text-mask), 0.6); // semi-transparent
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 20px var(--box-shadow-medium);
+  backdrop-filter: blur(8px); // glass effect
+}
+
 section {
   margin-bottom: 0px;
 }
@@ -13,7 +21,10 @@ section.guests-wrapper {
     z-index: 0;
 
     /* Desktop/tablet default: classic fixed background */
-    background-image: url("/images/guests/background/bg-01.png");
+    background-image: url("/images/guests/bg-light-landscape.png");
+    &.dark {
+      background-image: url("/images/guests/bg-dark-landscape.png");
+    }
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -33,12 +44,12 @@ section.guests-wrapper {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.18) 0%,
-      rgba(0, 0, 0, 0.12) 40%,
-      rgba(0, 0, 0, 0.18) 100%
-    );
+    // background: linear-gradient(
+    //   to bottom,
+    //   rgba(0, 0, 0, 0.18) 0%,
+    //   rgba(0, 0, 0, 0.12) 40%,
+    //   rgba(0, 0, 0, 0.18) 100%
+    // );
   }
 
   /* Ensure actual content sits above any background layer we add on mobile */
@@ -68,7 +79,10 @@ section.guests-wrapper {
       transform: translateZ(0);
       height: 100vh;
 
-      background-image: url("/images/guests/background/bg-01.png");
+      background-image: url("/images/guests/background/bg-light-portrait.png") !important;
+      &.dark {
+        background-image: url("/images/guests/bg-dark-portrait.png");
+      }
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;

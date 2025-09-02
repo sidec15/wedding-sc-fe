@@ -54,6 +54,7 @@ main {
   color: rgb(var(--text)); // Use RGB variable for text
   font-size: 0.85rem;
   border-top: 1px solid rgb(var(--light-gray)); // Use RGB variable for light gray
+  z-index: 10;
 }
 
 // ====================

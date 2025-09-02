@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, QueryList, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription, throttleTime } from 'rxjs';
 import { EventService, ScrollEvent } from '../../../../services/event.service';
@@ -33,25 +40,40 @@ export class GuestsDayInfoComponent implements AfterViewInit, OnDestroy {
   }
 
   private observeTimeLineItems(e: ScrollEvent): void {
-    this.timelineItems.forEach((item) => {
-      const position = this.platformService.positionYInViewport(
-        item.nativeElement
-      );
+    this.timelineItems.forEach((item) => this.observeFadingUpItems(item));
+    // this.times.forEach(item => this.observeFadingUpItems(item));
+    // this.contents.forEach(item => this.observeFadingUpItems(item));
+    // this.times.forEach(this.observeFadingUpItems);
+    // this.contents.forEach(this.observeFadingUpItems);
+  }
 
-      const el = item.nativeElement;
+  private observeFadingUpItems(item: ElementRef) {
+    const position = this.platformService.positionYInViewport(
+      item.nativeElement
+    );
 
-      if (position === 'visible' && !el.classList.contains('visible')) {
-        const rect = el.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const elementMiddle = rect.top + (rect.height / 2);
-        const viewportMiddle = windowHeight * 0.9;
-        
-        if (elementMiddle <= viewportMiddle) {
-          el.classList.add('visible');
-        }
-      } else if (position === 'below' && el.classList.contains('visible')) {
-        el.classList.remove('visible');
+    const el = item.nativeElement as HTMLElement;
+    const animWrapper = el.querySelector('.timeline-anim');
+    const timeEl = el.querySelector('.time');
+    const contentEl = el.querySelector('.content');
+
+    if (position === 'visible' && !el.classList.contains('visible')) {
+      const rect = el.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const elementMiddle = rect.top + rect.height / 2;
+      const viewportMiddle = windowHeight * 0.9;
+
+      if (elementMiddle <= viewportMiddle) {
+        el.classList.add('visible');
+        animWrapper?.classList.add('visible');
+        timeEl?.classList.add('visible');
+        contentEl?.classList.add('visible');
       }
-    });
+    } else if (position === 'below' && el.classList.contains('visible')) {
+      el.classList.remove('visible');
+      animWrapper?.classList.remove('visible');
+      timeEl?.classList.remove('visible');
+      contentEl?.classList.remove('visible');
+    }
   }
 }
