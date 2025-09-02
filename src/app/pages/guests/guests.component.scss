@@ -52,8 +52,7 @@ section.guests-wrapper {
 @media (hover: none) and (pointer: coarse) {
   section.guests-wrapper {
     & {
-      /* Prevent double-painting: move bg to the fixed layer below */
-      background: none;
+      background: none; /* Prevent double-painting */
     }
 
     &::before {
@@ -63,25 +62,21 @@ section.guests-wrapper {
       top: 0;
       width: 100vw;
 
-      /* Fallback size */
+      /* Put all declarations first */
+      z-index: 0;
+      pointer-events: none;
+      transform: translateZ(0);
       height: 100vh;
-
-      /* Prefer the largest/stable viewport height so it doesn't change with URL bar */
-      @supports (height: 100lvh) {
-        height: 100lvh;
-      }
 
       background-image: url("/images/guests/background/bg-01.png");
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
 
-      /* Layer under the content of guests-wrapper */
-      z-index: 0;
-      pointer-events: none;
-
-      /* Nudge GPU compositing to smooth repaints on iOS */
-      transform: translateZ(0);
+      /* Nested rule AFTER declarations */
+      @supports (height: 100lvh) {
+        height: 100lvh;
+      }
     }
   }
 }
