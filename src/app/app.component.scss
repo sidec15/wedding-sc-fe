@@ -5,8 +5,8 @@ html,
 body {
   height: 100%;
   font-family: "Comfortaa", "Segoe UI", sans-serif;
-  background-color: rgb(var(--bg)); // Use RGB variable for background
-  color: rgb(var(--text)); // Use RGB variable for text
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
 }
 
 // Full-height layout
@@ -21,56 +21,74 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  @include vh(100); // Full viewport height
+  @include vh(100);
 }
 
 // ====================
 // 📄 MAIN CONTENT
 // ====================
 main {
-  flex: 1; // Allow the main content to grow and fill available space
+  flex: 1;
   display: flex;
   flex-direction: column;
-  // padding-top: 80px; // Add padding equal to the height of the fixed header
-  padding-bottom: 0; // No padding needed for the footer
-  background-color: rgb(var(--bg)); // Use RGB variable for light gray
-  overflow-y: auto; // Ensure the main content is scrollable
+  padding-bottom: 0;
+  background-color: rgb(var(--bg));
+  overflow-y: auto;
 }
 
 // ====================
-// FOOTER
+// FOOTER (desktop default)
 // ====================
 .footer {
   position: static;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: auto; // let it expand for two lines
+  height: auto;
   padding: 0.5rem 1rem;
   display: flex;
-  flex-direction: column;        // <-- stack children vertically
-  align-items: center;           // center horizontally
-  justify-content: center;       // center vertically
+  flex-direction: row; // 💻 desktop default: row
+  align-items: center;
+  justify-content: center; // center the row horizontally
   background-color: rgb(var(--bg));
   color: rgb(var(--text));
   font-size: 0.85rem;
   border-top: 1px solid rgb(var(--light-gray));
   z-index: 10;
-  text-align: center;
+  text-align: left;
 
-  .copyright,
+  .copyright {
+    margin: 0;
+    position: absolute; // lock to center
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .powered {
-    margin: 0.25rem 0; // small spacing between lines
+    margin: 0;
+    margin-left: auto; // push to the right
   }
 }
 
-
 // ====================
-// MOBILE MENU OVERLAY
+// MOBILE OVERRIDES
 // ====================
-
 @media screen and (max-width: 768px) {
   main {
-    padding: 0; // Remove padding on mobile
+    padding: 0; // remove padding on mobile
+  }
+
+  .footer {
+    flex-direction: column; // 📱 stacked on mobile
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .copyright,
+    .powered {
+      position: static; // reset absolute positioning
+      transform: none;
+      margin: 0.25rem 0;
+    }
   }
 }
