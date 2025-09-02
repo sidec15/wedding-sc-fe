@@ -142,7 +142,6 @@ export class EventService {
   }
 
   emitFlash(flashMessage: FlashMessage): void {
-    // debug_sdc
     this.flashSubject.next(flashMessage);
   }
 
