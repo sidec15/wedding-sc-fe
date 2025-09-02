@@ -41,6 +41,14 @@ export class CardsService {
       image: '/images/our-story/our-story-chiara_piccola_primavera.jpg',
     },
     {
+      id: 'simone_piccolo_papa',
+      type: 'card',
+      title: 'our_story.cards.simone_piccolo_papa.title',
+      description: 'our_story.cards.simone_piccolo_papa.description',
+      image: '/images/our-story/our-story-simone_piccolo_papa.jpg',
+      comics: ['/images/our-story/our-story-comics-simone_piccolo_papa.png'],
+    },
+    {
       id: 'simone_venezia',
       type: 'card',
       title: 'our_story.cards.simone_venezia.title',
@@ -57,6 +65,13 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-chiara_piccola_natale.png'],
     },
     {
+      id: 'simone_nonni',
+      type: 'card',
+      title: 'our_story.cards.simone_nonni.title',
+      description: 'our_story.cards.simone_nonni.description',
+      image: '/images/our-story/our-story-simone_nonni.jpg',
+    },
+    {
       id: 'chiara_piccola_nonni',
       type: 'card',
       title: 'our_story.cards.chiara_piccola_nonni.title',
@@ -69,6 +84,14 @@ export class CardsService {
       title: 'our_story.cards.simone_piccolo_leone.title',
       description: 'our_story.cards.simone_piccolo_leone.description',
       image: '/images/our-story/our-story-simone_piccolo_leone.jpg',
+    },
+    {
+      id: 'simone_piccolo_fratelli',
+      type: 'card',
+      title: 'our_story.cards.simone_piccolo_fratelli.title',
+      description: 'our_story.cards.simone_piccolo_fratelli.description',
+      image: '/images/our-story/our-story-simone_piccolo_fratelli.jpg',
+      comics: ['/images/our-story/our-story-comics-simone_piccolo_fratelli.png'],
     },
     {
       id: 'simone_asilo_premio',
@@ -85,6 +108,13 @@ export class CardsService {
       description: 'our_story.cards.chiara_giovane_fratelli.description',
       image: '/images/our-story/our-story-chiara_giovane_fratelli.jpg',
       comics: ['/images/our-story/our-story-comics-chiara_giovane_fratelli.png'],
+    },
+    {
+      id: 'simone_cugini',
+      type: 'card',
+      title: 'our_story.cards.simone_cugini.title',
+      description: 'our_story.cards.simone_cugini.description',
+      image: '/images/our-story/our-story-simone_cugini.jpg',
     },
     {
       id: 'chiara_simone_gmg',

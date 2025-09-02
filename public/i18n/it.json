@@ -104,21 +104,33 @@
         "title": "Lì è nato il sinistro",
         "description": "Simone: \"Non sapevo ancora parlare bene, ma col sinistro mi facevo capire alla grande.\""
       },
-      "chiara_piccola_natale": {
-        "title": "Sotto l'albero, un dono che sorrideva",
-        "description": "Chiara: \"Con quell'abitino rosso sotto l'albero… l'imbarazzo era il mio vero accessorio di Natale.\""
-      },
       "chiara_piccola_primavera": {
         "title": "Un attimo di sole",
         "description": "Chiara: \"Altro che bouquet: mi bastava un ramo di primavera per essere felice.\""
+      },
+      "simone_nonni": {
+        "title": "I miei nonni",
+        "description": "Simone: \"Sono stato davvero fortunato ad avere dei nonni così speciali. Nonna Vittoria si prendeva cura di noi con amore quando mamma e papà erano al lavoro, nonna Antonietta ci riuniva ogni domenica con le sue fettuccine fatte in casa, e con nonno Gennaro non mancavano mai avventure e marachelle. L'unico rimpianto è non aver potuto conoscere meglio nonno Nando: da grande uomo di cultura qual era, avrei tanto voluto condividere con lui ogni passo del mio percorso di studi, fino alla laurea magistrale.\""
+      },
+      "chiara_piccola_natale": {
+        "title": "Sotto l'albero, un dono che sorrideva",
+        "description": "Chiara: \"Con quell'abitino rosso sotto l'albero… l'imbarazzo era il mio vero accessorio di Natale.\""
       },
       "simone_venezia": {
         "title": "Tra arte e briciole",
         "description": "Simone: \"Io turista a Venezia… i piccioni al buffet di briciole! Eravamo tutti felici.\""
       },
+      "simone_piccolo_papa": {
+        "title": "In gita con papà",
+        "description": "Simone: \"Io e papà, provetti escursionisti di montagna… con outfit studiati nei minimi dettagli: calzini alti, pantaloncini coordinati e cappellino strategico.\""
+      },
       "chiara_piccola_nonni": {
         "title": "Un ricordo di famiglia",
         "description": "Chiara: \"Con i miei nonni materni e le cugine, un ricordo di famiglia che porto nel cuore.\""
+      },
+      "simone_piccolo_fratelli": {
+        "title": "Squadra (quasi) al completo",
+        "description": "Simone: \"Eccoci qua: io, Lorenzo e la piccola Gloria… con le mitiche tutine anni '90, rigorosamente passate di fratello in fratello… e di fratello in sorella! Una vera tradizione di famiglia. Solo Marcolino, arrivato molti anni dopo, non ha potuto godere dell'onore di indossare le tutine 'pari al nuovo' che noi ci siamo tramandati con tanto amore!\""
       },
       "simone_asilo_premio": {
         "title": "Il re dei quiz in pantaloncini corti",
@@ -131,6 +143,10 @@
       "chiara_giovane_fratelli": {
         "title": "Fratelli sul ring",
         "description": "Chiara: \"La foto perfetta per dimostrare che l'amore fraterno può includere... anche un po' di wrestling!\""
+      },
+      "simone_cugini": {
+        "title": "Qualche cugino!",
+        "description": "Simone: \"Eccoci qui: fratelli, cugini… e sguardi rigorosamente non sincronizzati.\""
       },
       "chiara_simone_gmg": {
         "title": "Chi l'avrebbe detto?",
