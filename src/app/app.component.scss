@@ -41,21 +41,29 @@ main {
 // FOOTER
 // ====================
 .footer {
-  position: static; // Default position
+  position: static;
   bottom: 0;
   left: 0;
-  width: 100%; // Ensure it spans the full width
-  height: var(--footer-height); // Use CSS variable for footer height
-  padding: 0 1rem;
+  width: 100%;
+  height: auto; // let it expand for two lines
+  padding: 0.5rem 1rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(var(--bg)); // Use RGB variable for background
-  color: rgb(var(--text)); // Use RGB variable for text
+  flex-direction: column;        // <-- stack children vertically
+  align-items: center;           // center horizontally
+  justify-content: center;       // center vertically
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
   font-size: 0.85rem;
-  border-top: 1px solid rgb(var(--light-gray)); // Use RGB variable for light gray
+  border-top: 1px solid rgb(var(--light-gray));
   z-index: 10;
+  text-align: center;
+
+  .copyright,
+  .powered {
+    margin: 0.25rem 0; // small spacing between lines
+  }
 }
+
 
 // ====================
 // MOBILE MENU OVERLAY
