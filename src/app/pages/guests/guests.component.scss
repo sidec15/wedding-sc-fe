@@ -6,24 +6,26 @@ section {
 }
 
 section.guests-wrapper {
-  /* Layout */
-  margin-bottom: 0;
-  position: relative;
-  /* Create a stacking context so we can layer a fixed bg under content on mobile */
-  z-index: 0;
+  /* --- Base declarations (opt-in to new Sass behavior) --- */
+  & {
+    margin-bottom: 0;
+    position: relative;
+    z-index: 0;
 
-  /* Make the section at least viewport height (prefer stable units where supported) */
-  min-height: 100vh;
+    /* Desktop/tablet default: classic fixed background */
+    background-image: url("/images/guests/background/bg-01.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    /* Min height (stable viewport units where supported) */
+    min-height: 100vh;
+  }
+
   @supports (min-height: 100lvh) {
     min-height: 100lvh;
   }
-
-  /* Desktop/tablet default: classic fixed background */
-  background-image: url("/images/mobile-menu/bg-02.png");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed; /* desktop key line */
 
   /* Optional readability overlay */
   &::after {
@@ -46,40 +48,41 @@ section.guests-wrapper {
   }
 }
 
-/* Mobile: replace background-attachment: fixed with a fixed viewport layer.
-   This avoids the resize/jump when browser UI bars show/hide. */
+/* Mobile: replace background-attachment: fixed with a fixed viewport layer. */
 @media (hover: none) and (pointer: coarse) {
   section.guests-wrapper {
-    /* Prevent double-painting: move bg to the fixed layer below */
-    background: none;
-  }
-
-  section.guests-wrapper::before {
-    content: "";
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100vw;
-
-    /* Fallback size */
-    height: 100vh;
-
-    /* Prefer the largest/stable viewport height so it doesn't change with URL bar */
-    @supports (height: 100lvh) {
-      height: 100lvh;
+    & {
+      /* Prevent double-painting: move bg to the fixed layer below */
+      background: none;
     }
 
-    background-image: url("/images/mobile-menu/bg-02.png");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    &::before {
+      content: "";
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
 
-    /* Layer under the content of guests-wrapper */
-    z-index: 0;
-    pointer-events: none;
+      /* Fallback size */
+      height: 100vh;
 
-    /* Nudge GPU compositing to smooth repaints on iOS */
-    transform: translateZ(0);
+      /* Prefer the largest/stable viewport height so it doesn't change with URL bar */
+      @supports (height: 100lvh) {
+        height: 100lvh;
+      }
+
+      background-image: url("/images/guests/background/bg-01.png");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+
+      /* Layer under the content of guests-wrapper */
+      z-index: 0;
+      pointer-events: none;
+
+      /* Nudge GPU compositing to smooth repaints on iOS */
+      transform: translateZ(0);
+    }
   }
 }
 
