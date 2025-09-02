@@ -1,70 +1,59 @@
 @use "../../../styles/variables.scss" as *;
 @use "../../../styles/mixins.scss" as *;
 
+/* Frosted reusable card style */
 .frosted-box {
-  background: rgba(var(--text-mask), 0.6); // semi-transparent
+  background: rgba(var(--bg), 0.6);
   border-radius: 1rem;
   padding: 1rem;
   box-shadow: 0 4px 20px var(--box-shadow-medium);
-  backdrop-filter: blur(8px); // glass effect
+  backdrop-filter: blur(8px);
 }
 
+/* Base sections */
 section {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
+/* Guests wrapper desktop/tablet */
 section.guests-wrapper {
-  /* --- Base declarations (opt-in to new Sass behavior) --- */
-  & {
-    margin-bottom: 0;
-    position: relative;
-    z-index: 0;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 0;
 
-    /* Desktop/tablet default: classic fixed background */
-    background-image: url("/images/guests/bg-light-landscape.png");
-    &.dark {
-      background-image: url("/images/guests/bg-dark-landscape.png");
-    }
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  background-image: url("/images/guests/background/bg-light-landscape.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 
-    /* Min height (stable viewport units where supported) */
-    min-height: 100vh;
+  &.dark {
+    background-image: url("/images/guests/background/bg-dark-landscape.png");
   }
+
+  min-height: 100vh;
 
   @supports (min-height: 100lvh) {
     min-height: 100lvh;
   }
 
-  /* Optional readability overlay */
   &::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    // background: linear-gradient(
-    //   to bottom,
-    //   rgba(0, 0, 0, 0.18) 0%,
-    //   rgba(0, 0, 0, 0.12) 40%,
-    //   rgba(0, 0, 0, 0.18) 100%
-    // );
   }
 
-  /* Ensure actual content sits above any background layer we add on mobile */
   > * {
     position: relative;
     z-index: 1;
   }
 }
 
-/* Mobile: replace background-attachment: fixed with a fixed viewport layer. */
+/* Mobile: fixed viewport layer instead of background-attachment */
 @media (hover: none) and (pointer: coarse) {
   section.guests-wrapper {
-    & {
-      background: none; /* Prevent double-painting */
-    }
+    background: none;
 
     &::before {
       content: "";
@@ -72,30 +61,28 @@ section.guests-wrapper {
       left: 0;
       top: 0;
       width: 100vw;
-
-      /* Put all declarations first */
+      height: 100vh;
       z-index: 0;
       pointer-events: none;
       transform: translateZ(0);
-      height: 100vh;
 
       background-image: url("/images/guests/background/bg-light-portrait.png") !important;
-      &.dark {
-        background-image: url("/images/guests/bg-dark-portrait.png");
-      }
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
 
-      /* Nested rule AFTER declarations */
       @supports (height: 100lvh) {
         height: 100lvh;
       }
     }
+
+    &.dark::before {
+      background-image: url("/images/guests/background/bg-dark-portrait.png") !important;
+    }
   }
 }
 
-/* Consolidated heading styles */
+/* Headings */
 h2 {
   color: rgb(var(--accent));
   text-align: center;
@@ -115,6 +102,7 @@ h4 {
   margin: 1rem 0;
 }
 
+/* Headings mobile */
 @media (max-width: 768px) {
   h2 {
     font-size: 2rem;
