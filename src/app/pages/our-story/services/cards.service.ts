@@ -69,7 +69,7 @@ export class CardsService {
       type: 'card',
       title: 'our_story.cards.simone_nonni.title',
       description: 'our_story.cards.simone_nonni.description',
-      image: '/images/our-story/our-story-simone_nonni.jpg',
+      image: '/images/our-story/our-story-simone_nonni.png',
     },
     {
       id: 'chiara_piccola_nonni',
@@ -114,7 +114,7 @@ export class CardsService {
       type: 'card',
       title: 'our_story.cards.simone_cugini.title',
       description: 'our_story.cards.simone_cugini.description',
-      image: '/images/our-story/our-story-simone_cugini.jpg',
+      image: '/images/our-story/our-story-simone_cugini.png',
     },
     {
       id: 'chiara_simone_gmg',
@@ -125,12 +125,12 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-chiara_simone_gmg.png'],
     },
     {
-      id: 'chiara_simone_lauree',
+      id: 'chiara_simone_laurea',
       type: 'card',
-      title: 'our_story.cards.chiara_simone_lauree.title',
-      description: 'our_story.cards.chiara_simone_lauree.description',
-      image: '/images/our-story/our-story-chiara_simone_lauree.jpg',
-      comics: ['/images/our-story/our-story-comics-chiara_simone_lauree.png'],
+      title: 'our_story.cards.chiara_simone_laurea.title',
+      description: 'our_story.cards.chiara_simone_laurea.description',
+      image: '/images/our-story/our-story-chiara_simone_laurea.png',
+      comics: ['/images/our-story/our-story-comics-chiara_simone_laurea.png'],
     },
     {
       id: 'chiara_simone_brace',
