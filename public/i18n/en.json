@@ -90,7 +90,7 @@
         },
         "subscriptions": {
           "title": "Stay updated",
-          "description": "Enter your email to receive notifications when new comments are added to this photo. You can unsubscribe at any time.",
+          "description": "Enter your email to receive notifications when new comments are added to this photo. You can unsubscribe at any time by clicking the link provided in the email or by sending your request through the Contact Us section.",
           "subscribe": "Subscribe",
           "subscribing": "Subscribing...",
           "unsubscribe": "Unsubscribe",

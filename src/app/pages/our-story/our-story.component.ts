@@ -4,6 +4,7 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
+  signal,
 } from '@angular/core';
 import { CommonModule, NgClass, NgTemplateOutlet } from '@angular/common';
 
@@ -17,6 +18,7 @@ import { Comment } from './components/comments/models/comment';
 import { wait } from '../../utils/time.utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
+import { ImageFocusComponent } from '../../components/image-focus/image-focus.component';
 
 @Component({
   selector: 'app-our-story',
@@ -25,6 +27,7 @@ import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.co
     CommonModule,
     CommentsComponent,
     RingScrollComponent,
+    ImageFocusComponent,
   ],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
@@ -53,6 +56,8 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   showCommentsSection: boolean = true;
   isGreaterJump = false;
   showSwipeOnboarding = false;
+  isGalleryOpen = false;
+  imageUrl = signal<string>('');
 
   private touchStartX = 0;
   private touchStartY = 0;
@@ -278,6 +283,8 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
     const currentId = this.cards[this.currentIndex]?.id;
     if (!currentId) return;
 
+    this.imageUrl.set(this.cards[this.currentIndex].image || '');
+
     this.router.navigate([], {
       queryParams: { cardId: currentId },
       queryParamsHandling: 'merge',
@@ -387,6 +394,15 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
     if (deltaX > this.swipeThreshold) {
       this.previousCard();
     }
+  }
+
+  // ---------------- IMAGE FOCUS ----------------
+  openGallery(): void {
+    this.isGalleryOpen = true;
+  }
+
+  closeGallery(): void {
+    this.isGalleryOpen = false;
   }
 }
 

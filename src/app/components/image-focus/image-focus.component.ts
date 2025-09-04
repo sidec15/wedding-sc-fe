@@ -1,5 +1,5 @@
-
-import { Component, input, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-image-focus',
@@ -9,10 +9,21 @@ import { Component, input, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ImageFocusComponent {
   imageUrl = input.required<string>();
-  isVisible = input(false);
-  @Output() close = new EventEmitter<void>();
+  isVisible = signal(false);
+
+  constructor(private eventService: EventService) {}
+
+  show() {
+    this.isVisible.set(true);
+    this.eventService.emitRingScrollEnabled(false);
+  }
+
+  hide() {
+    this.isVisible.set(false);
+    this.eventService.emitRingScrollEnabled(true);
+  }
 
   onClose() {
-    this.close.emit();
+    this.hide();
   }
 }

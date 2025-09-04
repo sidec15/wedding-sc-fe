@@ -69,7 +69,7 @@
       },
       "subscriptions": {
         "title": "Rimani aggiornato",
-        "description": "Inserisci la tua email per ricevere notifiche quando vengono aggiunti nuovi commenti a questa foto. Puoi annullare l'iscrizione in qualsiasi momento.",
+        "description": "Inserisci la tua email per ricevere notifiche quando vengono aggiunti nuovi commenti a questa foto. Puoi annullare l'iscrizione in qualsiasi momento cliccando sull'apposito link presente nell'email ricevuta oppure inviando la tua richiesta tramite la sezione Contattaci.",
         "subscribe": "Iscriviti",
         "subscribing": "Iscrizione in corso...",
         "unsubscribe": "Annulla iscrizione",
@@ -85,7 +85,7 @@
     },
     "intro": {
       "title": "Come siamo finiti qui?",
-      "description": "Tutto è iniziato con un bel po' di foto d'epoca (e sì, alcune forse era meglio lasciarle nei cassetti…). Ci troverai piccoli, con facce buffe, pose improbabili e outfit che oggi fanno tendenza… ma solo su Marte. Poi arrivano gli anni in cui ci siamo incontrati e, tra una risata e l'altra, abbiamo iniziato a scrivere la nostra storia a due. Il resto? È tutto qui: viaggi, abbracci, momenti assurdi e ricordi che ci hanno portato fin dove siamo oggi. Questa è la nostra storia: un mix di momenti teneri, buffi, indimenticabili. Esplora e divertiti con noi!"
+      "description": "Tutto inizia con un bel po' di foto d'epoca (e sì, alcune forse era meglio lasciarle nei cassetti...). Ci troverai piccoli, con facce buffe, pose improbabili e outfit che oggi fanno tendenza... ma solo su Marte. Poi arrivano gli anni in cui ci siamo incontrati e, giorno dopo giorno, abbiamo iniziato a scrivere la nostra storia. Il resto? Viaggi, abbracci, momenti assurdi e ricordi che ci hanno portato fin dove siamo oggi. Eccoci qua: un mix di momenti teneri, buffi, indimenticabili.\n\nEsplora e... buon divertimento!"
     },
     "outro": {
       "title": "Prossima fermata: matrimonio!",
@@ -93,32 +93,32 @@
     },
     "cards": {
       "chiara_neonata": {
-        "title": "Un sorriso che conquista",
-        "description": "Chiara: \"Non mi ricordo nulla… ma sembra proprio che mi stessi divertendo!\""
+        "title": "Ta daaa",
+        "description": "Chiara: \"Per i più intimi ero \"faccia di luna\" e con quegli occhietti sapevo proprio conquistare il mio pubblico\""
       },
       "chiara_piccola_famiglia": {
-        "title": "Tutti insieme",
-        "description": "Chiara: \"Vestiti d'epoca, acconciature anni '80… e io ovviamente al centro della scena con tutta la squadra!\""
+        "title": "Agosto in famiglia",
+        "description": "Chiara: \"Vestiti d'epoca, acconciature anni '80... un ciuccio e un pannolino per una squadra strepitosa\""
       },
       "simone_piccolo_calcio": {
-        "title": "Lì è nato il sinistro",
-        "description": "Simone: \"Non sapevo ancora parlare bene, ma col sinistro mi facevo capire alla grande.\""
+        "title": "Tiro mancino!",
+        "description": "Simone: \"Non sapevo ancora parlare bene, ma con quel sinistro mi facevo capire alla grande.\""
       },
       "chiara_piccola_primavera": {
-        "title": "Un attimo di sole",
-        "description": "Chiara: \"Altro che bouquet: mi bastava un ramo di primavera per essere felice.\""
+        "title": "Acchiappafiori professionista",
+        "description": "Chiara: \"Nessun ramo poteva sfuggire a quelle manine!\""
       },
       "simone_nonni": {
-        "title": "I miei nonni",
-        "description": "Simone: \"Sono stato davvero fortunato ad avere dei nonni così speciali. Nonna Vittoria si prendeva cura di noi con amore quando mamma e papà erano al lavoro, nonna Antonietta ci riuniva ogni domenica con le sue fettuccine fatte in casa, e con nonno Gennaro non mancavano mai avventure e marachelle. L'unico rimpianto è non aver potuto conoscere meglio nonno Nando: da grande uomo di cultura qual era, avrei tanto voluto condividere con lui ogni passo del mio percorso di studi, fino alla laurea magistrale.\""
+        "title": "Nonni, gioia e allegria",
+        "description": "Simone: \"Sono stato davvero fortunato ad avere dei nonni così speciali. Nonna Vittoria si prendeva cura di noi con amore quando mamma e papà erano al lavoro, nonna Antonietta ci riuniva ogni domenica con le sue fettuccine fatte in casa, e con nonno Gennaro non mancavano mai avventure e marachelle. Di nonno Nando (che qui mi tiene in braccio) non ho ricordi, ma aneddoti e foto raccontano di un nonno dolce e affettuoso.\""
       },
       "chiara_piccola_natale": {
-        "title": "Sotto l'albero, un dono che sorrideva",
-        "description": "Chiara: \"Con quell'abitino rosso sotto l'albero… l'imbarazzo era il mio vero accessorio di Natale.\""
+        "title": "Buon Natale!",
+        "description": "Chiara: \"Ed eccola là! La tipica espressione che mettevo su per l'imbarazzo da posa  fotografica! E quel vestitino rosso natalizio ci si abbina proprio bene!\""
       },
       "simone_venezia": {
         "title": "Tra arte e briciole",
-        "description": "Simone: \"Io turista a Venezia… i piccioni al buffet di briciole! Eravamo tutti felici.\""
+        "description": "Simone: \"Io turista a Venezia in compagnia di ghiotti piccioni ad un buffet di briciole!\""
       },
       "simone_piccolo_papa": {
         "title": "In gita con papà",
@@ -130,10 +130,10 @@
       },
       "simone_piccolo_fratelli": {
         "title": "Squadra (quasi) al completo",
-        "description": "Simone: \"Eccoci qua: io, Lorenzo e la piccola Gloria… con le mitiche tutine anni '90, rigorosamente passate di fratello in fratello… e di fratello in sorella! Una vera tradizione di famiglia. Solo Marcolino, arrivato molti anni dopo, non ha potuto godere dell'onore di indossare le tutine 'pari al nuovo' che noi ci siamo tramandati con tanto amore!\""
+        "description": "Simone: \"Eccoci qua: io, Lorenzo e Gloria… con le mitiche tutine anni '90, rigorosamente passate di fratello in fratello… e di fratello in sorella!\""
       },
       "simone_asilo_premio": {
-        "title": "Il re dei quiz in pantaloncini corti",
+        "title": "Quiz e calzettoni rossi",
         "description": "Simone: \"Non so se fosse più grande la mia coppa o il coraggio di indossare quei pantaloncini.\""
       },
       "simone_piccolo_leone": {
@@ -162,7 +162,7 @@
       },
       "chiara_simone_mare_mosso": {
         "title": "Onde e fughe strategiche",
-        "description": "Simone: \"A Baia di Riaci, mare mosso e onde giganti… indovinate chi è che appena vede l'onda parte in modalità fuga?\"\nChiara: \"Non è fuga, è sopravvivenza. E comunque ero io quella lucida: tu eri lì a sfidare Poseidone!\""
+        "description": "Simone: \"A Baia di Riaci, mare mosso e onde giganti… indovinate chi è che appena vede l'onda parte in modalità fuga?\"\n\nChiara: \"Non è fuga, è sopravvivenza. E comunque ero io quella lucida: tu eri lì a sfidare Poseidone!\""
       },
       "chiara_simone_laurea": {
         "title": "Le nostre lauree",

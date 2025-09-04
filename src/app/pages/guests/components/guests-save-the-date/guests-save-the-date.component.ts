@@ -33,12 +33,10 @@ export class GuestsSaveTheDateComponent {
 
   openGallery(): void {
     this.isGalleryOpen = true;
-    this.eventService.emitRingScrollEnabled(false);
   }
 
   closeGallery(): void {
     this.isGalleryOpen = false;
-    this.eventService.emitRingScrollEnabled(true);
   }
 
   downloadImage() {

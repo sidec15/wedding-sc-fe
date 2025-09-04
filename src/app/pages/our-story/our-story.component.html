@@ -8,7 +8,9 @@
         <i class="fas fa-chevron-left"></i>
         <i class="fas fa-chevron-right"></i>
       </div>
-      <span class="hint">{{ "our_story.swipe_onboarding.hint" | translate }}</span>
+      <span class="hint">{{
+        "our_story.swipe_onboarding.hint" | translate
+      }}</span>
     </div>
   </div>
   }
@@ -108,7 +110,7 @@
               'slide-in-from-right': card.position === 'slide-in-from-right'
             }"
           >
-            <img [src]="card.image" [alt]="card.title" />
+            <img [src]="card.image" [alt]="card.title" (click)="openGallery()" />
           </div>
         </div>
         }
@@ -215,6 +217,11 @@
       </div>
     </ng-template>
   </div>
+
+  <app-image-focus
+    [imageUrl]="imageUrl()"
+    [isVisible]="isGalleryOpen"
+  ></app-image-focus>
 </section>
 
 <app-ring-scroll></app-ring-scroll>
