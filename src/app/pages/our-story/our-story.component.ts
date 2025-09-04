@@ -46,6 +46,7 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   lastBtn!: ElementRef;
   @ViewChild('cardWrapper', { static: true })
   cardWrapper!: ElementRef<HTMLElement>;
+  @ViewChild(ImageFocusComponent) imageFocus!: ImageFocusComponent;
 
   cards: Card[] = [];
   currentIndex: number = 0;
@@ -56,7 +57,6 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   showCommentsSection: boolean = true;
   isGreaterJump = false;
   showSwipeOnboarding = false;
-  isGalleryOpen = false;
   imageUrl = signal<string>('');
 
   private touchStartX = 0;
@@ -76,6 +76,8 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
     this.cards = this.storycardsProvider.getCards();
     // Initialize all cards with proper states
     this.initializeCardStates();
+    // Initialize imageUrl with first card's image
+    this.imageUrl.set(this.cards[0]?.image || '');
   }
 
   ngAfterViewInit(): void {
@@ -274,6 +276,9 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
     });
 
     this.currentIndex = newIndex;
+    
+    // Update imageUrl for the new current card
+    this.imageUrl.set(this.cards[newIndex].image || '');
 
     // show comments again
     this.showCommentsSection = true;
@@ -398,11 +403,7 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
 
   // ---------------- IMAGE FOCUS ----------------
   openGallery(): void {
-    this.isGalleryOpen = true;
-  }
-
-  closeGallery(): void {
-    this.isGalleryOpen = false;
+    this.imageFocus.show();
   }
 }
 

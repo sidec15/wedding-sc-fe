@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { EventService } from '../../../../services/event.service';
 import { ImageFocusComponent } from '../../../../components/image-focus/image-focus.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -16,7 +16,8 @@ import 'add-to-calendar-button';
   }
 })
 export class GuestsSaveTheDateComponent {
-  isGalleryOpen = false;
+  @ViewChild(ImageFocusComponent) imageFocus!: ImageFocusComponent;
+  
   isCalendarModalOpen = false;
   imageUrl = '/images/guests/save-the-date/save-the-date-01.jpg';
   googleUrl = '';
@@ -32,11 +33,7 @@ export class GuestsSaveTheDateComponent {
   }
 
   openGallery(): void {
-    this.isGalleryOpen = true;
-  }
-
-  closeGallery(): void {
-    this.isGalleryOpen = false;
+    this.imageFocus.show();
   }
 
   downloadImage() {
