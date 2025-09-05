@@ -86,6 +86,13 @@ export class CardsService {
       image: '/images/our-story/our-story-simone_piccolo_leone.jpg',
     },
     {
+      id: 'chiara_bruno',
+      type: 'card',
+      title: 'our_story.cards.chiara_bruno.title',
+      description: 'our_story.cards.chiara_bruno.description',
+      image: '/images/our-story/our-story-chiara_bruno.png',
+    },
+    {
       id: 'simone_piccolo_fratelli',
       type: 'card',
       title: 'our_story.cards.simone_piccolo_fratelli.title',
