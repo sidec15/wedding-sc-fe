@@ -132,6 +132,13 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-chiara_simone_gmg.png'],
     },
     {
+      id: 'simone_fratelli_tutti',
+      type: 'card',
+      title: 'our_story.cards.simone_fratelli_tutti.title',
+      description: 'our_story.cards.simone_fratelli_tutti.description',
+      image: '/images/our-story/our-story-simone_fratelli_tutti.jpg',
+    },
+    {
       id: 'chiara_simone_laurea',
       type: 'card',
       title: 'our_story.cards.chiara_simone_laurea.title',
