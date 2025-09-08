@@ -8,7 +8,10 @@ body.splash-active {
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: url("/images/splash/splash-01.png") no-repeat center center;
+  background-image: var(--splash-desktop);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -54,7 +57,7 @@ body.splash-active {
   }
 
   @media (max-width: 768px) {
-    background-image: url("/images/splash/splash-02.png");
+    background-image: var(--splash-mobile) !important;
     background-size: cover;
     background-position: center;
 
@@ -73,18 +76,6 @@ body.splash-active {
 
   }
 
-  // Dark theme override (nested)
-  [data-theme="dark"] & {
-    background: url("/images/splash/splash-03.png") no-repeat center center;
-    background-size: cover;
-    background-position: center;
-
-    @media (max-width: 768px) {
-      background: url("/images/splash/splash-04.png") no-repeat center center !important;
-      background-size: cover !important;
-      background-position: center !important;
-    }
-  }
 }
 
 @keyframes progressBar {
