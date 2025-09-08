@@ -139,6 +139,13 @@ export class CardsService {
       image: '/images/our-story/our-story-simone_fratelli_tutti.jpg',
     },
     {
+      id: 'chiara_simone_marco_giulia',
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_marco_giulia.title',
+      description: 'our_story.cards.chiara_simone_marco_giulia.description',
+      image: '/images/our-story/our-story-chiara_simone_marco_giulia.png',
+    },
+    {
       id: 'chiara_simone_laurea',
       type: 'card',
       title: 'our_story.cards.chiara_simone_laurea.title',

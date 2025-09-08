@@ -150,7 +150,7 @@
       },
       "chiara_simone_gmg": {
         "title": "Chi l'avrebbe detto?",
-        "description": "Simone: \"GMG 2000: eccomi lì, in primo piano, senza immaginare nulla...\"\nChiara: \"...e dietro di lui, seduta tranquilla, c'ero io! Non ci conoscevamo ancora, ma eravamo già vicini di sacco a pelo.\""
+        "description": "Simone: \"GMG 2000: eccomi lì, in primo piano, senza immaginare nulla...\"\n\nChiara: \"...e dietro di lui, seduta tranquilla, c'ero io! Non ci conoscevamo ancora, ma eravamo già vicini di sacco a pelo.\""
       },
       "chiara_simone_brace": {
         "title": "Braciami ancora",
@@ -173,8 +173,12 @@
         "description": "Chiara: \"Vedendoci in queste foto, si potrebbe dire che Bruno era un fratello molto premuroso, sempre presente, che mi portava in braccio... soprattutto in giro (EHHHH)! Dei dispetti e degli scherzi, non parleremo. Oggi celebriamo solo il lato tenero... finché dura!.\""
       },
       "simone_fratelli_tutti": {
-        "title": "Team De Cristofaro al completo",
-        "description": "Simone: \"Ecco una delle rare foto in cui ci siamo tutti ^_^ \""
+        "title": "Team De Cristofaro",
+        "description": "Simone: \"Comunione di Marco. Ecco una delle rare foto in cui ci siamo tutti noi fratelli ^_^ \""
+      },
+      "chiara_simone_marco_giulia": {
+        "title": "I nostri piccoli compagni di avventura",
+        "description": "Chiara: \"Giulia e Marco sono stati con noi in tantissime gite di famiglia: dalla montagna al mare, dalle strade infuocate d'agosto ai sentieri più sperduti. Sempre pronti a seguirci...\"\n\nSimone: \"Non dimentichiamo la visita suicida alla cascata delle Marmore, con febbrone di Giulia il giorno dopo!\""
       }
     }
   },
