@@ -36,38 +36,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   languageDropdownOpen = false;
   themeDropdownOpen = false;
-  /**
-   * navBackground$ is an observable string representing the CSS `background-image`
-   * for the navigation menu.
-   *
-   * Reactive behavior:
-   * - Listens to both theme changes (`eventService.theme$`) and layout changes (`eventService.layout$`).
-   * - If the layout is **desktop**, it always emits `"none"`, meaning no background image is applied.
-   * - If the layout is **mobile**, it computes the appropriate background image URL based on the current theme.
-   *
-   * Technical details:
-   * - `combineLatest` merges the two streams (`theme$` and `layout$`), so any change
-   *   in theme or layout triggers a new emission.
-   * - `startWith` ensures both streams have an initial value immediately:
-   *   - theme$: initialized with the current theme from ThemeService
-   *   - layout$: initialized with `LayoutType.desktop` (or whatever your default is)
-   * - `map` applies the logic: return `"none"` for desktop, or `computeBackground(...)` for mobile.
-   *
-   * Benefits:
-   * - Fully reactive: no manual subscriptions or `markForCheck()` needed.
-   * - Prevents ExpressionChangedAfterItHasBeenCheckedError on initialization.
-   * - Keeps logic declarative and easy to maintain.
-   *
-   * Example usage in template:
-   * ```html
-   * <ul
-   *   class="nav-links"
-   *   [class.open]="isMenuOpen"
-   *   [style.background-image]="navBackground$ | async"
-   * ></ul>
-   * ```
-   */
-  readonly navBackground$: Observable<string>;
 
   private menuSub!: Subscription;
   private headerBgSub!: Subscription;
@@ -98,24 +66,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     private menuService: MenuService,
     private themeService: ThemeService,
     private languageService: LanguageService
-  ) {
-    this.navBackground$ = combineLatest([
-      this.eventService.theme$.pipe(
-        startWith({
-          theme: this.themeService.getCurrentThemeToApply(),
-        } as ThemeMessage)
-      ),
-      this.eventService.layout$.pipe(
-        startWith(LayoutType.desktop) // fallback if no value yet
-      ),
-    ]).pipe(
-      map(([themeMessage, layout]) =>
-        layout === LayoutType.desktop
-          ? 'none'
-          : this.computeBackground(themeMessage.theme)
-      )
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
     window.addEventListener('popstate', this.popStateHandler);
@@ -254,15 +205,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       document.removeEventListener('click', this.documentClickListener, true);
       this.documentClickListener = undefined;
     }
-  }
-
-  private computeBackground(t: Theme) {
-    const url =
-      t === Theme.Dark
-        ? 'url("/images/mobile-menu/bg-02.png")'
-        : 'url("/images/mobile-menu/bg-01.png")';
-
-    return url;
   }
 
   private onLayoutEvent(layoutType: LayoutType) {

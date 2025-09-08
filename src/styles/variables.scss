@@ -30,7 +30,7 @@
   --carousel-gallery-buttons-hover-color: rgba(0, 0, 0, 0.5); // Hover background for carousel gallery buttons
   --error-border: rgb(220, 53, 69);
   --error-text: rgb(220, 53, 69);
-
+  --nav-background: url("/images/mobile-menu/bg-01.png");
 }
 
 // Dark theme
@@ -49,4 +49,5 @@
   --box-shadow-light: rgba(0, 0, 0, 0.22); // Lighter shadow for subtle effects
   --vertical-moving-background-font-size: 5rem; // Font size for vertical moving background
   --horizontal-moving-background-font-size: 3rem; // Font size for horizontal moving background
+  --nav-background: url("/images/mobile-menu/bg-02.png");
 }
