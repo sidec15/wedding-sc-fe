@@ -154,7 +154,7 @@ export class CardsService {
     {
       id: 'chiara_cugini',
       type: 'card',
-      title: 'our_story.cards.chiara_simone_gmg.title',
+      title: 'our_story.cards.chiara_cugini.title',
       description: 'our_story.cards.chiara_cugini.description',
       image: '/images/our-story/our-story-chiara_cugini.png',
     },
