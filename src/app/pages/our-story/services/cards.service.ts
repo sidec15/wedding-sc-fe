@@ -138,13 +138,6 @@ export class CardsService {
       image: '/images/our-story/our-story-simone_fratelli_tutti.jpg',
     },
     {
-      id: 'chiara_simone_marco_giulia',
-      type: 'card',
-      title: 'our_story.cards.chiara_simone_marco_giulia.title',
-      description: 'our_story.cards.chiara_simone_marco_giulia.description',
-      image: '/images/our-story/our-story-chiara_simone_marco_giulia.png',
-    },
-    {
       id: 'chiara_papa',
       type: 'card',
       title: 'our_story.cards.chiara_papa.title',
@@ -178,6 +171,20 @@ export class CardsService {
       title: 'our_story.cards.chiara_cari.title',
       description: 'our_story.cards.chiara_cari.description',
       image: '/images/our-story/our-story-chiara_cari.png',
+    },
+    {
+      id: 'chiara_simone_marco_giulia',
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_marco_giulia.title',
+      description: 'our_story.cards.chiara_simone_marco_giulia.description',
+      image: '/images/our-story/our-story-chiara_simone_marco_giulia.png',
+    },
+    {
+      id: 'chiara_simone_francesco',
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_francesco.title',
+      description: 'our_story.cards.chiara_simone_francesco.description',
+      image: '/images/our-story/our-story-chiara_simone_francesco.png',
     },
 
 
