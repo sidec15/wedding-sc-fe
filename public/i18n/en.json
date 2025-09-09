@@ -44,7 +44,7 @@
   },
   "our_story": {
     "swipe_onboarding": {
-      "message": "Swipe left or right to explore the story",
+      "message": "Swipe left or right to explore our story.\nTap on the photo to enlarge it: you can zoom in with two fingers and move around using two fingers.",
       "hint": "(Tap anywhere to continue)"
     },
     "intro": {

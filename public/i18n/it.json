@@ -44,7 +44,7 @@
   },
   "our_story": {
     "swipe_onboarding": {
-      "message": "Scorri a sinistra o a destra per esplorare la storia",
+      "message": "Scorri a sinistra o a destra per esplorare la nostra storia.\nTocca la foto per ingrandirla: potrai zoomare con due dita e spostarti sempre con due dita.",
       "hint": "(Tocca ovunque per continuare)"
     },
     "comments": {
@@ -190,6 +190,26 @@
       },
       "chiara_simone_giordana": {
         "title": "Giordana e noi",
+        "description": ""
+      },
+      "chiara_grazia": {
+        "title": "Io e Lella",
+        "description": "Chiara: \"\""
+      },
+      "chiara_mamma": {
+        "title": "Io e mamma",
+        "description": ""
+      },
+      "chiara_laura": {
+        "title": "Io e Laura",
+        "description": ""
+      },
+      "chiara_cugini": {
+        "title": "Io e i miei cugini",
+        "description": ""
+      },
+      "chiara_cari": {
+        "title": "Persone care",
         "description": ""
       }
     }

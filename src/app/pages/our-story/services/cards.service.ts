@@ -93,6 +93,13 @@ export class CardsService {
       image: '/images/our-story/our-story-chiara_bruno.png',
     },
     {
+      id: 'chiara_grazia',
+      type: 'card',
+      title: 'our_story.cards.chiara_grazia.title',
+      description: 'our_story.cards.chiara_grazia.description',
+      image: '/images/our-story/our-story-chiara_grazia.png',
+    },
+    {
       id: 'simone_piccolo_fratelli',
       type: 'card',
       title: 'our_story.cards.simone_piccolo_fratelli.title',
@@ -124,14 +131,6 @@ export class CardsService {
       image: '/images/our-story/our-story-simone_cugini.png',
     },
     {
-      id: 'chiara_simone_gmg',
-      type: 'card',
-      title: 'our_story.cards.chiara_simone_gmg.title',
-      description: 'our_story.cards.chiara_simone_gmg.description',
-      image: '/images/our-story/our-story-chiara_simone_gmg.jpg',
-      comics: ['/images/our-story/our-story-comics-chiara_simone_gmg.png'],
-    },
-    {
       id: 'simone_fratelli_tutti',
       type: 'card',
       title: 'our_story.cards.simone_fratelli_tutti.title',
@@ -151,6 +150,50 @@ export class CardsService {
       title: 'our_story.cards.chiara_papa.title',
       description: 'our_story.cards.chiara_papa.description',
       image: '/images/our-story/our-story-chiara_papa.jpg',
+    },
+    {
+      id: 'chiara_mamma',
+      type: 'card',
+      title: 'our_story.cards.chiara_mamma.title',
+      description: 'our_story.cards.chiara_mamma.description',
+      image: '/images/our-story/our-story-chiara_mamma.png',
+    },
+    {
+      id: 'chiara_cugini',
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_gmg.title',
+      description: 'our_story.cards.chiara_cugini.description',
+      image: '/images/our-story/our-story-chiara_cugini.png',
+    },
+    {
+      id: 'chiara_laura',
+      type: 'card',
+      title: 'our_story.cards.chiara_laura.title',
+      description: 'our_story.cards.chiara_laura.description',
+      image: '/images/our-story/our-story-chiara_laura.png',
+    },
+    {
+      id: 'chiara_cari',
+      type: 'card',
+      title: 'our_story.cards.chiara_cari.title',
+      description: 'our_story.cards.chiara_cari.description',
+      image: '/images/our-story/our-story-chiara_cari.png',
+    },
+
+
+    /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
+
+
+    {
+      id: 'chiara_simone_gmg',
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_gmg.title',
+      description: 'our_story.cards.chiara_simone_gmg.description',
+      image: '/images/our-story/our-story-chiara_simone_gmg.jpg',
+      comics: ['/images/our-story/our-story-comics-chiara_simone_gmg.png'],
     },
     {
       id: 'chiara_simone_laurea',

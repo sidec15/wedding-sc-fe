@@ -65,6 +65,7 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   private touchEndY = 0;
   private swipeThreshold = 50; // px
   private swipeListenerAdded = false;
+  private isMultiTouch = false;
 
   constructor(
     private platformService: PlatformService,
@@ -276,7 +277,7 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
     });
 
     this.currentIndex = newIndex;
-    
+
     // Update imageUrl for the new current card
     this.imageUrl.set(this.cards[newIndex].image || '');
 
@@ -373,11 +374,27 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   }
 
   private onTouchStart = (event: TouchEvent) => {
-    this.touchStartX = event.changedTouches[0].screenX;
-    this.touchStartY = event.changedTouches[0].screenY;
+    // Ignore multi-touch
+    if (event.touches.length > 1) return;
+
+    // Check if zoomed in
+    if (window.visualViewport && window.visualViewport.scale > 1) {
+      return; // Don't start swipe if zoomed
+    }
+
+    this.touchStartX = event.touches[0].screenX;
+    this.touchStartY = event.touches[0].screenY;
   };
 
   private onTouchEnd = (event: TouchEvent) => {
+    // Ignore multi-touch
+    if (event.changedTouches.length > 1) return;
+
+    // Again check zoom level
+    if (window.visualViewport && window.visualViewport.scale > 1) {
+      return; // Don't swipe if zoomed
+    }
+
     this.touchEndX = event.changedTouches[0].screenX;
     this.touchEndY = event.changedTouches[0].screenY;
     this.handleSwipeGesture();

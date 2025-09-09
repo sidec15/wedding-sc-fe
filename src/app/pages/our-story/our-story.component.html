@@ -3,7 +3,7 @@
   @if (showSwipeOnboarding && isMobile) {
   <div class="swipe-onboarding-mask" (click)="dismissSwipeOnboarding()">
     <div class="onboarding-content">
-      <p>{{ "our_story.swipe_onboarding.message" | translate }}</p>
+      <p [innerHTML]="'our_story.swipe_onboarding.message' | translate"></p>
       <div class="arrows">
         <i class="fas fa-chevron-left"></i>
         <i class="fas fa-chevron-right"></i>
@@ -110,7 +110,11 @@
               'slide-in-from-right': card.position === 'slide-in-from-right'
             }"
           >
-            <img [src]="card.image" [alt]="card.title" (click)="openGallery()" />
+            <img
+              [src]="card.image"
+              [alt]="card.title"
+              (click)="openGallery()"
+            />
           </div>
         </div>
         }
@@ -217,7 +221,6 @@
       </div>
     </ng-template>
   </div>
-
 </section>
 
 <app-image-focus [imageUrl]="imageUrl()"></app-image-focus>
