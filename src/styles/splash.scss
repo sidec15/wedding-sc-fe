@@ -47,7 +47,7 @@ body.splash-active {
       transparent 50%
     );
     background-size: 200% 100%;
-    animation: progressBar 3s linear forwards;
+    animation: progressBar var(--splash-duration) linear forwards;
     z-index: 1;
   }
 

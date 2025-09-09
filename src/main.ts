@@ -24,7 +24,7 @@ function handleSplash(): void {
   }
 
   const slideUpDurationMs = 3000;
-  const totalVisibleDurationMs = 3000;
+  const totalVisibleDurationMs = 3050;
 
   document.body.classList.add('splash-active');
   if (!splash) return;
