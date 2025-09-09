@@ -173,6 +173,13 @@ export class CardsService {
       image: '/images/our-story/our-story-chiara_cari.png',
     },
     {
+      id: 'chiara_giovanni_paolo',
+      type: 'card',
+      title: 'our_story.cards.chiara_giovanni_paolo.title',
+      description: 'our_story.cards.chiara_giovanni_paolo.description',
+      image: '/images/our-story/our-story-chiara_giovanni_paolo.png',
+    },
+    {
       id: 'chiara_simone_marco_giulia',
       type: 'card',
       title: 'our_story.cards.chiara_simone_marco_giulia.title',
