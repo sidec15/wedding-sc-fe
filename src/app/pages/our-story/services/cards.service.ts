@@ -38,7 +38,7 @@ export class CardsService {
       type: 'card',
       title: 'our_story.cards.chiara_piccola_primavera.title',
       description: 'our_story.cards.chiara_piccola_primavera.description',
-      image: '/images/our-story/our-story-chiara_piccola_primavera.jpg',
+      image: '/images/our-story/our-story-chiara_piccola_primavera.png',
     },
     {
       id: 'simone_piccolo_papa',
