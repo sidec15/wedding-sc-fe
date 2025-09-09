@@ -179,6 +179,18 @@
       "chiara_simone_marco_giulia": {
         "title": "I nostri piccoli compagni di avventura",
         "description": "Chiara: \"Giulia e Marco sono stati con noi in tantissime gite di famiglia: dalla montagna al mare, dalle strade infuocate d'agosto ai sentieri più sperduti. Sempre pronti a seguirci...\"\n\nSimone: \"Non dimentichiamo la visita suicida alla cascata delle Marmore, con febbrone di Giulia il giorno dopo!\""
+      },
+      "chiara_papa": {
+        "title": "Il mio papà",
+        "description": ""
+      },
+      "chiara_simone_snorkeling": {
+        "title": "Snorkeling estremo!",
+        "description": "Simone: \"Tutto inizia con una maschera, due pinne e un bastoncino di legno. E da lì parte l'operazione polpo: avvistamento, recupero, pulizia e... cucina! Pesca super sostenibile con bastoncino li legno per stanarli!\""
+      },
+      "chiara_simone_giordana": {
+        "title": "Giordana e noi",
+        "description": ""
       }
     }
   },

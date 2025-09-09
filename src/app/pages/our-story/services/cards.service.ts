@@ -146,6 +146,13 @@ export class CardsService {
       image: '/images/our-story/our-story-chiara_simone_marco_giulia.png',
     },
     {
+      id: 'chiara_papa',
+      type: 'card',
+      title: 'our_story.cards.chiara_papa.title',
+      description: 'our_story.cards.chiara_papa.description',
+      image: '/images/our-story/our-story-chiara_papa.jpg',
+    },
+    {
       id: 'chiara_simone_laurea',
       type: 'card',
       title: 'our_story.cards.chiara_simone_laurea.title',
@@ -175,6 +182,21 @@ export class CardsService {
       description: 'our_story.cards.chiara_simone_mare_mosso.description',
       image: '/images/our-story/our-story-chiara_simone_mare_mosso.jpg',
       comics: ['/images/our-story/our-story-comics-chiara_simone_mare_mosso.png'],
+    },
+    {
+      id: 'chiara_simone_snorkeling',
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_snorkeling.title',
+      description: 'our_story.cards.chiara_simone_snorkeling.description',
+      image: '/images/our-story/our-story-chiara_simone_snorkeling.png',
+      comics: ['/images/our-story/our-story-comics-chiara_simone_snorkeling.png'],
+    },
+    {
+      id: 'chiara_simone_giordana',
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_giordana.title',
+      description: 'our_story.cards.chiara_simone_giordana.description',
+      image: '/images/our-story/our-story-chiara_simone_giordana.jpg',
     },
     {
       id: "outro",
