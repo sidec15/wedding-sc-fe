@@ -105,19 +105,20 @@ export class ContactUsComponent {
           if (privacyAccepted) this.securitySession.setPrivacyConsent();
 
           // Reset and prefill from session
-          this.contactForm.reset(
-            {
-              name: '',
-              surname: '',
-              phone: '',
-              email: '',
-              message: '',
-              privacyContactForm: this.securitySession.hasPrivacyConsent(),
-              captchaContactForm: '',
-              websiteContactForm: '',
-            },
-            { emitEvent: false }
-          );
+          //debug_sdc
+          // this.contactForm.reset(
+          //   {
+          //     name: '',
+          //     surname: '',
+          //     phone: '',
+          //     email: '',
+          //     message: '',
+          //     privacyContactForm: this.securitySession.hasPrivacyConsent(),
+          //     captchaContactForm: '',
+          //     websiteContactForm: '',
+          //   },
+          //   { emitEvent: false }
+          // );
 
           this.eventService.emitFlash({
             type: 'success',
