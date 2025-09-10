@@ -1,0 +1,197 @@
+@use "variables.scss" as *;
+
+/* ===========================
+   Shared Form Styles
+   =========================== */
+
+.form-section {
+  padding: 1.5rem;
+  background: rgba(var(--bg), 0.95);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--box-shadow-light);
+  backdrop-filter: var(--backdrop-filter);
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(var(--text));
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-weight: 500;
+  color: rgba(var(--text), 0.8);
+  font-size: 0.9rem;
+}
+
+.form-input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgb(var(--light-gray));
+  border-radius: 4px;
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
+
+  &:focus {
+    outline: none;
+    border-color: rgb(var(--accent));
+  }
+
+  &:-webkit-autofill {
+    box-shadow: 0 0 0 1000px rgb(var(--bg)) inset !important;
+    -webkit-text-fill-color: rgb(var(--text)) !important;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: rgb(var(--text));
+  }
+
+  &.error {
+    border-color: var(--error-border);
+  }
+}
+
+.rich-text-editor-wrapper {
+  padding: 0.75rem;
+  border: 2px solid rgb(var(--light-gray));
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+
+  &:focus-within {
+    outline: none;
+    border-color: rgb(var(--accent));
+  }
+
+  &.error {
+    border-color: var(--error-border);
+  }
+
+  .NgxEditor__Content {
+    font-size: 1rem;
+    color: rgb(var(--text));
+    background: transparent;
+  }
+}
+
+@mixin rich-text-editor-focus {
+  outline: none;
+  border-color: rgb(var(--accent));
+}
+
+@mixin rich-text-editor-error {
+  border-color: var(--error-border);
+}
+
+.error-message {
+  color: var(--error-text);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, rgb(var(--accent)), rgb(var(--hover)));
+  color: var(--button-text-color);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--accent), 0.3);
+  }
+
+  &:disabled {
+    background: var(--disabled-color);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.char-count {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: rgba(var(--text), 0.7);
+}
+
+.hidden {
+  display: none;
+}
+
+/* ===========================
+   Mobile Styles (≤768px)
+   =========================== */
+@media (max-width: 768px) {
+  .form-section {
+    padding: 1rem !important;
+    border-radius: 10px !important;
+    box-shadow: 0 3px 12px var(--box-shadow-light) !important;
+  }
+
+  .section-title {
+    font-size: 1.1rem !important;
+  }
+
+  .form {
+    gap: 1rem !important;
+  }
+
+  .form-group {
+    gap: 0.4rem !important;
+  }
+
+  .form-label {
+    font-size: 0.95rem !important;
+  }
+
+  .form-input {
+    padding: 0.65rem 0.75rem !important;
+    font-size: 1rem !important;
+    border-radius: 6px !important;
+  }
+
+  .rich-text-editor-wrapper {
+    padding: 0.6rem !important;
+    border-radius: 8px !important;
+
+    .NgxEditor__Content {
+      font-size: 1rem !important;
+      line-height: 1.5 !important;
+    }
+  }
+
+  .char-count {
+    justify-content: flex-end !important;
+    font-size: 0.85rem !important;
+    margin-top: -0.25rem !important;
+  }
+
+  .submit-btn {
+    align-self: stretch !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 1rem !important;
+    border-radius: 10px !important;
+  }
+}
