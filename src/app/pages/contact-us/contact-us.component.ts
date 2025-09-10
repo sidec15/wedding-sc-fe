@@ -62,7 +62,7 @@ export class ContactUsComponent {
 
       // Section-scoped security fields
       privacyContactForm: [false, Validators.requiredTrue],
-      captchaContactForm: ['', Validators.required],
+      captchaContactForm: [null, Validators.required],
       websiteContactForm: [''], // Honeypot
     });
   }
@@ -106,19 +106,19 @@ export class ContactUsComponent {
 
           // Reset and prefill from session
           //debug_sdc
-          // this.contactForm.reset(
-          //   {
-          //     name: '',
-          //     surname: '',
-          //     phone: '',
-          //     email: '',
-          //     message: '',
-          //     privacyContactForm: this.securitySession.hasPrivacyConsent(),
-          //     captchaContactForm: '',
-          //     websiteContactForm: '',
-          //   },
-          //   { emitEvent: false }
-          // );
+          this.contactForm.reset(
+            {
+              name: '',
+              surname: '',
+              phone: '',
+              email: '',
+              message: '',
+              privacyContactForm: this.securitySession.hasPrivacyConsent(),
+              captchaContactForm: null,
+              websiteContactForm: '',
+            },
+            { emitEvent: false }
+          );
 
           this.eventService.emitFlash({
             type: 'success',
@@ -135,7 +135,7 @@ export class ContactUsComponent {
             // Clear control so the widget shows again immediately
             this.contactForm
               .get('captchaContactForm')
-              ?.reset('', { emitEvent: false });
+              ?.reset(null, { emitEvent: false });
 
             this.eventService.emitFlash({
               type: 'error',

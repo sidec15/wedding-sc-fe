@@ -102,7 +102,7 @@ export class CommentsComponent implements OnChanges {
         [plainTextRequired(), plainTextMaxLength(this.maxCommentLength)],
       ],
       privacyCommentCreate: [false, Validators.requiredTrue],
-      captchaCommentCreate: ['', Validators.required],
+      captchaCommentCreate: [null, Validators.required],
       websiteCommentCreate: [''], // honeypot
     });
 
@@ -110,7 +110,7 @@ export class CommentsComponent implements OnChanges {
     this.subscriptionForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       privacySubscription: [false, Validators.requiredTrue],
-      captchaSubscription: ['', Validators.required],
+      captchaSubscription: [null, Validators.required],
       websiteSubscription: [''], // honeypot
     });
   }
@@ -225,7 +225,7 @@ export class CommentsComponent implements OnChanges {
               messageHtml: '',
               privacyCommentCreate:
                 this.securitySessionService.hasPrivacyConsent(),
-              captchaCommentCreate: '',
+              captchaCommentCreate: null,
               websiteCommentCreate: '',
             },
             { emitEvent: false }
@@ -258,7 +258,7 @@ export class CommentsComponent implements OnChanges {
             // Optionally also clear the control immediately:
             this.commentForm
               .get('captchaCommentCreate')
-              ?.reset('', { emitEvent: false });
+              ?.reset(null, { emitEvent: false });
             return;
           }
 
@@ -374,7 +374,7 @@ export class CommentsComponent implements OnChanges {
               email: '',
               privacySubscription:
                 this.securitySessionService.hasPrivacyConsent(),
-              captchaSubscription: '',
+              captchaSubscription: null,
               websiteSubscription: '',
             },
             { emitEvent: false }

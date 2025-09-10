@@ -82,13 +82,22 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
+  // ✅ Do NOT write back into the FormControl here.
+  // The RecaptchaFormsModule CVA already does it.
+  onCaptchaResolved(_: string | null): void {
+    console.log('onCaptchaResolved');
+  }
+
+  // Keep this if you want the UI theme to update, but don't touch the control.
   private applyTheme(theme: Theme, force = false): void {
     const newTheme: 'light' | 'dark' = theme === Theme.Dark ? 'dark' : 'light';
     if (!force && newTheme === this.recaptchaTheme) return;
     this.recaptchaTheme = newTheme;
 
-    // Force remount the captcha widget (to apply new theme)
-    this.form.get(this.captchaControlName)?.reset(null, { emitEvent: false });
+    // ❌ remove this line — it creates a feedback loop via CVA
+    // this.form.get(this.captchaControlName)?.reset(null, { emitEvent: false });
+
+    // Just remount the component (safe, no control write)
     this.showCaptcha = false;
     this.cdr.detectChanges();
     setTimeout(() => {
@@ -97,13 +106,9 @@ export class SecurityConsentComponent implements OnInit, OnDestroy {
     });
   }
 
-  onCaptchaResolved(token: string | null): void {
-    // Just write to the form control; no caching in storage
-    this.form.get(this.captchaControlName)?.setValue(token, { emitEvent: false });
-  }
-
+  // (Optional) You can keep onCaptchaError to mark the control:
   onCaptchaError(): void {
-    // Optionally set a validation error on the form control
+    console.log('onCaptchaError');
     this.form.get(this.captchaControlName)?.setErrors({ error: true });
   }
 }
