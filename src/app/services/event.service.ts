@@ -38,6 +38,26 @@ export class EventService {
    */
   readonly layout$;
 
+  /**
+   * Emits true if the current layout is mobile (width <= 768px).
+   *
+   * ### Example usage in a component:
+   * ```ts
+   * isMobile$ = this.eventService.isMobile$;
+   * ```
+   *
+   * ### Example usage in a template:
+   * ```html
+   * <div *ngIf="isMobile$ | async">
+   *   Mobile layout
+   * </div>
+   * <div *ngIf="!(isMobile$ | async)">
+   *   Desktop layout
+   * </div>
+   * ```
+   */
+  readonly isMobile$;
+
   constructor(private breakpointObserver: BreakpointObserver) {
     this.layout$ = this.breakpointObserver.observe(['(max-width: 768px)']).pipe(
       // Map BreakpointState → LayoutType enum
@@ -51,6 +71,10 @@ export class EventService {
        * 2. The most recent value is replayed to new subscribers immediately.
        */
       shareReplay(1)
+    );
+
+    this.isMobile$ = this.layout$.pipe(
+      map((layout) => layout === LayoutType.mobile)
     );
   }
 
