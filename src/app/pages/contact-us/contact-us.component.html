@@ -5,9 +5,9 @@
 
   <!-- Chiara image for mobile -->
   @if (isMobile) {
-    <div class="contact-form-image chiara">
-      <img src="images/comics/comics-02.png" alt="Contact Us Chiara" />
-    </div>
+  <div class="contact-form-image chiara">
+    <img src="images/comics/comics-02.png" alt="Contact Us Chiara" />
+  </div>
   }
 
   <h3>{{ "contact_us.contact_form.subtitle" | translate }}</h3>
@@ -16,9 +16,9 @@
   <div class="form-row">
     <!-- Chiara image for desktop -->
     @if (!isMobile) {
-      <div class="contact-form-image chiara">
-        <img src="images/comics/comics-02.png" alt="Contact Us Chiara" />
-      </div>
+    <div class="contact-form-image chiara">
+      <img src="images/comics/comics-02.png" alt="Contact Us Chiara" />
+    </div>
     }
 
     <form
@@ -36,37 +36,46 @@
       </div>
 
       <div class="form-group">
-        <label for="name">{{ "contact_us.contact_form.name" | translate }} *</label>
+        <label for="name"
+          >{{ "contact_us.contact_form.name" | translate }} *</label
+        >
         <input type="text" id="name" formControlName="name" maxlength="50" />
         @if (contactForm.get('name')?.errors?.['required'] && submitted) {
-          <div class="error">
-            {{ "contact_us.contact_form.name_required" | translate }}
-          </div>
-        }
-        @if (contactForm.get('name')?.errors?.['maxlength'] && submitted) {
-          <div class="error">
-            {{ "contact_us.contact_form.name_too_long" | translate }}
-          </div>
+        <div class="error">
+          {{ "contact_us.contact_form.name_required" | translate }}
+        </div>
+        } @if (contactForm.get('name')?.errors?.['maxlength'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.name_too_long" | translate }}
+        </div>
         }
       </div>
 
       <div class="form-group">
-        <label for="surname">{{ "contact_us.contact_form.surname" | translate }} *</label>
-        <input type="text" id="surname" formControlName="surname" maxlength="50" />
+        <label for="surname"
+          >{{ "contact_us.contact_form.surname" | translate }} *</label
+        >
+        <input
+          type="text"
+          id="surname"
+          formControlName="surname"
+          maxlength="50"
+        />
         @if (contactForm.get('surname')?.errors?.['required'] && submitted) {
-          <div class="error">
-            {{ "contact_us.contact_form.surname_required" | translate }}
-          </div>
-        }
-        @if (contactForm.get('surname')?.errors?.['maxlength'] && submitted) {
-          <div class="error">
-            {{ "contact_us.contact_form.surname_too_long" | translate }}
-          </div>
+        <div class="error">
+          {{ "contact_us.contact_form.surname_required" | translate }}
+        </div>
+        } @if (contactForm.get('surname')?.errors?.['maxlength'] && submitted) {
+        <div class="error">
+          {{ "contact_us.contact_form.surname_too_long" | translate }}
+        </div>
         }
       </div>
 
       <div class="form-group">
-        <label for="phone">{{ "contact_us.contact_form.phone" | translate }}</label>
+        <label for="phone">{{
+          "contact_us.contact_form.phone" | translate
+        }}</label>
         <input
           type="tel"
           id="phone"
@@ -74,37 +83,44 @@
           placeholder="+39 123 456 7890"
         />
         @if (contactForm.get('phone')?.errors?.['pattern'] && submitted) {
-          <div class="error">
-            {{ "contact_us.contact_form.phone_invalid" | translate }}
-          </div>
+        <div class="error">
+          {{ "contact_us.contact_form.phone_invalid" | translate }}
+        </div>
         }
       </div>
 
       <div class="form-group">
-        <label for="email">{{ "contact_us.contact_form.email" | translate }}</label>
+        <label for="email">{{
+          "contact_us.contact_form.email" | translate
+        }}</label>
         <input type="email" id="email" formControlName="email" required />
         @if (contactForm.get('email')?.errors?.['email'] && submitted) {
-          <div class="error">
-            {{ "contact_us.contact_form.email_invalid" | translate }}
-          </div>
+        <div class="error">
+          {{ "contact_us.contact_form.email_invalid" | translate }}
+        </div>
         }
       </div>
 
       <div class="form-group">
         <label for="message">{{ "contact_us.contact_form.message" | translate }} *</label>
-        <textarea id="message" formControlName="message" rows="5" required></textarea>
+
+        <app-rich-text-editor
+          id="message"
+          formControlName="message"
+          [placeholder]="'our_story.comments.write_comment' | translate"
+          [emojiEnabled]="true"
+          (lengthChange)="messageCharCount = $event"
+          [error]="!!(messageControl?.invalid && messageControl?.touched)"
+        >
+        </app-rich-text-editor>
+
         <div class="char-count">
-          {{ contactForm.get("message")?.value?.length || 0 }}/{{ maxMessageLength }}
+          {{ messageCharCount || 0 }}/{{ maxMessageLength }}
         </div>
-        @if (contactForm.get('message')?.errors?.['required'] && submitted) {
-          <div class="error">
-            {{ "contact_us.contact_form.message_required" | translate }}
-          </div>
-        }
-        @if (contactForm.get('message')?.errors?.['maxlength'] && submitted) {
-          <div class="error">
-            {{ "contact_us.contact_form.message_too_long" | translate }}
-          </div>
+
+        @if (contactForm.get('message')?.invalid &&
+        contactForm.get('message')?.touched) {
+        <div class="error-message">{{ getErrorMessage("message") }}</div>
         }
       </div>
 
@@ -122,16 +138,16 @@
 
     <!-- Simone image for desktop -->
     @if (!isMobile) {
-      <div class="contact-form-image simone">
-        <img src="images/comics/comics-03.png" alt="Contact Us Simone" />
-      </div>
+    <div class="contact-form-image simone">
+      <img src="images/comics/comics-03.png" alt="Contact Us Simone" />
+    </div>
     }
   </div>
 
   <!-- Simone image for mobile -->
   @if (isMobile) {
-    <div class="contact-form-image simone">
-      <img src="images/comics/comics-03.png" alt="Contact Us Simone" />
-    </div>
+  <div class="contact-form-image simone">
+    <img src="images/comics/comics-03.png" alt="Contact Us Simone" />
+  </div>
   }
 </section>

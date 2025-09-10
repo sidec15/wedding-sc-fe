@@ -11,8 +11,10 @@ import { SecuritySessionService } from '../../services/security-session.service'
 import { ContactService } from './services/contact.service';
 import { SecurityConsentComponent } from '../../components/security-consent/security-consent.component';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as securityUtils from '../../utils/security.utils';
+import { RichTextEditorComponent } from '../../components/rich-text-editor/rich-text-editor.component';
+import { plainTextRequired, plainTextMaxLength } from '../../components/rich-text-editor/validators/validators';
 
 @Component({
   selector: 'app-contact-us',
@@ -21,6 +23,7 @@ import * as securityUtils from '../../utils/security.utils';
     ReactiveFormsModule,
     TranslateModule,
     SecurityConsentComponent,
+    RichTextEditorComponent
   ],
   templateUrl: './contact-us.component.html',
   styleUrl: './contact-us.component.scss',
@@ -32,7 +35,12 @@ export class ContactUsComponent {
   maxNameLength = 50;
   maxSurnameLength = 50;
 
+  messageCharCount = 0;
+
+
   readonly isMobile$;
+
+  private readonly translate: TranslateService;
 
   // Phone regex that allows international format
   private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
@@ -41,9 +49,11 @@ export class ContactUsComponent {
     private fb: FormBuilder,
     private contactService: ContactService,
     private eventService: EventService,
-    private securitySession: SecuritySessionService
+    private securitySession: SecuritySessionService,
+    private translateService: TranslateService
   ) {
     this.isMobile$ = this.eventService.isMobile$;
+    this.translate = this.translateService;
     this.contactForm = this.fb.group({
       name: [
         '',
@@ -57,7 +67,7 @@ export class ContactUsComponent {
       email: ['', [Validators.email]],
       message: [
         '',
-        [Validators.required, Validators.maxLength(this.maxMessageLength)],
+        [plainTextRequired(), plainTextMaxLength(this.maxMessageLength)],
       ],
 
       // Section-scoped security fields
@@ -65,6 +75,34 @@ export class ContactUsComponent {
       captchaContactForm: [null, Validators.required],
       websiteContactForm: [''], // Honeypot
     });
+  }
+
+  get messageControl() {
+    return this.contactForm.get('message');
+  }
+
+  getErrorMessage(fieldName: string): string {
+    const field = this.contactForm.get(fieldName);
+    if (field?.errors && field.touched) {
+      if (field.errors['required']) {
+        return this.translate.instant(
+          'rich_text_editor.errors.required_fields'
+        );
+      }
+      if (fieldName === 'message') {
+        if (field.errors['minlength']) {
+          return this.translate.instant(
+            'contact_us.contact_form.message_required'
+          );
+        }
+        if (field.errors['maxlength']) {
+          return this.translate.instant(
+            'contact_us.contact_form.message_too_long'
+          );
+        }
+      }
+    }
+    return '';
   }
 
   onSubmit(): void {
