@@ -31,9 +31,11 @@ import { plainTextRequired, plainTextMaxLength } from '../../components/rich-tex
 export class ContactUsComponent {
   contactForm: FormGroup;
   submitted = false;
+  isSubmitting = false;
   maxMessageLength = 1000;
   maxNameLength = 50;
   maxSurnameLength = 50;
+  toastDurationMs = 5000;
 
   messageCharCount = 0;
 
@@ -89,6 +91,34 @@ export class ContactUsComponent {
           'rich_text_editor.errors.required_fields'
         );
       }
+      if (fieldName === 'name') {
+        if (field.errors['maxlength']) {
+          return this.translate.instant(
+            'contact_us.contact_form.name_too_long'
+          );
+        }
+      }
+      if (fieldName === 'surname') {
+        if (field.errors['maxlength']) {
+          return this.translate.instant(
+            'contact_us.contact_form.surname_too_long'
+          );
+        }
+      }
+      if (fieldName === 'phone') {
+        if (field.errors['pattern']) {
+          return this.translate.instant(
+            'contact_us.contact_form.phone_invalid'
+          );
+        }
+      }
+      if (fieldName === 'email') {
+        if (field.errors['email']) {
+          return this.translate.instant(
+            'contact_us.contact_form.email_invalid'
+          );
+        }
+      }
       if (fieldName === 'message') {
         if (field.errors['minlength']) {
           return this.translate.instant(
@@ -96,6 +126,11 @@ export class ContactUsComponent {
           );
         }
         if (field.errors['maxlength']) {
+          return this.translate.instant(
+            'contact_us.contact_form.message_too_long'
+          );
+        }
+        if (field.errors['maxPlainTextLen']) {
           return this.translate.instant(
             'contact_us.contact_form.message_too_long'
           );
@@ -111,8 +146,9 @@ export class ContactUsComponent {
     // Honeypot anti-spam
     if (this.contactForm.get('websiteContactForm')?.value) return;
 
-    if (!this.contactForm.valid) return;
+    if (this.contactForm.invalid || this.isSubmitting) return;
 
+    this.isSubmitting = true;
     this.eventService.emitLoadingMask(true);
 
     // Build sanitized DTO
@@ -136,14 +172,18 @@ export class ContactUsComponent {
 
     this.contactService
       .sendContactForm(dto)
-      .pipe(finalize(() => this.eventService.emitLoadingMask(false)))
+      .pipe(
+        finalize(() => {
+          this.isSubmitting = false;
+          this.eventService.emitLoadingMask(false);
+        })
+      )
       .subscribe({
         next: () => {
           // Persist to session AFTER success (so other sections can skip)
           if (privacyAccepted) this.securitySession.setPrivacyConsent();
 
           // Reset and prefill from session
-          //debug_sdc
           this.contactForm.reset(
             {
               name: '',
@@ -157,11 +197,13 @@ export class ContactUsComponent {
             },
             { emitEvent: false }
           );
+          this.messageCharCount = 0;
 
           this.eventService.emitFlash({
             type: 'success',
             i18nKey: 'contact_us.contact_form.success_message',
             autoHide: true,
+            hideAfterMs: this.toastDurationMs,
             dismissible: true,
           });
           this.submitted = false;
@@ -179,6 +221,7 @@ export class ContactUsComponent {
               type: 'error',
               i18nKey: 'security.captcha_expired_or_invalid',
               autoHide: true,
+              hideAfterMs: this.toastDurationMs,
               dismissible: true,
             });
             return;
@@ -189,6 +232,7 @@ export class ContactUsComponent {
               type: 'error',
               i18nKey: 'security.captcha_unavailable_try_later',
               autoHide: true,
+              hideAfterMs: this.toastDurationMs,
               dismissible: true,
             });
             return;
@@ -200,6 +244,7 @@ export class ContactUsComponent {
             type: 'error',
             i18nKey: 'contact_us.contact_form.error_message',
             autoHide: true,
+            hideAfterMs: this.toastDurationMs,
             dismissible: true,
           });
         },

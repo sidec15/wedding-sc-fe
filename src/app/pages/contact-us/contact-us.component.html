@@ -21,120 +21,144 @@
     </div>
     }
 
-    <form
-      class="contact-form-container"
-      [formGroup]="contactForm"
-      (ngSubmit)="onSubmit()"
-    >
-      <!-- Honeypot field -->
-      <div class="hidden">
-        <input
-          type="text"
-          formControlName="websiteContactForm"
-          autocomplete="off"
+    <div class="contact-form-section">
+      <h4 class="section-title">
+        {{ "contact_us.contact_form.form_title" | translate }}
+      </h4>
+
+      <form
+        class="contact-form"
+        [formGroup]="contactForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <!-- Honeypot field -->
+        <div class="hidden">
+          <input
+            type="text"
+            formControlName="websiteContactForm"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="name" class="form-label"
+            >{{ "contact_us.contact_form.name" | translate }} *</label
+          >
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-input"
+            [class.error]="
+              contactForm.get('name')?.invalid &&
+              contactForm.get('name')?.touched
+            "
+            maxlength="50"
+          />
+          @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
+          <div class="error-message">{{ getErrorMessage("name") }}</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="surname" class="form-label"
+            >{{ "contact_us.contact_form.surname" | translate }} *</label
+          >
+          <input
+            type="text"
+            id="surname"
+            formControlName="surname"
+            class="form-input"
+            [class.error]="
+              contactForm.get('surname')?.invalid &&
+              contactForm.get('surname')?.touched
+            "
+            maxlength="50"
+          />
+          @if (contactForm.get('surname')?.invalid && contactForm.get('surname')?.touched) {
+          <div class="error-message">{{ getErrorMessage("surname") }}</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="phone" class="form-label">{{
+            "contact_us.contact_form.phone" | translate
+          }}</label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            class="form-input"
+            [class.error]="
+              contactForm.get('phone')?.invalid &&
+              contactForm.get('phone')?.touched
+            "
+            placeholder="+39 123 456 7890"
+          />
+          @if (contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched) {
+          <div class="error-message">{{ getErrorMessage("phone") }}</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">{{
+            "contact_us.contact_form.email" | translate
+          }}</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-input"
+            [class.error]="
+              contactForm.get('email')?.invalid &&
+              contactForm.get('email')?.touched
+            "
+            required
+          />
+          @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+          <div class="error-message">{{ getErrorMessage("email") }}</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="message" class="form-label">{{ "contact_us.contact_form.message" | translate }} *</label>
+
+          <app-rich-text-editor
+            id="message"
+            formControlName="message"
+            [placeholder]="'our_story.comments.write_comment' | translate"
+            [emojiEnabled]="true"
+            (lengthChange)="messageCharCount = $event"
+            [error]="!!(messageControl?.invalid && messageControl?.touched)"
+          >
+          </app-rich-text-editor>
+
+          <div class="char-count">
+            {{ messageCharCount || 0 }}/{{ maxMessageLength }}
+          </div>
+
+          @if (contactForm.get('message')?.invalid &&
+          contactForm.get('message')?.touched) {
+          <div class="error-message">{{ getErrorMessage("message") }}</div>
+          }
+        </div>
+
+        <app-security-consent
+          [form]="contactForm"
+          [submitted]="submitted"
+          captchaControlName="captchaContactForm"
+          privacyControlName="privacyContactForm"
         />
-      </div>
 
-      <div class="form-group">
-        <label for="name"
-          >{{ "contact_us.contact_form.name" | translate }} *</label
-        >
-        <input type="text" id="name" formControlName="name" maxlength="50" />
-        @if (contactForm.get('name')?.errors?.['required'] && submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.name_required" | translate }}
-        </div>
-        } @if (contactForm.get('name')?.errors?.['maxlength'] && submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.name_too_long" | translate }}
-        </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="surname"
-          >{{ "contact_us.contact_form.surname" | translate }} *</label
-        >
-        <input
-          type="text"
-          id="surname"
-          formControlName="surname"
-          maxlength="50"
-        />
-        @if (contactForm.get('surname')?.errors?.['required'] && submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.surname_required" | translate }}
-        </div>
-        } @if (contactForm.get('surname')?.errors?.['maxlength'] && submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.surname_too_long" | translate }}
-        </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="phone">{{
-          "contact_us.contact_form.phone" | translate
-        }}</label>
-        <input
-          type="tel"
-          id="phone"
-          formControlName="phone"
-          placeholder="+39 123 456 7890"
-        />
-        @if (contactForm.get('phone')?.errors?.['pattern'] && submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.phone_invalid" | translate }}
-        </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="email">{{
-          "contact_us.contact_form.email" | translate
-        }}</label>
-        <input type="email" id="email" formControlName="email" required />
-        @if (contactForm.get('email')?.errors?.['email'] && submitted) {
-        <div class="error">
-          {{ "contact_us.contact_form.email_invalid" | translate }}
-        </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="message">{{ "contact_us.contact_form.message" | translate }} *</label>
-
-        <app-rich-text-editor
-          id="message"
-          formControlName="message"
-          [placeholder]="'our_story.comments.write_comment' | translate"
-          [emojiEnabled]="true"
-          (lengthChange)="messageCharCount = $event"
-          [error]="!!(messageControl?.invalid && messageControl?.touched)"
-        >
-        </app-rich-text-editor>
-
-        <div class="char-count">
-          {{ messageCharCount || 0 }}/{{ maxMessageLength }}
-        </div>
-
-        @if (contactForm.get('message')?.invalid &&
-        contactForm.get('message')?.touched) {
-        <div class="error-message">{{ getErrorMessage("message") }}</div>
-        }
-      </div>
-
-      <app-security-consent
-        [form]="contactForm"
-        [submitted]="submitted"
-        captchaControlName="captchaContactForm"
-        privacyControlName="privacyContactForm"
-      />
-
-      <button class="btn" type="submit">
-        {{ "contact_us.contact_form.submit" | translate }}
-      </button>
-    </form>
+        <button class="submit-btn" type="submit" [disabled]="contactForm.invalid || isSubmitting">
+          @if (!isSubmitting) {
+          {{ "contact_us.contact_form.submit" | translate }}
+          } @else {
+          {{ "contact_us.contact_form.submitting" | translate }}
+          }
+        </button>
+      </form>
+    </div>
 
     <!-- Simone image for desktop -->
     @if (!isMobile) {
