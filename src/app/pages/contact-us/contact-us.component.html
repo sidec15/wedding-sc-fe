@@ -1,7 +1,7 @@
 <section class="contact-form">
   <h2>{{ "contact_us.contact_form.title" | translate }}</h2>
   <!-- Chiara image for mobile -->
-  <ng-container *ngIf="isMobile">
+  <ng-container *ngIf="(layout$ | async) === LayoutType.mobile">
     <div class="contact-form-image chiara">
       <img src="images/comics/comics-02.png" alt="Contact Us Chiara" />
     </div>
@@ -11,7 +11,7 @@
 
   <div class="form-row">
     <!-- Chiara image for desktop -->
-    <ng-container *ngIf="!isMobile">
+    <ng-container *ngIf="(layout$ | async) === LayoutType.desktop">
       <div class="contact-form-image chiara">
         <img src="images/comics/comics-02.png" alt="Contact Us Chiara" />
       </div>
@@ -136,7 +136,7 @@
     </form>
 
     <!-- Simone image for desktop -->
-    <ng-container *ngIf="!isMobile">
+    <ng-container *ngIf="(layout$ | async) === LayoutType.desktop">
       <div class="contact-form-image simone">
         <img src="images/comics/comics-03.png" alt="Contact Us Simone" />
       </div>
@@ -144,7 +144,7 @@
   </div>
 
   <!-- Simone image for mobile -->
-  <ng-container *ngIf="isMobile">
+  <ng-container *ngIf="(layout$ | async) === LayoutType.mobile">
     <div class="contact-form-image simone">
       <img src="images/comics/comics-03.png" alt="Contact Us Simone" />
     </div>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,13 +7,13 @@ import {
 } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { EventService } from '../../services/event.service';
-import { PlatformService } from '../../services/platform.service';
 import { SecuritySessionService } from '../../services/security-session.service';
 import { ContactService } from './services/contact.service';
 import { SecurityConsentComponent } from '../../components/security-consent/security-consent.component';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import * as securityUtils from '../../utils/security.utils';
+import { LayoutType } from '../../models/layout';
 
 @Component({
   selector: 'app-contact-us',
@@ -26,24 +26,29 @@ import * as securityUtils from '../../utils/security.utils';
   templateUrl: './contact-us.component.html',
   styleUrl: './contact-us.component.scss',
 })
-export class ContactUsComponent implements AfterViewInit {
+export class ContactUsComponent {
   contactForm: FormGroup;
   submitted = false;
   maxMessageLength = 1000;
   maxNameLength = 50;
   maxSurnameLength = 50;
-  isMobile = false;
+
+  // expose the enum to the template
+  readonly LayoutType = LayoutType;
+
+  // your stream that emits LayoutType
+  readonly layout$;
 
   // Phone regex that allows international format
   private phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
 
   constructor(
     private fb: FormBuilder,
-    private platformService: PlatformService,
     private contactService: ContactService,
     private eventService: EventService,
     private securitySession: SecuritySessionService
   ) {
+    this.layout$ = this.eventService.layout$;
     this.contactForm = this.fb.group({
       name: [
         '',
@@ -65,10 +70,6 @@ export class ContactUsComponent implements AfterViewInit {
       captchaContactForm: ['', Validators.required],
       websiteContactForm: [''], // Honeypot
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.isMobile = this.platformService.isMobile();
   }
 
   onSubmit(): void {
