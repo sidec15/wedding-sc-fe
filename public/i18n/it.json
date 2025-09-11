@@ -118,7 +118,7 @@
       },
       "simone_venezia": {
         "title": "Tra arte e briciole",
-        "description": "Simone: \"Io turista a Venezia in compagnia di ghiotti piccioni ad un buffet di briciole!\""
+        "description": "Simone: \"Io turista a Venezia in compagnia di ghiotti piccioni ad un buffet di briciole!\nIn basso un piccolo cavaliere medievale... armato solo di occhiali giganti.\""
       },
       "simone_piccolo_papa": {
         "title": "In gita con papà",
@@ -135,10 +135,6 @@
       "simone_asilo_premio": {
         "title": "Quiz e calzettoni rossi",
         "description": "Simone: \"Non so se fosse più grande la mia coppa o il coraggio di indossare quei pantaloncini.\""
-      },
-      "simone_piccolo_leone": {
-        "title": "Il guardiano della colonna",
-        "description": "Simone: \"Un piccolo cavaliere medievale... armato solo di occhiali giganti.\""
       },
       "chiara_giovane_fratelli": {
         "title": "Fratelli sul ring",
@@ -162,11 +158,11 @@
       },
       "chiara_simone_mare_mosso": {
         "title": "Onde e fughe strategiche",
-        "description": "Simone: \"A Baia di Riaci, mare mosso e onde giganti… indovinate chi è che appena vede l'onda parte in modalità fuga?\"\n\nChiara: \"Non è fuga, è sopravvivenza. E comunque ero io quella lucida: tu eri lì a sfidare Poseidone!\""
+        "description": "Simone: \"A Baia di Riaci, mare mosso e onde giganti… indovinate chi è che appena vede l'onda parte in modalità fuga?\"\n\nChiara: \"Non è fuga, è sopravvivenza!\""
       },
       "chiara_simone_laurea": {
         "title": "Le nostre lauree",
-        "description": "Simone: \"Ecco le nostre lauree, triennali e magistrali. Chiara? Elegantissima, sorridente, perfetta. Io? Con la stessa identica giacca in tutte le occasioni importanti. Minimalista o affezionato? Difficile dirlo.\nFatto curioso: Mi ricorderò sempre quando, all'esame di Costruzioni Marittime, il professore disse: \"Guardate che non serve presentarsi eleganti ma impreparati. Guardate De Cristofaro: si è venuto in bermuda e maglietta di Lupin… e se ne va con un bel 30.\" Ah, che soddisfazione quel giorno! (Era settembre, eh… faceva davvero caldo!)"
+        "description": "Simone: \"Ecco le nostre lauree, triennali e magistrali. Chiara? Elegantissima, sorridente, perfetta. Io? Con la stessa identica giacca in tutte le occasioni importanti. Minimalista o affezionato? Difficile dirlo.\n\nFatto curioso: Mi ricorderò sempre quando, all'esame di Costruzioni Marittime, il professore disse: \"Guardate che non serve presentarsi eleganti ma impreparati. Guardate De Cristofaro: si è venuto in bermuda e maglietta di Lupin… e se ne va con un bel 30.\" Ah, che soddisfazione quel giorno! (Era settembre, eh… faceva davvero caldo!)"
       },
       "chiara_bruno": {
         "title": "Fratello maggiore in servizio permanente",
@@ -178,7 +174,7 @@
       },
       "chiara_simone_marco_giulia": {
         "title": "I nostri piccoli compagni di avventura",
-        "description": "Chiara: \"Giulia e Marco sono stati con noi in tantissime gite di famiglia: dalla montagna al mare, dalle strade infuocate d'agosto ai sentieri più sperduti. Sempre pronti a seguirci...\"\n\nSimone: \"Non dimentichiamo la visita suicida alla cascata delle Marmore, con febbrone di Giulia il giorno dopo!\""
+        "description": "Chiara: \"Giulia e Marco sono stati con noi in tante gite di famiglia: dalla montagna al mare, dalle strade infuocate d'agosto ai sentieri più sperduti. Sempre pronti a seguirci...\"\n\nSimone: \"Non dimentichiamo la visita alla cascata delle Marmore, con febbrone di Giulia il giorno dopo!\""
       },
       "chiara_papa": {
         "title": "Il mio papà",
@@ -189,8 +185,8 @@
         "description": "Simone: \"Tutto inizia con una maschera, due pinne e un bastoncino di legno. E da lì parte l'operazione polpo: avvistamento, recupero, pulizia e... cucina! Pesca super sostenibile con bastoncino li legno per stanarli!\""
       },
       "chiara_simone_giordana": {
-        "title": "Giordana e noi",
-        "description": ""
+        "title": "La principessa della famiglia",
+        "description": "Simone: \"È l’unica che può dirmi cosa fare!\n\nChiara: \"Anche come e quando farlo ❤\""
       },
       "chiara_grazia": {
         "title": "Io e Lella",
@@ -201,8 +197,8 @@
         "description": ""
       },
       "chiara_laura": {
-        "title": "Io e Laura",
-        "description": ""
+        "title": "Selfie di gruppo",
+        "description": "Chiara: \"Vacanze, pizze, concerti, Natale... ogni occasione era buona per un selfie. E quando c'era Bruno alla fotocamera, una cosa era certa: il suo mento avrebbe avuto il ruolo da protagonista.\""
       },
       "chiara_cugini": {
         "title": "Io e i miei cugini",
@@ -213,16 +209,16 @@
         "description": ""
       },
       "chiara_simone_francesco": {
-        "title": "Ecco Francesco!",
-        "description": ""
+        "title": "Wi-Fi, affetto e gomitate",
+        "description": "Simone: \"Giochiamo in coop online... ma seduti fianco a fianco, come due LAN gamer del 2003. Francesco è il pro, io sono quello che porta le munizioni. Ma con stile, eh.\"\n\nChiara: \"Francesco ha un talento unico: riesce a sembrare adorabile, furioso e pericoloso… nel giro di tre secondi!\""
       },
       "chiara_giovanni_paolo": {
-        "title": "Giovanni Paolo",
-        "description": ""
+        "title": "Una carezza che non si dimentica",
+        "description": "Chiara: \"Da bambina facevo la chierichetta e mai avrei immaginato di ricevere le carezze e il sorriso di San Giovanni Paolo II. Un momento di tenerezza e di grazia che porto nel cuore, ancora oggi.\""
       },
       "chiara_simone_montagna": {
-        "title": "Eccoci anche in montagna",
-        "description": ""
+        "title": "Zaini in spalla, spray antizanzare in tasca",
+        "description": "Simone: \"Sebbene siamo da sempre una coppia da località di mare, ogni tanto ci concediamo anche un po' di tranquillità in montagna. Panorami mozzafiato, aria pulita, zero sabbia nelle scarpe… quasi rilassante.\"\n\nChiara: \"Rilassante? Parla per te. Io ogni cinque minuti scappo da un'ape, uno scarafaggio o qualche essere non identificato che decide di atterrarmi in testa!\""
       },
       "chiara_domenico_giovanni": {
         "title": "Chiara, Domenico e Giovanni",
