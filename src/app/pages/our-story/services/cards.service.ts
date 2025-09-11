@@ -19,6 +19,13 @@ export class CardsService {
       comics: ['/images/our-story/our-story-comics-chiara_neonata.png'],
     },
     {
+      id: 'chiara_simone_battesimo',
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_battesimo.title',
+      description: 'our_story.cards.chiara_simone_battesimo.description',
+      image: '/images/our-story/our-story-chiara_simone_battesimo.png',
+    },
+    {
       id: 'chiara_piccola_famiglia',
       type: 'card',
       title: 'our_story.cards.chiara_piccola_famiglia.title',
@@ -98,7 +105,7 @@ export class CardsService {
       type: 'card',
       title: 'our_story.cards.chiara_piccola_nonni.title',
       description: 'our_story.cards.chiara_piccola_nonni.description',
-      image: '/images/our-story/our-story-chiara_piccola_nonni.jpg',
+      image: '/images/our-story/our-story-chiara_piccola_nonni.png',
     },
     {
       id: 'simone_piccolo_fratelli',
@@ -318,6 +325,13 @@ export class CardsService {
       title: 'our_story.cards.chiara_simone_noi2.title',
       description: 'our_story.cards.chiara_simone_noi2.description',
       image: '/images/our-story/our-story-chiara_simone_noi2.png',
+    },
+    {
+      id: 'chiara_simone_madonna_miracolo',
+      type: 'card',
+      title: 'our_story.cards.chiara_simone_madonna_miracolo.title',
+      description: 'our_story.cards.chiara_simone_madonna_miracolo.description',
+      image: '/images/our-story/our-story-chiara_simone_madonna_miracolo.jpg',
     },
     {
       id: "outro",

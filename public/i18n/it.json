@@ -96,6 +96,10 @@
         "title": "Ta daaa",
         "description": "Chiara: \"Per i più intimi ero \"faccia di luna\" e con quegli occhietti sapevo proprio conquistare il mio pubblico\""
       },
+      "chiara_simone_battesimo": {
+        "title": "30 Marzo 1986 ✨",
+        "description": "Chiara: \"Notte di Pasqua, e senza saperlo, a pochi chilometri di distanza ricevevamo il sacramento del Battesimo... questo di certo lo abbiamo in comune 😅\""
+      },
       "chiara_piccola_famiglia": {
         "title": "Agosto in famiglia",
         "description": "Chiara: \"Vestiti d'epoca, acconciature anni '80... un ciuccio e un pannolino per una squadra strepitosa\""
@@ -170,7 +174,7 @@
       },
       "simone_fratelli_tutti": {
         "title": "Team De Cristofaro",
-        "description": "Simone: \"Comunione di Marco. Ecco una delle rare foto in cui ci siamo tutti noi fratelli ^_^ \""
+        "description": "Simone: \"Comunione di Marco. Una delle rare foto in cui ci siamo proprio tutti noi fratelli 😅\""
       },
       "chiara_simone_marco_giulia": {
         "title": "I nostri piccoli compagni di avventura",
@@ -185,8 +189,8 @@
         "description": "Simone: \"Tutto inizia con una maschera, due pinne e un bastoncino di legno. E da lì parte l'operazione polpo: avvistamento, recupero, pulizia e... cucina! Pesca super sostenibile con bastoncino li legno per stanarli!\""
       },
       "chiara_simone_giordana": {
-        "title": "La principessa della famiglia",
-        "description": "Simone: \"È l’unica che può dirmi cosa fare!\n\nChiara: \"Anche come e quando farlo ❤\""
+        "title": "La principessa della famiglia 👑",
+        "description": "Simone: \"È l'unica che può dirmi cosa fare!\"\n\nChiara: \"Anche come e quando farlo ❤️\""
       },
       "chiara_grazia": {
         "title": "Io e Lella",
@@ -225,12 +229,12 @@
         "description": ""
       },
       "chiara_simone_noi1": {
-        "title": "Un po' di noi",
-        "description": ""
+        "title": "Un po' di noi...",
+        "description": "Chiara: \"Moto, viaggi, Natale e cannoni...\nInsomma, un riassunto onesto della situazione. 😅\""
       },
       "chiara_simone_noi2": {
-        "title": "Ancora un altro po'",
-        "description": ""
+        "title": "In ogni situazione possibile",
+        "description": "Simone: \"Cascate, spiagge, scooterate notturne… e il Volo dell'Angelo 🚀 🪂.<br>Quella simpatica idea di lanciarsi appesi a un cavo tra due montagne.<br>Per chi fosse curioso di sapere com'è andata (la foto è di pochi istanti prima):<br><a href='https://www.youtube.com/watch?v=SpjktxOyRBw&ab_channel=sidec15' target='_blank'>Guarda il video</a> 😎\""
       },
       "chiara_simone_london": {
         "title": "A Londra...",
@@ -253,8 +257,8 @@
         "description": ""
       },
       "chiara_simone_giovani": {
-        "title": "Giovani e spensierati",
-        "description": ""
+        "title": "Stile anni 2000",
+        "description": "Chiara: \"Qualche scatto d'epoca. L'epoca siamo noi.\""
       }
     }
   },
