@@ -157,8 +157,8 @@
         "description": "Simone: \"Io e Chiara, complici perfetti in ogni grigliata: io con la carne, lei con la forchetta pronta.\""
       },
       "chiara_simone_argentario": {
-        "title": "Scogli, sole e noi",
-        "description": "Simone: \"All'Argentario, come sempre… niente ombrelloni chic o sabbia fine: noi, da veri tipi da mare, tra rocce, vento e piedi doloranti ma felici.\""
+        "title": "Tra scogli e sole",
+        "description": "Simone: \"Qui eravamo all'Argentario e come sempre... niente ombrelloni chic o sabbia fine: noi, veri tipi da mare, tra rocce, vento e piedi doloranti ma soddisfatti.\""
       },
       "chiara_simone_mare_mosso": {
         "title": "Onde e fughe strategiche",
@@ -241,12 +241,12 @@
         "description": "Chiara: \"Classico tour di Londra: monumenti 🏰, passeggiate 🚶‍♀️, double decker 🚌... e una sfida laser con Darth Vader, per non farci mancare nulla.\"<br>\nSimone: \"Ottima la burrobirra 🍺✨\""
       },
       "chiara_simone_eleganti": {
-        "title": "Eleganti e sorridenti ✨",
-        "description": "Chiara: \"Ogni tanto ci capita di essere in tiro... 👗👔 👠👞💄\""
+        "title": "Sorridenti e ... ogni tanto eleganti✨",
+        "description": ""
       },
       "chiara_simone_ka1": {
         "title": "Germania 🥨: lavoro in trasferta 💼✈️ (e una piccola vacanza di vita a due 👫)",
-        "description": "Simone: \"Nel 2017 vengo mandato per due mesi a Karlsruhe per lavorare con i colleghi tedeschi... e Chiara parte con me!\nSveglia presto, passeggiata a piedi fino in sede 🚶‍♂️, poi tutta la mattinata tra riunioni, pianificazioni e chiacchiere internazionali ☕💻.\nAlle 13:30 pausa pranzo nella mensa semivuota (li' tutti mangiavano alle 12!) e Chiara che arrivava puntuale per mangiare insieme 🥗.\nIl pomeriggio lo passato a far impazzire qualche povero collega che provava a starmi dietro 😅.\nStacco con allenamento in palestra 🏋️‍♂️, poi alle 17:45 puntuale arrivava Chiara dopo la sua 1h30 di corsa nei parchi 🏃‍♀️🌳.\nSeguiva un'altra passeggiata insieme (zaini e spesa inclusi) 🥾🛒, poi cena e crollo sul letto 🛌.<br>\nForse una delle parentesi più belle di sempre ❤️.\""
+        "description": "Simone: \"Nel 2017 vengo mandato per due mesi a Karlsruhe per lavorare con i colleghi tedeschi... e Chiara parte con me!<br>Sveglia presto, passeggiata a piedi fino in sede 🚶‍♂️, poi tutta la mattinata tra riunioni, pianificazioni e chiacchiere internazionali ☕💻.<br>Alle 13:30 pausa pranzo nella mensa semivuota (li' tutti mangiavano alle 12!) e Chiara che arrivava puntuale per mangiare insieme 🥗.<br>Il pomeriggio lo passato a far impazzire qualche povero collega che provava a starmi dietro 😅.<br>Stacco con allenamento in palestra 🏋️‍♂️, poi alle 17:45 puntuale arrivava Chiara dopo la sua 1h30 di corsa nei parchi 🏃‍♀️🌳.<br>Seguiva un'altra passeggiata insieme (zaini e spesa inclusi) 🥾🛒, poi cena e crollo sul letto 🛌.<br>\nForse una delle parentesi più belle di sempre ❤️.\""
       },
       "chiara_simone_ka2": {
         "title": "Germania: la vita di coppia in versione weekend",
@@ -254,11 +254,11 @@
       },
       "chiara_simone_mare": {
         "title": "Il mare secondo noi ☀️🏖️",
-        "description": "Chiara: \"Le nostre vacanze in Salento sono uniche.\nSveglia entro le 8:00 ⏰, con Simone che va a prendere il pane fresco 🥖 per i panini.\nColazione ☕ e risveglio muscolare 💪 con palestra fai da te, poi zaini pronti 🎒 e partenza per il mare verso le 11:00/11:30 🕚.\nArrivo alla location tra le 12:00 e le 12:30 📍 (mai lo stesso posto), seguito da una passeggiata di circa un'ora 🚶‍♀️ tra spiaggia o scogli.\nPoi un'ora e mezza di snorkeling 🤿 alla ricerca di polpi 🐙, pranzo al sacco verso le 14:00/14:30 🥪, e massimo 30 minuti di riposo 😴.\nDopo? Ritorno alla macchina 🚗.\nAltro che relax… è un tour de force con vista mare. 😎💪\""
+        "description": "Le nostre vacanze in Salento? Un tour de force con vista mare:<br>sveglia presto, zaino in spalla, trekking lungo la costa, snorkeling e crollo di fine serata. Altro che relax!"
       },
       "chiara_simone_giovani": {
         "title": "Stile anni 2000 💿🕶️",
-        "description": "Chiara: \"Qualche scatto d'epoca. L'epoca siamo noi. 😎📸\""
+        "description": "Qualche scatto d'epoca 😎📸"
       }
     }
   },
