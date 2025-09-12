@@ -6,7 +6,7 @@ import {
   AfterViewInit,
   signal,
 } from '@angular/core';
-import { CommonModule, NgClass, NgTemplateOutlet } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../services/platform.service';
@@ -19,6 +19,7 @@ import { wait } from '../../utils/time.utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { ImageFocusComponent } from '../../components/image-focus/image-focus.component';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 
 @Component({
   selector: 'app-our-story',
@@ -28,6 +29,7 @@ import { ImageFocusComponent } from '../../components/image-focus/image-focus.co
     CommentsComponent,
     RingScrollComponent,
     ImageFocusComponent,
+    SafeHtmlPipe,
   ],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],

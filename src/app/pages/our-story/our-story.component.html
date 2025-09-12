@@ -61,7 +61,7 @@
           }"
         >
           <h2>{{ card.title | translate }}</h2>
-          <p>{{ card.description | translate }}</p>
+          <p [innerHTML]="card.description | translate | safeHtml"></p>
         </div>
       </div>
       }
@@ -93,7 +93,7 @@
             }"
           >
             <h2>{{ card.title | translate }}</h2>
-            <p class="description">{{ card.description | translate }}</p>
+            <p class="description" [innerHTML]="card.description | translate | safeHtml"></p>
           </div>
         </div>
 

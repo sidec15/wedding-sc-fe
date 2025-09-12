@@ -85,7 +85,7 @@
     },
     "intro": {
       "title": "Come siamo finiti qui?",
-      "description": "Tutto inizia con un bel po' di foto d'epoca (e sì, alcune forse era meglio lasciarle nei cassetti...). Ci troverai piccoli, con facce buffe, pose improbabili e outfit che oggi fanno tendenza... ma solo su Marte. Poi arrivano gli anni in cui ci siamo incontrati e, giorno dopo giorno, abbiamo iniziato a scrivere la nostra storia. Il resto? Viaggi, abbracci, momenti assurdi e ricordi che ci hanno portato fin dove siamo oggi. Eccoci qua: un mix di momenti teneri, buffi, indimenticabili.\n\nEsplora e... buon divertimento!"
+      "description": "Tutto inizia con un bel po' di foto d'epoca (e sì, alcune forse era meglio lasciarle nei cassetti...). Ci troverai piccoli, con facce buffe, pose improbabili e outfit che oggi fanno tendenza... ma solo su Marte. Poi arrivano gli anni in cui ci siamo incontrati e, giorno dopo giorno, abbiamo iniziato a scrivere la nostra storia. Il resto? Viaggi, abbracci, momenti assurdi e ricordi che ci hanno portato fin dove siamo oggi. Eccoci qua: un mix di momenti teneri, buffi, indimenticabili.<br><br>Esplora e... buon divertimento!"
     },
     "outro": {
       "title": "Prossima fermata: matrimonio!",
@@ -98,7 +98,7 @@
       },
       "chiara_simone_battesimo": {
         "title": "30 Marzo 1986 ✨",
-        "description": "Chiara: \"Notte di Pasqua, e senza saperlo, a pochi chilometri di distanza ricevevamo il sacramento del Battesimo... questo di certo lo abbiamo in comune 😅\""
+        "description": "Era la notte di Pasqua, e senza saperlo, a pochi chilometri di distanza ricevevamo entrambi il sacramento del Battesimo... questo di certo lo abbiamo in comune 😅"
       },
       "chiara_piccola_famiglia": {
         "title": "Agosto in famiglia",
@@ -114,7 +114,7 @@
       },
       "simone_nonni": {
         "title": "Nonni, gioia e allegria",
-        "description": "Simone: \"Sono stato davvero fortunato ad avere dei nonni così speciali. Nonna Vittoria si prendeva cura di noi con amore quando mamma e papà erano al lavoro, nonna Antonietta ci riuniva ogni domenica con le sue fettuccine fatte in casa, e con nonno Gennaro non mancavano mai avventure e marachelle. Di nonno Nando (che qui mi tiene in braccio) non ho ricordi, ma aneddoti e foto raccontano di un nonno dolce e affettuoso.\""
+        "description": "Simone: \"Sono stato davvero fortunato ad avere dei nonni così speciali. Nonna Vittoria si prendeva cura di noi con amore quando mamma e papà erano al lavoro, nonna Antonietta ci riuniva ogni domenica con le sue fettuccine fatte in casa 🍝, e con nonno Gennaro non mancavano mai avventure e marachelle 😄. Di nonno Nando (che qui mi tiene in braccio) non ho ricordi, ma aneddoti e foto raccontano di un nonno dolce e affettuoso.\"<br>Chiara: \"Nonno Gennaro è stato per me da subito un nonno a tutti gli effetti 🧓❤️... Mi ha voluto davvero tanto bene, un bene vero e sincero, dimostrato tante volte 🤗. Tra telefonate galeotte ☎️, abbracci, risate 😂 e spontanea complicità ✨, passare qualche ora insieme era sempre uno spasso!\""
       },
       "chiara_piccola_natale": {
         "title": "Buon Natale!",
@@ -129,8 +129,8 @@
         "description": "Simone: \"Io e papà, provetti escursionisti di montagna… con outfit studiati nei minimi dettagli: calzini alti, pantaloncini coordinati e cappellino strategico.\""
       },
       "chiara_piccola_nonni": {
-        "title": "Un ricordo di famiglia",
-        "description": "Chiara: \"Con i miei nonni materni e le cugine, un ricordo di famiglia che porto nel cuore.\""
+        "title": "Nonni e nonne: preziose radici",
+        "description": "Chiara: \"Chi viveva lavorando la terra 🌾, chi aveva avuto la possibilità di studiare 📚: i miei nonni erano persone semplici e con un cuore grande ❤️. Non ho avuto l'onore né la fortuna di conoscerli tutti davvero (come nonno Bruno), se non attraverso i racconti di chi ha condiviso con loro momenti importanti e divertenti 😊. Di altri, come nonno Arnaldo, per noi 'nonno Nnnardo', conservo ricordi piccolissimi e purtroppo molto sbiaditi 🕰️. Le mie nonne, Amelia e Clara, invece, sono sempre state molto presenti 👵👵: due grandi donne! Mi hanno donato tanto amore 💕 e, con la loro spontaneità a volte un po' buffa 😄, anche tantissime risate! 😂\""
       },
       "simone_piccolo_fratelli": {
         "title": "Squadra (quasi) al completo",
@@ -150,7 +150,7 @@
       },
       "chiara_simone_gmg": {
         "title": "Chi l'avrebbe detto?",
-        "description": "Simone: \"GMG 2000: eccomi lì, in primo piano, senza immaginare nulla...\"\n\nChiara: \"...e dietro di lui, seduta tranquilla, c'ero io! Non ci conoscevamo ancora, ma eravamo già vicini di sacco a pelo.\""
+        "description": "Simone: \"GMG 2000: eccomi lì, in primo piano, senza immaginare nulla...\"<br>\nChiara: \"...e dietro di lui, seduta tranquilla, c'ero io! Non ci conoscevamo ancora, ma eravamo già vicini di sacco a pelo.\""
       },
       "chiara_simone_brace": {
         "title": "Braciami ancora",
@@ -162,15 +162,15 @@
       },
       "chiara_simone_mare_mosso": {
         "title": "Onde e fughe strategiche",
-        "description": "Simone: \"A Baia di Riaci, mare mosso e onde giganti 🌊... indovinate chi è che appena vede l'onda parte in modalità fuga? 🏃‍♀️💨\"\n\nChiara: \"Non è fuga, è sopravvivenza! 😤\""
+        "description": "Simone: \"A Baia di Riaci, mare mosso e onde giganti 🌊... indovinate chi è che appena vede l'onda parte in modalità fuga? 🏃‍♀️💨\"<br>\nChiara: \"Non è fuga, è sopravvivenza! 😤\""
       },
       "chiara_simone_laurea": {
         "title": "Le nostre lauree",
-        "description": "Simone: \"Ecco le nostre lauree, triennali e magistrali 🎓. Chiara? Elegantissima 👗, sorridente 😄, perfetta ✨. Io? Con la stessa identica giacca in tutte le occasioni importanti 👔. Minimalista o affezionato? Difficile dirlo.\n\nFatto curioso: Mi ricorderò sempre quando, all'esame di Costruzioni Marittime 🌊📐, il professore disse: 'Badate che non serve presentarsi eleganti ma impreparati. Guardate De Cristofaro: è venuto in bermuda 🩳 e maglietta di Lupin 👕... e se ne va con un bel 30 🏆.' Ah, che soddisfazione quel giorno! (Era settembre, eh… faceva davvero caldo! ☀️)\""
+        "description": "Simone: \"Ecco le nostre lauree, triennali e magistrali 🎓. Chiara? Elegantissima 👗, sorridente 😄, perfetta ✨. Io? Con la stessa identica giacca in tutte le occasioni importanti 👔. Minimalista o affezionato? Difficile dirlo.<br>\nFatto curioso: Mi ricorderò sempre quando, all'esame di Costruzioni Marittime 🌊📐, il professore disse: 'Badate che non serve presentarsi eleganti ma impreparati. Guardate De Cristofaro: è venuto in bermuda 🩳 e maglietta di Lupin 👕... e se ne va con un bel 30 🏆.' Ah, che soddisfazione quel giorno! (Era settembre, eh… faceva davvero caldo! ☀️)\""
       },
       "chiara_bruno": {
         "title": "Fratello maggiore in servizio permanente",
-        "description": "Chiara: \"Vedendoci in queste foto, si potrebbe dire che Bruno era un fratello molto premuroso, sempre presente, che mi portava in braccio... soprattutto in giro (EHHHH)! Dei dispetti e degli scherzi, non parleremo. Oggi celebriamo solo il lato tenero... finché dura!.\""
+        "description": "Chiara: \"Vedendoci in queste foto, si potrebbe dire che Bruno era un fratello molto premuroso 🤗, sempre presente, che mi portava in braccio... soprattutto in giro (EHHHH)! Dei dispetti e degli scherzi 🙈, non parleremo. Oggi celebriamo solo il lato tenero... finché dura! 😇\""
       },
       "simone_fratelli_tutti": {
         "title": "Team De Cristofaro",
@@ -178,27 +178,27 @@
       },
       "chiara_simone_marco_giulia": {
         "title": "I nostri piccoli compagni di avventura 🧒👧",
-        "description": "Chiara: \"Giulia e Marco sono stati con noi in tante gite di famiglia 🏞️: dalla montagna ⛰️ al mare 🏖️, dalle strade infuocate d'agosto ☀️🔥 ai sentieri più sperduti 🥾. Sempre pronti a seguirci...\"\n\nSimone: \"Non dimentichiamo la visita alla cascata delle Marmore 💧, con febbrone di Giulia 🤒 il giorno dopo!\""
+        "description": "Chiara: \"Giulia e Marco sono stati con noi in tante gite di famiglia 🏞️: dalla montagna ⛰️ al mare 🏖️, dalle strade infuocate d'agosto ☀️🔥 ai sentieri più sperduti 🥾. Sempre pronti a seguirci...\"<br>\nSimone: \"Non dimentichiamo la visita alla cascata delle Marmore 💧, con febbrone di Giulia 🤒 il giorno dopo!\""
       },
       "chiara_papa": {
         "title": "Il mio papà",
-        "description": ""
+        "description": "Chiara: \"E poi c'è lui, il mio babbo adorato 💖: un'altra colonna portante, anzi il mio 'ascoltatore portante'! 🎧 Negli anni si è sorbito ore e ore di ripetizioni su qualsiasi argomento possibile 📖, dalle interrogazioni di scuola 📚 agli esami universitari 🎓. Tra diplomi e lauree che ho collezionato, ormai avrebbe diritto a una bella collezione di titoli honoris causa 🏅 da appendere al muro!\""
       },
       "chiara_simone_snorkeling": {
         "title": "Snorkeling estremo!",
-        "description": "Simone: \"Tutto inizia con una maschera 🤿, due pinne 🩴 e un bastoncino di legno 🪵. E parte l'operazione polpo 🐙: avvistamento 👀, recupero 🤲, pulizia 🧼 e... cucina 🍽️! Pesca super sostenibile con bastoncino di legno per stanarli! 👌😁\""
+        "description": "Simone: \"Tutto inizia con una maschera 🤿, due pinne 🩴 e un bastoncino di legno 🪵. E parte l'operazione polpo 🐙: avvistamento 👀, recupero 🤲, pulizia 🧼 e... cucina 🍽️! Pesca super sostenibile! 👌😁\""
       },
       "chiara_simone_giordana": {
         "title": "La principessa della famiglia 👑",
-        "description": "Simone: \"È l'unica che può dirmi cosa fare!\"\n\nChiara: \"Anche come e quando farlo ❤️\""
+        "description": "Simone: \"È l'unica che può dirmi cosa fare!\"<br>\nChiara: \"Anche come e quando farlo ❤️\""
       },
       "chiara_grazia": {
         "title": "Io e Lella",
         "description": "Chiara: \"\""
       },
       "chiara_mamma": {
-        "title": "Io e mamma",
-        "description": ""
+        "title": "Mamy and I 👩‍👧💗",
+        "description": "Chiara: \"Una della mie due colonne portanti... Tanto di quello che ho lo devo a lei 💕. La 'poveretta', ahimè, paga però da sempre l'alto prezzo nella sua ardua missione di mamma 👩‍👧‍👦 verso la figlia femmina: tenere a bada il maschiaccio casinista e caotico 😅🎢 che è in lei... Un'impresa titanica insomma 💥🫣\""
       },
       "chiara_laura": {
         "title": "Selfie di gruppo",
@@ -214,15 +214,15 @@
       },
       "chiara_simone_francesco": {
         "title": "Wi-Fi, affetto e gomitate 🎮❤️💥",
-        "description": "Simone: \"Giochiamo in coop online 🎮... ma seduti fianco a fianco, come due LAN gamer del 2003 🧑‍💻🧑‍💻. Francesco è il pro 🧠, io sono quello che porta le munizioni 💼. Ma con stile, eh 😎.\"\n\nChiara: \"Francesco ha un talento unico: riesce a sembrare adorabile 😊, furioso 😡 e pericoloso 💣... nel giro di tre secondi!\""
+        "description": "Simone: \"Giochiamo in coop online 🎮... ma seduti fianco a fianco, come due LAN gamer del 2003 🧑‍💻🧑‍💻. Francesco è il pro 🧠, io sono quello che porta le munizioni 💼. Ma con stile, eh 😎.\"<br>\nChiara: \"Francesco ha un talento unico: riesce a sembrare adorabile 😊, furioso 😡 e pericoloso 💣... nel giro di tre secondi!\""
       },
       "chiara_giovanni_paolo": {
         "title": "Una carezza che non si dimentica",
         "description": "Chiara: \"Da bambina facevo la chierichetta e mai avrei immaginato di ricevere le carezze e il sorriso di San Giovanni Paolo II. Un momento di tenerezza e di grazia che porto nel cuore, ancora oggi.\""
       },
       "chiara_simone_montagna": {
-        "title": "Zaini in spalla 🎒, spray antizanzare in tasca 🦟",
-        "description": "Simone: \"Sebbene siamo da sempre una coppia da località di mare 🏖️, ogni tanto ci concediamo anche un po' di tranquillità in montagna 🏔️. Panorami mozzafiato 😍, aria pulita 🍃, zero sabbia nelle scarpe 👟... super rilassante.\"\n\nChiara: \"Rilassante? 😤 Parla per te. Io ogni cinque minuti scappo da un'ape 🐝, uno scarafaggio 🪳 o qualche essere non ben identificato 👾 che decide di atterrarmi in testa!\""
+        "title": "Zaini in spalla e spray antizanzare in tasca 🦟",
+        "description": "Simone: \"Oltre al mare, ogni tanto ci concediamo anche un po' di tranquillità in montagna 🏔️. Panorami mozzafiato 😍, aria pulita 🍃, zero sabbia nelle scarpe 👟... super rilassante.\"<br>\nChiara: \"Rilassante?! 😤 Parla per te. Bella la natura! Ma è un continuo fuggi fuggi tra vespe 🐝, ragni 🕷️ o qualche altro essere non ben identificato 👾 che decide di atterrarmi in testa!\""
       },
       "chiara_domenico_giovanni": {
         "title": "Chiara, Domenico e Giovanni",
@@ -238,7 +238,7 @@
       },
       "chiara_simone_london": {
         "title": "Da Stonehenge 🌫️ alla Morte Nera 🚀",
-        "description": "Chiara: \"Classico tour di Londra: monumenti 🏰, passeggiate 🚶‍♀️, double decker 🚌... e una sfida laser con Darth Vader, per non farci mancare nulla.\"\n\nSimone: \"Ottima la burrobirra 🍺✨\""
+        "description": "Chiara: \"Classico tour di Londra: monumenti 🏰, passeggiate 🚶‍♀️, double decker 🚌... e una sfida laser con Darth Vader, per non farci mancare nulla.\"<br>\nSimone: \"Ottima la burrobirra 🍺✨\""
       },
       "chiara_simone_eleganti": {
         "title": "Eleganti e sorridenti ✨",
@@ -246,7 +246,7 @@
       },
       "chiara_simone_ka1": {
         "title": "Germania 🥨: lavoro in trasferta 💼✈️ (e una piccola vacanza di vita a due 👫)",
-        "description": "Simone: \"Nel 2017 vengo mandato per due mesi a Karlsruhe per lavorare con i colleghi tedeschi... e Chiara parte con me!\nSveglia presto, passeggiata a piedi fino in sede 🚶‍♂️, poi tutta la mattinata tra riunioni, pianificazioni e chiacchiere internazionali ☕💻.\nAlle 13:30 pausa pranzo nella mensa semivuota (li' tutti mangiavano alle 12!) e Chiara che arrivava puntuale per mangiare insieme 🥗.\nIl pomeriggio lo passato a far impazzire qualche povero collega che provava a starmi dietro 😅.\nStacco con allenamento in palestra 🏋️‍♂️, poi alle 17:45 puntuale arrivava Chiara dopo la sua 1h30 di corsa nei parchi 🏃‍♀️🌳.\nSeguiva un'altra passeggiata insieme (zaini e spesa inclusi) 🥾🛒, poi cena e crollo sul letto 🛌.\n\nForse una delle parentesi più belle di sempre ❤️.\""
+        "description": "Simone: \"Nel 2017 vengo mandato per due mesi a Karlsruhe per lavorare con i colleghi tedeschi... e Chiara parte con me!\nSveglia presto, passeggiata a piedi fino in sede 🚶‍♂️, poi tutta la mattinata tra riunioni, pianificazioni e chiacchiere internazionali ☕💻.\nAlle 13:30 pausa pranzo nella mensa semivuota (li' tutti mangiavano alle 12!) e Chiara che arrivava puntuale per mangiare insieme 🥗.\nIl pomeriggio lo passato a far impazzire qualche povero collega che provava a starmi dietro 😅.\nStacco con allenamento in palestra 🏋️‍♂️, poi alle 17:45 puntuale arrivava Chiara dopo la sua 1h30 di corsa nei parchi 🏃‍♀️🌳.\nSeguiva un'altra passeggiata insieme (zaini e spesa inclusi) 🥾🛒, poi cena e crollo sul letto 🛌.<br>\nForse una delle parentesi più belle di sempre ❤️.\""
       },
       "chiara_simone_ka2": {
         "title": "Germania: la vita di coppia in versione weekend",

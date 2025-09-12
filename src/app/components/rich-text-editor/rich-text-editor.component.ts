@@ -51,8 +51,6 @@ export class RichTextEditorComponent
   @Input() toolbar: Toolbar = [
     ['bold', 'italic', 'underline', 'strike'],
     ['ordered_list', 'bullet_list'],
-    [{ heading: ['h3', 'h4'] }],
-    ['link'],
     ['undo', 'redo'],
   ];
   @Input() autofocus = false;
@@ -81,11 +79,24 @@ export class RichTextEditorComponent
 
     // sync inner control -> outer form
     this.control.valueChanges.subscribe((html) => {
-      const out = this.sanitizeOnOutput
-        ? DOMPurify.sanitize(html ?? '', { USE_PROFILES: { html: true } })
-        : html ?? '';
-      this.onChange(out);
-      this.lengthChange.emit(this.plainLen(out));
+      const clean = DOMPurify.sanitize(html ?? '', {
+        ALLOWED_TAGS: [
+          'b',
+          'i',
+          'em',
+          'strong',
+          'u',
+          's',
+          'br',
+          'ul',
+          'ol',
+          'li',
+        ],
+        ALLOWED_ATTR: [],
+      });
+
+      this.onChange(clean);
+      this.lengthChange.emit(this.plainLen(clean));
     });
 
     if (this.autofocus) {
@@ -141,7 +152,6 @@ export class RichTextEditorComponent
     // Optional: collapse emoji picker and mark as touched
     this.showEmoji = false;
     this.markTouched();
-
   }
 
   submit() {

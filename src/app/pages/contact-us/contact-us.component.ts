@@ -14,7 +14,10 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as securityUtils from '../../utils/security.utils';
 import { RichTextEditorComponent } from '../../components/rich-text-editor/rich-text-editor.component';
-import { plainTextRequired, plainTextMaxLength } from '../../components/rich-text-editor/validators/validators';
+import {
+  plainTextRequired,
+  plainTextMaxLength,
+} from '../../components/rich-text-editor/validators/validators';
 
 @Component({
   selector: 'app-contact-us',
@@ -23,7 +26,7 @@ import { plainTextRequired, plainTextMaxLength } from '../../components/rich-tex
     ReactiveFormsModule,
     TranslateModule,
     SecurityConsentComponent,
-    RichTextEditorComponent
+    RichTextEditorComponent,
   ],
   templateUrl: './contact-us.component.html',
   styleUrl: './contact-us.component.scss',
@@ -38,7 +41,6 @@ export class ContactUsComponent {
   toastDurationMs = 5000;
 
   messageCharCount = 0;
-
 
   readonly isMobile$;
 
@@ -155,7 +157,7 @@ export class ContactUsComponent {
     const raw = { ...this.contactForm.value };
     Object.keys(raw).forEach((k) => {
       if (typeof raw[k] === 'string')
-        raw[k] = securityUtils.sanitizeInput(raw[k]);
+        raw[k] = securityUtils.sanitizeHtml(raw[k]);
     });
 
     const recaptchaToken = (raw.captchaContactForm || null) as string | null;
