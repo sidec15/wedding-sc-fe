@@ -185,6 +185,7 @@ export class CardsService {
       title: 'our_story.cards.chiara_simone_marco_giulia.title',
       description: 'our_story.cards.chiara_simone_marco_giulia.description',
       image: '/images/our-story/our-story-chiara_simone_marco_giulia.png',
+      comics: ['/images/our-story/our-story-comics-chiara_simone_marco_giulia.png'],
     },
     {
       id: 'chiara_simone_francesco',
@@ -192,6 +193,7 @@ export class CardsService {
       title: 'our_story.cards.chiara_simone_francesco.title',
       description: 'our_story.cards.chiara_simone_francesco.description',
       image: '/images/our-story/our-story-chiara_simone_francesco.png',
+      comics: ['/images/our-story/our-story-comics-chiara_simone_francesco1.png', '/images/our-story/our-story-comics-chiara_simone_francesco2.png'],
     },
     {
       id: 'chiara_simone_giordana',
@@ -253,6 +255,7 @@ export class CardsService {
       title: 'our_story.cards.chiara_simone_mare.title',
       description: 'our_story.cards.chiara_simone_mare.description',
       image: '/images/our-story/our-story-chiara_simone_mare.png',
+      comics: ['/images/our-story/our-story-comics-chiara_simone_mare.png'],
     },
     {
       id: 'chiara_simone_snorkeling',
@@ -283,6 +286,7 @@ export class CardsService {
       title: 'our_story.cards.chiara_simone_montagna.title',
       description: 'our_story.cards.chiara_simone_montagna.description',
       image: '/images/our-story/our-story-chiara_simone_montagna.png',
+      comics: ['/images/our-story/our-story-comics-chiara_simone_montagna.png'],
     },
     {
       id: 'chiara_simone_eleganti',
@@ -311,6 +315,7 @@ export class CardsService {
       title: 'our_story.cards.chiara_simone_london.title',
       description: 'our_story.cards.chiara_simone_london.description',
       image: '/images/our-story/our-story-chiara_simone_london.png',
+      comics: ['/images/our-story/our-story-comics-chiara_simone_london.png'],
     },
     {
       id: 'chiara_simone_noi1',
