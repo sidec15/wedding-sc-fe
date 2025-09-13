@@ -12,7 +12,7 @@ function handleSplash(): void {
 
   let shouldSkipSplash = queryParams.get('skipSplash') === 'true';
   // debug_sdc
-  shouldSkipSplash = true;
+  // shouldSkipSplash = true;
 
   if (shouldSkipSplash) {
     if (splash) splash.remove();
