@@ -44,7 +44,7 @@
     <!-- Single gallery-buttons section, style with ngClass -->
     <div
       class="gallery-buttons"
-      [ngClass]="{ mobile: isMobile, desktop: !isMobile }"
+      [ngClass]="{ mobile: isMobile$ | async, desktop: !(isMobile$ | async) }"
       [class.hidden]="overlayStatus === 'expanded'"
       [class.collapsed]="overlayStatus === 'hidden'"
       >
@@ -60,13 +60,13 @@
     </div>
 
     <!-- Desktop-only linear progress bar -->
-    @if (!isMobile) {
+    @if (!(isMobile$ | async)) {
       <div class="progress-bar-container">
         <div class="progress-bar" [style.width.%]="progress"></div>
       </div>
     }
     <!-- Mobile-only border progress -->
-    @if (isMobile) {
+    @if (isMobile$ | async) {
       <div class="border-progress">
         <div
           class="side top"

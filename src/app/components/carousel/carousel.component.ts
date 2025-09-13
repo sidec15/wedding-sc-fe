@@ -9,7 +9,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { EventService } from '../../services/event.service';
 import { PlatformService } from '../../services/platform.service';
 import {
@@ -21,11 +21,11 @@ import {
 } from '@angular/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgClass, NgStyle } from '@angular/common';
-import e from 'express';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-carousel',
-  imports: [TranslateModule, NgStyle, NgClass],
+  imports: [TranslateModule, NgStyle, NgClass, AsyncPipe],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
   animations: [
@@ -52,13 +52,13 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   overlayRef!: ElementRef<HTMLElement>;
 
   /** State */
-  isMobile = false;
   currentSlideIndex = 0;
   activeSlides: Slide[] = [];
   fadeState: 'visible' | 'hidden' = 'visible';
   progress = 100;
   shouldShowMore = false;
   _overlayStatus: 'expanded' | 'collapsed' | 'hidden' = 'collapsed';
+  isMobile$: Observable<boolean>;
 
   /** Internals */
   private slideSub!: Subscription;
@@ -76,12 +76,13 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     private platformService: PlatformService,
     private eventService: EventService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    this.isMobile$ = this.eventService.isMobile$;
+  }
 
   ngOnInit(): void {
-    this.isMobile = this.platformService.isMobile();
     this.mySlides =
-      this.isMobile && this.slidesMobile()?.length > 0
+    this.platformService.isMobile() && this.slidesMobile()?.length > 0
         ? this.slidesMobile()
         : this.slides();
   }

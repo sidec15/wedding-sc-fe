@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -8,19 +7,18 @@ import {
   ViewChild,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { combineLatest, map, Observable, startWith, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Theme } from '../../models/theme';
 import {
   EventService,
   MenuEvent,
-  ThemeMessage,
 } from '../../services/event.service';
 import { HeaderService } from '../../services/header.service';
 import { MenuService } from '../../services/menu.service';
 import { PlatformService } from '../../services/platform.service';
 import { ThemeService } from '../../services/theme.service';
 import { LanguageService } from '../../services/language.service';
-import { CommonModule, NgClass, NgStyle } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { constants } from '../../constants';
 import { LayoutType } from '../../models/layout';
