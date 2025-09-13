@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  @if (isMobile) {
+  @if (isMobile$ | async) {
     <div class="mobile">
       <h2>{{ contentTitle() | translate }}</h2>
       <app-carousel [slides]=slidesMobile></app-carousel>

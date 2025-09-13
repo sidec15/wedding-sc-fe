@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MovingBackgroundComponent } from '../../../../../components/moving-background/moving-background.component';
-import { Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, EMPTY } from 'rxjs';
 import {
   EventService,
   ScrollEvent,
@@ -21,19 +21,24 @@ import {
   CarouselComponent,
   Slide,
 } from '../../../../../components/carousel/carousel.component';
+import { AsyncPipe } from '@angular/common';
+
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-two-images',
   imports: [
     TranslateModule,
     MovingBackgroundComponent,
-    CarouselComponent
+    CarouselComponent,
+    AsyncPipe
 ],
   templateUrl: './two-images.component.html',
   styleUrl: './two-images.component.scss',
 })
 export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
-  private scrollEventSubscription!: Subscription;
+  // private scrollEventSubscription!: Subscription;
+  private destroy$ = new Subject<void>();
 
   movingBackgroundText = input.required<string>();
   contentTitle = input.required<string>();
@@ -42,7 +47,6 @@ export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
   imageUrlRight = input.required<string>();
 
   slidesMobile: Slide[] = [];
-  isMobile = false;
 
   @ViewChild('description', { static: false })
   descriptionRef!: ElementRef<HTMLElement>;
@@ -56,15 +60,18 @@ export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('descriptionContainer', { static: false })
   descriptionContainerRef!: ElementRef<HTMLElement>;
 
+  isMobile$: Observable<boolean>;
+
   private readonly slideDuration = 20000; // Duration for each slide in milliseconds
 
   constructor(
     private platformService: PlatformService,
     private eventService: EventService
-  ) {}
+  ) {
+    this.isMobile$ = this.eventService.isMobile$;
+  }
 
   ngOnInit(): void {
-    this.isMobile = this.platformService.isMobile();
     this.slidesMobile = [
       {
         imageUrl: this.imageUrlLeft(),
@@ -84,21 +91,46 @@ export class TwoImagesComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
-    if (!this.platformService.isMobile()) {
-      this.scrollEventSubscription = this.eventService.scrollEvent$.subscribe(
-        (e: ScrollEvent) => {
-          // Update the parallax effect for the title background
-          const scrollY = e.scrollY;
-          this.animateDesktop(scrollY);
+    /**
+     * Manages the subscription to scroll events based on the device's mobile status.
+     * This reactive approach uses `isMobile$` to dynamically control whether the component
+     * listens for scroll events. When `isMobile$` emits `false` (indicating a desktop environment),
+     * it subscribes to `eventService.scrollEvent$` to enable desktop-specific animations.
+     * Conversely, when `isMobile$` emits `true` (indicating a mobile environment),
+     * it unsubscribes from `eventService.scrollEvent$` by returning `EMPTY`,
+     * thereby preventing unnecessary event processing and optimizing performance on mobile devices.
+     * The `takeUntil(this.destroy$)` operator ensures that all subscriptions are automatically
+     * cleaned up when the component is destroyed, preventing memory leaks.
+     */
+    this.isMobile$.pipe(
+      takeUntil(this.destroy$),
+      switchMap(isMobile => {
+        /*
+         * This switchMap operator ensures that the scrollEvent$ subscription is managed dynamically.
+         * If the device is not mobile (`!isMobile`), it subscribes to `eventService.scrollEvent$`,
+         * enabling desktop-specific scroll animations. If the device is mobile (`isMobile`),
+         * it returns `EMPTY`, effectively unsubscribing from `scrollEvent$` and preventing
+         * unnecessary scroll event processing on mobile, optimizing performance and resource usage.
+         * `takeUntil(this.destroy$)` ensures all subscriptions are cleaned up when the component is destroyed.
+         */
+        if (!isMobile) {
+          // If not mobile (desktop), subscribe to scroll events
+          return this.eventService.scrollEvent$;
+        } else {
+          // If mobile, stop listening to scroll events (return an empty observable)
+          return EMPTY;
         }
-      );
-    }
+      })
+    ).subscribe((e: ScrollEvent) => {
+      // This block will only execute if it's not mobile and a scroll event occurs
+      const scrollY = e.scrollY;
+      this.animateDesktop(scrollY);
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.scrollEventSubscription) {
-      this.scrollEventSubscription.unsubscribe();
-    }
+    this.destroy$.next(); // Emit a value to signal completion
+    this.destroy$.complete(); // Complete the subject
   }
 
   private animateDesktop(scrollY: number) {
