@@ -8,7 +8,7 @@
   @if (isPlatformReady) {
     <div class="miracle-container">
       <app-parallax-image
-        [src]="imageSrc$ | async"
+        [src]="(imageSrc$ | async) || ''"
         [speedFactor]="0.2"
         [containerHeight]="(isMobile$ | async) ? '80lvh' : '100lvh'"
         [imageHeight]="(isMobile$ | async) ? '100lvh' : '120lvh'"
