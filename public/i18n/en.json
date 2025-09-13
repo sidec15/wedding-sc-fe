@@ -44,65 +44,225 @@
   },
   "our_story": {
     "swipe_onboarding": {
-      "message": "Swipe left or right to explore our story.\nTap on the photo to enlarge it: you can zoom in with two fingers and move around using two fingers.",
+      "message": "Swipe left or right to explore our story.\nTap the photo to enlarge it: you can zoom with two fingers and move around with two fingers as well.",
       "hint": "(Tap anywhere to continue)"
+    },
+    "comments": {
+      "title": "Comments",
+      "no_comment": "No comments yet. Be the first to comment!",
+      "leave_comment_message": "Leave a comment",
+      "nickname_placeholder": "Enter your nickname",
+      "comment": "Comment",
+      "write_comment": "Write your comment...",
+      "submit": "Submit Comment",
+      "submitting": "Submitting...",
+      "success_message": "Your comment has been successfully posted!",
+      "error_creating_comment": "An error occurred while posting the comment. Please try again later.",
+      "error_retrieving_comments": "An error occurred while retrieving comments. Please try again later.",
+      "load_more": "Load more",
+      "loading": "Loading...",
+      "errors": {
+        "invalid_nickname_min": "Nickname is too short.",
+        "invalid_nickname_max": "Nickname is too long. Maximum 20 characters.",
+        "invalid_nickname_chars": "Invalid character. Use only letters, numbers, apostrophes ('), spaces, and hyphens (-).",
+        "invalid_content": "Message is too long."
+      },
+      "subscriptions": {
+        "title": "Stay updated",
+        "description": "Enter your email to receive notifications when new comments are added to this photo. You can unsubscribe at any time by clicking the unsubscribe link in the email you receive or by sending your request through the Contact Us section.",
+        "subscribe": "Subscribe",
+        "subscribing": "Subscribing...",
+        "unsubscribe": "Unsubscribe",
+        "unsubscribing": "Unsubscribing...",
+        "subscribe_success": "Subscription successful. You will receive notifications for new comments.",
+        "subscribe_error": "An error occurred while subscribing. Please try again later.",
+        "unsubscribe_success": "Unsubscription successful. You will no longer receive notifications.",
+        "unsubscribe_error": "An error occurred while unsubscribing. Please try again later.",
+        "notify_email_label": "Notification email",
+        "notify_email_placeholder": "Enter your email",
+        "notify_email_invalid": "Enter a valid email address."
+      }
     },
     "intro": {
       "title": "How did we end up here?",
-      "description": "It all started with a bunch of vintage photos (and yes, some of them probably should've stayed in the drawer…). You'll see us as kids, with questionable faces, awkward poses, and outfits that might be trendy today… on Mars. Then came the years when we met and started writing our story together. The rest? It's all here: hugs, holidays, silly moments, and memories that brought us to where we are now. This is our story: a mix of sweet, funny, and unforgettable moments. Explore and enjoy with us!"
-    },
-    "start": {
-      "title": "Where It All Began",
-      "description": "We first met in high school..."
-    },
-    "first_trip": {
-      "title": "First Trip Together",
-      "description": "That summer in Spain was unforgettable."
-    },
-    "proposal": {
-      "title": "She Said Yes!",
-      "description": "An exciting proposal under the stars."
+      "description": "It all starts with a bunch of old photos (and yes, some of them probably should have stayed hidden in the drawers...). You'll find us as kids, with funny faces, awkward poses, and outfits that today would only be trendy... on Mars. Then came the years when we met and, day by day, we began to write our story. The rest? Trips, hugs, crazy moments, and memories that brought us to where we are today. Here we are: a mix of tender, funny, and unforgettable moments.<br><br>Explore and... have fun!"
     },
     "outro": {
-      "title": "Next stop: the wedding!",
-      "description": "And yes, this time no questionable outfits... we hope."
+      "title": "Next stop: wedding!",
+      "description": "And yes, this time no questionable outfits... maybe."
     },
-    "our_story": {
-      "comments": {
-        "title": "Comments",
-        "no_comment": "No comments yet. Be the first to comment!",
-        "leave_comment_message": "Leave a comment",
-        "nickname_placeholder": "Enter your nickname",
-        "comment": "Comment",
-        "write_comment": "Write your comment...",
-        "submit": "Submit Comment",
-        "submitting": "Submitting...",
-        "success_message": "Your comment has been posted successfully!",
-        "error_creating_comment": "An error occurred while posting the comment. Please try again later.",
-        "error_retrieving_comments": "An error occurred while retrieving comments. Please try again later.",
-        "load_more": "Load more",
-        "loading": "Loading...",
-        "errors": {
-          "invalid_nickname_min": "Nickname is too short.",
-          "invalid_nickname_max": "Nickname is too long. Maximum 20 characters.",
-          "invalid_nickname_chars": "Unsupported character. Use only letters, numbers, apostrophes ('), spaces, and hyphens (-).",
-          "invalid_content": "Message is too long."
-        },
-        "subscriptions": {
-          "title": "Stay updated",
-          "description": "Enter your email to receive notifications when new comments are added to this photo. You can unsubscribe at any time by clicking the link provided in the email or by sending your request through the Contact Us section.",
-          "subscribe": "Subscribe",
-          "subscribing": "Subscribing...",
-          "unsubscribe": "Unsubscribe",
-          "unsubscribing": "Unsubscribing...",
-          "subscribe_success": "Subscribed successfully. You will receive notifications for new comments.",
-          "subscribe_error": "An error occurred while subscribing. Please try again later.",
-          "unsubscribe_success": "Unsubscribed successfully. You will no longer receive notifications.",
-          "unsubscribe_error": "An error occurred while unsubscribing. Please try again later.",
-          "notify_email_label": "Notification email",
-          "notify_email_placeholder": "Enter your email",
-          "notify_email_invalid": "Please enter a valid email address."
-        }
+    "cards": {
+      "chiara_neonata": {
+        "title": "Ta daaa",
+        "description": "Chiara: \"For the closest ones I was 'moon face' 🌝🌙✨ and with those little eyes 👀 I really knew how to win over my audience 🎭\""
+      },
+      "chiara_simone_battesimo": {
+        "title": "March 30, 1986 ✨",
+        "description": "It was Easter night, and without knowing it, just a few kilometers apart, we were both receiving the sacrament of Baptism... definitely something we have in common 😅"
+      },
+      "chiara_piccola_famiglia": {
+        "title": "August with family",
+        "description": "Chiara: \"Vintage clothes 👗, 80s hairstyles 💇‍♀️... a pacifier 🍼 and a diaper 🧷 for a truly amazing team 💪👨‍👩‍👧\""
+      },
+      "simone_piccolo_calcio": {
+        "title": "Left-footed shot!",
+        "description": "Simone: \"I couldn’t speak well yet 🗣️, but with that left foot ⚽️👟 I made myself perfectly clear.\""
+      },
+      "chiara_piccola_primavera": {
+        "title": "Smiles and adventure",
+        "description": "Chiara: \"Always a little explorer 🧭, with a mischievous look 😉. I love diving into and adventuring through nature 🌿🍃... but keep me away from anything that flies 🐝🦟 or... I go full Marcell Jacobs mode!! 🏃‍♀️💨\""
+      },
+      "simone_nonni": {
+        "title": "Grandparents, joy and cheer",
+        "description": "Simone: \"I was really lucky to have such special grandparents. Grandma Vittoria lovingly cared for us when mom and dad were at work, Grandma Antonietta gathered us every Sunday with her homemade fettuccine 🍝, and with Grandpa Gennaro there were always adventures and pranks 😄. I have no memories of Grandpa Nando (who’s holding me here), but stories and photos tell of a sweet and affectionate grandpa.\"<br>Chiara: \"Grandpa Gennaro was truly a grandpa to me from the very beginning 🧓❤️... He loved me so much, a genuine and sincere love, shown countless times 🤗. Between cheeky phone calls ☎️, hugs, laughter 😂 and natural complicity ✨, spending a few hours together was always great fun!\""
+      },
+      "chiara_piccola_natale": {
+        "title": "Merry Christmas!",
+        "description": "Chiara: \"And there it is! 😳📸 The classic face I made out of embarrassment when posing for photos! And that little red Christmas dress 🎄👗 fits perfectly!\""
+      },
+      "simone_venezia": {
+        "title": "Between art and crumbs",
+        "description": "Simone: \"Me, a tourist in Venice 🛶, in the company of greedy pigeons at a crumb buffet 🐦🥖!<br>Below, a little medieval knight… armed only with oversized glasses 🏰👓.\""
+      },
+      "simone_piccolo_papa": {
+        "title": "On a trip with Dad",
+        "description": "Simone: \"Me and Dad, rookie mountain hikers 🏞️... with outfits planned down to the last detail: high socks 🧦, matching shorts 🩳 and a strategic cap 🧢.\""
+      },
+      "chiara_piccola_nonni": {
+        "title": "Grandparents: precious roots",
+        "description": "Chiara: \"Some worked the land 🌾, others had the chance to study 📚: my grandparents were simple people with big hearts ❤️. I didn’t have the honor or luck to truly know them all (like Grandpa Bruno), except through the stories of those who shared important and fun moments with them 😊. Of others, like Grandpa Arnaldo — for us 'Grandpa Nnnardo' — I only keep very faint and tiny memories 🕰️. My grandmothers, Amelia and Clara, on the other hand, were always very present 👵👵: two great women! They gave me so much love 💕 and, with their sometimes naturally funny spontaneity 😄, plenty of laughter too! 😂\""
+      },
+      "simone_piccolo_fratelli": {
+        "title": "The (almost) complete team",
+        "description": "Simone: \"Here we are: me, Lorenzo, and Gloria 👶👦👧... with the legendary 90s onesies 👕, strictly passed from brother to brother… and from brother to sister! 🔁😂\""
+      },
+      "simone_asilo_premio": {
+        "title": "Quiz and red socks",
+        "description": "Simone: \"I don’t know which was bigger: my trophy 🏆 or the courage to wear those red shorts 🔴🩳.\""
+      },
+      "chiara_giovane_fratelli": {
+        "title": "Siblings in the ring",
+        "description": "Chiara: \"The perfect photo to prove that sibling love 💞 can also include... a bit of wrestling 🤼‍♂️😄!\""
+      },
+      "simone_cugini": {
+        "title": "A few cousins!",
+        "description": "Simone: \"Here we are: siblings, cousins 👨‍👩‍👦‍👦… and strictly unsynchronized looks 👀😅.\""
+      },
+      "chiara_simone_gmg": {
+        "title": "Who would have thought?",
+        "description": "Simone: \"Tor Vergata, World Youth Day 2000 🌟, a night under the stars ✨. There I was, in the foreground, not imagining anything... and right behind me, sitting calmly 😌, was Chiara! 💕 We didn’t know each other yet, but we were already sleeping bag neighbors 🛌💫.\""
+      },
+      "chiara_simone_brace": {
+        "title": "Grill me again",
+        "description": "Simone: \"Chiara and I, the perfect partners at every barbecue 🍖👩‍❤️‍👨. From beginners to expert fire masters 🔥🍴🥩.\""
+      },
+      "chiara_simone_argentario": {
+        "title": "Between rocks and sun",
+        "description": "Simone: \"Here we were at Argentario ☀️🌊 and as always... no fancy umbrellas or fine sand: just us, true sea lovers 🐚, among rocks 🪨, wind 💨 and sore but satisfied feet 🦶😌.\""
+      },
+      "chiara_simone_mare_mosso": {
+        "title": "Waves and strategic escapes",
+        "description": "Simone: \"At Baia di Riaci, rough sea and giant waves 🌊... guess who immediately runs away as soon as a wave shows up? 🏃‍♀️💨\"<br>Chiara: \"It’s not running away, it’s survival! 😤\""
+      },
+      "chiara_simone_laurea": {
+        "title": "Anxiety, sweat, and important milestones",
+        "description": "🎓 Memorable snapshots capturing the first but fundamental milestones of our life: our bachelor’s and master’s degrees. 📚 And today you’ve got one more engineer 🛠️ and one more psychologist 🧠 around you... Congratulations to us! 🥳🎉"
+      },
+      "chiara_bruno": {
+        "title": "Big brother on permanent duty",
+        "description": "Chiara: \"Looking at these photos, you could say Bruno was a very caring brother 🤗, always there, carrying me in his arms... especially around (EHHHH)! As for the pranks and mischief 🙈, we won’t talk about that. Today we celebrate only the sweet side... while it lasts! 😇\""
+      },
+      "simone_fratelli_tutti": {
+        "title": "Team De Cristofaro",
+        "description": "Simone: \"Marco’s First Communion ✨. One of the rare photos where all of us siblings are actually together 👨‍👩‍👧‍👦😅.\""
+      },
+      "chiara_simone_marco_giulia": {
+        "title": "Our little adventure buddies 🧒👧",
+        "description": "Chiara: \"From the sea 🏖️, to the mountains ⛰️, from the scorching August streets ☀️🔥 to the most remote trails 🥾, as kids Giulia and Marco were always ready to follow us.\"<br>Simone: \"Let’s not forget that time at the Marmore Falls 💧, with Giulia coming down with a high fever 🤒 the next day!\""
+      },
+      "chiara_papa": {
+        "title": "My dad",
+        "description": "Chiara: \"And then there’s him, my beloved dad 💖: another pillar in my life, actually my 'listening pillar'! 🎧 Over the years he’s endured endless hours of me rehearsing any topic imaginable 📖, from school tests 📚 to university exams 🎓. With all the diplomas and degrees I’ve collected, by now he should have quite the collection of honorary degrees 🏅 to hang on the wall!\""
+      },
+      "chiara_simone_snorkeling": {
+        "title": "Extreme snorkeling!",
+        "description": "Simone: \"It all starts with a mask 🤿, two fins 🩴 and a wooden stick 🪵. Then comes the octopus operation 🐙: spotting 👀, catching 🤲, cleaning 🧼 and... cooking 🍽️! Ultra-sustainable fishing! 👌😁\""
+      },
+      "chiara_simone_giordana": {
+        "title": "Princess 👑",
+        "description": "Simone: \"Giordana is the youngest in the family 👧✨ and with her strong personality 😎 she definitely doesn’t go unnoticed!\""
+      },
+      "chiara_grazia": {
+        "title": "Sisters by 'chance', 'tatine' by choice",
+        "description": "Chiara: \"Tata and tatina... With 13 years between us, for me she was necessarily a bit like a mom 🤱, a safe harbor from Bruno’s teasing ⚓, a partner in mischief 😇😈... always a unique and (above all) loud presence in my life 📢... And yes... from the very moment she steps out of bed while I’m still half asleep... somebody stop herrr 🛌🚫😂\""
+      },
+      "chiara_mamma": {
+        "title": "Mamy and I 👩‍👧💗",
+        "description": "Chiara: \"One of my two pillars... So much of what I have I owe to her 💕. The 'poor one', alas, has always paid the high price of her tough mission as a mom 👩‍👧‍👦 to a daughter: keeping at bay the tomboyish, chaotic whirlwind 😅🎢 inside her... A truly titanic feat 💥🫣\""
+      },
+      "chiara_laura": {
+        "title": "Group selfie",
+        "description": "Chiara: \"Vacations 🏖️, pizzas 🍕, concerts 🎶, Christmas 🎄... any occasion was good for a selfie 🤳. And when Bruno was behind the camera 📸, one thing was certain: his chin was destined to play the lead role 😅.\""
+      },
+      "chiara_cugini": {
+        "title": "Uncles and cousins",
+        "description": "Chiara: \"Precious childhood playmates 🧸 who, even if growing up in parallel, stay in our lives forever: cousins! The very first friends we have as kids 👧👦. And next to them, the uncles: special presences ✨ who are a bit guides, a bit accomplices 🤝, able to give sincere affection 💖, precious advice 💡 and two open arms ready to hold you tight 🤗\""
+      },
+      "chiara_cari": {
+        "title": "Loved ones",
+        "description": "Chiara: \"...Then there are special figures who don’t need titles to be defined: whether by blood, chosen, or found along the way, they all share the ability to make us feel unique 💞. They know how to spoil us with affection 💝, surprise us with complicity 🤝, and remain steady points in our lives 🌟, part guide and part partners in laughter 😂. Presences that transform family into something even greater and more precious 👨‍👩‍👧‍👦✨.\""
+      },
+      "chiara_simone_francesco": {
+        "title": "Wi-Fi, affection, and elbow jabs 🎮❤️💥",
+        "description": "Simone: \"We play co-op online 🎮... but sitting side by side, like two LAN gamers from 2003 🧑‍💻🧑‍💻. Francesco is the pro 🧠, I’m the one bringing the ammo 💼. But with style, of course 😎.\"<br>Chiara: \"Francesco has a unique talent: he can look adorable 😊, furious 😡, and dangerous 💣... all within three seconds!\""
+      },
+      "chiara_giovanni_paolo": {
+        "title": "Caresses you never forget",
+        "description": "Chiara: \"As a teenager I did service in church and thanks to that I had the chance to have a truly unique encounter... the one with Saint John Paul II. I treasure the memory of his smile and his gestures of tenderness.\""
+      },
+      "chiara_simone_montagna": {
+        "title": "Backpacks on, bug spray in pocket 🦟",
+        "description": "Simone: \"Besides the sea, every now and then we also treat ourselves to some peace in the mountains 🏔️. Breathtaking views 😍, clean air 🍃, no sand in our shoes 👟... super relaxing.\"<br>Chiara: \"Relaxing?! 😤 Speak for yourself. Nature is beautiful, sure! But it’s a constant run from wasps 🐝, spiders 🕷️, or some other unidentified creature 👾 that decides to land on my head!\""
+      },
+      "chiara_domenico_giovanni": {
+        "title": "Per aspera ad Astra",
+        "description": "Chiara: \"With Dome and Gio, an extraordinary friendship born by chance ❤️, between ‘monsoons’ 🌊 and ‘walls’ on the beach volleyball court at Baia di Riaci (in Calabria) 🏐☀️. A special bond that goes beyond time and space ✨🪐! My twins, my guardian angels.\""
+      },
+      "chiara_simone_noi1": {
+        "title": "A bit of us...",
+        "description": "Chiara: \"Motorbike rides 🏍️, trips ✈️, Christmas 🎄 and elegant evenings 💃...\""
+      },
+      "chiara_simone_noi2": {
+        "title": "... A bit more",
+        "description": "Simone: \"Waterfalls, beaches, night scooter rides… and the Angel Flight 🚀 🪂.<br>That brilliant idea of throwing yourself attached to a cable between two mountains.<br>For those curious about how it went (this photo was taken just moments before):<br><a href='https://www.youtube.com/watch?v=SpjktxOyRBw&ab_channel=sidec15' target='_blank'>Watch the video</a> 😎\""
+      },
+      "chiara_simone_london": {
+        "title": "From Stonehenge 🌫️ to the Death Star 🚀",
+        "description": "Chiara: \"Classic London tour: monuments 🏰, walks 🚶‍♀️, double-decker buses 🚌... and a laser duel with Darth Vader, just to top it off.\"<br>Simone: \"The butterbeer was great 🍺✨\""
+      },
+      "chiara_simone_eleganti": {
+        "title": "Smiling and... occasionally elegant ✨",
+        "description": ""
+      },
+      "chiara_simone_ka1": {
+        "title": "Germany 🥨 part 1",
+        "description": "Simone: \"In 2017 I was sent for two months to Karlsruhe to work with German colleagues… and Chiara came with me!<br>Every weekend was the perfect chance to explore the city and its surroundings 🏙️🌳.<br><br>Probably one of the most beautiful chapters ever ❤️.\""
+      },
+      "chiara_simone_ka2": {
+        "title": "Germany 🍺 part 2",
+        "description": "Chiara: \"Some of our destinations were 🚆🚌: Strasbourg, Stuttgart, Heidelberg (with its peculiar 220,000-liter wine barrel 🍷!), Baden (with its wonderful landscapes and tulip fields 🌸🌷)... In short, long walks from morning to evening 🥾📸!\""
+      },
+      "chiara_simone_mare": {
+        "title": "The sea, our way ☀️🏖️",
+        "description": "Our holidays in Salento? A sea-view tour de force:<br>early wake-ups, backpack on, trekking along the coast, snorkeling, and collapsing at the end of the day. Anything but relaxing!"
+      },
+      "chiara_simone_giovani": {
+        "title": "2000s style 💿🕶️",
+        "description": "Some old-school shots 😎📸"
+      },
+      "chiara_simone_madonna_miracolo": {
+        "title": "The little Roman Lourdes",
+        "description": "The altar of Our Lady of the Miracle, in the Basilica of Sant’Andrea delle Fratte. A place of prayer, faith, beauty, and meaning, which preserves the memory of an extraordinary event that took place on January 20, 1842: the apparition of the Virgin Mary and the conversion of the young Alphonse Ratisbonne. Today this place is also a fundamental part of our journey of faith, together with the Minims fathers and our consecrated brothers."
       }
     }
   },
