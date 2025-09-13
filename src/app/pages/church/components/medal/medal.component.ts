@@ -8,17 +8,20 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { PlatformService } from '../../../../services/platform.service';
 import { EventService, ScrollEvent } from '../../../../services/event.service';
-import { Subscription, throttleTime } from 'rxjs';
+import { Subscription, throttleTime, Subject, takeUntil, Observable, withLatestFrom } from 'rxjs';
 import { HorizontalMovingBackgroundComponent } from '../../../../components/horizontal-moving-background/horizontal-moving-background.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-medal',
-  imports: [TranslateModule, HorizontalMovingBackgroundComponent],
+  imports: [TranslateModule, HorizontalMovingBackgroundComponent, AsyncPipe],
   templateUrl: './medal.component.html',
   styleUrl: './medal.component.scss',
+  standalone: true,
 })
 export class MedalComponent implements AfterViewInit, OnDestroy {
   private scrollEventSubscription!: Subscription;
+  private destroy$ = new Subject<void>();
 
   @ViewChild('medalContainer', { static: false })
   medalContainerRef!: ElementRef<HTMLElement>;
@@ -35,43 +38,49 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
   private minScale = 0.2;
   private maxScale = 1.2;
 
+  public isMobile$!: Observable<boolean>;
+
   constructor(
     private platformService: PlatformService,
     private eventService: EventService
-  ) {}
+  ) {
+    this.isMobile$ = this.eventService.isMobile$;
+  }
 
   ngAfterViewInit(): void {
     if (!this.platformService.isBrowser()) return; // Ensure this runs only in the browser
 
-    if (this.platformService.isMobile()) {
-      // this.minScale = 0.6; // Adjust min scale for mobile
-      this.maxScale = 1.0; // Adjust max scale for mobile
-    }
+    this.isMobile$.pipe(takeUntil(this.destroy$)).subscribe((isMobile) => {
+      if (isMobile) {
+        this.maxScale = 1.0; // Adjust max scale for mobile
+      }else{
+        this.maxScale = 1.2;
+      }
+    });
 
     this.scrollEventSubscription = this.eventService.scrollEvent$
-      .pipe(throttleTime(16)) // Throttle to ~60 FPS
-      .subscribe((e: ScrollEvent) => {
-        this.animate(e);
+      .pipe(
+        throttleTime(16),
+        withLatestFrom(this.isMobile$),
+        takeUntil(this.destroy$)
+      ) // Throttle to ~60 FPS
+      .subscribe(([e, isMobile]) => {
+        this.animate(e, isMobile);
       });
   }
 
   ngOnDestroy(): void {
-    if (this.scrollEventSubscription) {
-      this.scrollEventSubscription.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  get isMobile(): boolean {
-    return this.platformService.isMobile();
-  }
-
-  private animate(e: ScrollEvent) {
+  private animate(e: ScrollEvent, isMobile: boolean) {
     const imageContainerEl = this.imageContainerRef.nativeElement;
     const descriptionLeftEl = this.descriptionLeftRef.nativeElement;
     const descriptionRightEl = this.descriptionRightRef.nativeElement;
 
-    let domRect: DOMRect | null = null;
-    if (this.isMobile) {
+    let domRect: DOMRect;
+    if (isMobile) {
       domRect = imageContainerEl.getBoundingClientRect();
     } else {
       domRect = descriptionLeftEl.getBoundingClientRect();
@@ -86,7 +95,7 @@ export class MedalComponent implements AfterViewInit, OnDestroy {
         1
       );
 
-    if (!this.isMobile) {
+    if (!isMobile) {
       const descriptionOpacity = visibleRatio;
 
       descriptionLeftEl.style.opacity = `${descriptionOpacity}`;
