@@ -18,6 +18,7 @@ import {
   plainTextRequired,
   plainTextMaxLength,
 } from '../../components/rich-text-editor/validators/validators';
+import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 
 @Component({
   selector: 'app-contact-us',
@@ -27,6 +28,7 @@ import {
     TranslateModule,
     SecurityConsentComponent,
     RichTextEditorComponent,
+    RingScrollComponent,
   ],
   templateUrl: './contact-us.component.html',
   styleUrl: './contact-us.component.scss',

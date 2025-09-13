@@ -164,6 +164,7 @@
       width: 100%;
       height: auto;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
 
@@ -219,6 +220,19 @@
           font-size: 1.5rem;
           color: rgb(var(--text));
           line-height: 1.5;
+        }
+      }
+      .outro-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding-top: 2rem;
+
+        img {
+          max-width: 80%;
+          max-height: 80lvh;
+          object-fit: contain;
         }
       }
     }
