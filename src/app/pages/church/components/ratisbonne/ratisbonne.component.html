@@ -4,8 +4,8 @@
     'church.ratisbonne.description1',
     'church.ratisbonne.description2'
   ]"
-  [imageUrlLeft]="imageLeftSrc"
-  [imageUrlRight]="imageRightSrc"
+  [imageUrlLeft]="imageLeftSrc$ | async"
+  [imageUrlRight]="imageRightSrc$ | async"
   [movingBackgroundText]="''"
 >
 </app-two-images>

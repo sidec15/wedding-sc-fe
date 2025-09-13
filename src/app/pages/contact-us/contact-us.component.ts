@@ -30,6 +30,7 @@ import {
   ],
   templateUrl: './contact-us.component.html',
   styleUrl: './contact-us.component.scss',
+  standalone: true,
 })
 export class ContactUsComponent {
   contactForm: FormGroup;

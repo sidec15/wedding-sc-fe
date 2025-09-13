@@ -1,5 +1,5 @@
 <section class="miracle-section" #miracleSection>
-  @if (isMobile) {
+  @if ((isMobile$ | async)) {
     <h2 class="miracle-title">
       {{ "church.miracle.title" | translate }}
     </h2>
@@ -8,14 +8,14 @@
   @if (isPlatformReady) {
     <div class="miracle-container">
       <app-parallax-image
-        [src]="imageSrc"
+        [src]="imageSrc$ | async"
         [speedFactor]="0.2"
-        [containerHeight]="isMobile ? '80lvh' : '100lvh'"
-        [imageHeight]="isMobile ? '100lvh' : '120lvh'"
+        [containerHeight]="(isMobile$ | async) ? '80lvh' : '100lvh'"
+        [imageHeight]="(isMobile$ | async) ? '100lvh' : '120lvh'"
       ></app-parallax-image>
 
       <div class="miracle-text" #miracleText>
-        @if (!isMobile) {
+        @if (!(isMobile$ | async)) {
           <h2 class="miracle-title">
             {{ "church.miracle.title" | translate }}
           </h2>

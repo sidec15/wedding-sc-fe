@@ -9,16 +9,18 @@ import {
   TemplateRef,
   ViewChild,
   ViewChildren,
+  OnInit,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParallaxImageComponent } from '../../../../components/parallax-image/parallax-image.component';
 import { PlatformService } from '../../../../services/platform.service';
 import { EventService } from '../../../../services/event.service';
-import { Subscription, take, throttleTime } from 'rxjs';
+import { combineLatest, map, Observable, Subject, Subscription, take, takeUntil, throttleTime } from 'rxjs';
 import {
   GenericCarouselComponent,
   Slide,
 } from '../../../../components/generic-carousel/generic-carousel.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-miracle',
@@ -26,11 +28,13 @@ import {
     TranslateModule,
     ParallaxImageComponent,
     GenericCarouselComponent,
+    AsyncPipe,
   ],
   templateUrl: './miracle.component.html',
   styleUrl: './miracle.component.scss',
+  standalone: true,
 })
-export class MiracleComponent implements AfterViewInit, OnDestroy {
+export class MiracleComponent implements AfterViewInit, OnDestroy, OnInit {
   /** Duration (in ms) each slide remains visible */
   private static readonly DURATION = 25000;
   private static readonly IMAGE_DESKTOP = '/images/church/miracle/miracle-11.jpg';
@@ -40,13 +44,14 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
   isPlatformReady = false;
 
   /** Image shown as static background (desktop or mobile) */
-  imageSrc: string = '';
+  imageSrc$: Observable<string>;
 
   /** Platform mobile flag */
-  private _isMobile = false;
+  isMobile$: Observable<boolean>;
 
   /** Subscription to the scroll animation stream */
   private scrollSub!: Subscription;
+  private destroy$ = new Subject<void>();
 
   /** Section and text DOM references for parallax effect */
   @ViewChild('miracleSection', { static: false }) sectionRef!: ElementRef;
@@ -64,39 +69,75 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
     private eventService: EventService,
     private cdRef: ChangeDetectorRef,
     private zone: NgZone
-  ) {}
+  ) {
+    this.isMobile$ = this.eventService.isMobile$;
+    this.imageSrc$ = this.isMobile$.pipe(
+      map((isMobile) =>
+        isMobile
+          ? MiracleComponent.IMAGE_MOBILE
+          : MiracleComponent.IMAGE_DESKTOP
+      ),
+      takeUntil(this.destroy$)
+    );
+  }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     if (!this.platformService.isPlatformReady()) return;
     this.isPlatformReady = true;
 
-    // Detect if the platform is mobile
-    this._isMobile = this.platformService.isMobile();
+    this.isMobile$.pipe(takeUntil(this.destroy$)).subscribe((isMobile) => {
+      if (isMobile) {
+        /**
+         * TemplateRefs in @ViewChildren inside *ngIf are only available *after* view stabilization.
+         * `NgZone.onStable` ensures the DOM is fully initialized before reading the templates.
+         */
+        this.zone.onStable.pipe(take(1)).subscribe(() => {
+          this.slides = this.slideTemplates.map((template) => ({
+            elementRef: template,
+            duration: MiracleComponent.DURATION,
+          }));
+          if (this.slides.length > 0) {
+            this.slides[0].visible = true; // Ensure first slide is visible
+          }
 
-    if (!this._isMobile) {
-      // Desktop: use static image
-      this.imageSrc = MiracleComponent.IMAGE_DESKTOP;
-    } else {
-      // Mobile: use mobile-optimized image
-      this.imageSrc = MiracleComponent.IMAGE_MOBILE;
+          // Forces re-evaluation to update the input-bound carousel
+          this.cdRef.detectChanges();
+        });
+      }
+    });
+  }
 
-      /**
-       * TemplateRefs in @ViewChildren inside *ngIf are only available *after* view stabilization.
-       * `NgZone.onStable` ensures the DOM is fully initialized before reading the templates.
-       */
-      this.zone.onStable.pipe(take(1)).subscribe(() => {
-        this.slides = this.slideTemplates.map((template) => ({
-          elementRef: template,
-          duration: MiracleComponent.DURATION,
-        }));
-        if (this.slides.length > 0) {
-          this.slides[0].visible = true; // Ensure first slide is visible
-        }
+  ngAfterViewInit(): void {
+    // if (!this.platformService.isPlatformReady()) return;
+    // this.isPlatformReady = true;
 
-        // Forces re-evaluation to update the input-bound carousel
-        this.cdRef.detectChanges();
-      });
-    }
+    // // Detect if the platform is mobile
+    // this._isMobile = this.platformService.isMobile();
+
+    // if (!this._isMobile) {
+    //   // Desktop: use static image
+    //   this.imageSrc = MiracleComponent.IMAGE_DESKTOP;
+    // } else {
+    //   // Mobile: use mobile-optimized image
+    //   this.imageSrc = MiracleComponent.IMAGE_MOBILE;
+
+    //   /**
+    //    * TemplateRefs in @ViewChildren inside *ngIf are only available *after* view stabilization.
+    //    * `NgZone.onStable` ensures the DOM is fully initialized before reading the templates.
+    //    */
+    //   this.zone.onStable.pipe(take(1)).subscribe(() => {
+    //     this.slides = this.slideTemplates.map((template) => ({
+    //       elementRef: template,
+    //       duration: MiracleComponent.DURATION,
+    //     }));
+    //     if (this.slides.length > 0) {
+    //       this.slides[0].visible = true; // Ensure first slide is visible
+    //     }
+
+    //     // Forces re-evaluation to update the input-bound carousel
+    //     this.cdRef.detectChanges();
+    //   });
+    // }
 
     /**
      * This second detectChanges prevents ExpressionChangedAfterItHasBeenCheckedError.
@@ -104,20 +145,24 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
      */
     this.cdRef.detectChanges();
 
-    if (!this._isMobile) return;
+    this.isMobile$.pipe(takeUntil(this.destroy$)).subscribe((isMobile) => {
+      if (!isMobile) return; // Only subscribe to scroll on mobile
 
-    /**
-     * Subscribe to scroll events (throttled for performance).
-     * Used to animate the parallax text block based on scroll progress.
-     */
-    this.scrollSub = this.eventService.scrollEvent$
-      .pipe(throttleTime(16)) // ~60 FPS
-      .subscribe(() => this.animateText());
+      /**
+       * Subscribe to scroll events (throttled for performance).
+       * Used to animate the parallax text block based on scroll progress.
+       */
+      this.scrollSub = this.eventService.scrollEvent$
+        .pipe(throttleTime(16), takeUntil(this.destroy$)) // ~60 FPS
+        .subscribe(() => this.animateText());
+    });
   }
 
   ngOnDestroy(): void {
     // Prevent memory leaks by unsubscribing
-    this.scrollSub?.unsubscribe();
+    // this.scrollSub?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   /**
@@ -145,7 +190,7 @@ export class MiracleComponent implements AfterViewInit, OnDestroy {
   }
 
   /** Returns whether the current platform is a mobile device */
-  get isMobile(): boolean {
-    return this._isMobile;
-  }
+  // get isMobile(): boolean {
+  //   return this._isMobile;
+  // }
 }
