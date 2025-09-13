@@ -170,7 +170,7 @@
 
       // Special transitions for intro→first image and last image→outro
       &.from-regular {
-        .text-content {
+        .text-content{
           animation: fadeIn 0.8s ease-out 0.8s forwards;
         }
       }
@@ -178,6 +178,20 @@
       &.to-regular {
         .text-content {
           animation: fadeOut 0.3s ease-out forwards;
+        }
+      }
+
+      .outro-image {
+        &.hidden {
+          animation: fadeOut 0.3s ease-out forwards;
+        }
+
+        &.transitioning-out {
+          animation: fadeOut 0.3s ease-out forwards;
+        }
+
+        &.transitioning-in {
+          animation: fadeIn 0.8s ease-out 0.5s forwards;
         }
       }
 

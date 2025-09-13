@@ -64,7 +64,15 @@
           <p [innerHTML]="card.description | translate | safeHtml"></p>
         </div>
         @if (card.type === 'outro') {
-        <div class="outro-image">
+        <div
+          class="outro-image"
+          [ngClass]="{
+            visible: card.status === 'visible',
+            hidden: card.status === 'hidden',
+            'transitioning-in': card.status === 'transitioning-in',
+            'transitioning-out': card.status === 'transitioning-out'
+          }"
+        >
           <img src="/images/comics/comics-04.png" alt="Outro image" />
         </div>
         }
