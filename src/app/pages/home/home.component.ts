@@ -5,51 +5,61 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderService } from '../../services/header.service';
 import { PlatformService } from '../../services/platform.service';
-import { Subscription, timer } from 'rxjs';
+import { Observable, Subscription, timer, Subject, takeUntil } from 'rxjs';
 import { DateTime } from 'luxon';
-import { NgTemplateOutlet } from '@angular/common';
 import { MenuService } from '../../services/menu.service';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-home',
-  imports: [TranslateModule, NgTemplateOutlet],
+  imports: [TranslateModule, NgTemplateOutlet, AsyncPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  standalone: true,
 })
 export class HomeComponent implements OnInit, OnDestroy {
   countdown = { days: '00', hours: '00', minutes: '00', seconds: '00' };
-  isMobile = false;
+  isMobile$: Observable<boolean>;
 
   private timerSub!: Subscription;
   private targetDate = DateTime.fromObject(
     { year: 2025, month: 10, day: 10, hour: 15 },
     { zone: 'Europe/Rome' }
   );
+  private destroy$ = new Subject<void>();
 
   constructor(
     private platformService: PlatformService,
     private headerService: HeaderService,
     private menuService: MenuService,
-  ) {}
+    private eventService: EventService
+  ) {
+    this.isMobile$ = this.eventService.isMobile$;
+  }
 
   ngOnInit(): void {
     if (!this.platformService.isPlatformReady()) return;
 
     // 1) Decide layout before first render
-    this.isMobile = this.platformService.isMobile();
+    // this.isMobile = this.platformService.isMobile();
 
     // 2) Do one initial compute (no error)
     this.updateCountdown();
 
     // 3) Start ticking AFTER first render to avoid NG0100
-    this.timerSub = timer(1000, 1000).subscribe(() => this.updateCountdown());
+    this.timerSub = timer(1000, 1000)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateCountdown());
   }
 
   ngOnDestroy(): void {
-    this.timerSub?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   toggleMenu(): void {

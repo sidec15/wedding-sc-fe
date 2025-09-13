@@ -5,6 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   signal,
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -20,6 +21,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RingScrollComponent } from '../../components/ring-scroll/ring-scroll.component';
 import { ImageFocusComponent } from '../../components/image-focus/image-focus.component';
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { EventService } from '../../services/event.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-our-story',
@@ -30,12 +34,14 @@ import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
     RingScrollComponent,
     ImageFocusComponent,
     SafeHtmlPipe,
+    AsyncPipe,
   ],
   templateUrl: './our-story.component.html',
   styleUrls: ['./our-story.component.scss'],
   providers: [CardsService],
+  standalone: true,
 })
-export class OurStoryComponent implements AfterViewInit, OnDestroy {
+export class OurStoryComponent implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild('navCtrl', { static: false })
   navCtrl!: ElementRef;
   @ViewChild('prevBtn', { static: false })
@@ -55,7 +61,7 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   isTransitioning: boolean = false;
   previousIndex: number = 0;
   nextIndex: number = 0;
-  isMobile: boolean = false;
+  isMobile$: Observable<boolean>;
   showCommentsSection: boolean = true;
   isGreaterJump = false;
   showSwipeOnboarding = false;
@@ -68,43 +74,68 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   private swipeThreshold = 50; // px
   private swipeListenerAdded = false;
   private isMultiTouch = false;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private platformService: PlatformService,
     private storycardsProvider: CardsService,
     private headerService: HeaderService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private eventService: EventService
   ) {
     this.cards = this.storycardsProvider.getCards();
     // Initialize all cards with proper states
     this.initializeCardStates();
     // Initialize imageUrl with first card's image
     this.imageUrl.set(this.cards[0]?.image || '');
+    this.isMobile$ = this.eventService.isMobile$;
+  }
+
+  ngOnInit(): void {
+    this.isMobile$.pipe(takeUntil(this.destroy$)).subscribe((isMobile) => {
+      if (isMobile) {
+        // ✅ Defer onboarding flag to avoid ExpressionChangedAfterItHasBeenCheckedError
+        if (!localStorage.getItem('ourStorySwipeOnboardingShown')) {
+          setTimeout(() => {
+            // Show onboarding only first time (localStorage flag)
+            this.showSwipeOnboarding = true;
+          }, 0);
+        }
+
+        this.addSwipeListeners();
+        if (typeof window !== 'undefined') {
+          const element = document.querySelector('.story-gallery');
+          if (element) {
+            (element as HTMLElement).focus();
+          }
+        }
+      }
+    });
   }
 
   ngAfterViewInit(): void {
-    this.isMobile = this.platformService.isMobile();
+    // this.isMobile = this.platformService.isMobile();
     this.headerService.setMinDistanceToShowHeader(1);
 
     // Focus the component for keyboard navigation
-    if (this.isMobile) {
-      // ✅ Defer onboarding flag to avoid ExpressionChangedAfterItHasBeenCheckedError
-      if (!localStorage.getItem('ourStorySwipeOnboardingShown')) {
-        setTimeout(() => {
-          // Show onboarding only first time (localStorage flag)
-          this.showSwipeOnboarding = true;
-        }, 0);
-      }
+    // if (this.isMobile) {
+    //   // ✅ Defer onboarding flag to avoid ExpressionChangedAfterItHasBeenCheckedError
+    //   if (!localStorage.getItem('ourStorySwipeOnboardingShown')) {
+    //     setTimeout(() => {
+    //       // Show onboarding only first time (localStorage flag)
+    //       this.showSwipeOnboarding = true;
+    //     }, 0);
+    //   }
 
-      this.addSwipeListeners();
-      if (typeof window !== 'undefined') {
-        const element = document.querySelector('.story-gallery');
-        if (element) {
-          (element as HTMLElement).focus();
-        }
-      }
-    }
+    //   this.addSwipeListeners();
+    //   if (typeof window !== 'undefined') {
+    //     const element = document.querySelector('.story-gallery');
+    //     if (element) {
+    //       (element as HTMLElement).focus();
+    //     }
+    //   }
+    // }
 
     // --- NEW: read ?cardId=... and jump without animation
     this.route.queryParamMap.subscribe((params) => {
@@ -121,6 +152,8 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.removeSwipeListeners();
     this.headerService.resetMinDistanceToShowHeader();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initializeCardStates(): void {
@@ -209,9 +242,11 @@ export class OurStoryComponent implements AfterViewInit, OnDestroy {
     if (clickedBtnRef && clickedBtnRef.nativeElement) {
       clickedBtnRef.nativeElement.classList.remove('clicked');
     }
-    if (this.isMobile) {
-      this.temporarilyDisableHover(clickedBtnRef);
-    }
+    this.isMobile$.pipe(takeUntil(this.destroy$)).subscribe((isMobile) => {
+      if (isMobile) {
+        this.temporarilyDisableHover(clickedBtnRef);
+      }
+    });
     currentCard.status = 'hidden';
     currentCard.position = isForward ? 'before' : 'after';
 

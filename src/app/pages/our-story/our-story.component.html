@@ -1,6 +1,6 @@
 <section class="our-story">
   <!-- Swipe Onboarding Mask -->
-  @if (showSwipeOnboarding && isMobile) {
+  @if (showSwipeOnboarding && (isMobile$ | async)) {
   <div class="swipe-onboarding-mask" (click)="dismissSwipeOnboarding()">
     <div class="onboarding-content">
       <p [innerHTML]="'our_story.swipe_onboarding.message' | translate"></p>
