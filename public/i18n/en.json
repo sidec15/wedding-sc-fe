@@ -28,7 +28,9 @@
       "required": "required",
       "max_length": "limit exceeded",
       "required_fields": "Required field"
-    }
+    },
+    "hide": "Hide",
+    "more": "More"
   },
   "home": {
     "welcome": "Welcome!",

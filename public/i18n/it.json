@@ -28,7 +28,9 @@
       "required": "obbligatorio",
       "max_length": "superato il limite",
       "required_fields": "Campo obbligatorio"
-    }
+    },
+    "hide": "Nascondi",
+    "more": "Altro"
   },
   "home": {
     "welcome": "Benvenuti!",

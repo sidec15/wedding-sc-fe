@@ -13,7 +13,11 @@
       [attr.aria-expanded]="toolbarOpen"
       aria-controls="ngx-toolbar"
     >
-      <span class="label">{{ toolbarOpen ? 'Hide' : 'More' }}</span>
+      <span class="label">{{
+        toolbarOpen
+          ? ("rich_text_editor.hide" | translate)
+          : ("rich_text_editor.more" | translate)
+      }}</span>
       <span class="icon">⋯</span>
     </button>
 
