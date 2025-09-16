@@ -123,7 +123,7 @@
           <app-rich-text-editor
             id="message"
             formControlName="message"
-            [placeholder]="'our_story.comments.write_comment' | translate"
+            [placeholder]="'contact_us.contact_form.write_message' | translate"
             [emojiEnabled]="true"
             (lengthChange)="messageCharCount = $event"
             [error]="!!(messageControl?.invalid && messageControl?.touched)"

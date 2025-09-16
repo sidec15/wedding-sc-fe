@@ -478,6 +478,7 @@
       "phone": "Phone",
       "email": "Email",
       "message": "Message",
+      "write_message": "Write your message...",
       "submit": "Submit",
       "success_message": "Message sent successfully!",
       "error_message": "An error occurred. Please try later.",
